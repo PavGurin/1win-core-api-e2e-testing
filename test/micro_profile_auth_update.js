@@ -1,6 +1,6 @@
 import { expect } from "chai"
 
-var ttt;
+var token_val;
 
 describe("///////////////////profile check///////////////////////////", () => {
 
@@ -9,7 +9,7 @@ describe("///////////////////profile check///////////////////////////", () => {
         const { data } = await socket.send("PROFILE:auth-login",{login:'testsocke777@yandex.ru',password:'qwerty777'});
        // expect(data).to.be.a('array')
         console.log(data);
-        ttt = data.token;
+        token_val = data.token;
 
     })
       
@@ -17,7 +17,7 @@ describe("///////////////////profile check///////////////////////////", () => {
 
     it("////////////////////profile update////////////////////", async () => {
 
-        await socket.setToken(ttt);
+        await socket.setToken(token_val);
         const { data } = await socket.send("PROFILE:profile-update",{
  
             country: 'RU',
