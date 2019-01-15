@@ -2,7 +2,7 @@ import io from 'socket.io-client'
 import queryString from 'query-string';
 
 export default class SocketClient {
-    constructor(token, path = 'https://1win.pro/', lang = "ru") {
+    constructor({token, path = 'https://1win.pro/', lang = "ru"}) {
         this.path = path;
         this.token = token;
         this.lang = lang;
@@ -36,7 +36,9 @@ export default class SocketClient {
             });
     
             // if socket disconnected or can't connect this try
-            this.socket.on('connect_error', () => {
+            this.socket.on('connect_error', (e) => {
+                console.log('work?')
+                console.error(e)
                 reject()
             });
     

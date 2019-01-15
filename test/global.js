@@ -3,7 +3,7 @@ import SocketClient from "../src"
 let socket;
 
 before(async () => {
-  socket = new SocketClient() 
+  socket = new SocketClient({path: 'https://1win.pro/'}) 
   await socket.connect();
   global.socket = socket
 })
