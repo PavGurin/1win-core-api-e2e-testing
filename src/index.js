@@ -92,8 +92,4 @@ export default class SocketClient {
         delete this.requestMap[msg.msgid];
     }
 
-    async setToken(token) {
-        this.token = token;
-        await this.connect()
-    }
 }

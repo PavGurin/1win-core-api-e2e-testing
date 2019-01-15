@@ -17,7 +17,6 @@ describe("///////////////////profile check///////////////////////////", () => {
 
     it("////////////////////profile update////////////////////", async () => {
 
-        await socket.setToken(token_val);
         const { data } = await socket.send("PROFILE:profile-update",{
  
             country: 'RU',
