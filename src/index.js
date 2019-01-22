@@ -3,6 +3,7 @@ import queryString from 'query-string';
 
 export default class SocketClient {
     constructor({token, path = 'https://1win.pro/', lang = "ru"}) {
+  //  constructor({token, path = 'http://176.9.17.49:9090', lang = "ru"}) {
         this.path = path;
         this.token = token;
         this.lang = lang;
