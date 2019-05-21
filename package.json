@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require testPolyfill.js --compilers js:@babel/register --timeout 10000"
+    "test": "mocha --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive"
   },
   "keywords": [],
   "author": "",
