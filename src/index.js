@@ -1,9 +1,9 @@
 import io from 'socket.io-client'
 import queryString from 'query-string';
 
+import config from './config'
 export default class SocketClient {
-    constructor({token, path = 'https://1win.pro/', lang = "ru"}) {
-  //  constructor({token, path = 'http://176.9.17.49:9090', lang = "ru"}) {
+    constructor({token, path = config.backendURL, lang = "ru"}) {
         this.path = path;
         this.token = token;
         this.lang = lang;
