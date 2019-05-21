@@ -4,3 +4,4 @@ package_lock.json
 yarn.lock
 coverage/
 artifacts/
+.idea/
