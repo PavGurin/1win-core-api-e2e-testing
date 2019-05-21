@@ -1,0 +1,25 @@
+image:
+  name: node:8.16.0-alpine
+
+
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+
+services:
+  - docker:dind
+
+stages:
+  - tests
+
+api_test:
+  stage: tests
+  when: manual
+  tags:
+  - docker
+  script:
+    - npm i
+    - npm run test:junit-report
+  artifacts:
+    reports:
+      junit: artifacts/test-output.xml
