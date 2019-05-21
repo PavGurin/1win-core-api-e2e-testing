@@ -54,7 +54,7 @@ describe("Bets check", () => {
     // })
 
     it("Bets make ordinar", async () => {
-        const { data: loginData } = await socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
+        const { data: loginData } = await socket.send("POST:login",{login:'rgckho@1win.xyz',password:'55s9ef'})
 
         socket.token = loginData.token;
 
