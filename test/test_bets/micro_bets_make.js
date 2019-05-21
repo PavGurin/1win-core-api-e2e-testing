@@ -7,12 +7,12 @@ import { expect } from "chai"
 //     beforeEach(function(done){
 //         const login = () => socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
 //     });
-  
 
-  
+
+
 //     context('login', function(){
 //        it('should log the user in', function(){
-//         const { data } = await socket.send("BETS:bets-make",                       
+//         const { data } = await socket.send("BETS:bets-make",
 //                     {
 //                     "currency": "RUB",
 //                     "betsMap": {
@@ -32,28 +32,28 @@ import { expect } from "chai"
 //                         }
 //                     }
 //                     }
-                
+
 //             )
 //        });
 //     });
-  
+
 
 //   });
 
 
 
 
-describe("///////////////////bets check ///////////////////////////", () => {
+describe("Bets check", () => {
     // beforeEach(function(done){
     //      const { data } =  socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
     // });
 
     // it("////////////////////bets auth//////////////////", async () => {
     //   const { data } = await login();
-    //   expect(data.message).to.equal(undefined); 
+    //   expect(data.message).to.equal(undefined);
     // })
 
-    it("////////////////////bets make ordinar//////////////////", async () => {
+    it("Bets make ordinar", async () => {
         const { data: loginData } = await socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
 
         socket.token = loginData.token;
@@ -79,7 +79,7 @@ describe("///////////////////bets check ///////////////////////////", () => {
                 }
             }
 
-  
+
         );
         console.log(loginData);
         console.log(betData);
@@ -87,7 +87,7 @@ describe("///////////////////bets check ///////////////////////////", () => {
     })
 
     // it("////////////////////bets make ordinar 2////////////////////", async () => {
-    //     const { data } = await  socket.send("BETS:bets-make",                       
+    //     const { data } = await  socket.send("BETS:bets-make",
     //                 {
     //                 "currency": "RUB",
     //                 "betsMap": {
@@ -107,13 +107,13 @@ describe("///////////////////bets check ///////////////////////////", () => {
     //                     }
     //                 }
     //                 }
-                
+
     //         );
     //    expect(data.message).to.equal(undefined);
     // })
 
     // it("////////////////////bets make express////////////////////", async () => {
-    //     const { data } = await socket.send("BETS:bets-make",               
+    //     const { data } = await socket.send("BETS:bets-make",
     //                     {
     //                     "currency": "RUB",
     //                     "betsMap": {
@@ -147,7 +147,7 @@ describe("///////////////////bets check ///////////////////////////", () => {
     //                         }
     //                     }
     //                     }
-                    
+
     //             );
     //    expect(data.message).to.equal(undefined);
     // })
@@ -183,24 +183,9 @@ describe("///////////////////bets check ///////////////////////////", () => {
     //                     }
     //                     }
     //             );
-   
+
     //    expect(data.message).to.equal(undefined);
     // })
-        
+
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

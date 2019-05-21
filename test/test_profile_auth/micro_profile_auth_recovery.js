@@ -1,8 +1,8 @@
 import { expect } from "chai"
 
-describe("///////////////////profile check auth recovery///////////////////////////", () => {
+describe("Profile check auth recovery", () => {
 
-    it("////////////////////profile recovery mail/////////////////", async () => {
+    it("Profile recovery mail", async () => {
       const { data } = await socket.send("PROFILE:forgot-recovery",{
 
         account: 'testsocke777@yandex.ru'
@@ -11,17 +11,13 @@ describe("///////////////////profile check auth recovery////////////////////////
     expect(data.message).to.equal(undefined);
     })
 
-      
-
-    it("////////////////////profile recovery phone/////////////////", async () => {
+    it("Profile recovery phone", async () => {
         const { data } = await socket.send("PROFILE:forgot-recovery",{
-  
+
           account: '57544564564976'
       }
       );
       expect(data.message).to.equal(undefined);
     })
 
-
 })
-
