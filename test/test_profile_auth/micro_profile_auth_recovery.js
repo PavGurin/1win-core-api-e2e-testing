@@ -8,10 +8,9 @@ describe("Profile check auth recovery", () => {
         account: '123123123123123123@mailinator.com'
     }
     );
-    console.log(data[0]);
-    //expect(data).to.be.an('array');
-    expect(data[0].name).to.be.an('object');
-    //expect(data.message).to.equal(undefined);
+    console.log(data);
+
+    expect(data).to.deep.include({status: 200});
     })
 
 /* Сейчас восстановление пароля только по email

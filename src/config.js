@@ -1,3 +1,2 @@
 export default {
-    backendURL: 'https://1wima.xyz/'
-}
+    backendURL: 'https://1wima.xyz/'}

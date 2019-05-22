@@ -22,7 +22,7 @@ describe("Profile check micro profile auth", () => {
         expect(data.message).to.equal(undefined);
     })
 
-/* 500ка при апдейте заблоченного юзера
+/* 500 при выполнении данного теста
     it("Save profile block user", async () => {
         const { data } = await socket.send("POST:login",{login:'testsocke777@yandex.ru',password:'qwerty777'});
 
@@ -40,7 +40,8 @@ describe("Profile check micro profile auth", () => {
             //id_user: 1460933
         }
         );
-        expect(data.status).to.equal(500);
+        expect(betData).to.deep.include({status: 500});
+        expect(betData).to.deep.include({messageLangKey: 'error.system'});
     })
 */
 })
