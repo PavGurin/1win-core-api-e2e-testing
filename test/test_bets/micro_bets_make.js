@@ -1,59 +1,16 @@
 import { expect } from "chai"
-
-
-
-
-// describe('main page', function(){
-//     beforeEach(function(done){
-//         const login = () => socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
-//     });
-
-
-
-//     context('login', function(){
-//        it('should log the user in', function(){
-//         const { data } = await socket.send("BETS:bets-make",
-//                     {
-//                     "currency": "RUB",
-//                     "betsMap": {
-//                         "prematch_16493397_575_0_4+_*": {
-//                         "amount": 11,
-//                         "couponList": [
-//                             {
-//                             "service": "prematch",
-//                             "matchId": 16493397,
-//                             "typeId": 575,
-//                             "subTypeId": 0,
-//                             "outCome": "4+",
-//                             "specialValue": "*",
-//                             "coefficient": "36.9"
-//                             }
-//                         ]
-//                         }
-//                     }
-//                     }
-
-//             )
-//        });
-//     });
-
-
-//   });
-
-
-
-
 describe("Bets check", () => {
-    // beforeEach(function(done){
-    //      const { data } =  socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
-    // });
+/*
+     beforeEach(function(done){
+          const { data } =  socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
+     });
+      it("////////////////////bets auth//////////////////", async () => {
+       const { data } = await login();
+       expect(data.message).to.equal(undefined);
+     })
+*/
 
-    // it("////////////////////bets auth//////////////////", async () => {
-    //   const { data } = await login();
-    //   expect(data.message).to.equal(undefined);
-    // })
-
-    it("Bets make ordinar", async () => {
+    it("Bets make ordinar without money", async () => {
         const { data: loginData } = await socket.send("POST:login",{login:'rgckho@1win.xyz',password:'55s9ef'})
 
         socket.token = loginData.token;
@@ -74,18 +31,56 @@ describe("Bets check", () => {
                         "specialValue": "*",
                         "coefficient": "7.98"
                     }
-                    ]
-                }
-                }
-            }
-
-
+                    ]}
+                }}
         );
         console.log(loginData);
         console.log(betData);
-      //expect(data.message).to.equal(undefined);
+
+        expect(betData).to.deep.include({status: 403});
+        expect(betData).to.deep.include({message: 'Недостаточно средств'});
     })
 
+
+/* describe('main page', function(){
+     beforeEach(function(done){
+         const login = () => socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
+     });
+
+
+
+     context('login', function(){
+        it('should log the user in', function(){
+         const { data } = await socket.send("BETS:bets-make",
+                     {
+                     "currency": "RUB",
+                     "betsMap": {
+                         "prematch_16493397_575_0_4+_*": {
+                         "amount": 11,
+                         "couponList": [
+                             {
+                             "service": "prematch",
+                             "matchId": 16493397,
+                             "typeId": 575,
+                             "subTypeId": 0,
+                             "outCome": "4+",
+                             "specialValue": "*",
+                             "coefficient": "36.9"
+                             }
+                         ]
+                        }
+                     }
+                    }
+
+             )
+        });
+     });
+
+
+   });
+*/
+
+/*
     // it("////////////////////bets make ordinar 2////////////////////", async () => {
     //     const { data } = await  socket.send("BETS:bets-make",
     //                 {
@@ -186,6 +181,6 @@ describe("Bets check", () => {
 
     //    expect(data.message).to.equal(undefined);
     // })
-
+*/
 
 })
