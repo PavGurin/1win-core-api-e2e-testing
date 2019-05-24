@@ -1,8 +1,8 @@
 export default {
 
     //Prodlike
-    //backendURL: 'https://1win.dev/'
+    backendURL: 'https://1win.dev/'
 
     //Prod
-    backendURL: 'https://1wcav.xyz/'
+    //backendURL: 'https://1wcav.xyz/'
   }

@@ -1,19 +1,19 @@
-import { expect } from "chai"
+import { expect } from "chai";
 
 describe("Profile check micro profile auth", () => {
 
     it("Save profile valid user", async () => {
-        const { data } = await socket.send("POST:login",{login:'123123123123123123@mailinator.com', password:'123123123123'});
+        const { data } = await socket.send("POST:login",{login:'123123@mailinator.com', password:'123123'});
 
         await socket.send("USER:updatePersonalData",{
 
             birthday: -1372471200000,
             country: 'ru',
-            email: '123123123123123123@mailinator.com',
+            email: '123123@mailinator.com',
             name: 'autotest_user',
             new_password: null,
-            password: '123123123123',
-            phone: '+79995654565',
+            password: '123123',
+            phone: '+79995654567',
             repeat_password: 'null',
             timezone: -3,
             //id_user: 1460933

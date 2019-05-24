@@ -11,7 +11,7 @@ describe("Bets check", () => {
 */
 
     it("Bets make ordinar without money", async () => {
-        const { data: loginData } = await socket.send("POST:login",{login:'rgckho@1win.xyz',password:'55s9ef'})
+        const { data: loginData } = await socket.send("POST:login",{login:'123123@mailinator.com', password:'123123'})
 
         socket.token = loginData.token;
 
