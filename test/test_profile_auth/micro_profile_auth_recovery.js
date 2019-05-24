@@ -11,6 +11,7 @@ describe("Profile check auth recovery", () => {
     console.log(data[0]);
     //expect(data).to.be.an('array');
     expect(data).to.be.an('object');
+
     //expect(data.message).to.equal(undefined);
     })
 
