@@ -8,7 +8,7 @@ describe("Casino search check", () => {
         })
 
        //вывод логов в консоль
-       //console.log(data[0]);
+       console.log(data[0]);
 
         expect(data).to.be.an('array');
         expect(data[0].name).to.be.an('object');
@@ -23,7 +23,7 @@ describe("Casino search check", () => {
 
         });
 
-        //console.log(data[0]);
+        console.log(data[0]);
         expect(data).to.be.an('array');
         expect(data[0].Name).to.be.an('object');
         expect(data.message).to.equal(undefined);
@@ -40,7 +40,7 @@ describe("Casino search check", () => {
             lang: "ru",
             isOnlyMobile: false
           })
-        //console.log(data[0]);
+        console.log(data[0]);
         expect(data).to.be.an('array');
         expect(data[0].name).to.be.an('object');
         expect(data.message).to.equal(undefined);

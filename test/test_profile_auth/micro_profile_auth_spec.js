@@ -4,12 +4,12 @@ import { expect } from "chai"
 describe("Profile check click/mail", () => {
 
     it("Auth login from 1 click", async () => {
-      const { data } = await socket.send("POST:login",{login:'rgckho@1win.xyz',password:'55s9ef'});
+      const { data } = await socket.send("POST:login",{login:'bahc21@1win.xyz',password:'107pi8'});
       expect(data.message).to.equal(undefined);
     })
 
     it("Auth login from mail", async () => {
-        const { data } = await socket.send("POST:login",{login:'testsocke777@yandex.ru',password:'qwerty777'});
+        const { data } = await socket.send("POST:login",{login:'123123@mailinator.com',password:'123123'});
         expect(data.message).to.equal(undefined);
     })
 

@@ -1,2 +1,8 @@
 export default {
-    backendURL: 'https://1wima.xyz/'}
+
+    //Prodlike
+    backendURL: 'https://1win.dev/'
+
+    //Prod
+    //backendURL: 'https://1wcav.xyz/'
+  }

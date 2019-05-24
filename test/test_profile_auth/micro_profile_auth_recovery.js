@@ -5,12 +5,14 @@ describe("Profile check auth recovery", () => {
     it("Profile recovery mail", async () => {
       const { data } = await socket.send("POST:forgot_password",{
 
-        account: '123123123123123123@mailinator.com'
+        account: '123123@mailinator.com'
     }
     );
-    console.log(data);
+    console.log(data[0]);
+    //expect(data).to.be.an('array');
+    expect(data).to.be.an('object');
 
-    expect(data).to.deep.include({status: 200});
+    //expect(data.message).to.equal(undefined);
     })
 
 /* Сейчас восстановление пароля только по email
