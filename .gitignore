@@ -1,7 +1,7 @@
 /node_modules
 /dist
-package_lock.json
 yarn.lock
 coverage/
 artifacts/
 .idea/
+package-lock.json
