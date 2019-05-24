@@ -55,7 +55,8 @@ describe("transfer", () => {
             }
         );
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data).to.deep.include({status: 403});
+        expect(data).to.deep.include({message: 'Недостаточно средств'});
     });
 
     it("With money", async () => {
