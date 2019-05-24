@@ -1,11 +1,11 @@
 import { expect } from "chai"
 
 
-describe("RUB/USD - Create deposite", () => {
+describe("Create deposite", () => {
 
 
 
-    it("RUB - Create deposite paymentType = card_rub and wallet = null", async () => {
+    it("RUB - paymentType = card_rub and wallet = null", async () => {
         await socket.send("USER:auth-login",{login:'123123@mailinator.com',password:'123123'});
 
         const { data } = await socket.send("BANKING:deposit-create",{
@@ -19,7 +19,7 @@ describe("RUB/USD - Create deposite", () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it("USD - Create deposite paymentType = card_rub and wallet = null", async () => {
+    it("USD - paymentType = card_rub and wallet = null", async () => {
         await socket.send("USER:auth-login",{login:'123123@mailinator.com',password:'123123'});
 
         const { data } = await socket.send("BANKING:deposit-create",{
@@ -33,7 +33,7 @@ describe("RUB/USD - Create deposite", () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it("Create deposite - must not pass", async () => {
+    it("Must not pass", async () => {
         await socket.send("USER:auth-login",{login:'123123@mailinator.com',password:'123123'});
 
         const { data } = await socket.send("BANKING:deposit-create",{

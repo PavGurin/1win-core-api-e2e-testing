@@ -1,7 +1,7 @@
 import { expect } from "chai"
 
 
-describe("withdrawal - history", () => {
+describe("Balance get", () => {
 
 
     it("Without money", async () => {

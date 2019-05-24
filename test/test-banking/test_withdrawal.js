@@ -1,10 +1,10 @@
 import { expect } from "chai"
 
 
-describe("withdrawal - history", () => {
+describe("withdrawal history", () => {
 
 
-    it("Without withdrawal", async () => {
+    it("Without money", async () => {
         await socket.send("USER:auth-login",{login:'123123@mailinator.com',password:'123123'});
 
         const { data } = await socket.send("BANKING:withdrawal-history");
