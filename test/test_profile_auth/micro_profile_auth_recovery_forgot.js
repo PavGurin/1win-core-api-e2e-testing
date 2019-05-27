@@ -1,6 +1,6 @@
 import { expect } from "chai"
 
-describe("Profile check recovery forgot", () => {
+describe.skip("Profile check recovery forgot", () => {
 
 
     it("Profile recovery forgot confirm whit incorrect code", async () => {

@@ -1,5 +1,5 @@
 import { expect } from "chai"
-describe("Bets check", () => {
+describe.skip("Bets check", () => {
 /*
      beforeEach(function(done){
           const { data } =  socket.send("PROFILE:auth-login",{login:'rgckho@1win.xyz',password:'55s9ef'})
