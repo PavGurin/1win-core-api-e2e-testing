@@ -17,6 +17,7 @@ api_test:
   stage: tests
   tags:
   - docker
+  allow_failure: true
   script:
     - npm i
     - npm run test:junit-report
