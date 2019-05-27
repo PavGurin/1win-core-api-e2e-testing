@@ -1,8 +1,7 @@
 import { expect } from "chai"
-import * as describe from 'mocha';
 
 
-describe.skip("Сonvert confirm", () => {
+describe("Сonvert confirm", () => {
 
 
     it("Incorrect code", async () => {
