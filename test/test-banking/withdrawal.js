@@ -20,8 +20,15 @@ describe("withdrawal", () => {
         expect(data.message).equal(undefined);
     });
 
-    it("Get - Withdrawal 404 not found ", async () => {
+    it("Get - Withdrawal 404 not found - authorized ", async () => {
         await socket.send("USER:auth-login",{login:'test_withdrawal@mailinator.com',password:'123123'});
+
+        const { data } = await socket.send("BANKING:withdrawal-get", {id:205});
+        console.log(data);
+        expect(data.message).equal(undefined);
+    });
+
+    it("Get - Withdrawal 404 not found - unauthorized ", async () => {
 
         const { data } = await socket.send("BANKING:withdrawal-get", {id:205});
         console.log(data);
