@@ -1,8 +1,3 @@
 export default {
-
-    //Prodlike
-    backendURL: 'https://1win.dev/'
-
-    //Prod
-    //backendURL: 'https://1wcav.xyz/'
-  }
+    backendURL: process.env.TEST_URL || 'https://1win.dev/'
+}
