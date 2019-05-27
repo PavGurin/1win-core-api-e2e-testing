@@ -1,10 +1,10 @@
 import { expect } from "chai"
 
 
-describe("withdrawal history", () => {
+describe("withdrawal", () => {
 
 
-    it("Without money", async () => {
+    it("History - Without money", async () => {
         await socket.send("USER:auth-login",{login:'123123@mailinator.com',password:'123123'});
 
         const { data } = await socket.send("BANKING:withdrawal-history");
@@ -12,12 +12,20 @@ describe("withdrawal history", () => {
         expect(data.message).equal(undefined);
     });
 
-    it("With money", async () => {
+    it("History - With money", async () => {
         await socket.send("USER:auth-login",{login:'test_withdrawal@mailinator.com',password:'123123'});
 
         const { data } = await socket.send("BANKING:withdrawal-history");
         console.log(data);
         expect(data.message).equal(undefined);
-    })
+    });
+
+    it("Get - Withdrawal 404 not found ", async () => {
+        await socket.send("USER:auth-login",{login:'test_withdrawal@mailinator.com',password:'123123'});
+
+        const { data } = await socket.send("BANKING:withdrawal-get", {id:205});
+        console.log(data);
+        expect(data.message).equal(undefined);
+    });
 
 });
