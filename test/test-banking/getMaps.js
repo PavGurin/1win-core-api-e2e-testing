@@ -35,6 +35,4 @@ describe("Get methods map", () => {
     });
 
 
-
-
 });
