@@ -15,7 +15,6 @@ stages:
 
 api_test:
   stage: tests
-  when: manual
   tags:
   - docker
   script:
