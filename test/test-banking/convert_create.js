@@ -113,4 +113,41 @@ describe("Convert", () => {
         expect(data.message).equal(undefined);
     });
 
+    it("Create after login valid request 0.9 USD -> RUB(enough money) ", async () => {
+        await socket.send("USER:auth-login",{login:'test_withdrawal@mailinator.com',password:'123123'});
+
+        const { data } = await socket.send("BANKING:convert-create",{
+            amount: 0.9,
+            senderCurrency: 'USD',
+            receiverCurrency: 'RUB',
+        });
+        console.log(data);
+        expect(data.message).equal(undefined);
+    });
+
+    it("Create after login valid request negative amount USD -> RUB(enough money) ", async () => {
+        await socket.send("USER:auth-login",{login:'test_withdrawal@mailinator.com',password:'123123'});
+
+        const { data } = await socket.send("BANKING:convert-create",{
+            amount: -0.9,
+            senderCurrency: 'USD',
+            receiverCurrency: 'RUB',
+        });
+        console.log(data);
+        expect(data.message).equal(undefined);
+    });
+
+    it("Create after login valid request negative amount RUB -> USD(enough money) ", async () => {
+        await socket.send("USER:auth-login",{login:'test_withdrawal@mailinator.com',password:'123123'});
+
+        const { data } = await socket.send("BANKING:convert-create",{
+            amount: -100.9,
+            senderCurrency: 'RUB',
+            receiverCurrency: 'USD',
+        });
+        console.log(data);
+        expect(data.message).equal(undefined);
+    });
+
+
 });
