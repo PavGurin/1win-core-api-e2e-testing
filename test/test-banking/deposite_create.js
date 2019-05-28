@@ -1,10 +1,10 @@
 import {expect} from 'chai';
+import {userList} from '../../src/userList';
 
 describe('Create deposite', () => {
 
     it('RUB - paymentType = card_rub and wallet = null', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -17,8 +17,7 @@ describe('Create deposite', () => {
     });
 
     it('RUB - paymentType = tele2_rub and wallet != null', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -31,8 +30,7 @@ describe('Create deposite', () => {
     });
 
     it('RUB - paymentType = tele2_rub and wallet = null', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -46,8 +44,7 @@ describe('Create deposite', () => {
     });
 
     it('USD - paymentType = card_rub and wallet = null', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -60,8 +57,7 @@ describe('Create deposite', () => {
     });
 
     it('Must not pass', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
             wallet: '',

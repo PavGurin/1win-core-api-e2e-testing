@@ -1,10 +1,10 @@
 import {expect} from 'chai';
+import {userList} from '../../src/userList';
 
 describe('Сonvert confirm', () => {
 
     it('Incorrect code', async () => {
-        await socket.send('USER:auth-login', {login: 'test_withdrawal@mailinator.com', password: '123123'});
-
+        userList.login_with_RUB()
         const {data} = await socket.send('BANKING:convert-confirm', {code: 7446561});
         console.log(data);
         expect(data.message).equal(undefined);

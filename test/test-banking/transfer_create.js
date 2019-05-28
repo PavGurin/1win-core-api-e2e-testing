@@ -1,10 +1,10 @@
 import {expect} from 'chai';
+import {userList} from '../../src/userList';
 
 describe('transfer', () => {
 
     it('Without money , not enough amount + RUB', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
@@ -17,8 +17,7 @@ describe('transfer', () => {
     });
 
     it('Without money , not enough amount + USD', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
@@ -30,8 +29,7 @@ describe('transfer', () => {
     });
 
     it('Without money , enough amount + USD', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 100,
@@ -44,8 +42,7 @@ describe('transfer', () => {
     });
 
     it('Without money , enough amount + RUB', async () => {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
-
+        userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 100,
@@ -58,8 +55,7 @@ describe('transfer', () => {
     });
 
     it('With money', async () => {
-        await socket.send('USER:auth-login', {login: 'test_withdrawal@mailinator.com', password: '123123'});
-
+        userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 100,
@@ -71,8 +67,7 @@ describe('transfer', () => {
     });
 
     it('With money + USD, amount = 1 USD', async () => {
-        await socket.send('USER:auth-login', {login: 'test_withdrawal@mailinator.com', password: '123123'});
-
+        userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
@@ -84,8 +79,7 @@ describe('transfer', () => {
     });
 
     it('With money + USD, amount = 2 USD', async () => {
-        await socket.send('USER:auth-login', {login: 'test_withdrawal@mailinator.com', password: '123123'});
-
+        userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 2,
