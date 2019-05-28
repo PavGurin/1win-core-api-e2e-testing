@@ -5,6 +5,7 @@ image:
 variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
+  TEST_URL: https://1win.dev/
 
 services:
   - docker:dind
@@ -14,9 +15,9 @@ stages:
 
 api_test:
   stage: tests
-  when: manual
   tags:
   - docker
+  allow_failure: true
   script:
     - npm i
     - npm run test:junit-report
