@@ -25,8 +25,9 @@ describe('Usual schema', () => {
             .to.equal('someCountry');
     }
 
-    function checkErrorMsg(errorMessage, expectedMessage) {
-        expect(errorMessage).to.equal(expectedMessage);
+    function checkErrorMsg(data, expectedMessage) {
+        expect(data.status).to.equal(400);
+        expect(data.message).to.equal(expectedMessage);
     }
 
     const visit_domain = 'some_domain';
@@ -67,7 +68,7 @@ describe('Usual schema', () => {
             repeat_password: default_password,
             visit_domain: visit_domain
         });
-        // console.log(data);
+        console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -85,7 +86,7 @@ describe('Usual schema', () => {
             repeat_password: default_password,
             partner_key: promo_code
         });
-        // console.log(data);
+        console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -104,7 +105,7 @@ describe('Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        // console.log(data);
+        console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -123,8 +124,8 @@ describe('Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
+        console.log(data);
+        checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
     });
 
     it('(-) long name', async () => {
@@ -142,8 +143,8 @@ describe('Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
+        console.log(data);
+        checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
     });
 
     it('(-) short phone number', async () => {
@@ -160,8 +161,8 @@ describe('Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+        console.log(data);
+        checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
     });
 
     it('(-) long phone number', async () => {
@@ -178,8 +179,8 @@ describe('Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+        console.log(data);
+        checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
     });
 
     it('(-) different passwords', async () => {
@@ -196,8 +197,8 @@ describe('Usual schema', () => {
             repeat_password: testStr + '1',
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Password confirmation not matches to password');
+        console.log(data);
+        checkErrorMsg(data, 'Password confirmation not matches to password');
     });
 
     it('(-) short password', async () => {
@@ -214,8 +215,8 @@ describe('Usual schema', () => {
             repeat_password: testStr,
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
+        console.log(data);
+        checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
     });
 
     it('(-) long password', async () => {
@@ -232,8 +233,8 @@ describe('Usual schema', () => {
             repeat_password: testStr,
             partner_key: promo_code
         });
-        // console.log(data);
-        checkErrorMsg(data.message, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
+        console.log(data);
+        checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
     });
 
     it('(-) - visit_domain - partner_key', async () => {
@@ -246,8 +247,7 @@ describe('Usual schema', () => {
             password: default_password,
             repeat_password: default_password
         });
-        // console.log(data);
-        expect(data.status).to.equal(400);
-        checkErrorMsg(data.message, 'Visit domain is required if partner key does not specified');
+        console.log(data);
+        checkErrorMsg(data, 'Visit domain is required if partner key does not specified');
     });
 });
