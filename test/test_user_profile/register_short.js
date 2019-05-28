@@ -26,10 +26,11 @@ describe('Register - Short schema', () => {
     // register via short scheme with 'visit_domain' and 'partner_key'
     it('+ visit_domain + partner_key', async () => {
 
-        const {data} = await defaultRequest({
-            visit_domain: 'someDomain',
-            partner_key: promo_code
-        });
+        const {data} = await defaultRequest(
+            {
+                visit_domain: 'someDomain',
+                partner_key: promo_code
+            });
 
         checkRegInfo(data);
     });
@@ -45,9 +46,10 @@ describe('Register - Short schema', () => {
 
     it('- visit_domain + partner_key', async () => {
 
-        const {data} = await defaultRequest({
-            partner_key: promo_code
-        });
+        const {data} = await defaultRequest(
+            {
+                partner_key: promo_code
+            });
 
         checkRegInfo(data);
         expect(data.partner_key)
