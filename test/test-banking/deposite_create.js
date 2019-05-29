@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe('Create deposite', () => {
+describe.skip('Create deposite', () => {
 
     it('RUB - paymentType = card_rub and wallet = null', async () => {
         await userList.login_without_money();
