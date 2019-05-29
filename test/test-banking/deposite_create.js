@@ -4,7 +4,7 @@ import {userList} from '../../src/userList';
 describe('Create deposite', () => {
 
     it('RUB - paymentType = card_rub and wallet = null', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -17,7 +17,7 @@ describe('Create deposite', () => {
     });
 
     it('RUB - paymentType = tele2_rub and wallet != null', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -30,7 +30,7 @@ describe('Create deposite', () => {
     });
 
     it('RUB - paymentType = tele2_rub and wallet = null', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -44,7 +44,7 @@ describe('Create deposite', () => {
     });
 
     it('USD - paymentType = card_rub and wallet = null', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -57,7 +57,7 @@ describe('Create deposite', () => {
     });
 
     it('Must not pass', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
             wallet: '',
