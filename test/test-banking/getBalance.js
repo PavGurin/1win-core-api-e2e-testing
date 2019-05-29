@@ -18,7 +18,7 @@ describe('Balance get', () => {
     });
 
     it('With money rub + usd', async () => {
-        await userList.login_with_RUB();
+        await userList.login_with_RUB_USD();
         const {data} = await socket.send('BANKING:balance-get');
         console.log(data);
         expect(data.message).equal(undefined);

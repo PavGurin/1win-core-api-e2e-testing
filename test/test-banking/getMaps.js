@@ -4,7 +4,7 @@ import {userList} from '../../src/userList';
 describe('Get methods map', () => {
 
     it('Withdrawal methods map with login', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:methods-withdrawal');
         console.log(data);
         expect(data.message).equal(undefined);
@@ -18,7 +18,7 @@ describe('Get methods map', () => {
     });
 
     it('Payment methods map with login', async () => {
-        userList.login_without_money();
+        await userList.login_without_money();
         const {data} = await socket.send('BANKING:methods-payment');
         console.log(data);
         expect(data.message).equal(undefined);
