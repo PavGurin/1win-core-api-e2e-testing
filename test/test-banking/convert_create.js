@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe('Convert', () => {
+describe.skip('Convert', () => {
 
     it('Create before login', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
@@ -24,7 +24,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 100 RUB -> USD', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 100,
             senderCurrency: 'RUB',
@@ -35,7 +35,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 1 USD -> RUB ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1,
             senderCurrency: 'USD',
@@ -46,7 +46,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 1 USD -> USD ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1,
             senderCurrency: 'USD',
@@ -57,7 +57,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 1 RUB -> RUB ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1,
             senderCurrency: 'RUB',
@@ -68,7 +68,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 100 RUB -> RUB ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 100,
             senderCurrency: 'RUB',
@@ -79,7 +79,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 10000 RUB -> USD(not enough money) ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 10000,
             senderCurrency: 'RUB',
@@ -91,7 +91,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 1000 USD -> RUB(not enough money) ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1000,
             senderCurrency: 'USD',
@@ -102,7 +102,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request 0.9 USD -> RUB(enough money) ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 0.9,
             senderCurrency: 'USD',
@@ -113,7 +113,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request negative amount USD -> RUB(enough money) ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: -0.9,
             senderCurrency: 'USD',
@@ -124,7 +124,7 @@ describe('Convert', () => {
     });
 
     it('Create after login valid request negative amount RUB -> USD(enough money) ', async () => {
-        userList.login_with_RUB();
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: -100.9,
             senderCurrency: 'RUB',
@@ -133,5 +133,4 @@ describe('Convert', () => {
         console.log(data);
         expect(data.message).equal(undefined);
     });
-
 });

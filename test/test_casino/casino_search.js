@@ -5,7 +5,7 @@ describe.skip("Casino search check", () => {
     it("Games-search", async () => {
         const { data } = await socket.send("CASINO-2:games-search",{
 
-        })
+        });
 
        //вывод логов в консоль
        console.log(data[0]);
@@ -14,7 +14,7 @@ describe.skip("Casino search check", () => {
         expect(data[0].name).to.be.an('object');
         expect(data.message).to.equal(undefined);
 
-    })
+    });
 
 
 
@@ -27,7 +27,7 @@ describe.skip("Casino search check", () => {
         expect(data).to.be.an('array');
         expect(data[0].Name).to.be.an('object');
         expect(data.message).to.equal(undefined);
-    })
+    });
 
 
     it("Games-all", async () => {
@@ -39,11 +39,11 @@ describe.skip("Casino search check", () => {
             },
             lang: "ru",
             isOnlyMobile: false
-          })
+          });
         console.log(data[0]);
         expect(data).to.be.an('array');
         expect(data[0].name).to.be.an('object');
         expect(data.message).to.equal(undefined);
     })
 
-})
+});
