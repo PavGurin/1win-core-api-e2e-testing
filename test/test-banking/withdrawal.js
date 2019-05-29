@@ -48,5 +48,4 @@ describe('withdrawal', () => {
         expect(data).to.deep.include({status: 404});
         expect(data).to.deep.include({message: 'Выплата не найдена'});
     });
-
 });

@@ -64,9 +64,7 @@ describe.skip('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-
         console.log(data);
         expect(data.message).to.equal(undefined);
     });
-
 });

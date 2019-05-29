@@ -3,7 +3,6 @@ import {userList} from '../../src/userList';
 
 describe('Withdrawal create with user without money ', () => {
 
-
     it.skip('Without money', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
@@ -106,7 +105,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'megafon_rub',
-            wallet: '+79215645656',
+            wallet: '+79215645656'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -117,7 +116,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'mts_rub',
-            wallet: '+79215645656',
+            wallet: '+79215645656'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -128,7 +127,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'qiwi_rub',
-            wallet: '+79215645656',
+            wallet: '+79215645656'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -139,7 +138,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'tele2_rub',
-            wallet: '+79215645656',
+            wallet: '+79215645656'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -150,7 +149,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'yamoney_rub',
-            wallet: '+4100100000000',
+            wallet: '+4100100000000'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -161,7 +160,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'webmoney_rub',
-            wallet: 'R123456789000',
+            wallet: 'R123456789000'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -172,7 +171,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'payeer_rub',
-            wallet: 'P0000000000',
+            wallet: 'P0000000000'
         });
         console.log(data);
         expect(data.message).equal(undefined);
@@ -183,7 +182,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'advcash_rub',
-            wallet: 'mail@example.com',
+            wallet: 'mail@example.com'
         });
         console.log(data);
         expect(data.message).equal(undefined);

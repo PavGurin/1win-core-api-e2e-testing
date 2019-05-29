@@ -12,9 +12,8 @@ describe.skip('deposit requests', () => {
 
     it('Запрос депозита по хэшу', async () => {
         await userList.login_with_RUB();
-        const {data} = await socket.send('BANKING:deposit-request',{h:'gjhg'});
+        const {data} = await socket.send('BANKING:deposit-request', {h: 'gjhg'});
         console.log(data);
         expect(data.message).equal(undefined);
     });
-
 });

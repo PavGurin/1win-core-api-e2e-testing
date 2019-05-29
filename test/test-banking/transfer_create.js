@@ -94,8 +94,8 @@ describe('transfer', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
-                amount: 2,
-                            }
+                amount: 2
+            }
         );
         console.log(data);
         expect(data.message).equal(undefined);
@@ -105,11 +105,10 @@ describe('transfer', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
-                amount: 1999,
+                amount: 1999
             }
         );
         console.log(data);
         expect(data.message).equal(undefined);
     });
-
 });

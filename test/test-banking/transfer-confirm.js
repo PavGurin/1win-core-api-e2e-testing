@@ -9,5 +9,4 @@ describe.skip('Transfer confirm', () => {
         console.log(data);
         expect(data.message).equal(undefined);
     });
-
 });
