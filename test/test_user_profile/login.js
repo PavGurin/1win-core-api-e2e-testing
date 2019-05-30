@@ -4,14 +4,14 @@ import {randomStr} from '../../src/randomizer';
 describe('Login', () => {
 
     const default_user = 'fcrxntest@xyz.com';
-    const default_phone = '9213320385';
+    const default_phone = '+79213320385';
     const default_password = '123456';
 
     function checkSuccessMsg(data) {
         expect(data.email).equal(default_user);
         expect(data.phone).equal(default_phone);
-        expect(data.id).equal(290);
-        expect(data.user_id).equal(290);
+        expect(data.id).equal(1490253);
+        expect(data.user_id).equal(1490253);
     }
 
     function checkErrorMsg(data, expectedMessage) {

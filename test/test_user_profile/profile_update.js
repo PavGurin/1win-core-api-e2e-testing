@@ -1,12 +1,26 @@
 import {expect} from 'chai';
+import {randomNum, randomStr} from '../../src/randomizer';
 
-describe('Short schema', () => {
+describe('Profile update', () => {
 
     const promo_code = 'test001';
+    const birthday = 946587600002;
+    const default_password = '123456';
+
+    // const logout = () => socket.send('USER:auth-logout', {});
+    //     //
+    //     // async function checkPasswordChange(login) {
+    //     //
+    //     //     const {data} = await socket.send('USER:auth-login', {
+    //     //         login: login,
+    //     //         password: default_password
+    //     //     });
+    //     //     return data;
+    //     // }
 
     it('Short reg and updating user', async () => {
 
-        const {data} = await socket.send('USER:auth-register',
+        let {data} = await socket.send('USER:auth-register',
             {
                 isShort: true,
                 country: 'someCountry',
@@ -14,33 +28,39 @@ describe('Short schema', () => {
                 visit_domain: 'someDomain',
                 partner_key: promo_code
             });
-        // console.log(data);
 
-        const userId = data.id.toString();
+        const userId = data.user_id;
         const password = data.password;
 
-        const email = data.email;
-        const phone = data.phone;
+        console.log('Before update: \nUserId = ' + data.user_id + ', eMail = ' + data.email +
+            ', phone = ' + data.phone);
 
-        console.log('Changed info: \nUserId = ' + userId + ', password = ' + password + ', eMail = ' + email + ', phone = ' + phone);
-        // console.log(authRegister);
-        //
-        const {data2} = await socket.send('USER:profile-update',
+        const {data: {updatedUser}} = await socket.send('USER:profile-update',
             {
-                name: '277',
+                userId: userId,
+                name: randomStr(),
                 country: 'Russia',
                 timezone: 1,
-                email: email,
-                phone: phone,
+                email: randomStr(5) + '_upd@test.xyz',
+                phone: randomNum().toString(),
                 password: password,
                 new_password: '123456',
                 repeat_password: '123456',
-                birthday: 946587600002
+                birthday: birthday
             });
-        console.log('Changed info: \nUserId = ' + data2.userId.toString() + ', password = ' + data2.password +
-            ', eMail = ' + data2.email + ', phone = ' + data2.phone);
-        console.log(userId);
-        console.log(password);
-        console.log(data2);
+        console.log('After update: \nUserId = ' + updatedUser.id + ', eMail = ' + updatedUser.email +
+            ', phone = ' + updatedUser.phone);
+
+        expect(data.id).equal(updatedUser.id);
+        expect(updatedUser.name).to.have.lengthOf(6).and.not.equal(data.name);
+        expect(updatedUser.country).equal('Russia').and.not.equal(data.country);
+        expect(updatedUser.email).satisfies(email => email.endsWith('_upd@test.xyz'))
+                                 .and.not.equal(data.email);
+        expect(updatedUser.phone).to.have.lengthOf(7).and.not.equal(data.phone);
+        expect(updatedUser.birthday).equal(birthday).and.not.equal(data.birthday);
+
+        // const y = await logout();
+        // const x = await checkPasswordChange(updatedUser.email);
+        // console.log(x);
     });
 });

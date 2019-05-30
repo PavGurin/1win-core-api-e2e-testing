@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {randomStr, randomNum} from '../../src/randomizer';
 
-describe('Usual schema', () => {
+describe('Register -Usual schema', () => {
 
     const defaultRequest = (params) => socket.send('USER:auth-register',
         {

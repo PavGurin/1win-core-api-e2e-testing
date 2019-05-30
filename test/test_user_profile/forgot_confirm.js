@@ -1,18 +1,35 @@
 import {expect} from 'chai';
 
-describe('Profile check recovery forgot', () => {
+describe('Auth recovery confirm', () => {
 
-    it('Profile recovery forgot confirm whit incorrect code', async () => {
-        const {data} = await socket.send('POST:forgot_password_confirm', {
+    const new_password = '123456';
+    const userId = 1490385;
+    const correct_code = 8711360;
 
-                userId: 1460970,
-                code: 1630984,
-                password: '123321123321',
-                repeat_password: '123321123321'
+    // positive test with 'error' expected
+    it('(~) with correct code', async () => {
+        const {data} = await socket.send('USER:forgot-confirm', {
 
+                userId: userId,
+                code: correct_code,
+                password: new_password,
+                repeat_password: new_password
             }
         );
-        //expect(data.messageLangKey).to.equal('incorrect_request_key');
-        expect(data.status).to.equal(400);
+        // { error : false } - real expected response
+        expect(data.error).to.equal(false);
+    });
+
+    it('(-)  with incorrect code', async () => {
+        const {data} = await socket.send('USER:forgot-confirm', {
+
+                userId: userId,
+                code: 1234567,
+                password: new_password,
+                repeat_password: new_password
+            }
+        );
+        expect(data.status).equal(400);
+        expect(data.message).equal('Неверный ключ запроса');
     });
 });
