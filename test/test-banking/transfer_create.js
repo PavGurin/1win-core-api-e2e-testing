@@ -1,9 +1,9 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe('transfer', () => {
+describe('Transfer', () => {
 
-    it('Without money , not enough amount + RUB', async () => {
+    it('(-) Without money , not enough amount + RUB', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -12,11 +12,11 @@ describe('transfer', () => {
             }
         );
         console.log(data);
-        expect(data).to.deep.include({status: 403});
-        expect(data).to.deep.include({message: 'Недостаточно средств'});
+        expect(data.status).equal(403);
+        expect(data.message).equal('Недостаточно средств');
     });
 
-    it('Without money , not enough amount + USD', async () => {
+    it.skip('Without money , not enough amount + USD', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -24,11 +24,11 @@ describe('transfer', () => {
                 currency: 'USD'
             }
         );
-        expect(data).to.deep.include({status: 403});
-        expect(data).to.deep.include({message: 'Недостаточно средств'});
+        expect(data.status).equal(403);
+        expect(data.message).equal('Недостаточно средств');
     });
 
-    it('Without money , enough amount + USD', async () => {
+    it('(-) Without money , enough amount + USD', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -37,11 +37,11 @@ describe('transfer', () => {
             }
         );
         console.log(data);
-        expect(data).to.deep.include({status: 403});
-        expect(data).to.deep.include({message: 'Недостаточно средств'});
+        expect(data.status).equal(403);
+        expect(data.message).equal('Недостаточно средств');
     });
 
-    it('Without money , enough amount + RUB', async () => {
+    it('(-) Without money , enough amount + RUB', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -50,11 +50,11 @@ describe('transfer', () => {
             }
         );
         console.log(data);
-        expect(data).to.deep.include({status: 403});
-        expect(data).to.deep.include({message: 'Недостаточно средств'});
+        expect(data.status).equal(403);
+        expect(data.message).equal('Недостаточно средств');
     });
 
-    it('With money', async () => {
+    it('(+) With money', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -66,7 +66,7 @@ describe('transfer', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money + USD, amount = 1 USD', async () => {
+    it('(+) With money + USD, amount = 1 USD', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -78,7 +78,7 @@ describe('transfer', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money + USD, amount = 2 USD', async () => {
+    it('(+) With money + USD, amount = 2 USD', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -90,7 +90,7 @@ describe('transfer', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money + USD, currency = null', async () => {
+    it('(+) With money + USD, currency = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
@@ -101,7 +101,7 @@ describe('transfer', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money + USD, currency = null and amount > 1000', async () => {
+    it('(+) With money + USD, currency = null and amount > 1000', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',

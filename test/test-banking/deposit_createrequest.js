@@ -1,9 +1,9 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe.skip('deposit requests', () => {
+describe('Deposit requests', () => {
 
-    it('deposit-create-request', async () => {
+    it.skip('(+) create', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
@@ -13,10 +13,11 @@ describe.skip('deposit requests', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('Запрос депозита по хэшу', async () => {
+    it('(-) with hash', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-request', {h: 'gjhg'});
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(404);
+        expect(data.message).equal('Запрос депозита не найден');
     });
 });
