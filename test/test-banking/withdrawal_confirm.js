@@ -9,5 +9,6 @@ describe('Withdrawal confirm', () => {
         console.log(data);
         expect(data.status).equal(400);
         expect(data.message).equal('Неверный ключ запроса');
+
     });
 });
