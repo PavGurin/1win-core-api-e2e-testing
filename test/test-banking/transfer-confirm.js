@@ -7,7 +7,7 @@ describe('Transfer confirm', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 5372831});
         console.log(data);
-        expect(data.status).equal(404);
-        expect(data.message).equal('Перевод не найден');
+        expect(data.status).equal(400);
+        expect(data.message).equal('Неверный ключ запроса');
     });
 });
