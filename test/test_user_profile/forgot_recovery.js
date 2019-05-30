@@ -40,4 +40,13 @@ describe('Auth recovery forgot', () => {
             expect(true).equal(true);
         }
     });
+
+    it('(-) empty account field', async () => {
+        const {status: status} = await socket.send('USER:forgot-recovery', {
+                account: ''
+            }
+        );
+        console.log('response status:' + status);
+        expect(status).not.to.equal(200);
+    });
 });
