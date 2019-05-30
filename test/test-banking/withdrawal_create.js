@@ -3,7 +3,7 @@ import {userList} from '../../src/userList';
 
 describe('Withdrawal create with user without money ', () => {
 
-    it.skip('Without money', async () => {
+    it.skip('(-) Without money', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -15,7 +15,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('Without money card_rub + valid wallet ', async () => {
+    it('(-) Without money card_rub + valid wallet ', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -24,11 +24,11 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data).to.deep.include({status: 403});
-        expect(data).to.deep.include({message: 'Недостаточно средств'});
+        expect(data.status).equal(403);
+        expect(data.message).equal('Недостаточно средств');
     });
 
-    it.skip('With money invalid', async () => {
+    it.skip('(-) With money invalid', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -40,7 +40,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money card_rub + valid wallet', async () => {
+    it('(+) With money card_rub + valid wallet', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -52,7 +52,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money card_uah + valid wallet + RUB', async () => {
+    it('(+) With money card_uah + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -64,7 +64,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money card_uah + valid wallet + USD', async () => {
+    it('(+) With money card_uah + valid wallet + USD', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -76,7 +76,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money beeline_rub + valid wallet + RUB', async () => {
+    it('(+) With money beeline_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -88,7 +88,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money beeline_rub + valid wallet + USD', async () => {
+    it('(+) With money beeline_rub + valid wallet + USD', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -100,7 +100,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money megafon_rub + valid wallet + RUB', async () => {
+    it('(+) With money megafon_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -111,7 +111,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money mts_rub + valid wallet + RUB', async () => {
+    it('(+) With money mts_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -122,7 +122,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money qiwi_rub + valid wallet + RUB', async () => {
+    it('(+) With money qiwi_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -133,7 +133,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money tele2_rub + valid wallet + RUB', async () => {
+    it('(+) With money tele2_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -144,7 +144,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money yamoney_rub + valid wallet + RUB', async () => {
+    it('(+) With money yamoney_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -155,7 +155,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money webmoney_rub + valid wallet + RUB', async () => {
+    it('(+) With money webmoney_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -166,7 +166,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money payeer_rub + valid wallet + RUB', async () => {
+    it('(+) With money payeer_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -177,7 +177,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('With money advcash_rub + valid wallet + RUB', async () => {
+    it('(+) With money advcash_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
