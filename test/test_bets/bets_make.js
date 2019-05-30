@@ -1,4 +1,5 @@
-import { expect } from "chai"
+import {expect} from "chai"
+
 describe.skip("Bets check", () => {
 /*
      beforeEach(function(done){
