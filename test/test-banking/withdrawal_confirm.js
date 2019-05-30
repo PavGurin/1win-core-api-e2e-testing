@@ -7,7 +7,7 @@ describe('Withdrawal confirm', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 1070416});
         console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Неверный ключ запроса');
+        expect(data.status).equal(403);
+        expect(data.message).equal('Выплата не найдена');
     });
 });
