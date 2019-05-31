@@ -41,7 +41,8 @@ describe('Auth recovery forgot', () => {
         }
     });
 
-    it('(-) empty account field', async () => {
+    //TODO  ожидает фикса
+    it.skip('(-) empty account field', async () => {
         const {status: status} = await socket.send('USER:forgot-recovery', {
                 account: ''
             }

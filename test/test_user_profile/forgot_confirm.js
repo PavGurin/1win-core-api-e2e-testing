@@ -4,7 +4,7 @@ describe('Auth recovery confirm', () => {
 
     const new_password = '123456';
     const userId = 1490385;
-    const correct_code = 8711360;
+    const correct_code = 6391721;
 
     // positive test with 'error' expected
     it('(~) with correct code', async () => {
