@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Auth recovery forgot', () => {
 
@@ -42,13 +43,11 @@ describe('Auth recovery forgot', () => {
         }
     });
 
-    //TODO  ожидает фикса
-    it.skip('C19321 (-) empty account field', async () => {
-        const {status: status} = await socket.send('USER:forgot-recovery', {
-                account: ''
-            }
-        );
-        console.log('response status:' + status);
-        expect(status).not.to.equal(200);
+    it('C19321 (-) empty account field', async () => {
+        const {data: data} = await socket.send('USER:forgot-recovery', {
+            account: ''
+        });
+        console.log(data);
+        checkErrorMsg(data,'Bad request, account is invalid');
     });
 });

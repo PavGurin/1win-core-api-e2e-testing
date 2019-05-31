@@ -57,7 +57,6 @@ describe('Login', () => {
         checkErrorMsg(data, 'Неверный email или пароль');
     });
 
-    //TODO ожидает фикса
     it('C19297 (-) empty login', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
