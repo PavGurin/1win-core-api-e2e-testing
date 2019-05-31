@@ -16,7 +16,7 @@ describe('Transfer', () => {
         expect(data.message).equal('Недостаточно средств');
     });
 
-    it.skip('Without money , not enough amount + USD', async () => {
+    it('Without money , not enough amount + USD', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',

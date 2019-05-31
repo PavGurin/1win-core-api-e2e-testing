@@ -18,7 +18,7 @@ describe('Profile update', () => {
     //     //     return data;
     //     // }
 
-    it('Short reg and updating user', async () => {
+    it('C19323 (+) Short reg and updating user', async () => {
 
         let {data} = await socket.send('USER:auth-register',
             {

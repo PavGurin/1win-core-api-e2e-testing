@@ -17,7 +17,7 @@ describe('Login', () => {
     }
 
     // (+) for positive tests (-) for negative tests
-    it('(+) login by email', async () => {
+    it('C19293 (+) login by email', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
@@ -27,7 +27,7 @@ describe('Login', () => {
         checkSuccessMsg(data);
     });
 
-    it('(+) login by phone', async () => {
+    it('C19294 (+) login by phone', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: default_phone,
@@ -37,7 +37,7 @@ describe('Login', () => {
         checkSuccessMsg(data);
     });
 
-    it('(-) nonexistent user', async () => {
+    it('C19295 (-) nonexistent user', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: 'nonexistent_user@yep.fail',
@@ -47,7 +47,7 @@ describe('Login', () => {
         checkErrorMsg(data, 'Пользователь  не найден');
     });
 
-    it('(-) wrong password', async () => {
+    it('C19296 (-) wrong password', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
@@ -58,7 +58,7 @@ describe('Login', () => {
     });
 
     //TODO ожидает фикса
-    it.skip('(-) empty login', async () => {
+    it.skip('C19297 (-) empty login', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: '',
@@ -68,7 +68,7 @@ describe('Login', () => {
         checkErrorMsg(data, 'Пользователь  не найден');
     });
 
-    it('(-) empty password', async () => {
+    it('C19298 (-) empty password', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
@@ -78,7 +78,7 @@ describe('Login', () => {
         checkErrorMsg(data, 'Неверный пароль');
     });
 
-    it('(-) long login (17 symbols)', async () => {
+    it('C19299 (-) long login (17 symbols)', async () => {
         const {data} = await socket.send('USER:auth-login', {
             login: randomStr(17),
             password: ''
@@ -87,7 +87,7 @@ describe('Login', () => {
         checkErrorMsg(data, 'Пользователь  не найден');
     });
 
-    it('(-) long password (19 symbols)', async () => {
+    it('C19300 (-) long password (19 symbols)', async () => {
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
             password: randomStr(19)

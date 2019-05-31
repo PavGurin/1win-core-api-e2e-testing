@@ -6,7 +6,7 @@ describe('Auth recovery forgot', () => {
     const testingPhone = '+79110994202';
     const default_id = 1490385;
 
-    it('(+) recovery by email', async () => {
+    it('C19318 (+) recovery by email', async () => {
         const {data} = await socket.send('USER:forgot-recovery', {
                 account: testingEmail
             }
@@ -18,7 +18,7 @@ describe('Auth recovery forgot', () => {
                           .and.satisfies(email => email.endsWith(testingEmail.substr(15)));
     });
 
-    it('(+) recovery by phone', async () => {
+    it('C19319 (+) recovery by phone', async () => {
         const {data} = await socket.send('USER:forgot-recovery', {
                 account: testingPhone
             }
@@ -30,7 +30,7 @@ describe('Auth recovery forgot', () => {
                           .and.satisfies(email => email.endsWith(testingEmail.substr(15)));
     });
 
-    it('(-) nonexistent user', async () => {
+    it('C19320 (-) nonexistent user', async () => {
         // восстановление пароля с несуществующим пользователем должно возвращать ошибку
         try {
             const {data} = await socket.send('USER:forgot-recovery', {
@@ -43,7 +43,7 @@ describe('Auth recovery forgot', () => {
     });
 
     //TODO  ожидает фикса
-    it.skip('(-) empty account field', async () => {
+    it.skip('C19321 (-) empty account field', async () => {
         const {status: status} = await socket.send('USER:forgot-recovery', {
                 account: ''
             }
