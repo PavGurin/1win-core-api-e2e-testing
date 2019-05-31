@@ -14,14 +14,20 @@ describe('Withdrawal', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-history');
         console.log(data);
-        expect(data["0"].amount, data["0"].id, data["0"].payment_system, data["0"].status, data["0"].time).equal(100, 163, 'money-transfer', 1, 1559039814000);
+        expect(data["0"].id).equal(163);
+        expect(data["0"].time).equal(1559039814000);
+        expect(data["0"].payment_system).equal('money-transfer');
+        expect(data["0"].amount).equal(100);
+        expect(data["0"].status).equal(1);
+
     });
 
     it('(-) Get - withdrawal not found - auth', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 205});
         console.log(data);
-        expect(data.status, data.message).equal(404, 'Выплата не найдена');
+        expect(data.status).equal(404);
+        expect(data.message).equal('Выплата не найдена');
 
     });
 
@@ -29,10 +35,12 @@ describe('Withdrawal', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 163});
         console.log(data);
-        expect(data.amount, data.currency, data.date, data.device, data.id, data.id_user, data.merchant_invoice_id,
-            data.merchant_is_checked, data.merchant_name, data.merchant_operation_id, data.payed_amount, data.payment_system,
-            data.status, data.time, data.time_confirm, data.wallet).equal(100, 'RUB', '2019-05-28T00:00:00.000Z', null, 163, 205, null, 0, null, null, 0, 'money-transfer', 1,
-            '2019-05-28T13:36:54.000Z', '1971-01-01T00:00:00.000Z', '417');
+        expect(data.id).equal(163);
+        expect(data.time).equal(1559039814000);
+        expect(data.payment_system).equal('money-transfer');
+        expect(data.amount).equal(100);
+        expect(data.status).equal(1);
+        expect(data.wallet).equal('417');
 
     });
 
@@ -40,16 +48,19 @@ describe('Withdrawal', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 179});
         console.log(data);
-        expect(data.amount, data.currency, data.date, data.device, data.id, data.id_user, data.merchant_invoice_id,
-            data.merchant_is_checked, data.merchant_name, data.merchant_operation_id, data.payed_amount, data.payment_system,
-            data.status, data.time, data.time_confirm, data.wallet).equal(100, 'RUB', '2019-05-29T00:00:00.000Z', null, 179, 205, null, 0, null, null, 0, 'card_rub', 0,
-            '2019-05-29T13:40:26.000Z', '1971-01-01T00:00:00.000Z', '5536913759650035');
+        expect(data.id).equal(179);
+        expect(data.time).equal(1559126426000);
+        expect(data.payment_system).equal('card_rub');
+        expect(data.amount).equal(100);
+        expect(data.status).equal(0);
+        expect(data.wallet).equal('5536913759650035');
 
     });
 
     it('(-) Get - 404 not found - unauthorized ', async () => {
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 162});
         console.log(data);
-        expect(data.status, data.message).equal(404, 'Выплата не найдена');
+        expect(data.status).equal(404);
+        expect(data.message).equal('Выплата не найдена');
     });
 });
