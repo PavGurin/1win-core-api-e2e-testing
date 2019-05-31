@@ -44,7 +44,7 @@ describe('Withdrawal', () => {
 
     });
 
-    it('(+) Get - 1 RUB card_rub', async () => {
+    it('(+) Get - 100 RUB card_rub', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 179});
         console.log(data);
@@ -57,10 +57,10 @@ describe('Withdrawal', () => {
 
     });
 
-    it('(-) Get - 404 not found - unauthorized ', async () => {
-        const {data} = await socket.send('BANKING:withdrawal-get', {id: 162});
+    it('C19364 (-) Get - Bad request, id is required ', async () => {
+        const {data} = await socket.send('BANKING:withdrawal-get', {id: null});
         console.log(data);
-        expect(data.status).equal(404);
-        expect(data.message).equal('Выплата не найдена');
+        expect(data.status).equal(400);
+        expect(data.message).equal('Bad request, id is required');
     });
 });

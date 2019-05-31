@@ -32,7 +32,7 @@ describe('Withdrawal create with user without money ', () => {
         checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
-    it('(-) With money invalid', async () => {
+    it('C19324 (-) With money invalid', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -44,7 +44,7 @@ describe('Withdrawal create with user without money ', () => {
         checkErrMsg(data, 400, 'Bad Request.');
     });
 
-    it('(+) With money card_rub + valid wallet', async () => {
+    it('C19325 (+) With money card_rub + valid wallet', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -56,7 +56,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money card_uah + valid wallet + RUB', async () => {
+    it('C19326 (+) With money card_uah + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -68,7 +68,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money card_uah + valid wallet + USD', async () => {
+    it('C19327 (+) With money card_uah + valid wallet + USD', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -80,7 +80,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money beeline_rub + valid wallet + RUB', async () => {
+    it('C19328 (+) With money beeline_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -92,7 +92,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money beeline_rub + valid wallet + USD', async () => {
+    it('C19329 (+) With money beeline_rub + valid wallet + USD', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -104,7 +104,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money megafon_rub + valid wallet + RUB', async () => {
+    it('C19330 (+) With money megafon_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -115,7 +115,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money mts_rub + valid wallet + RUB', async () => {
+    it('C19331 (+) With money mts_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -126,7 +126,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money qiwi_rub + valid wallet + RUB', async () => {
+    it('C19332 (+) With money qiwi_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -137,7 +137,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money tele2_rub + valid wallet + RUB', async () => {
+    it('C19333 (+) With money tele2_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -148,7 +148,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money yamoney_rub + valid wallet + RUB', async () => {
+    it('C19334 (+) With money yamoney_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -159,7 +159,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money webmoney_rub + valid wallet + RUB', async () => {
+    it('C19335 (+) With money webmoney_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -171,7 +171,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(undefined);
     });
 
-    it('(+) With money payeer_rub + valid wallet + RUB', async () => {
+    it('C19336 (+) With money payeer_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -182,7 +182,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).equal('te************l@mailinator.com');
     });
 
-    it('(+) With money advcash_rub + valid wallet + RUB', async () => {
+    it('C19337 (+) With money advcash_rub + valid wallet + RUB', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
