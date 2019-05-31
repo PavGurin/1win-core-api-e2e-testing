@@ -3,6 +3,7 @@ import {userList} from '../../src/userList';
 
 describe('Deposit requests', () => {
 
+    //TODO ожидает фикса
     it.skip('(+) create', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create-request', {
