@@ -24,40 +24,40 @@ describe('Register - Short schema', () => {
     }
 
     // register via short scheme with 'visit_domain' and 'partner_key'
-    it('+ visit_domain + partner_key', async () => {
+    it('(+) with visit_domain with partner_key', async () => {
 
         const {data} = await defaultRequest({
             visit_domain: 'someDomain',
             partner_key: promo_code
         });
-
+        console.log(data);
         checkRegInfo(data);
     });
 
-    it('+ visit domain - partner_key', async () => {
+    it('(+) with visit domain w/o partner_key', async () => {
 
         const {data} = await defaultRequest({
             visit_domain: 'someDomain'
         });
-
+        console.log(data);
         checkRegInfo(data);
     });
 
-    it('- visit_domain + partner_key', async () => {
+    it('(+) w/o visit_domain with partner_key', async () => {
 
         const {data} = await defaultRequest({
             partner_key: promo_code
         });
-
+        console.log(data);
         checkRegInfo(data);
         expect(data.partner_key)
             .to.equal(promo_code);
     });
 
-    it('- visit_domain - partner_key', async () => {
+    it('(-) w/o visit_domain w/o partner_key', async () => {
         // request without mandatory params
         const {data} = await defaultRequest();
-
+        console.log(data);
         expect(data.status)
             .to.equal(400);
     });

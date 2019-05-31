@@ -1,6 +1,7 @@
 import {expect} from 'chai';
+import {randomStr, randomNum} from '../../src/randomizer';
 
-describe('Usual schema', () => {
+describe('Register -Usual schema', () => {
 
     const defaultRequest = (params) => socket.send('USER:auth-register',
         {
@@ -33,25 +34,6 @@ describe('Usual schema', () => {
     const visit_domain = 'some_domain';
     const promo_code = 'test001';
     const default_password = '123456';
-
-    // returns random String with length parameter
-    function randomStr(length = 6) {
-        if (length > 10) {
-            let finalStr = '';
-            for (let i = 0; i < ((length - length % 10) / 10); i++) {
-                finalStr += Math.random().toString(36).slice(-10);
-            }
-            if (length % 10 === 0) {
-                return finalStr;
-            } else
-                return finalStr + Math.random().toString(36).slice(-(length % 10));
-        } else
-            return Math.random().toString(36).slice(-length);
-    }
-
-    function randomNum() { // returns 7 numbers *** ** **
-        return Math.floor(Math.random() * 9999999) + 1;
-    }
 
     // (+) for positive tests (-) for negative tests
     it('(+) + visit_domain', async () => {
