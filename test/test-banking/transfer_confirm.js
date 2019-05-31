@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {userList} from '../../src/userList';
 import {checkErrorMsg} from '../../src/responseChecker';
 
-describe('Transfer confirm', () => {
+describe.skip('Transfer confirm', () => {
 
     //TODO продумать логику теста так, чтобы нужный код подставлялся сам в момент запуска теста
     it('(-) Incorrect code', async () => {
