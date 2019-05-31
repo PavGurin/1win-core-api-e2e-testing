@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import {randomStr, randomNum} from '../../src/randomizer';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Register -Usual schema', () => {
 
@@ -24,11 +25,6 @@ describe('Register -Usual schema', () => {
             .to.equal(testText);
         expect(data.country)
             .to.equal('someCountry');
-    }
-
-    function checkErrorMsg(data, expectedMessage) {
-        expect(data.status).to.equal(400);
-        expect(data.message).to.equal(expectedMessage);
     }
 
     const visit_domain = 'some_domain';

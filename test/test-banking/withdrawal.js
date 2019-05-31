@@ -48,7 +48,6 @@ describe('Withdrawal', () => {
     });
 
     it('(-) Get - 404 not found - unauthorized ', async () => {
-
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 162});
         console.log(data);
         expect(data.status, data.message).equal(404, 'Выплата не найдена');

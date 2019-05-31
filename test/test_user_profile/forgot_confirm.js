@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Auth recovery confirm', () => {
 
@@ -30,7 +31,6 @@ describe('Auth recovery confirm', () => {
                 repeat_password: new_password
             }
         );
-        expect(data.status).equal(400);
-        expect(data.message).equal('Неверный ключ запроса');
+        checkErrorMsg(data, 'Неверный ключ запроса');
     });
 });

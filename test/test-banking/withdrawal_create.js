@@ -3,7 +3,12 @@ import {userList} from '../../src/userList';
 
 describe('Withdrawal create with user without money ', () => {
 
-    it.skip('(-) Without money', async () => {
+    function checkErrMsg(data, expStatus, expMessage) {
+        expect(data.status).equal(expStatus);
+        expect(data.message).equal(expMessage);
+    }
+
+    it('(-) Without money', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -12,7 +17,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        checkErrMsg(data, 400, 'Bad Request.');
     });
 
     it('(-) Without money card_rub + valid wallet ', async () => {
@@ -24,11 +29,10 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data.status).equal(403);
-        expect(data.message).equal('Недостаточно средств');
+        checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
-    it.skip('(-) With money invalid', async () => {
+    it('(-) With money invalid', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -37,7 +41,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        checkErrMsg(data, 400, 'Bad Request.');
     });
 
     it('(+) With money card_rub + valid wallet', async () => {
@@ -49,7 +53,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money card_uah + valid wallet + RUB', async () => {
@@ -61,7 +65,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money card_uah + valid wallet + USD', async () => {
@@ -73,7 +77,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'USD'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money beeline_rub + valid wallet + RUB', async () => {
@@ -85,7 +89,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money beeline_rub + valid wallet + USD', async () => {
@@ -97,7 +101,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'USD'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money megafon_rub + valid wallet + RUB', async () => {
@@ -108,7 +112,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money mts_rub + valid wallet + RUB', async () => {
@@ -119,7 +123,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money qiwi_rub + valid wallet + RUB', async () => {
@@ -130,7 +134,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money tele2_rub + valid wallet + RUB', async () => {
@@ -141,7 +145,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money yamoney_rub + valid wallet + RUB', async () => {
@@ -152,7 +156,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+4100100000000'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money webmoney_rub + valid wallet + RUB', async () => {
@@ -163,6 +167,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'R123456789000'
         });
         console.log(data);
+        expect(data.email).equal('te************l@mailinator.com');
         expect(data.message).equal(undefined);
     });
 
@@ -174,7 +179,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'P0000000000'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
 
     it('(+) With money advcash_rub + valid wallet + RUB', async () => {
@@ -185,7 +190,6 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'mail@example.com'
         });
         console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.email).equal('te************l@mailinator.com');
     });
-
 });

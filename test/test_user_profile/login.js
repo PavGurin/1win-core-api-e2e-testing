@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import {randomStr} from '../../src/randomizer';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Login', () => {
 
@@ -13,11 +14,6 @@ describe('Login', () => {
         expect(data.phone).equal(default_phone);
         expect(data.id).equal(default_id);
         expect(data.user_id).equal(default_id);
-    }
-
-    function checkErrorMsg(data, expectedMessage) {
-        expect(data.status).to.equal(400);
-        expect(data.message).to.equal(expectedMessage);
     }
 
     // (+) for positive tests (-) for negative tests
