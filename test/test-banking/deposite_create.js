@@ -3,7 +3,7 @@ import {userList} from '../../src/userList';
 
 describe.skip('Create deposite', () => {
 
-    it('RUB - paymentType = card_rub and wallet = null', async () => {
+    it('RUB - paymentType = card_rub and wallet = empty', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -66,5 +66,72 @@ describe.skip('Create deposite', () => {
         });
         console.log(data);
         expect(data.message).to.equal(undefined);
+    });
+
+    it('(-) RUB - paymentType = card_rub and amount = null', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:deposit-create', {
+
+            amount: null,
+            wallet: '',
+            paymentType: 'card_rub',
+            currency: 'RUB'
+        });
+        console.log(data);
+        expect(data.message).to.equal(undefined);
+    });
+
+    it('(-) RUB - paymentType = card_rub and wallet = null', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:deposit-create', {
+
+            amount: '1',
+            wallet: null,
+            paymentType: 'card_rub',
+            currency: 'RUB'
+        });
+        console.log(data);
+        expect(data.status).equal(400);
+        expect(data.message).equal('Неверная сумма');
+    });
+
+    it('(-) RUB - paymentType = card_rub and wallet = null', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:deposit-create', {
+
+            amount: '1',
+            wallet: null,
+            paymentType: 'card_rub',
+            currency: 'RUB'
+        });
+        console.log(data);
+        expect(data.status).equal(400);
+        expect(data.message).equal('Неверная сумма');
+    });
+
+    it('(-) RUB - paymentType = card_rub and currency = null', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:deposit-create', {
+
+            amount: '100',
+            wallet: null,
+            paymentType: 'card_rub',
+            //currency: 'RUB'
+        });
+        console.log(data);
+        expect(data.status).equal(200);
+    });
+
+    it('(-) RUB - paymentType = card_rub and wallet != null', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:deposit-create', {
+
+            amount: '100',
+            wallet: 'порпорпорпэ',
+            paymentType: 'card_rub',
+            //currency: 'RUB'
+        });
+        console.log(data);
+        expect(data.status).equal(200);
     });
 });
