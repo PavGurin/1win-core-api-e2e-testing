@@ -2,8 +2,9 @@ import {expect} from 'chai';
 
 describe('Auth recovery forgot', () => {
 
-    const testingEmail = 'kalliak1993@yandex.ru';
+    const testingEmail = 'kallaik1993@yandex.ru';
     const testingPhone = '+79110994202';
+    const default_id = 810;
 
     it('(+) recovery by email', async () => {
         const {data} = await socket.send('USER:forgot-recovery', {
@@ -12,7 +13,7 @@ describe('Auth recovery forgot', () => {
         );
         console.log(data);
         expect(data).to.be.an('object');
-        expect(data.userId).equal(1490385);
+        expect(data.userId).equal(default_id);
         expect(data.email).satisfies(email => email.startsWith(testingEmail.substr(0, 2)))
                           .and.satisfies(email => email.endsWith(testingEmail.substr(15)));
     });
@@ -24,7 +25,7 @@ describe('Auth recovery forgot', () => {
         );
         console.log(data);
         expect(data).to.be.an('object');
-        expect(data.userId).equal(1490385);
+        expect(data.userId).equal(default_id);
         expect(data.email).satisfies(email => email.startsWith(testingEmail.substr(0, 2)))
                           .and.satisfies(email => email.endsWith(testingEmail.substr(15)));
     });

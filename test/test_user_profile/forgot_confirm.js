@@ -3,11 +3,12 @@ import {expect} from 'chai';
 describe('Auth recovery confirm', () => {
 
     const new_password = '123456';
-    const userId = 1490385;
+    const userId = 291;
     const correct_code = 6391721;
 
+    //TODO need to get correct_code from mail
     // positive test with 'error' expected
-    it('(~) with correct code', async () => {
+    it.skip('(~) with correct code', async () => {
         const {data} = await socket.send('USER:forgot-confirm', {
 
                 userId: userId,
