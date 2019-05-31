@@ -44,7 +44,7 @@ describe('Login', () => {
             password: default_password
         });
         console.log(data);
-        checkErrorMsg(data, 'Пользователь  не найден');
+        checkErrorMsg(data, 'Неверный email или пароль');
     });
 
     it('C19296 (-) wrong password', async () => {
@@ -54,18 +54,18 @@ describe('Login', () => {
             password: default_password + 'x'
         });
         console.log(data);
-        checkErrorMsg(data, 'Неверный пароль');
+        checkErrorMsg(data, 'Неверный email или пароль');
     });
 
     //TODO ожидает фикса
-    it.skip('C19297 (-) empty login', async () => {
+    it('C19297 (-) empty login', async () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: '',
             password: default_password
         });
         console.log(data);
-        checkErrorMsg(data, 'Пользователь  не найден');
+        checkErrorMsg(data, 'Bad request, login is invalid');
     });
 
     it('C19298 (-) empty password', async () => {
@@ -75,7 +75,7 @@ describe('Login', () => {
             password: ''
         });
         console.log(data);
-        checkErrorMsg(data, 'Неверный пароль');
+        checkErrorMsg(data, 'Bad request, password is invalid');
     });
 
     it('C19299 (-) long login (17 symbols)', async () => {
@@ -84,7 +84,7 @@ describe('Login', () => {
             password: ''
         });
         console.log(data);
-        checkErrorMsg(data, 'Пользователь  не найден');
+        checkErrorMsg(data, 'Bad request, password is invalid');
     });
 
     it('C19300 (-) long password (19 symbols)', async () => {
@@ -93,6 +93,6 @@ describe('Login', () => {
             password: randomStr(19)
         });
         console.log(data);
-        checkErrorMsg(data, 'Неверный пароль');
+        checkErrorMsg(data, 'Неверный email или пароль');
     });
 });
