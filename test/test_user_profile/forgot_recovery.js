@@ -4,7 +4,7 @@ describe('Auth recovery forgot', () => {
 
     const testingEmail = 'kalliak1993@yandex.ru';
     const testingPhone = '+79110994202';
-    const default_id = 123123;
+    const default_id = 1490385;
 
     it('(+) recovery by email', async () => {
         const {data} = await socket.send('USER:forgot-recovery', {
