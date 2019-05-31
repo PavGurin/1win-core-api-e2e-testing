@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe('bets-history', () => {
+describe.skip('bets-history', () => {
 
     it('(+) without bets', async () => {
 

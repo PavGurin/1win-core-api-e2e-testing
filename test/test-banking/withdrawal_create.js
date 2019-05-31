@@ -8,7 +8,7 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.message).equal(expMessage);
     }
 
-    it('(-) Without money', async () => {
+    it('C19278 (-) Without money', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
@@ -20,7 +20,7 @@ describe('Withdrawal create with user without money ', () => {
         checkErrMsg(data, 400, 'Bad Request.');
     });
 
-    it('(-) Without money card_rub + valid wallet ', async () => {
+    it('C19279 (-) Without money card_rub + valid wallet ', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
