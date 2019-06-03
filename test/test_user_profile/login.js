@@ -23,7 +23,7 @@ describe('Login', () => {
             login: default_user,
             password: default_password
         });
-        console.log(data);
+        // console.log(data);
         checkSuccessMsg(data);
     });
 
@@ -33,7 +33,7 @@ describe('Login', () => {
             login: default_phone,
             password: default_password
         });
-        console.log(data);
+        // console.log(data);
         checkSuccessMsg(data);
     });
 
@@ -43,7 +43,7 @@ describe('Login', () => {
             login: 'nonexistent_user@yep.fail',
             password: default_password
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
     });
 
@@ -53,7 +53,7 @@ describe('Login', () => {
             login: default_user,
             password: default_password + 'x'
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
     });
 
@@ -63,7 +63,7 @@ describe('Login', () => {
             login: '',
             password: default_password
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Bad request, login is invalid');
     });
 
@@ -73,7 +73,7 @@ describe('Login', () => {
             login: default_user,
             password: ''
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Bad request, password is invalid');
     });
 
@@ -82,7 +82,7 @@ describe('Login', () => {
             login: randomStr(17),
             password: ''
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Bad request, password is invalid');
     });
 
@@ -91,7 +91,7 @@ describe('Login', () => {
             login: default_user,
             password: randomStr(19)
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
     });
 });

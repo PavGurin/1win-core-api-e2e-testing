@@ -32,8 +32,8 @@ describe('Profile update', () => {
         const userId = data.user_id;
         const password = data.password;
 
-        console.log('Before update: \nUserId = ' + data.user_id + ', eMail = ' + data.email +
-            ', phone = ' + data.phone);
+        // console.log('Before update: \nUserId = ' + data.user_id + ', eMail = ' + data.email +
+        //     ', phone = ' + data.phone);
 
         const {data: {updatedUser}} = await socket.send('USER:profile-update',
             {
@@ -48,8 +48,8 @@ describe('Profile update', () => {
                 repeat_password: '123456',
                 birthday: birthday
             });
-        console.log('After update: \nUserId = ' + updatedUser.id + ', eMail = ' + updatedUser.email +
-            ', phone = ' + updatedUser.phone);
+        // console.log('After update: \nUserId = ' + updatedUser.id + ', eMail = ' + updatedUser.email +
+        //     ', phone = ' + updatedUser.phone);
 
         expect(data.id).equal(updatedUser.id);
         expect(updatedUser.name).to.have.lengthOf(6).and.not.equal(data.name);

@@ -47,7 +47,7 @@ describe('Register -Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -65,7 +65,7 @@ describe('Register -Usual schema', () => {
             repeat_password: default_password,
             visit_domain: visit_domain
         });
-        console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -83,7 +83,7 @@ describe('Register -Usual schema', () => {
             repeat_password: default_password,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -97,7 +97,7 @@ describe('Register -Usual schema', () => {
             password: default_password,
             repeat_password: default_password
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Visit domain is required if partner key does not specified');
     });
 
@@ -116,7 +116,7 @@ describe('Register -Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
     });
 
@@ -135,7 +135,7 @@ describe('Register -Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
     });
 
@@ -153,7 +153,7 @@ describe('Register -Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
     });
 
@@ -171,7 +171,7 @@ describe('Register -Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
     });
 
@@ -189,7 +189,7 @@ describe('Register -Usual schema', () => {
             repeat_password: testStr + '1',
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Password confirmation not matches to password');
     });
 
@@ -207,7 +207,7 @@ describe('Register -Usual schema', () => {
             repeat_password: testStr,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
     });
 
@@ -225,7 +225,7 @@ describe('Register -Usual schema', () => {
             repeat_password: testStr,
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
     });
 });

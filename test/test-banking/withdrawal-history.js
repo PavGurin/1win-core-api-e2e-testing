@@ -1,0 +1,24 @@
+import {expect} from 'chai';
+import {userList} from '../../src/userList';
+
+//returns withdrawals sorted by time
+describe('Withdrawal history', () => {
+
+    it('(+) without withdrawal', async () => {
+        await userList.login_without_money();
+        const {data} = await socket.send('BANKING:withdrawal-history');
+        // console.log(data);
+        expect(data.length).equal(0);
+    });
+
+    it('(+) with withdrawal', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:withdrawal-history');
+        // console.log(data);
+        expect(data["0"].id).equal(163);
+        expect(data["0"].time).equal(1559039814000);
+        expect(data["0"].payment_system).equal('money-transfer');
+        expect(data["0"].amount).equal(100);
+        expect(data["0"].status).equal(1);
+    });
+});

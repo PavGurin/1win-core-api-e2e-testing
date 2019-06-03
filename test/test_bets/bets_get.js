@@ -36,8 +36,5 @@ describe('Bets get', () => {
         );
         console.log(data);
         expect(data.selectionList["0"].bet_id).equal(23);
-
     });
-
-
 });

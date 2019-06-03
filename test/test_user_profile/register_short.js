@@ -30,7 +30,7 @@ describe('Register - Short schema', () => {
             visit_domain: 'someDomain',
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkRegInfo(data);
     });
 
@@ -39,7 +39,7 @@ describe('Register - Short schema', () => {
         const {data} = await defaultRequest({
             visit_domain: 'someDomain'
         });
-        console.log(data);
+        // console.log(data);
         checkRegInfo(data);
     });
 
@@ -48,7 +48,7 @@ describe('Register - Short schema', () => {
         const {data} = await defaultRequest({
             partner_key: promo_code
         });
-        console.log(data);
+        // console.log(data);
         checkRegInfo(data);
         expect(data.partner_key)
             .to.equal(promo_code);
@@ -57,7 +57,7 @@ describe('Register - Short schema', () => {
     it('C19304 (-) w/o visit_domain w/o partner_key', async () => {
         // request without mandatory params
         const {data} = await defaultRequest();
-        console.log(data);
+        // console.log(data);
         expect(data.status)
             .to.equal(400);
     });

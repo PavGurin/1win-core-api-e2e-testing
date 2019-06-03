@@ -2,11 +2,16 @@ export const userList = {
 
     //Prodlike
     async login_without_money() {
-        await socket.send('USER:auth-login', {login: '123123@mailinator.com', password: '123123'});
+        await socket.send('USER:auth-login', {
+            login: '123123@mailinator.com',
+            password: '123123'
+        });
     },
 
     async login_with_RUB() {
-        await socket.send('USER:auth-login', {login: 'test_withdrawal@mailinator.com', password: '123123'});
+        await socket.send('USER:auth-login', {
+            login: 'test_withdrawal@mailinator.com',
+            password: '123123'});
     },
     async login_with_RUB_USD() {
         //Должен быть баланс в валюте отличной от рублей
@@ -25,8 +30,7 @@ export const userList = {
     async login_partial_block() {
         //У пользователя стоит частичный блок
         await socket.send('USER:auth-login', {login: 'partial_block_user@mailinator.com', password: '123123'});
-    },
-
+    }
 
     //Prod
 };
