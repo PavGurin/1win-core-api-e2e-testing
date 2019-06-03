@@ -9,7 +9,7 @@ describe('Create deposite', () => {
         expect(data.message).equal(expMessage);
     }
 
-    it.skip('RUB - paymentType = card_rub and wallet = empty', async () => {
+    it.skip('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -22,7 +22,7 @@ describe('Create deposite', () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it.skip('RUB - paymentType = tele2_rub and wallet != null', async () => {
+    it.skip('C19382 RUB - paymentType = tele2_rub and wallet != null', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -35,7 +35,7 @@ describe('Create deposite', () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it('RUB - paymentType = tele2_rub and wallet = null', async () => {
+    it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -49,7 +49,7 @@ describe('Create deposite', () => {
         expect(data).to.deep.include({message: 'Неверный формат кошелька'});
     });
 
-    it.skip('USD - paymentType = card_rub and wallet = null', async () => {
+    it.skip('C19385 USD - paymentType = card_rub and wallet = null', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -62,7 +62,7 @@ describe('Create deposite', () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it.skip('Must not pass', async () => {
+    it.skip('C19386 Must not pass', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
@@ -74,7 +74,7 @@ describe('Create deposite', () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it.skip('(-) RUB - paymentType = card_rub and amount = null', async () => {
+    it.skip('C19387 (-) RUB - paymentType = card_rub and amount = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -87,7 +87,7 @@ describe('Create deposite', () => {
         checkErrorMsg(data, 'Bad request, amount is required, no default value provided');
     });
 
-    it('(-) RUB - paymentType = card_rub and wallet = null', async () => {
+    it('C19388 (-) RUB - paymentType = card_rub and wallet = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -101,11 +101,11 @@ describe('Create deposite', () => {
         expect(data.message).equal('Неверная сумма');
     });
 
-    it('(-) RUB - paymentType = card_rub and wallet = null', async () => {
+    it('C19389 (-) RUB - paymentType = card_rub and wallet = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
-            amount: '1',
+            amount: '0',
             wallet: null,
             paymentType: 'card_rub',
             currency: 'RUB'
@@ -115,7 +115,7 @@ describe('Create deposite', () => {
         expect(data.message).equal('Неверная сумма');
     });
 
-    it.skip('(-) RUB - paymentType = card_rub and currency = null', async () => {
+    it.skip('C19390 (-) RUB - paymentType = card_rub and currency = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -128,7 +128,7 @@ describe('Create deposite', () => {
         expect(data.status).equal(200);
     });
 
-    it.skip('(-) RUB - paymentType = card_rub and wallet != null', async () => {
+    it.skip('C19391 (-) RUB - paymentType = card_rub and wallet != null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
