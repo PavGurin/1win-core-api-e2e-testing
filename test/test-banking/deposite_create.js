@@ -18,7 +18,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).to.equal(undefined);
     });
 
@@ -31,7 +31,7 @@ describe('Create deposite', () => {
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).to.equal(undefined);
     });
 
@@ -44,7 +44,7 @@ describe('Create deposite', () => {
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data).to.deep.include({status: 400});
         expect(data).to.deep.include({message: 'Неверный формат кошелька'});
     });
@@ -58,7 +58,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).to.equal(undefined);
     });
 
@@ -70,7 +70,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).to.equal(undefined);
     });
 
@@ -83,7 +83,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Bad request, amount is required, no default value provided');
     });
 
@@ -96,7 +96,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(400);
         expect(data.message).equal('Неверная сумма');
     });
@@ -110,7 +110,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(400);
         expect(data.message).equal('Неверная сумма');
     });
@@ -124,7 +124,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub'
             //currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -137,7 +137,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub'
             //currency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(200);
     });
 });

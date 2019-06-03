@@ -11,7 +11,7 @@ describe('Transfer', () => {
                 currency: 'RUB'
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(403);
         expect(data.message).equal('Недостаточно средств');
     });
@@ -36,7 +36,7 @@ describe('Transfer', () => {
                 currency: 'USD'
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(403);
         expect(data.message).equal('Недостаточно средств');
     });
@@ -49,7 +49,7 @@ describe('Transfer', () => {
                 currency: 'RUB'
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(403);
         expect(data.message).equal('Недостаточно средств');
     });
@@ -62,7 +62,7 @@ describe('Transfer', () => {
                 currency: 'RUB'
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -74,7 +74,7 @@ describe('Transfer', () => {
                 currency: 'USD'
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -86,7 +86,7 @@ describe('Transfer', () => {
                 currency: 'USD'
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -97,7 +97,7 @@ describe('Transfer', () => {
                 amount: 2
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -108,7 +108,7 @@ describe('Transfer', () => {
                 amount: 1999
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 });

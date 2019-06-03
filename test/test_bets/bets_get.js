@@ -10,7 +10,7 @@ describe('Bets get', () => {
                 language: null
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(404);
         expect(data.message).equal('Ставка не найдена');
     });
@@ -22,7 +22,7 @@ describe('Bets get', () => {
                 language: null
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(404);
         expect(data.message).equal('Ставка не найдена');
     });
@@ -34,7 +34,7 @@ describe('Bets get', () => {
                 language: null
             }
         );
-        console.log(data);
+        // console.log(data);
         expect(data.selectionList["0"].bet_id).equal(23);
     });
 });

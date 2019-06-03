@@ -9,7 +9,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -19,7 +19,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -30,7 +30,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -41,7 +41,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -52,7 +52,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -63,7 +63,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -74,7 +74,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -85,7 +85,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data).to.deep.include({status: 403});
         expect(data).to.deep.include({message: 'Недостаточно средств'});
     });
@@ -97,7 +97,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -108,7 +108,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -119,7 +119,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 
@@ -130,7 +130,7 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.message).equal(undefined);
     });
 });
