@@ -3,7 +3,7 @@ import {userList} from '../../src/userList';
 
 describe('Bets get', () => {
 
-    it('(-) without bets', async () => {
+    it('(-) user without bet history', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BETS:bets-get', {
                 id: 23,
@@ -50,9 +50,11 @@ describe('Bets get', () => {
     });
 
     it('(+) get ordinary bet by id', async () => {
+        const test_bet_id = 23;
+
         await userList.login_with_RUB();
         const {data} = await socket.send('BETS:bets-get', {
-                id: 23,
+                id: test_bet_id,
                 language: null
             }
         );
@@ -60,26 +62,29 @@ describe('Bets get', () => {
         expect(data.id_user).equal(205);
         expect(data.betType).equal('ordinary');
         expect(data.currency).equal('RUB');
-        expect(data.id).equal(23);
-        expect(data.selectionList['0'].bet_id).equal(23);
-
+        expect(data.id).equal(test_bet_id);
+        expect(data.selectionList['0'].bet_id).equal(test_bet_id);
     });
 
     it('(+) get express bet by id', async () => {
+        const test_bet_id = 26;
+
         await userList.login_with_RUB();
         const {data} = await socket.send('BETS:bets-get', {
-                id: 26,
+                id: test_bet_id,
                 language: null
             }
         );
-        // console.log(data);
+        console.log(data);
         expect(data.id_user).equal(205);
         expect(data.betType).equal('express');
         expect(data.currency).equal('RUB');
-        expect(data.id).equal(26);
+        // проверяет 'id' ставки
+        expect(data.id).equal(test_bet_id);
         expect(data.selectionList.length).equal(2);
+        // проверяет 'bet_id' каждой ставки экспресса (должно совпадать
         for (let i = 0; i < data.selectionList.length; i++) {
-            expect(data.selectionList[i].bet_id).equal(26);
+            expect(data.selectionList[i].bet_id).equal(test_bet_id);
         }
     });
 });
