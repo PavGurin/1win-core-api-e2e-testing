@@ -112,7 +112,7 @@ describe('Create deposite', () => {
         });
         // console.log(data);
         expect(data.status).equal(400);
-        expect(data.message).equal('Неверная сумма');
+        expect(data.message).equal('Bad request, amount is invalid');
     });
 
     it.skip('C19390 (-) RUB - paymentType = card_rub and currency = null', async () => {

@@ -109,6 +109,6 @@ describe('Transfer', () => {
             }
         );
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.message).equal("Недостаточно средств");
     });
 });
