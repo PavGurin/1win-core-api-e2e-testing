@@ -1,29 +1,31 @@
 import {expect} from 'chai';
 import {randomStr} from '../../src/randomizer';
 import {checkErrorMsg} from '../../src/responseChecker';
+import {userList} from '../../src/userList';
 
 describe('Login', () => {
 
     const default_user = 'fcrxntest@xyz.com';
-    const default_phone = '+79213320385';
+    const default_phone = '9213320385';
     const default_password = '123456';
     const default_id = 1490253;
 
     function checkSuccessMsg(data) {
         expect(data.email).equal(default_user);
-        expect(data.phone).equal(default_phone);
+        expect(data.phone).contains(default_phone);
         expect(data.id).equal(default_id);
         expect(data.user_id).equal(default_id);
     }
 
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
+        const data = userList.login_with_RUB("dev");
 
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password
-        });
-        // console.log(data);
+        // const {data} = await socket.send('USER:auth-login', {
+        //     login: default_user,
+        //     password: default_password
+        // });
+        console.log(data);
         checkSuccessMsg(data);
     });
 

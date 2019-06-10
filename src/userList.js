@@ -9,18 +9,24 @@ export const userList = {
     },
 
     // id_user = 205
-    async login_with_RUB() {
-        await socket.send('USER:auth-login', {
-            login: 'test_withdrawal@mailinator.com',
-            password: '123123'
-        });
-    },
+    async login_with_RUB(dev_or_master) {
+        switch (dev_or_master) {
+            case 'dev': {
+                await socket.send('USER:auth-login', {
+                    login: 'test_withdrawal@mailinator.com',
+                    password: '123123'
+                });
 
-    async login_prod_bet_history() {
-        await socket.send('USER:auth-login', {
-            login: 'lina.solodova@gmail.com',
-            password: 'm26qi6'
-        });
+            }
+                break;
+
+            case 'master': {
+                await socket.send('USER:auth-login', {
+                    login: 'lina.solodova@gmail.com',
+                    password: 'm26qi6'
+                });
+            }
+        }
     },
 
     async login_with_RUB_USD() {
