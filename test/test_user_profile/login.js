@@ -19,17 +19,17 @@ describe('Login', () => {
 
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
-        const data = await userList.login_without_money();
-        // console.log(data);
-        expect(data.status).equal(200);
-        checkSuccessMsg(data.data);
+        const response = await userList.login_without_money();
+        console.log(response);
+        expect(response.status).equal(200);
+        checkSuccessMsg(response.data);
     });
 
     it('C19294 (+) login by phone', async () => {
-        const data = await userList.login_by_phone();
-        // console.log(data);
-        expect(data.status).equal(200);
-        checkSuccessMsg(data.data);
+        const response = await userList.login_by_phone();
+        console.log(response);
+        expect(response.status).equal(200);
+        checkSuccessMsg(response.data);
     });
 
     it('C19295 (-) nonexistent user', async () => {
