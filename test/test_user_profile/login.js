@@ -5,10 +5,10 @@ import {userList} from '../../src/userList';
 
 describe('Login', () => {
 
-    const default_user = 'fcrxntest@xyz.com';
-    const default_phone = '9213320385';
-    const default_password = '123456';
-    const default_id = 1490253;
+    const default_user = '123123@mailinator.com';
+    const default_phone = '+79511511515';
+    const default_password = '123123';
+    const default_id = 1322492;
 
     function checkSuccessMsg(data) {
         expect(data.email).equal(default_user);
@@ -19,24 +19,17 @@ describe('Login', () => {
 
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
-        const data = userList.login_with_RUB("dev");
-
-        // const {data} = await socket.send('USER:auth-login', {
-        //     login: default_user,
-        //     password: default_password
-        // });
-        console.log(data);
-        checkSuccessMsg(data);
+        const data = await userList.login_without_money();
+        // console.log(data);
+        expect(data.status).equal(200);
+        checkSuccessMsg(data.data);
     });
 
     it('C19294 (+) login by phone', async () => {
-
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_phone,
-            password: default_password
-        });
+        const data = await userList.login_by_phone();
         // console.log(data);
-        checkSuccessMsg(data);
+        expect(data.status).equal(200);
+        checkSuccessMsg(data.data);
     });
 
     it('C19295 (-) nonexistent user', async () => {
