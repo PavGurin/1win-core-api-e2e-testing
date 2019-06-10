@@ -6,7 +6,7 @@ import {userList} from '../../src/userList';
 describe('Login', () => {
 
     const default_user = '123123@mailinator.com';
-    const default_phone = '+79511511515';
+    const default_phone = '+79995654567';
     const default_password = '123123';
     const default_id = 1322492;
 
@@ -20,8 +20,8 @@ describe('Login', () => {
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
         const {data} = await socket.send('USER:auth-login', {
-            login: '123123@mailinator.com',
-            password: '123123',
+            login: default_user,
+            password: default_password,
             tg_hash: randomStr(5)
         });
         // const data = await userList.login_without_money();
@@ -31,8 +31,8 @@ describe('Login', () => {
 
     it('C19294 (+) login by phone', async () => {
         const {data} = await socket.send('USER:auth-login', {
-            login: '+79511511515',
-            password: '123123',
+            login: default_phone,
+            password: default_password,
             tg_hash: randomStr(5)
         });
         console.log(data);
