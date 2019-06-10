@@ -5,9 +5,9 @@ import {checkErrorMsg} from '../../src/responseChecker';
 describe('Login', () => {
 
     const default_user = 'fcrxntest@xyz.com';
-    const default_phone = '9213320385';
+    const default_phone = '+79213320385';
     const default_password = '123456';
-    const default_id = 290;
+    const default_id = 1490253;
 
     function checkSuccessMsg(data) {
         expect(data.email).equal(default_user);

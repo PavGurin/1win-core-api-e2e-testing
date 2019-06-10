@@ -16,6 +16,13 @@ export const userList = {
         });
     },
 
+    async login_prod_bet_history() {
+        await socket.send('USER:auth-login', {
+            login: 'lina.solodova@gmail.com',
+            password: 'm26qi6'
+        });
+    },
+
     async login_with_RUB_USD() {
         //Должен быть баланс в валюте отличной от рублей
         await socket.send('USER:auth-login', {

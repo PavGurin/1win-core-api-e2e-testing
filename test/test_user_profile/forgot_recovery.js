@@ -26,7 +26,7 @@ describe('Auth recovery forgot', () => {
         );
         // console.log(data);
         expect(data).to.be.an('object');
-        expect(data.userId).equal(810);
+        expect(data.userId).equal(default_id);
         expect(data.email).satisfies(email => email.startsWith(testingEmail.substr(0, 2)))
                           .and.satisfies(email => email.endsWith(testingEmail.substr(15)));
     });

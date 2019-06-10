@@ -20,7 +20,7 @@ describe('Bets history', () => {
         expect(data.betsMap).to.be.empty;
     });
 
-    it('(+) muser w/o bet history default filter', async () => {
+    it('(-) no order value', async () => {
 
         await userList.login_without_money();
         const {data} = await socket.send('BETS:bets-history', {
@@ -83,11 +83,71 @@ describe('Bets history', () => {
         expect(data.betsMap).to.be.empty;
     });
 
+    it('(+) user w/o bet history, bet type \'ordinary\'', async () => {
+
+        await userList.login_without_money();
+        const {data} = await socket.send('BETS:bets-history', {
+            language: null,
+            limit: [0, 20],
+            order: ['id', 'ASC'],
+            where: {
+                betType: ['ordinary']
+            }
+        });
+        // console.log(data);
+        expect(data.totalCount).equal(0);
+        expect(data.betsMap).to.be.empty;
+    });
+
+    // it('(+) user with bet history, bet type \'ordinary\'', async () => {
+    //
+    //     await userList.login_with_RUB();
+    //     const {data:{betsMap}} = await socket.send('BETS:bets-history', {
+    //         language: null,
+    //         limit: [0, 20],
+    //         order: ['id', 'ASC'],
+    //         where: {
+    //             betType: ['ordinary']
+    //         }
+    //     });
+    //
+    //     console.log(betsMap);
+    //     expect(Object.entries(betsMap).length).equal(10);
+    //     // expect(Object.values(betsMap).every((
+    //     //     // {id_user}) => id_user === 205)).equal(true);
+    //     //     {betType}) => betType === 'ordinary')).equal(true);
+    //     // expect(Object.values(betsMap).every((
+    //     //     {id_user}) => id_user === 205)).equal(true);
+    // });
+
+    // PROD version
+    it('(+) user with bet history, bet type \'ordinary\'', async () => {
+
+        await userList.login_prod_bet_history();
+        const {data: {betsMap}} = await socket.send('BETS:bets-history', {
+            language: null,
+            limit: [0, 15],
+            order: ['id', 'ASC'],
+            where: {
+                betType: ['ordinary']
+            }
+        });
+
+        console.log(betsMap);
+        expect(Object.entries(betsMap).length).equal(15);
+        expect(Object.values(betsMap).every(({betType}) => betType === 'ordinary')).equal(true);
+        // expect(Object.values(betsMap).every((
+        //     // {id_user}) => id_user === 205)).equal(true);
+        //     {betType}) => betType === 'ordinary')).equal(true);
+        // expect(Object.values(betsMap).every((
+        //     {id_user}) => id_user === 205)).equal(true);
+    });
+
     /** Bets statuses:
      status 0 - opened, 1 - lost, 2 - returned, 3 - won
      **/
 
-    // TODO service should be fixed to run ALL filters
+    // TODO 'service' should be fixed to run ALL filters
     it.skip('(+) all filters with all available values', async () => {
 
         await userList.login_with_RUB();
@@ -108,12 +168,31 @@ describe('Bets history', () => {
 
     // TODO поменять в тестовой БД статус некоторых ставок вместо '0' чтобы проверить фильтр по статусу
     // check that amount of all statuses bets > one status bets amount
+    // it('(+) only \'lost\' bets status (status = 1)', async () => {
+    //
+    //     await userList.login_prod_bet_history();
+    //     const {data: {betsMap}} = await socket.send('BETS:bets-history', {
+    //         language: null,
+    //         limit: [0, 20],
+    //         order: ['id', 'DESC'],
+    //
+    //         where: {
+    //             status: [1],
+    //             // service: ['live', 'prematch'],
+    //             betType: ['ordinary', 'express']
+    //         }
+    //     });
+    //     console.log(betsMap);
+    //     expect(Object.entries(betsMap).length).equal(1);
+    //     expect(betsMap['23'].status).equal(1);
+    // });
+
     it('(+) only \'lost\' bets status (status = 1)', async () => {
 
-        await userList.login_with_RUB();
+        await userList.login_prod_bet_history();
         const {data: {betsMap}} = await socket.send('BETS:bets-history', {
             language: null,
-            limit: [0, 20],
+            limit: [0, 15],
             order: ['id', 'DESC'],
 
             where: {
@@ -123,16 +202,36 @@ describe('Bets history', () => {
             }
         });
         // console.log(betsMap);
-        expect(Object.entries(betsMap).length).equal(1);
-        expect(betsMap['23'].status).equal(1);
+        expect(Object.entries(betsMap).length).equal(15);
+        expect(Object.values(betsMap).every(({status}) => status === 1)).equal(true);
     });
+
+    // it('(+) only \'returned\' bets status (status = 2)', async () => {
+    //
+    //     await userList.login_with_RUB();
+    //     const {data: {betsMap}} = await socket.send('BETS:bets-history', {
+    //         language: null,
+    //         limit: [0, 20],
+    //         order: ['id', 'DESC'],
+    //
+    //         where: {
+    //             status: [2],
+    //             // service: ['live', 'prematch'],
+    //             betType: ['ordinary', 'express']
+    //         }
+    //     });
+    //     // console.log(data);
+    //     expect(Object.entries(betsMap).length).equal(2);
+    //     expect(Object.values(betsMap).every(({status}) => status === 2)).equal(true);
+    // });
+
 
     it('(+) only \'returned\' bets status (status = 2)', async () => {
 
-        await userList.login_with_RUB();
-        const {data} = await socket.send('BETS:bets-history', {
+        await userList.login_prod_bet_history();
+        const {data: {betsMap}} = await socket.send('BETS:bets-history', {
             language: null,
-            limit: [0, 20],
+            limit: [0, 15],
             order: ['id', 'DESC'],
 
             where: {
@@ -141,17 +240,36 @@ describe('Bets history', () => {
                 betType: ['ordinary', 'express']
             }
         });
-        // console.log(data);
-        expect(Object.entries(betsMap).length).equal(1);
-        expect(betsMap['23'].status).equal(1);
+        console.log(betsMap);
+        expect(Object.entries(betsMap).length).equal(15);
+        expect(Object.values(betsMap).every(({status}) => status === 2)).equal(true);
     });
+
+    // it('(+) only \'won\' bets status (status = 3)', async () => {
+    //
+    //     await userList.login_with_RUB();
+    //     const {data: {betsMap}} = await socket.send('BETS:bets-history', {
+    //         language: null,
+    //         limit: [0, 20],
+    //         order: ['id', 'DESC'],
+    //
+    //         where: {
+    //             status: [3],
+    //             // service: ['live', 'prematch'],
+    //             betType: ['ordinary', 'express']
+    //         }
+    //     });
+    //     // console.log(data);
+    //     expect(Object.entries(betsMap).length).equal(3);
+    //     expect(Object.values(betsMap).every(({status}) => status === 3)).equal(true);
+    // });
 
     it('(+) only \'won\' bets status (status = 3)', async () => {
 
-        await userList.login_with_RUB();
+        await userList.login_prod_bet_history();
         const {data: {betsMap}} = await socket.send('BETS:bets-history', {
             language: null,
-            limit: [0, 20],
+            limit: [0, 15],
             order: ['id', 'DESC'],
 
             where: {
@@ -160,9 +278,9 @@ describe('Bets history', () => {
                 betType: ['ordinary', 'express']
             }
         });
-        // console.log(data);
-        expect(Object.entries(betsMap).length).equal(3);
-        expect(Object.values(betsMap).every(({status}) => status === 3)).equal();
+        // console.log(betsMap);
+        expect(Object.entries(betsMap).length).equal(15);
+        expect(Object.values(betsMap).every(({status}) => status === 3)).equal(true);
     });
 
     // TODO wait for limit assignment

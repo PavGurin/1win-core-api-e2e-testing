@@ -38,7 +38,6 @@ describe('Register -Usual schema', () => {
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
-            isShort: false,
             name: testStr,
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
