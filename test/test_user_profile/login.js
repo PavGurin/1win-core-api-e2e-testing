@@ -36,7 +36,8 @@ describe('Login', () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: 'nonexistent_user@yep.fail',
-            password: default_password
+            password: default_password,
+            tg_hash: randomStr(5)
         });
         // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
@@ -46,7 +47,8 @@ describe('Login', () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
-            password: default_password + 'x'
+            password: default_password + 'x',
+            tg_hash: randomStr(5)
         });
         // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
@@ -56,7 +58,8 @@ describe('Login', () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: '',
-            password: default_password
+            password: default_password,
+            tg_hash: randomStr(5)
         });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, login is invalid');
@@ -66,7 +69,8 @@ describe('Login', () => {
 
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
-            password: ''
+            password: '',
+            tg_hash: randomStr(5)
         });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, password is invalid');
@@ -75,7 +79,8 @@ describe('Login', () => {
     it('C19299 (-) long login (17 symbols)', async () => {
         const {data} = await socket.send('USER:auth-login', {
             login: randomStr(17),
-            password: ''
+            password: '',
+            tg_hash: randomStr(5)
         });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, password is invalid');
@@ -84,9 +89,49 @@ describe('Login', () => {
     it('C19300 (-) long password (19 symbols)', async () => {
         const {data} = await socket.send('USER:auth-login', {
             login: default_user,
-            password: randomStr(19)
+            password: randomStr(19),
+            tg_hash: randomStr(5)
         });
         // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
+    });
+
+    it('C19926 (+) short tg_hash (4 symbols)', async () => {
+        const {data} = await socket.send('USER:auth-login', {
+            login: default_user,
+            password: default_password,
+            tg_hash: randomStr(4)
+        });
+        // console.log(data);
+        checkSuccessMsg(data);
+    });
+
+    it('C19927 (+) long tg_hash (6 symbols)', async () => {
+        const {data} = await socket.send('USER:auth-login', {
+            login: default_user,
+            password: default_password,
+            tg_hash: randomStr(6)
+        });
+        // console.log(data);
+        checkSuccessMsg(data);
+    });
+
+    it('C19928 (+) empty tg_hash', async () => {
+        const {data} = await socket.send('USER:auth-login', {
+            login: default_user,
+            password: default_password,
+            tg_hash: null
+        });
+        // console.log(data);
+        checkSuccessMsg(data);
+    });
+
+    it('C19929 (+) w/o tg_hash', async () => {
+        const {data} = await socket.send('USER:auth-login', {
+            login: default_user,
+            password: default_password
+        });
+        // console.log(data);
+        checkSuccessMsg(data);
     });
 });
