@@ -1,5 +1,5 @@
 {
-    "reporterEnabled": "spec, mocha-junit-reporter",
+    "reporterEnabled": "spec, mocha-junit-reporter, src/reporters/testrail.js",
     "mochaJunitReporterReporterOptions": {
         "mochaFile": "artifacts/test-output.xml"
     }
