@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe.skip('Balance get', () => {
+describe('Balance get', () => {
 
     it('C19353 (+) Without money', async () => {
         await userList.login_without_money();

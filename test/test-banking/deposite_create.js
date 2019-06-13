@@ -1,7 +1,6 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-//TODO after fix change all skip tests to real check
 describe('Create deposite', () => {
 
     function checkErrorMsg(data, expMessage) {
@@ -9,7 +8,7 @@ describe('Create deposite', () => {
         expect(data.message).equal(expMessage);
     }
 
-    it.skip('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
+    it('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -19,10 +18,10 @@ describe('Create deposite', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).to.equal(undefined);
+        expect(data.currency).to.equal('RUB');
     });
 
-    it.skip('C19382 RUB - paymentType = tele2_rub and wallet != null', async () => {
+    it('C19382 RUB - paymentType = tele2_rub and wallet != null', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -32,7 +31,7 @@ describe('Create deposite', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).to.equal(undefined);
+        expect(data.currency).to.equal('RUB');
     });
 
     it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
@@ -59,7 +58,7 @@ describe('Create deposite', () => {
             currency: 'USD'
         });
         // console.log(data);
-        expect(data.message).to.equal(undefined);
+        expect(data.currency).to.equal('USD');
     });
 
     it.skip('C19386 Must not pass', async () => {
@@ -74,7 +73,7 @@ describe('Create deposite', () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it.skip('C19387 (-) RUB - paymentType = card_rub and amount = null', async () => {
+    it('C19387 (-) RUB - paymentType = card_rub and amount = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -115,7 +114,7 @@ describe('Create deposite', () => {
         expect(data.message).equal('Bad request, amount is invalid');
     });
 
-    it.skip('C19390 (-) RUB - paymentType = card_rub and currency = null', async () => {
+    it('C19390 (-) RUB - paymentType = card_rub and currency = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -125,10 +124,10 @@ describe('Create deposite', () => {
             //currency: 'RUB'
         });
         // console.log(data);
-        expect(data.status).equal(200);
+        expect(data.currency).to.equal('RUB');
     });
 
-    it.skip('C19391 (-) RUB - paymentType = card_rub and wallet != null', async () => {
+    it('C19391 (-) RUB - paymentType = card_rub and wallet != null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -137,7 +136,6 @@ describe('Create deposite', () => {
             paymentType: 'card_rub'
             //currency: 'RUB'
         });
-        // console.log(data);
-        expect(data.status).equal(200);
+        expect(data.currency).to.equal('RUB');
     });
 });
