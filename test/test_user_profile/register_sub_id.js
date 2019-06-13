@@ -32,7 +32,7 @@ describe('Register with sub id parameter', () => {
     const default_password = '123456';
 
     // (+) for positive tests (-) for negative tests
-    it('(+) Sub id 1', async () => {
+    it('C20067 (+) Sub id 1', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -47,11 +47,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) Sub id 2', async () => {
+    it('C20068 (+) Sub id 2', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -66,11 +66,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) Sub id 3', async () => {
+    it('C20069 (+) Sub id 3', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -85,11 +85,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) Sub id 4', async () => {
+    it('C20070 (+) Sub id 4', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -104,11 +104,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) Sub id 5', async () => {
+    it('C20071 (+) Sub id 5', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -123,11 +123,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) All sub ids (from 1 to 5)', async () => {
+    it('C20072 (+) All sub ids (from 1 to 5)', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -142,11 +142,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) Sub ids (1-3-5)', async () => {
+    it('C20073 (+) Sub ids (1-3-5)', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -161,11 +161,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(+) Sub id with legal symbols', async () => {
+    it('C20074 (+) Sub id with legal symbols', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -180,11 +180,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(-) Sub id with rus language', async () => {
+    it('C20075 (-) Sub id with rus language', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -199,11 +199,11 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(-) Sub id with illegal symbols', async () => {
+    it('C20076 (-) Sub id with illegal symbols', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -218,12 +218,12 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
     // shouldn't be saved
-    it('(-) Sub id with legal and illegal symbols', async () => {
+    it('C20484 (-) Sub id with legal and illegal symbols', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -238,12 +238,12 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
     // sub1 should be saved, sub2 and sub3 shouldn't
-    it('(+) Legal sub1 + illegal sub2 + mixed sub3', async () => {
+    it('C20485 (+) Legal sub1 + illegal sub2 + mixed sub3', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
@@ -258,18 +258,19 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('(?) Sub with 10 length', async () => {
+    // TODO add check that test DB saves 128 symbols
+    it('C20486 (+) Sub with 500+ length', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
             name: testStr,
-            sub_ids: 'sub1=1234567890',
+            sub_ids: 'sub1=' + randomStr(505),
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
             password: default_password,
@@ -277,7 +278,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        //console.log(data);
+        // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 });
