@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe('Convert', () => {
+describe.skip('Convert', () => {
 
     it('C19340 Create before login', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
