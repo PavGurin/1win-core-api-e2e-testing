@@ -109,7 +109,7 @@ describe('Login', () => {
             password: default_password,
             tg_hash: randomStr(4)
         });
-        // console.log(data);
+        console.log(data);
         checkSuccessMsg(data);
     });
 
