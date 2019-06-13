@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import {randomNum, randomStr} from '../../src/randomizer';
-import {checkErrorMsg} from '../../src/responseChecker';
 
-describe('Register -Usual schema', () => {
+// TODO для проверки работы тестов нужно добавить проверку api партнерки и сверять изменение данных
+describe('Register with sub id parameter', () => {
 
     const defaultRequest = (params) => socket.send('USER:auth-register',
         {
@@ -32,13 +32,14 @@ describe('Register -Usual schema', () => {
     const default_password = '123456';
 
     // (+) for positive tests (-) for negative tests
-    it('C19305 (+) + visit_domain + partner_key', async () => {
+    it('(+) Sub id 1', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
             name: testStr,
+            sub_ids: 'sub1=sub_1',
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
             password: default_password,
@@ -46,185 +47,237 @@ describe('Register -Usual schema', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        // console.log(data);
+        console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('C19306 (+) + visit_domain - partner_key', async () => {
+    it('(+) Sub id 2', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
-            isShort: false,
             name: testStr,
+            sub_ids: 'sub2=sub_2',
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
             password: default_password,
             repeat_password: default_password,
-            visit_domain: visit_domain
+            visit_domain: visit_domain,
+            partner_key: partner_key
         });
-        // console.log(data);
+        console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('C19307 (+) - visit_domain + partner_key', async () => {
+    it('(+) Sub id 3', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
-            isShort: false,
             name: testStr,
+            sub_ids: 'sub3=sub_3',
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
             password: default_password,
             repeat_password: default_password,
+            visit_domain: visit_domain,
             partner_key: partner_key
         });
-        // console.log(data);
+        console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
-    it('C19308 (-) - visit_domain - partner_key', async () => {
-
-        const {data} = await defaultRequest({
-            isShort: false,
-            name: randomStr(),
-            email: randomStr() + 'test@xyz.com',
-            phone: '921' + randomNum,
-            password: default_password,
-            repeat_password: default_password
-        });
-        // console.log(data);
-        checkErrorMsg(data, 'Visit domain is required if partner key does not specified');
-    });
-
-    it('C19309 (-) short name', async () => {
-
-        const testStr = randomStr(2);
-        const testNum = randomNum();
-
-        const {data} = await defaultRequest({
-            isShort: false,
-            name: testStr,
-            email: testStr + '_test@xyz.com',
-            phone: '921' + testNum,
-            password: default_password,
-            repeat_password: default_password,
-            visit_domain: visit_domain,
-            partner_key: partner_key
-        });
-        // console.log(data);
-        checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
-    });
-
-    it('C19310 (-) long name', async () => {
-
-        const testStr = randomStr(17);
-        const testNum = randomNum();
-
-        const {data} = await defaultRequest({
-            isShort: false,
-            name: testStr,
-            email: testStr + '_test@xyz.com',
-            phone: '921' + testNum,
-            password: default_password,
-            repeat_password: default_password,
-            visit_domain: visit_domain,
-            partner_key: partner_key
-        });
-        // console.log(data);
-        checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
-    });
-
-    it('C19311 (-) short phone number', async () => {
-
-        const testStr = randomStr();
-
-        const {data} = await defaultRequest({
-            isShort: false,
-            name: testStr,
-            email: testStr + '_test@xyz.com',
-            phone: randomStr(4),
-            password: default_password,
-            repeat_password: default_password,
-            visit_domain: visit_domain,
-            partner_key: partner_key
-        });
-        // console.log(data);
-        checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
-    });
-
-    it('C19312 (-) long phone number', async () => {
-
-        const testStr = randomStr();
-
-        const {data} = await defaultRequest({
-            isShort: false,
-            name: testStr,
-            email: testStr + '_test@xyz.com',
-            phone: randomStr(31),
-            password: default_password,
-            repeat_password: default_password,
-            visit_domain: visit_domain,
-            partner_key: partner_key
-        });
-        // console.log(data);
-        checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
-    });
-
-    it('C19313 (-) different passwords', async () => {
+    it('(+) Sub id 4', async () => {
 
         const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
-            isShort: false,
             name: testStr,
+            sub_ids: 'sub4=sub_4',
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
-            password: testStr,
-            repeat_password: testStr + '1',
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
             partner_key: partner_key
         });
-        // console.log(data);
-        checkErrorMsg(data, 'Password confirmation not matches to password');
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
     });
 
-    it('C19314 (-) short password', async () => {
+    it('(+) Sub id 5', async () => {
 
-        const testStr = randomStr(5);
+        const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
-            isShort: false,
             name: testStr,
+            sub_ids: 'sub5=sub_5',
             email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
-            password: testStr,
-            repeat_password: testStr,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
             partner_key: partner_key
         });
-        // console.log(data);
-        checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
     });
 
-    it('C19315 (-) long password', async () => {
+    it('(+) All sub ids (from 1 to 5)', async () => {
 
-        const testStr = randomStr(19);
+        const testStr = randomStr();
         const testNum = randomNum();
 
         const {data} = await defaultRequest({
-            isShort: false,
-            name: randomStr(),
-            email: randomStr() + '_test@xyz.com',
+            name: testStr,
+            sub_ids: 'sub1=sub_1&sub2=sub_2&sub3=sub_3&sub4=sub_4&sub5=sub_5',
+            email: testStr + '_test@xyz.com',
             phone: '921' + testNum,
-            password: testStr,
-            repeat_password: testStr,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
             partner_key: partner_key
         });
-        // console.log(data);
-        checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    it('(+) Sub ids (1-3-5)', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=sub_1&sub3=sub_3&sub5=sub_5',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    it('(+) Sub id with legal symbols', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=_-',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    it('(-) Sub id with rus language', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=кириллица',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    it('(-) Sub id with illegal symbols', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=/\\?*= +|`~\'\"±§^',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    // shouldn't be saved
+    it('(-) Sub id with legal and illegal symbols', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=-_=&sub2=?*^',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    // sub1 should be saved, sub2 and sub3 shouldn't
+    it('(+) Legal sub1 + illegal sub2 + mixed sub3', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=legal&sub2=?*^&sub3=^mixed^',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
+    it('(?) Sub with 10 length', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=1234567890',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+            partner_key: partner_key
+        });
+        console.log(data);
+        checkRegInfo(data, testStr, testNum);
     });
 });

@@ -4,7 +4,7 @@ import {checkErrorMsg} from '../../src/responseChecker';
 describe('Auth recovery confirm', () => {
 
     const new_password = '123456';
-    const userId = 291;
+    const userId = 291; // prod 1490385
     const correct_code = 6391721;
 
     //TODO need to get correct_code from mail
@@ -25,12 +25,11 @@ describe('Auth recovery confirm', () => {
     it('C19317 (-)  with incorrect code', async () => {
         const {data} = await socket.send('USER:forgot-confirm', {
 
-                userId: userId,
-                code: 1234567,
-                password: new_password,
-                repeat_password: new_password
-            }
-        );
+            userId: userId,
+            code: 1234567,
+            password: new_password,
+            repeat_password: new_password
+        });
         checkErrorMsg(data, 'Неверный ключ запроса');
     });
 });
