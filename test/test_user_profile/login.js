@@ -8,7 +8,7 @@ describe('Login', () => {
     const default_user = '123123@mailinator.com';
     const default_phone = '+79995654567';
     const default_password = '123123';
-    const default_id = 1322492;
+    const default_id = 156;
 
     function checkSuccessMsg(data) {
         expect(data.email).equal(default_user);
@@ -19,23 +19,14 @@ describe('Login', () => {
 
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password,
-            tg_hash: randomStr(5)
-        });
-        // const data = await userList.login_without_money();
-        console.log(data);
+        const {data} = await userList.login_without_money();
+        // console.log(data);
         checkSuccessMsg(data);
     });
 
     it('C19294 (+) login by phone', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_phone,
-            password: default_password,
-            tg_hash: randomStr(5)
-        });
-        console.log(data);
+        const {data} = await userList.login_by_phone();
+        // console.log(data);
         checkSuccessMsg(data);
     });
 
@@ -109,7 +100,7 @@ describe('Login', () => {
             password: default_password,
             tg_hash: randomStr(4)
         });
-        console.log(data);
+        // console.log(data);
         checkSuccessMsg(data);
     });
 

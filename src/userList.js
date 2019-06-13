@@ -6,6 +6,13 @@ export const userList = {
     async login_without_money() {
         return await socket.send('USER:auth-login', {
             login: '123123@mailinator.com',
+            password: '123123'
+        });
+    },
+
+    async login_without_money_tghash() {
+        return await socket.send('USER:auth-login', {
+            login: '123123@mailinator.com',
             password: '123123',
             tg_hash: randomStr(5)
         });
@@ -13,9 +20,8 @@ export const userList = {
 
     async login_by_phone() {
         return await socket.send('USER:auth-login', {
-            login: '+79511511515',
-            password: '123123',
-            tg_hash: randomStr(5)
+            login: '+79995654567',
+            password: '123123'
         });
     },
 
