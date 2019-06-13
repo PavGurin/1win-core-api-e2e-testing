@@ -1,6 +1,5 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
-import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Transfer confirm', () => {
 
@@ -9,7 +8,9 @@ describe('Transfer confirm', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 5372831});
         // console.log(data);
-        checkErrorMsg(data, 'Неверный ключ запроса');
+        //checkErrorMsg(data, 'Неверный ключ запроса');
+        expect(data.status).equal(404);
+        expect(data.message).equal('Перевод не найден');
     });
 
     it('C19366 (-) Nonexistent code', async () => {

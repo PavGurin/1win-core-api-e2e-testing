@@ -7,9 +7,10 @@ describe('Withdrawal confirm', () => {
     it('C19338 (-) Incorrect code', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 1070416});
-        // console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Неверный ключ запроса');
+        console.log(data);
+        //checkErrorMsg(data, 'Неверный ключ запроса');
+        expect(data.status).equal(403);
+        expect(data.message).equal('Выплата не найдена');
     });
 
     it('C19339 (-) Nonexistent code', async () => {
