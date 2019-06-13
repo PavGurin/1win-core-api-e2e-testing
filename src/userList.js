@@ -25,11 +25,10 @@ export const userList = {
         });
     },
 
-    // id_user = 205
     async login_with_RUB() {
         return await socket.send('USER:auth-login', {
-            login: 'lina.solodova@gmail.com',
-            password: 'm26qi6',
+            login: 'test_withdrawal@mailinator.com',
+            password: '123123',
             tg_hash: randomStr(5)
         });
     },
@@ -69,6 +68,5 @@ export const userList = {
             tg_hash: randomStr(5)
         });
     }
-    //Prod
 };
 

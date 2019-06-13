@@ -26,4 +26,5 @@ describe('Balance get', () => {
         // console.log(data);
         expect(data.balance).equal(5000);
     });
+
 });
