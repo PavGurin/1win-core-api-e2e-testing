@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import {userList} from '../../src/userList';
 import {checkErrorMsg} from '../../src/responseChecker';
 
-describe.skip('Transfer confirm', () => {
+describe('Transfer confirm', () => {
 
     //TODO продумать логику теста так, чтобы нужный код подставлялся сам в момент запуска теста
     it('C19365 (-) Incorrect code', async () => {
@@ -12,7 +12,7 @@ describe.skip('Transfer confirm', () => {
         checkErrorMsg(data, 'Неверный ключ запроса');
     });
 
-    it.skip('C19366 (-) Nonexistent code', async () => {
+    it('C19366 (-) Nonexistent code', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 111});
         // console.log(data);

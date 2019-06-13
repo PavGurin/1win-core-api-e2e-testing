@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
 
-describe.skip('Withdrawal confirm', () => {
+describe('Withdrawal confirm', () => {
 
     // TODO необходимо продумать тест с созданием перевода и подставлять в этот тест всегда актуальный код
     it('C19338 (-) Incorrect code', async () => {
@@ -12,7 +12,7 @@ describe.skip('Withdrawal confirm', () => {
         expect(data.message).equal('Неверный ключ запроса');
     });
 
-    it.skip('C19339 (-) Nonexistent code', async () => {
+    it('C19339 (-) Nonexistent code', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 9999999});
         // console.log(data);

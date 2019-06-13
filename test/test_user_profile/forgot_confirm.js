@@ -9,7 +9,7 @@ describe('Auth recovery confirm', () => {
 
     //TODO need to get correct_code from mail
     // positive test with 'error' expected
-    it.skip('C19316 (~) with correct code', async () => {
+    it('C19316 (~) with correct code', async () => {
         const {data} = await socket.send('USER:forgot-confirm', {
 
                 userId: userId,

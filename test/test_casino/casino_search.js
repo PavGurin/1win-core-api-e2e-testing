@@ -1,6 +1,6 @@
 import {expect} from "chai"
 
-describe.skip("Casino search check", () => {
+describe("Casino search check", () => {
 
     it("Games-search", async () => {
         const { data } = await socket.send("CASINO-2:games-search",{

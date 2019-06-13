@@ -48,7 +48,7 @@ describe('Create deposite', () => {
         expect(data).to.deep.include({message: 'Неверный формат кошелька'});
     });
 
-    it.skip('C19385 USD - paymentType = card_rub and wallet = null', async () => {
+    it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -61,7 +61,7 @@ describe('Create deposite', () => {
         expect(data.currency).to.equal('USD');
     });
 
-    it.skip('C19386 Must not pass', async () => {
+    it('C19386 Must not pass', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,

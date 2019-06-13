@@ -47,7 +47,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -66,7 +66,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -85,7 +85,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -104,7 +104,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -123,7 +123,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -142,7 +142,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -161,7 +161,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -180,7 +180,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -199,7 +199,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -218,7 +218,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -238,7 +238,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -258,7 +258,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 
@@ -277,7 +277,7 @@ describe('Register with sub id parameter', () => {
             visit_domain: visit_domain,
             partner_key: partner_key
         });
-        console.log(data);
+        //console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
 });
