@@ -4,14 +4,14 @@ import {userList} from '../../src/userList';
 //returns withdrawals sorted by time
 describe('Withdrawal history', () => {
 
-    it('(+) without withdrawal', async () => {
+    it('C19359 - (+) without withdrawal', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:withdrawal-history');
         // console.log(data);
         expect(data.length).equal(0);
     });
 
-    it('(+) with withdrawal', async () => {
+    it('C19360 -(+) with withdrawal', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-history');
         // console.log(data);

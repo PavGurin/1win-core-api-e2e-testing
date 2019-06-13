@@ -148,7 +148,7 @@ describe('Bets history', () => {
      **/
 
     // TODO 'service' should be fixed to run ALL filters
-    it.skip('(+) all filters with all available values', async () => {
+    it('(+) all filters with all available values', async () => {
 
         await userList.login_with_RUB();
         const {data: {betsMap}} = await socket.send('BETS:bets-history', {
@@ -284,7 +284,7 @@ describe('Bets history', () => {
     });
 
     // TODO wait for limit assignment
-    it.skip('(-) limits \'from\' equal \'to\' value', async () => {
+    it('(-) limits \'from\' equal \'to\' value', async () => {
 
         await userList.login_with_RUB();
         const {data: {betsMap}} = await socket.send('BETS:bets-history', {
@@ -302,7 +302,7 @@ describe('Bets history', () => {
         expect(data.betsMap).to.be.empty;
     });
 
-    it.skip('(-) limits \'from\' value > than \'to\' value', async () => {
+    it('(-) limits \'from\' value > than \'to\' value', async () => {
 
         await userList.login_with_RUB();
         const {data: {betsMap}} = await socket.send('BETS:bets-history', {
@@ -321,7 +321,7 @@ describe('Bets history', () => {
     });
 
     //TODO fix expect
-    it.skip('(-) 5 limits + 5 offset, where all filters, where service = null', async () => {
+    it('(-) 5 limits + 5 offset, where all filters, where service = null', async () => {
 
         await userList.login_with_RUB();
         const {data} = await socket.send('BETS:bets-history', {
@@ -341,7 +341,7 @@ describe('Bets history', () => {
     });
 
     //TODO fix expect
-    it.skip('(+) 5 limits + 2 offset, where all filters, where service = null', async () => {
+    it('(+) 5 limits + 2 offset, where all filters, where service = null', async () => {
 
         await userList.login_with_RUB();
         const {data} = await socket.send('BETS:bets-history', {

@@ -4,7 +4,7 @@ import {userList} from '../../src/userList';
 //returns withdrawal value
 describe('Withdrawal get', () => {
 
-    it('(-) Get - withdrawal not found - auth', async () => {
+    it('C19361 (-) Get - withdrawal not found - auth', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 205});
         // console.log(data);
@@ -12,7 +12,7 @@ describe('Withdrawal get', () => {
         expect(data.message).equal('Выплата не найдена');
     });
 
-    it('(+) Get - 100 RUB money-transfer -  ', async () => {
+    it('C19362 (+) Get - 100 RUB money-transfer -  ', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 163});
         // console.log(data);
@@ -24,7 +24,7 @@ describe('Withdrawal get', () => {
         expect(data.wallet).equal('417');
     });
 
-    it('(+) Get - 100 RUB card_rub', async () => {
+    it('C19363 (+) Get - 100 RUB card_rub', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 179});
         // console.log(data);
