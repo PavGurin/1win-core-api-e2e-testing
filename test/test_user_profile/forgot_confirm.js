@@ -4,7 +4,7 @@ import {checkErrorMsg} from '../../src/responseChecker';
 describe('Auth recovery confirm', () => {
 
     const new_password = '123456';
-    const userId = 291; // prod 1490385
+    const userId = 1491435; // prod 1490385
     const correct_code = 6391721;
 
     //TODO need to get correct_code from mail
