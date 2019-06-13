@@ -3,7 +3,7 @@ import {randomNum, randomStr} from '../../src/randomizer';
 
 describe('Profile update', () => {
 
-    const promo_code = 'test001';
+    const partner_key = 'test001';
     const birthday = 946587600002;
     const default_password = '123456';
 
@@ -26,7 +26,7 @@ describe('Profile update', () => {
                 country: 'someCountry',
                 timezone: 23,
                 visit_domain: 'someDomain',
-                partner_key: promo_code
+                partner_key: partner_key
             });
 
         const userId = data.user_id;

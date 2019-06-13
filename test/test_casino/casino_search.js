@@ -1,10 +1,9 @@
-import { expect } from "chai"
+import {expect} from "chai"
 
 describe.skip("Casino search check", () => {
 
     it("Games-search", async () => {
         const { data } = await socket.send("CASINO-2:games-search",{
-
         });
 
        //вывод логов в консоль
@@ -13,7 +12,6 @@ describe.skip("Casino search check", () => {
         expect(data).to.be.an('array');
         expect(data[0].name).to.be.an('object');
         expect(data.message).to.equal(undefined);
-
     });
 
 

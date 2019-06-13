@@ -9,7 +9,7 @@ describe('Register - Short schema', () => {
             ...params
         });
 
-    const promo_code = 'test001';
+    const partner_key = 'test001';
 
     // проверка ответа успешной регистрации
     function checkRegInfo(data) {
@@ -28,7 +28,7 @@ describe('Register - Short schema', () => {
 
         const {data} = await defaultRequest({
             visit_domain: 'someDomain',
-            partner_key: promo_code
+            partner_key: partner_key
         });
         // console.log(data);
         checkRegInfo(data);
@@ -46,12 +46,12 @@ describe('Register - Short schema', () => {
     it('C19303 (+) w/o visit_domain with partner_key', async () => {
 
         const {data} = await defaultRequest({
-            partner_key: promo_code
+            partner_key: partner_key
         });
         // console.log(data);
         checkRegInfo(data);
         expect(data.partner_key)
-            .to.equal(promo_code);
+            .to.equal(partner_key);
     });
 
     it('C19304 (-) w/o visit_domain w/o partner_key', async () => {
