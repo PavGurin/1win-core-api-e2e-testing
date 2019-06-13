@@ -6,11 +6,13 @@ const config = {
     username: process.env.CYPRESS_TESTRAIL_USER,
     password: process.env.CYPRESS_TESTRAIL_PASSWORD,
     projectId: process.env.CYPRESS_TESTRAIL_PROJECT_ID,
+    filter: process.env.TEST_FILTER,
 }
 
 const statusId = (mochaState) => ({
     passed: 1,
-    failed: 5
+    blocked: 2,
+    failed: 5,
 }[mochaState])
 
 const titleToCaseId = testTitle => (/\bT?C(\d+)\b/g.exec(testTitle) || [-1])[1];
@@ -35,6 +37,7 @@ class TestrailReporter {
     }
 
     addResult(test, error) {
+        if (test.title.includes(config.filter)) test.state = 'blocked'
         this.results.push({
             status_id: statusId(test.state),
             case_id: titleToCaseId(test.title) || -1,

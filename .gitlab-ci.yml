@@ -5,7 +5,6 @@ image:
 variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
-  TEST_URL: https://1win.dev/
 
 services:
   - docker:dind
@@ -13,7 +12,7 @@ services:
 stages:
   - tests
 
-api_test:
+.api_test: &api_test
   stage: tests
   tags:
   - docker
@@ -24,3 +23,16 @@ api_test:
   artifacts:
     reports:
       junit: artifacts/test-output.xml
+
+backend_staging:
+  variables:
+    TEST_URL: https://1win.dev/
+    TEST_FILTER: "@master"
+  <<: *api_test
+
+backend_production:
+  when: manual
+  variables:
+    TEST_URL: https://1winufeg.xyz/
+    TEST_FILTER: "@dev"
+  <<: *api_test
