@@ -8,8 +8,7 @@ describe('Auth recovery confirm', () => {
     const correct_code = 6391721;
 
     //TODO need to get correct_code from mail
-    // positive test with 'error' expected
-    it.skip('C19316 (~) with correct code', async () => {
+    it.skip('C19316 (+) with correct code', async () => {
         const {data} = await socket.send('USER:forgot-confirm', {
 
                 userId: userId,
@@ -22,7 +21,7 @@ describe('Auth recovery confirm', () => {
         expect(data.error).to.equal(false);
     });
 
-    it('C19317 (-)  with incorrect code', async () => {
+    it('C19317 (-) with incorrect code', async () => {
         const {data} = await socket.send('USER:forgot-confirm', {
 
             userId: userId,
