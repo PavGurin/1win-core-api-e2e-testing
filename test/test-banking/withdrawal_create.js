@@ -54,7 +54,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 
     it('C19326 (+) With money card_uah + valid wallet + RUB', async () => {
@@ -66,7 +66,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 
     it('C19327 (+) With money card_uah + valid wallet + USD', async () => {
@@ -78,7 +78,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'USD'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 
     it('C19328 (+) With money beeline_rub + valid wallet + RUB', async () => {
@@ -90,7 +90,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null)
     });
 
     it('C19329 (+) With money beeline_rub + valid wallet + USD', async () => {
@@ -102,7 +102,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'USD'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null)
     });
 
     it('C19330 (+) With money megafon_rub + valid wallet + RUB', async () => {
@@ -113,7 +113,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null)
     });
 
     it('C19331 (+) With money mts_rub + valid wallet + RUB', async () => {
@@ -124,7 +124,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null)
     });
 
     it('C19332 (+) With money qiwi_rub + valid wallet + RUB', async () => {
@@ -134,8 +134,8 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'qiwi_rub',
             wallet: '+79215645656'
         });
-        // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        //console.log(data);
+        expect(data.email).not.equal(null)
     });
 
     it('C19333 (+) With money tele2_rub + valid wallet + RUB', async () => {
@@ -146,7 +146,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 
     it('C19334 (+) With money yamoney_rub + valid wallet + RUB', async () => {
@@ -157,7 +157,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+4100100000000'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 
     it('C19335 (+) With money webmoney_rub + valid wallet + RUB', async () => {
@@ -168,7 +168,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'R123456789000'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
 
@@ -180,7 +180,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'P0000000000'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 
     it('C19337 (+) With money advcash_rub + valid wallet + RUB', async () => {
@@ -191,6 +191,6 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'mail@example.com'
         });
         // console.log(data);
-        expect(data.email).equal('te************l@mailinator.com');
+        expect(data.email).not.equal(null);
     });
 });
