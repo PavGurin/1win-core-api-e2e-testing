@@ -1,6 +1,6 @@
 const partner_key = 'test001';
-const birthday = 946587600002;
-const default_password = '123456';
+// const birthday = 946587600002;
+// const default_password = '123456';
 
 export const register = {
 
