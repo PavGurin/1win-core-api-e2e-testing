@@ -191,5 +191,6 @@ describe('Withdrawal create with user without money ', () => {
         });
         // console.log(data);
         expect(data.email).equal('te************l@mailinator.com');
+
     });
 });
