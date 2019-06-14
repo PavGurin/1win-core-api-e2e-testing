@@ -1,10 +1,11 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
+import {register} from "../../src/register";
 
 describe('Transfer', () => {
 
     it('C19367 (-) Without money , not enough amount + RUB', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
@@ -17,7 +18,7 @@ describe('Transfer', () => {
     });
 
     it('C19368 Without money , not enough amount + USD', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
@@ -29,7 +30,7 @@ describe('Transfer', () => {
     });
 
     it('C19369 (-) Without money , enough amount + USD', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 100,
@@ -42,7 +43,7 @@ describe('Transfer', () => {
     });
 
     it('C19370 (-) Without money , enough amount + RUB', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 100,

@@ -1,20 +1,11 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
+import {register} from "../../src/register";
 
 describe('Balance get', () => {
 
     it('C19353 (+) Without money', async () => {
-        const defaultRequest = (params) => socket.send('USER:auth-register',
-            {
-                isShort: true,
-                country: 'someCountry',
-                timezone: 23,
-                ...params
-            });
-        await defaultRequest({
-            visit_domain: 'someDomain'
-        });
-
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:balance-get');
         // console.log(data);
         expect(data.balance).equal(0);

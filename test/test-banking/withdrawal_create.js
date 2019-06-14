@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {register} from '../../src/register';
 import {userList} from '../../src/userList';
 
 describe('Withdrawal create with user without money ', () => {
@@ -9,7 +10,7 @@ describe('Withdrawal create with user without money ', () => {
     }
 
     it('C19278 (-) Without money', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '5446546',
@@ -21,7 +22,7 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19279 (-) Without money card_rub + valid wallet ', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',

@@ -1,11 +1,12 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
+import {register} from "../../src/register";
 
 //returns withdrawals sorted by time
 describe('Withdrawal history', () => {
 
     it('C19359 - (+) without withdrawal', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-history');
         // console.log(data);
         expect(data.length).equal(0);

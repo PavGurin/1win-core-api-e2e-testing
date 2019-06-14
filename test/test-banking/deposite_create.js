@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import {userList} from '../../src/userList';
+import {register} from "../../src/register";
 
 describe('Create deposite', () => {
 
@@ -9,7 +10,7 @@ describe('Create deposite', () => {
     }
 
     it('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -22,7 +23,7 @@ describe('Create deposite', () => {
     });
 
     it('C19382 RUB - paymentType = tele2_rub and wallet != null', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -35,7 +36,7 @@ describe('Create deposite', () => {
     });
 
     it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -49,7 +50,7 @@ describe('Create deposite', () => {
     });
 
     it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -62,7 +63,7 @@ describe('Create deposite', () => {
     });
 
     it('C19386 Must not pass', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
             wallet: '',
