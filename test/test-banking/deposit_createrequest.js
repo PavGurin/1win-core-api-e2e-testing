@@ -3,12 +3,24 @@ import {userList} from '../../src/userList';
 
 describe('Deposit requests', () => {
 
-    it('C19376 (+) create', async () => {
+    it('C19376 (-) create without currency', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
             paymentType: 'card_rub'});
+        // console.log(data);
+        expect(data.message).equal(undefined);
+    });
+
+    it(' (+) create with currency', async () => {
+        await userList.login_with_RUB();
+        const {data} = await socket.send('BANKING:deposit-create-request', {
+            amount: 100,
+            wallet: '',
+            paymentType: 'card_rub',
+            currency: 'RUB'
+        });
         // console.log(data);
         expect(data.message).equal(undefined);
     });

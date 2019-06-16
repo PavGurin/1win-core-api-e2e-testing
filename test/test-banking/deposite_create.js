@@ -121,7 +121,7 @@ describe('Create deposite', () => {
 
             amount: '100',
             wallet: null,
-            paymentType: 'card_rub'
+            paymentType: 'card_rub',
             //currency: 'RUB'
         });
         // console.log(data);
@@ -134,7 +134,7 @@ describe('Create deposite', () => {
 
             amount: '100',
             wallet: 'порпорпорпэ',
-            paymentType: 'card_rub'
+            paymentType: 'card_rub',
             //currency: 'RUB'
         });
         expect(data.currency).to.equal('RUB');
