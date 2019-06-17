@@ -8,7 +8,7 @@ describe('Create deposite', () => {
         expect(data.message).equal(expMessage);
     }
 
-    it('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
+    it('C19384 RUB - paymentType = card_rub and wallet = empty @master', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -17,11 +17,11 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'RUB'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 
-    it('C19382 RUB - paymentType = tele2_rub and wallet != null', async () => {
+    it('C19382 RUB - paymentType = tele2_rub and wallet != null @master', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -30,7 +30,7 @@ describe('Create deposite', () => {
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 
@@ -48,7 +48,7 @@ describe('Create deposite', () => {
         expect(data).to.deep.include({message: 'Неверный формат кошелька'});
     });
 
-    it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
+    it('C19385 USD - paymentType = card_rub and wallet = null @master', async () => {
         await userList.login_without_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -57,7 +57,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('USD');
     });
 
@@ -69,7 +69,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.message).to.equal(undefined);
     });
 
@@ -123,7 +123,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub'
             //currency: 'RUB'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 
@@ -133,7 +133,7 @@ describe('Create deposite', () => {
 
             amount: '100',
             wallet: 'порпорпорпэ',
-            paymentType: 'card_rub'
+            paymentType: 'card_rub',
             //currency: 'RUB'
         });
         expect(data.currency).to.equal('RUB');
