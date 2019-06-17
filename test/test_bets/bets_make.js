@@ -3,6 +3,8 @@ import {userList} from '../../src/userList';
 
 describe("Bets check", () => {
 
+    //TODO вынести методы в глобальные переменные по созданию ставки
+    //TODO после обновить старые тесты с маркером dev
     it("Bets make ordinar without money", async () => {
         await userList.login_without_money();
         const {betData} = await socket.send("BETS:bets-make",
