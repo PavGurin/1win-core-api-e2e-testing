@@ -335,7 +335,7 @@ describe('Bets history', () => {
                 betType: ['ordinary', 'express']
             }
         });
-        console.log(data);
+        //console.log(data);
         expect(data.totalCount).equal(0);
         expect(data.betsMap).to.be.empty;
     });
@@ -355,7 +355,7 @@ describe('Bets history', () => {
                 betType: ['ordinary', 'express']
             }
         });
-        console.log(data);
+        //console.log(data);
         expect(data.totalCount).equal(0);
         expect(data.betsMap).to.be.empty;
     });

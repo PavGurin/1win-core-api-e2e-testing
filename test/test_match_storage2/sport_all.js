@@ -3,7 +3,7 @@ import {expect} from "chai"
 describe("Sport all", () => {
 
 
-    it("- (+) valid request prematch", async () => {
+    it("C21146 - (+) valid request prematch", async () => {
         const {data} = await socket.send("MATCH-STORAGE-2:sport-all", {
             service: 'prematch',
             timeFilter: {
@@ -20,7 +20,7 @@ describe("Sport all", () => {
 
     });
 
-    it("- (+) valid request @master", async () => {
+    it("C21147 - (+) valid request live @master", async () => {
         const {data} = await socket.send("MATCH-STORAGE-2:sport-all", {
             service: 'live',
             timeFilter: {

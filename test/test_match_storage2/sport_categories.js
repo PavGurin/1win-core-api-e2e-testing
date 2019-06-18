@@ -3,7 +3,7 @@ import {expect} from "chai"
 describe("Sport categories", () => {
 
 
-    it("- (+) valid request prematch", async () => {
+    it("C21148 - (+) valid request prematch", async () => {
         const {data} = await socket.send("MATCH-STORAGE-2:sport-categories", {
             service: 'prematch',
             sportId: 'all',
@@ -23,7 +23,7 @@ describe("Sport categories", () => {
         expect(data.sportCategoriesMap["0"].sportName.ru).not.equal(null);
     });
 
-    it("- (+) valid request live @master", async () => {
+    it("C21149 - (+) valid request live @master", async () => {
         const {data} = await socket.send("MATCH-STORAGE-2:sport-categories", {
             service: 'live',
             sportId: 'all',
