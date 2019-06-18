@@ -18,7 +18,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'RUB'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
     //TODO нужна тестовая симкарта теле2
@@ -58,7 +58,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('USD');
     });
 
@@ -70,7 +70,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             currency: 'USD'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.message).to.equal(undefined);
     });
 
