@@ -12,7 +12,7 @@ describe('Withdrawal history', () => {
         expect(data.length).equal(0);
     });
 
-    it('C19360 -(+) with withdrawal', async () => {
+    it('C19360 -(+) with withdrawal @dev', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-history');
         // console.log(data);
