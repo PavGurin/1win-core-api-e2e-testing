@@ -42,6 +42,14 @@ export const userList = {
         });
     },
 
+    //С реальными деньгами! Использовать аккуратно)
+    async login_with_real_money() {
+        return await socket.send('USER:auth-login', {
+            login: 'nogm75@1win.xyz',
+            password: '123456'
+        });
+    },
+
     async login_test_status() {
         //У пользователя статит статус тестового пользователя
         await socket.send('USER:auth-login', {
