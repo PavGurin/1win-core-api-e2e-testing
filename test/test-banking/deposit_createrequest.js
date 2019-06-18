@@ -1,10 +1,10 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
+import {register} from "../../src/register";
 
 describe('Deposit requests', () => {
 
     it('C19376 (-) create without currency', async () => {
-        await userList.login_with_RUB();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
@@ -14,7 +14,7 @@ describe('Deposit requests', () => {
     });
 
     it(' (+) create with currency', async () => {
-        await userList.login_with_RUB();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
@@ -26,7 +26,7 @@ describe('Deposit requests', () => {
     });
 
     it('C19377 (-) with hash', async () => {
-        await userList.login_with_RUB();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-request', {h: 'gjhg'});
         // console.log(data);
         expect(data.status).equal(404);

@@ -124,7 +124,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             //currency: 'RUB'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 
@@ -137,6 +137,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub',
             //currency: 'RUB'
         });
+        console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 });
