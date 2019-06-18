@@ -17,11 +17,11 @@ describe('Balance get', () => {
 
     });
 
-    it('C19354 (+) With money rub + usd @dev', async () => {
-        await userList.login_with_RUB_USD();
+    it('C19354 (+) With money rub + usd', async () => {
+        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:balance-get');
         // console.log(data);
-        expect(data["0"].balance).equal(5000);
+        expect(data["0"].balance).not.equal(0);
         expect(data["0"].currency).equal('RUB');
         expect(data["1"].balance).equal(0);
         expect(data["1"].currency).equal('USD');
