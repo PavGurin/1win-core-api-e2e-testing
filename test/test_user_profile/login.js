@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {randomStr} from '../../src/randomizer';
 import {checkErrorMsg} from '../../src/responseChecker';
-import {userList} from '../../src/userList';
+import {userList} from '../../src/methods/userList';
 
 describe('Login', () => {
 

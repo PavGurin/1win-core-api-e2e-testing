@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {register} from '../../src/register';
-import {userList} from "../../src/userList";
+import {register} from '../../src/methods/register';
+import {userList} from "../../src/methods/userList";
 
 describe('Withdrawal create with user without money ', () => {
 
@@ -17,7 +17,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad Request.');
     });
 
@@ -29,7 +29,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
@@ -41,7 +41,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad Request.');
     });
 
@@ -53,7 +53,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'card_rub',
             currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -66,7 +66,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'card_uah',
             currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -79,7 +79,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'card_uah',
             currency: 'USD'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -92,7 +92,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645654',
             currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -105,7 +105,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656',
             currency: 'USD'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -117,7 +117,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'megafon_rub',
             wallet: '+79215645656'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -129,7 +129,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'mts_rub',
             wallet: '+79215645656'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -141,7 +141,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'qiwi_rub',
             wallet: '+79215645656'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -153,7 +153,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'tele2_rub',
             wallet: '+79215645656'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -165,7 +165,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'yamoney_rub',
             wallet: '+4100100000000'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -177,7 +177,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'webmoney_rub',
             wallet: 'R123456789000'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -189,7 +189,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'payeer_rub',
             wallet: 'P0000000000'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -201,7 +201,7 @@ describe('Withdrawal create with user without money ', () => {
             payment_system: 'advcash_rub',
             wallet: 'mail@example.com'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });

@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
-import {register} from "../../src/register";
+import {userList} from '../../src/methods/userList';
+import {register} from "../../src/methods/register";
 
 describe('Create deposite', () => {
 
@@ -21,17 +21,17 @@ describe('Create deposite', () => {
         // console.log(data);
         expect(data.currency).to.equal('RUB');
     });
-
-    it('C19382 RUB - paymentType = tele2_rub and wallet != null', async () => {
+    //TODO нужна тестовая симкарта теле2
+    it.skip('C19382 RUB - paymentType = tele2_rub and wallet != null @master', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
-            wallet: '89545654565',
+            wallet: '89772520000',
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 

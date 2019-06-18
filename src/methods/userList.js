@@ -1,4 +1,4 @@
-import {randomStr} from './randomizer';
+import {randomStr} from '../randomizer';
 
 export const userList = {
 

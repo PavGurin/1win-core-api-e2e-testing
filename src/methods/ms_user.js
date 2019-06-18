@@ -1,4 +1,4 @@
-import {randomNum, randomStr} from './randomizer';
+import {randomNum, randomStr} from '../randomizer';
 
 export const update_profile = (updateProfile) => socket.send('USER:profile-update',
     {

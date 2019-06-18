@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {register} from "../../src/register";
+import {register} from "../../src/methods/register";
 
 describe('Get methods map', () => {
 

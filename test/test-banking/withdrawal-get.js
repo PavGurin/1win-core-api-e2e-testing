@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
+import {userList} from '../../src/methods/userList';
 
 //returns withdrawal value
 describe('Withdrawal get', () => {

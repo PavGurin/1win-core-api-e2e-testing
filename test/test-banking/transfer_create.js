@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
-import {register} from "../../src/register";
+import {userList} from '../../src/methods/userList';
+import {register} from "../../src/methods/register";
 
 describe('Transfer', () => {
 
