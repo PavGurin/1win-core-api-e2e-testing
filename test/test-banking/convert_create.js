@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
 
-describe.skip('Convert', () => {
+describe('Convert', () => {
 
     it('C19340 Create before login', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
@@ -9,8 +9,8 @@ describe.skip('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        // console.log(data);
-        expect(data.message).equal(undefined);
+        console.log(data);
+        expect(data.status).equal(200);
     });
 
     it('C19341 Create before login not enough money', async () => {
@@ -20,7 +20,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'USD'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19342 Create after login valid request 100 RUB -> USD', async () => {
@@ -31,7 +31,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'USD'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19343 Create after login valid request 1 USD -> RUB ', async () => {
@@ -42,7 +42,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19344 Create after login valid request 1 USD -> USD ', async () => {
@@ -53,7 +53,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'USD'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19345 Create after login valid request 1 RUB -> RUB ', async () => {
@@ -64,7 +64,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19346 Create after login valid request 100 RUB -> RUB ', async () => {
@@ -75,7 +75,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19347 Create after login valid request 10000 RUB -> USD(not enough money) ', async () => {
@@ -98,7 +98,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19349 Create after login valid request 0.9 USD -> RUB(enough money) ', async () => {
@@ -109,7 +109,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19350 Create after login valid request negative amount USD -> RUB(enough money) ', async () => {
@@ -120,7 +120,7 @@ describe.skip('Convert', () => {
             receiverCurrency: 'RUB'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 
     it('C19351 Create after login valid request negative amount RUB -> USD(enough money) ', async () => {
@@ -131,6 +131,6 @@ describe.skip('Convert', () => {
             receiverCurrency: 'USD'
         });
         // console.log(data);
-        expect(data.message).equal(undefined);
+        expect(data.status).equal(200);
     });
 });

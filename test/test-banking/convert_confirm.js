@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
 
-describe.skip('Сonvert confirm', () => {
+describe('Сonvert confirm', () => {
 
     it('C19352 (-) Incorrect code', async () => {
         await userList.login_with_RUB();
