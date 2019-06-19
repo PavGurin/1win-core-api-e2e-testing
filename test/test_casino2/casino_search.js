@@ -1,9 +1,8 @@
 import {expect} from "chai"
 
-describe("Casino search check @master", () => {
+describe("Casino search check", () => {
 
-    //TODO нужно разобраться почему 500 и завести задачу на бэк
-    it("C20487 - Games-search @master", async () => {
+    it("C20487 - Games-search", async () => {
         const { data } = await socket.send("CASINO-2:games-search",{
         });
 

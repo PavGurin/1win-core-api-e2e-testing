@@ -75,7 +75,7 @@ describe('Bets get', () => {
                 language: null
             }
         );
-        console.log(data);
+        //console.log(data);
         expect(data.id_user).equal(205);
         expect(data.betType).equal('express');
         expect(data.currency).equal('RUB');
