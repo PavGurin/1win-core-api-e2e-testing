@@ -2,32 +2,23 @@ import {expect} from 'chai';
 import {randomStr} from '../../src/randomizer';
 import {checkErrorMsg} from '../../src/responseChecker';
 import {userList} from '../../src/methods/userList';
+import {register} from '../../src/methods/register';
 
 describe('Login', () => {
 
-    const default_user = '123123@mailinator.com';
-    const default_phone = '+79995654567';
-    const default_password = '123123';
-    const default_id = 156;
-
-    function checkSuccessMsg(data) {
-        expect(data.email).equal(default_user);
-        expect(data.phone).contains(default_phone);
-        expect(data.id).equal(default_id);
-        expect(data.user_id).equal(default_id);
-    }
-
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
-        const {data} = await userList.login_without_money();
-        // console.log(data);
-        checkSuccessMsg(data);
+        const {data} = await register.one_click_reg();
+        const {status} = await userList.login_with_params(data.email, data.password);
+        // console.log(status);
+        expect(status).equal(200);
     });
 
     it('C19294 (+) login by phone', async () => {
-        const {data} = await userList.login_by_phone();
-        // console.log(data);
-        checkSuccessMsg(data);
+        const {data} = await register.one_click_reg();
+        const {status} = await userList.login_with_params(data.phone, data.password);
+        // console.log(status);
+        expect(status).equal(200);
     });
 
     it('C19295 (-) nonexistent user', async () => {
@@ -43,11 +34,8 @@ describe('Login', () => {
 
     it('C19296 (-) wrong password', async () => {
 
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password + 'x',
-            tg_hash: randomStr(5)
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {data} = await userList.login_with_params(regResult.email, 'wrongPass');
         // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
     });
@@ -65,11 +53,8 @@ describe('Login', () => {
 
     it('C19298 (-) empty password', async () => {
 
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: '',
-            tg_hash: randomStr(5)
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {data} = await userList.login_with_params(regResult.email, '');
         // console.log(data);
         checkErrorMsg(data, 'Bad request, password is invalid');
     });
@@ -85,51 +70,40 @@ describe('Login', () => {
     });
 
     it('C19300 (-) long password (19 symbols)', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: randomStr(19),
-            tg_hash: randomStr(5)
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {data} = await userList.login_with_params(regResult.email, randomStr(19));
         // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
     });
 
     it('C19926 (+) short tg_hash (4 symbols)', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password,
-            tg_hash: randomStr(4)
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {status} = await userList.login_with_params(regResult.email, randomStr(19), randomStr(4));
         // console.log(data);
-        checkSuccessMsg(data);
+        expect(status).equal(200);
     });
 
     it('C19927 (+) long tg_hash (6 symbols)', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password,
-            tg_hash: randomStr(6)
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {status} = await userList.login_with_params(regResult.email, randomStr(19), randomStr(6));
         // console.log(data);
-        checkSuccessMsg(data);
+        // console.log(data);
+        expect(status).equal(200);
     });
 
     it('C19928 (+) empty tg_hash', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password,
-            tg_hash: null
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {status} = await userList.login_with_params(regResult.email, randomStr(19), null);
         // console.log(data);
-        checkSuccessMsg(data);
+        // console.log(data);
+        expect(status).equal(200);
     });
 
     it('C19929 (+) w/o tg_hash', async () => {
-        const {data} = await socket.send('USER:auth-login', {
-            login: default_user,
-            password: default_password
-        });
+        const {data: regResult} = await register.one_click_reg();
+        const {status} = await userList.login_with_params(regResult.email, randomStr(19));
         // console.log(data);
-        checkSuccessMsg(data);
+        // console.log(data);
+        expect(status).equal(200);
     });
 });
