@@ -251,7 +251,7 @@ describe('Profile update after oneClick registration', () => {
 
         const {data: loginResult} = await socket.send('USER:auth-login', {
             login: updatedUser.email,
-            password: newPassword
+            password: password
         });
         // console.log(loginResult);
         checkErrorMsg(loginResult, 'Неверный email или пароль');
