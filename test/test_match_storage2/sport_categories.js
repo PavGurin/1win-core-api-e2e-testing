@@ -34,7 +34,7 @@ describe("Sport categories", () => {
         });
         //console.log(data);
         expect(data.service).equal('live');
-        expect(data.sportCategoriesMap["0"].categoryIconFileId).equal(null);
+        expect(data.sportCategoriesMap["0"].categoryIconFileId).not.equal(null);
         expect(data.sportCategoriesMap["0"].categoryId).not.equal(null);
         expect(data.sportCategoriesMap["0"].categoryName.en).not.equal(null);
         expect(data.sportCategoriesMap["0"].categoryName.ru).not.equal(null);
