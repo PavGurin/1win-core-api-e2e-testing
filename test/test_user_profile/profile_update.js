@@ -1,66 +1,455 @@
 import {expect} from 'chai';
+import {register} from '../../src/register';
+import {update_profile} from '../../src/ms_user';
 import {randomNum, randomStr} from '../../src/randomizer';
+import {checkErrorMsg} from '../../src/responseChecker';
 
-describe('Profile update', () => {
+describe('Profile update after oneClick registration', () => {
 
-    const partner_key = 'test001';
-    const birthday = 946587600002;
-    const default_password = '123456';
+    /* Hint from documentation
+     {
+     name: String, // (3-16 symbols)
+     email: String,
+     phone: String, // (5-30 symbols)
+     password: String, // (6-18 symbols)
+     new_password: ?String, // (6-18 symbols)
+     repeat_password: ?String, // (equals to new password)
+     birthday: Number
+     }
+     */
 
-    // const logout = () => socket.send('USER:auth-logout', {});
-    //     //
-    //     // async function checkPasswordChange(login) {
-    //     //
-    //     //     const {data} = await socket.send('USER:auth-login', {
-    //     //         login: login,
-    //     //         password: default_password
-    //     //     });
-    //     //     return data;
-    //     // }
+    it('C19323 (+) change name', async () => {
 
-    it('C19323 (+) Short reg and updating user', async () => {
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newName = randomStr();
 
-        let {data} = await socket.send('USER:auth-register',
-            {
-                isShort: true,
-                country: 'someCountry',
-                timezone: 23,
-                visit_domain: 'someDomain',
-                partner_key: partner_key
-            });
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            name: newName
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
+        expect(updatedUser.name).to.equal(newName);
+    });
 
-        const userId = data.user_id;
+    it('C21394 (-) change to short name', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newName = randomStr(2);
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            name: newName
+        });
+        // console.log(updatedUser);
+        expect(data.name).to.equal(updatedUser.name);
+        checkErrorMsg(updatedUser, 'error');
+    });
+
+    it('C21395 (-) change to long name', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newName = randomStr(17);
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            name: newName
+        });
+        // console.log(updatedUser);
+        expect(data.name).to.equal(updatedUser.name);
+        checkErrorMsg(updatedUser, 'error');
+    });
+
+    it('C21396 (+) change eMail', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newEmail = randomStr() + '@new.ru';
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            email: newEmail
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
+        expect(updatedUser.email).to.equal(newEmail);
+    });
+
+    it('C21397 (-) change eMail twice', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const firstEmailChange = randomStr() + '@first.change';
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            email: firstEmailChange
+        });
+        // console.log(updatedUser.email);
+        expect(updatedUser.email).to.equal(firstEmailChange);
+
+        const secondEmailChange = randomStr() + '@second.change';
+        const {data: {updatedUser: updatedUser2}} = await update_profile({
+            password: password,
+            email: secondEmailChange
+        });
+        // console.log(updatedUser2.email);
+        expect(updatedUser2.email).to.equal(firstEmailChange);
+    });
+
+    it('C21398 (-) change country', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
         const password = data.password;
 
-        // console.log('Before update: \nUserId = ' + data.user_id + ', eMail = ' + data.email +
-        //     ', phone = ' + data.phone);
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            country: 'countryWasChanged'
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
+        expect(updatedUser.country).to.equal(default_country);
+    });
 
-        const {data: {updatedUser}} = await socket.send('USER:profile-update',
-            {
-                userId: userId,
-                name: randomStr(),
-                country: 'Russia',
-                timezone: 1,
-                email: randomStr(5) + '_upd@test.xyz',
-                phone: randomNum().toString(),
-                password: password,
-                new_password: '123456',
-                repeat_password: '123456',
-                birthday: birthday
-            });
-        // console.log('After update: \nUserId = ' + updatedUser.id + ', eMail = ' + updatedUser.email +
-        //     ', phone = ' + updatedUser.phone);
+    it('C21399 (+) change phone', async () => {
 
-        expect(data.id).equal(updatedUser.id);
-        expect(updatedUser.name).to.have.lengthOf(6).and.not.equal(data.name);
-        expect(updatedUser.country).equal('Russia').and.not.equal(data.country);
-        expect(updatedUser.email).satisfies(email => email.endsWith('_upd@test.xyz'))
-                                 .and.not.equal(data.email);
-        expect(updatedUser.phone).to.have.lengthOf(7).and.not.equal(data.phone);
-        expect(updatedUser.birthday).equal(birthday).and.not.equal(data.birthday);
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomNum().toString();
 
-        // const y = await logout();
-        // const x = await checkPasswordChange(updatedUser.email);
-        // console.log(x);
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
+        expect(updatedUser.phone).to.equal(newPhone);
+    });
+
+    it('C21400 (-) change to short phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomStr(4);
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    });
+
+    it('C21401 (-) change to long phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomStr(31);
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    });
+
+    it('C21402 (-) change phone to existing one', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomNum().toString();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.phone).to.equal(newPhone);
+
+        await socket.send('USER:auth-logout', {});
+
+        const {data: data2} = await register.one_click_reg();
+        // console.log(data2);
+        const password2 = data2.password;
+
+        const {data: updatedUser2} = await update_profile({
+            password: password2,
+            phone: newPhone
+        });
+        // console.log(updatedUser2);
+        expect(updatedUser.id).to.equal(data.id);
+        checkErrorMsg(updatedUser2, 'Пользователь с таким номером телефона уже существует');
+    });
+
+    it('C21403 (+) change password', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPassword = randomStr();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            new_password: newPassword,
+            repeat_password: newPassword
+        });
+        // console.log(updatedUser);
+        await socket.send('USER:auth-logout', {});
+
+        const {data: loginResult} = await socket.send('USER:auth-login', {
+            login: updatedUser.email,
+            password: newPassword
+        });
+        // console.log(loginResult);
+        expect(loginResult.email).to.equal(updatedUser.email);
+    });
+
+    it('C21404 (-) change to different passwords', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            new_password: randomStr(),
+            repeat_password: randomStr()
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Password confirmation not matches to a new password');
+    });
+
+    it('C21417 (-) change w/o \'repeat password\' value', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPassword = randomStr();
+
+        const {data: {updatedUser: updatedUser}} = await update_profile({
+            password: password,
+            new_password: newPassword
+            // repeat_password: newPassword
+        });
+        // console.log(updatedUser);
+
+        await socket.send('USER:auth-logout', {});
+
+        const {data: loginResult} = await socket.send('USER:auth-login', {
+            login: updatedUser.email,
+            password: password
+        });
+        // console.log(loginResult);
+        checkErrorMsg(loginResult, 'Неверный email или пароль');
+    });
+
+    it('C21418 (-) change w/o \'new password\' value', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPassword = randomStr();
+
+        const {data: {updatedUser: updatedUser}} = await update_profile({
+            password: password,
+            // new_password: newPassword
+            repeat_password: newPassword
+        });
+        // console.log(updatedUser);
+
+        await socket.send('USER:auth-logout', {});
+
+        const {data: loginResult} = await socket.send('USER:auth-login', {
+            login: updatedUser.email,
+            password: newPassword
+        });
+        checkErrorMsg(loginResult, 'Неверный email или пароль');
+    });
+
+    it('C21405 (-) null name', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            name: null
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, name is required, no default value provided');
+    });
+
+    it('C21406 (-) empty name', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            name: ''
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, name is required, no default value provided');
+    });
+
+    it('C21407 (-) null email', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            email: null
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, email is required, no default value provided');
+    });
+
+    it('C21408 (-) empty email', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            email: ''
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, email is invalid');
+    });
+
+    it('C21409 (-) null phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            phone: null
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, phone is required, no default value provided');
+    });
+
+    it('C21410 (-) empty phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            phone: ''
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    });
+
+    it('C21411 (-) null password', async () => {
+
+        await register.one_click_reg();
+
+        const {data: updatedUser} = await update_profile({
+            password: null
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, password is required, no default value provided');
+    });
+
+    it('C21412 (-) empty password', async () => {
+
+        await register.one_click_reg();
+
+        const {data: updatedUser} = await update_profile({
+            password: ''
+        });
+        console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Неверный пароль');
+    });
+
+    it('C21413 (-) invalid eMail', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newEmail = 'that\'s invalid email';
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            email: newEmail
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, email is invalid');
+    });
+
+    it('C21414 (+) change every field', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newName = randomStr();
+        const newPhone = randomNum().toString();
+        const newBirthDay = randomNum();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            name: newName,
+            phone: newPhone,
+            email: newName + '@new.xyz',
+            birthday: newBirthDay
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
+        expect(updatedUser.name).to.equal(newName);
+        expect(updatedUser.phone).to.equal(newPhone);
+        expect(updatedUser.email).to.equal(newName + '@new.xyz');
+        expect(updatedUser.birthday).to.equal(newBirthDay);
+    });
+
+    it('C21415 (-) change email after usual reg', async () => {
+        const {data} = await register.usual_reg();
+        // console.log(data);
+        const password = data.password;
+        console.log(data.name);
+        const {data: {updatedUser: updatedUser}} = await update_profile({
+            password: password,
+            email: randomStr() + '@new.ru'
+        });
+        // console.log(updatedUser);
+        expect(data.email).to.equal(updatedUser.email);
+    });
+
+    it('C21416 (+) change birthday', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newBirthday = randomNum();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            birthday: newBirthday
+        });
+        // console.log(updatedUser);
+        expect(data.birthday).to.not.equal(updatedUser.birthday);
     });
 });
