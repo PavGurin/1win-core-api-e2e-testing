@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import {register} from '../../src/register';
 import {update_profile} from '../../src/ms_user';
 import {randomNum, randomStr} from '../../src/randomizer';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Profile update after oneClick registration', () => {
 
@@ -30,6 +31,7 @@ describe('Profile update after oneClick registration', () => {
             name: newName
         });
         // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
         expect(updatedUser.name).to.equal(newName);
     });
 
@@ -45,7 +47,8 @@ describe('Profile update after oneClick registration', () => {
             name: newName
         });
         // console.log(updatedUser);
-        expect(updatedUser.name).to.equal(newName);
+        expect(data.name).to.equal(updatedUser.name);
+        checkErrorMsg(updatedUser, 'error');
     });
 
     it('C19323 (-) change to long name', async () => {
@@ -60,7 +63,8 @@ describe('Profile update after oneClick registration', () => {
             name: newName
         });
         // console.log(updatedUser);
-        expect(updatedUser.name).to.equal(newName);
+        expect(data.name).to.equal(updatedUser.name);
+        checkErrorMsg(updatedUser, 'error');
     });
 
     it('C19323 (+) change eMail', async () => {
@@ -75,6 +79,7 @@ describe('Profile update after oneClick registration', () => {
             email: newEmail
         });
         // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
         expect(updatedUser.email).to.equal(newEmail);
     });
 
@@ -89,7 +94,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             email: firstEmailChange
         });
-        console.log(updatedUser.email);
+        // console.log(updatedUser.email);
         expect(updatedUser.email).to.equal(firstEmailChange);
 
         const secondEmailChange = randomStr() + '@second.change';
@@ -97,7 +102,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             email: secondEmailChange
         });
-        console.log(updatedUser2.email);
+        // console.log(updatedUser2.email);
         expect(updatedUser2.email).to.equal(firstEmailChange);
     });
 
@@ -111,7 +116,8 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             country: 'countryWasChanged'
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
         expect(updatedUser.country).to.equal(default_country);
     });
 
@@ -120,15 +126,98 @@ describe('Profile update after oneClick registration', () => {
         const {data} = await register.one_click_reg();
         // console.log(data);
         const password = data.password;
+        const newPhone = randomNum().toString();
 
         const {data: {updatedUser}} = await update_profile({
             password: password,
-            phone: randomNum().toString()
+            phone: newPhone
         });
-        console.log(updatedUser);
-        expect(updatedUser.country).to.equal(default_country);
+        // console.log(updatedUser);
+        expect(updatedUser.id).to.equal(data.id);
+        expect(updatedUser.phone).to.equal(newPhone);
     });
 
+    it('C19323 (-) change to short phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomStr(4);
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    });
+
+    it('C19323 (-) change to long phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomStr(31);
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    });
+
+    it('C19323 (-) change phone to existing one', async () => {
+        //TODO maybe logout needed
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPhone = randomNum().toString();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            phone: newPhone
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.phone).to.equal(newPhone);
+
+        await socket.send('USER:auth-logout', {});
+
+        const {data: data2} = await register.one_click_reg();
+        // console.log(data2);
+        const password2 = data2.password;
+
+        const {data: updatedUser2} = await update_profile({
+            password: password2,
+            phone: newPhone
+        });
+        // console.log(updatedUser2);
+        expect(updatedUser.id).to.equal(data.id);
+        checkErrorMsg(updatedUser2, 'Пользователь с таким номером телефона уже существует');
+    });
+
+    it('C19323 (+) change password', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newPassword = randomStr();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            new_password: newPassword,
+            repeat_password: newPassword
+        });
+        // console.log(updatedUser);
+        await socket.send('USER:auth-logout', {});
+
+        const {data: loginResult} = await socket.send('USER:auth-login', {
+            login: updatedUser.email,
+            password: newPassword
+        });
+        // console.log(loginResult);
+        expect(loginResult.email).to.equal(updatedUser.email);
+    });
 });
 
 // const logout = () => socket.send('USER:auth-logout', {});
