@@ -21,6 +21,7 @@ describe('Auth recovery confirm', () => {
         expect(data.error).to.equal(false);
     });
 
+    //TODO request to recovery > confirm request
     it('C19317 (-) with incorrect code', async () => {
         const {data} = await socket.send('USER:forgot-confirm', {
 
