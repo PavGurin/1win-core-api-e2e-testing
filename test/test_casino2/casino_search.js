@@ -11,7 +11,7 @@ describe("Casino search check", () => {
     });
 
 
-    it("C20488 Categories-all", async () => {
+    it("C20488 - Categories-all", async () => {
         const { data } = await socket.send("CASINO-2:categories-all",{
         });
         //console.log(data[0]);

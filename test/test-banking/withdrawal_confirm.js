@@ -1,23 +1,25 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
+import {userList} from '../../src/methods/userList';
+import {register} from "../../src/methods/register";
+import {banking} from "../../src/methods/banking";
 
 describe('Withdrawal confirm', () => {
 
     // TODO необходимо продумать тест с созданием перевода и подставлять в этот тест всегда актуальный код
-    it('C19338 (-) Incorrect code', async () => {
-        await userList.login_with_RUB();
-        const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 1070416});
+    it('C19338 (-) Incorrect code code response 403', async () => {
+        await register.one_click_reg();
+        const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 10704});
         //console.log(data);
-        //checkErrorMsg(data, 'Неверный ключ запроса');
         expect(data.status).equal(403);
         expect(data.message).equal('Выплата не найдена');
     });
 
-    it('C19339 (-) Nonexistent code', async () => {
-        await userList.login_with_RUB();
-        const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 9999999});
-        // console.log(data);
-        expect(data.status).equal(403);
-        expect(data.message).equal('Выплата не найдена');
+    it('C19339 (-) Incorrect code response 400', async () => {
+        await userList.login_with_real_money();
+        await banking.withdrawal_create();
+        const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 99});
+        //console.log(data);
+        expect(data.status).equal(400);
+        expect(data.message).equal('Неверный ключ запроса');
     });
 });

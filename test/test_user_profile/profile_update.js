@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {register} from '../../src/register';
-import {update_profile} from '../../src/ms_user';
+import {register} from '../../src/methods/register';
+import {update_profile} from '../../src/methods/ms_user';
 import {randomNum, randomStr} from '../../src/randomizer';
 import {checkErrorMsg} from '../../src/responseChecker';
 

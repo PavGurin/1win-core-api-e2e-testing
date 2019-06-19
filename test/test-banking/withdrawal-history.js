@@ -1,17 +1,18 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
+import {userList} from '../../src/methods/userList';
+import {register} from "../../src/methods/register";
 
 //returns withdrawals sorted by time
 describe('Withdrawal history', () => {
 
     it('C19359 - (+) without withdrawal', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-history');
         // console.log(data);
         expect(data.length).equal(0);
     });
 
-    it('C19360 -(+) with withdrawal', async () => {
+    it('C19360 -(+) with withdrawal @dev', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-history');
         // console.log(data);

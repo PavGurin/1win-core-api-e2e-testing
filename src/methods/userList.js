@@ -1,26 +1,19 @@
-import {randomStr} from './randomizer';
+import {randomStr} from '../randomizer';
 
 export const userList = {
+
+    async login_with_params(login, password, tg_hash) {
+        return await socket.send('USER:auth-login', {
+            login: login,
+            password: password,
+            tg_hash: tg_hash
+        });
+    },
 
     //Prodlike
     async login_without_money() {
         return await socket.send('USER:auth-login', {
             login: '123123@mailinator.com',
-            password: '123123'
-        });
-    },
-
-    async login_without_money_tghash() {
-        return await socket.send('USER:auth-login', {
-            login: '123123@mailinator.com',
-            password: '123123',
-            tg_hash: randomStr(5)
-        });
-    },
-
-    async login_by_phone() {
-        return await socket.send('USER:auth-login', {
-            login: '+79995654567',
             password: '123123'
         });
     },
@@ -39,6 +32,14 @@ export const userList = {
             login: 'test_withdrawal2@mailinator.com',
             password: '123123',
             tg_hash: randomStr(5)
+        });
+    },
+
+    //С реальными деньгами! Использовать аккуратно)
+    async login_with_real_money() {
+        return await socket.send('USER:auth-login', {
+            login: 'nogm75@1win.xyz',
+            password: '123456'
         });
     },
 

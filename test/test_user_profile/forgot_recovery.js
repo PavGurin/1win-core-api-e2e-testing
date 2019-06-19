@@ -48,6 +48,6 @@ describe('Auth recovery forgot', () => {
             account: ''
         });
         // console.log(data);
-        checkErrorMsg(data,'Bad request, account is invalid');
+        checkErrorMsg(data, 'Bad request, account is invalid');
     });
 });

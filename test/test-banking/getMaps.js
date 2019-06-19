@@ -1,10 +1,10 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
+import {register} from "../../src/methods/register";
 
 describe('Get methods map', () => {
 
     it('C19355 Withdrawal methods map with login', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:methods-withdrawal');
         //console.log(data);
         expect(data).to.be.an('object');
@@ -22,7 +22,7 @@ describe('Get methods map', () => {
     });
 
     it('C19357 Payment methods map with login', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:methods-payment');
         //console.log(data);
         expect(data).to.be.an('object');

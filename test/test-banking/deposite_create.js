@@ -1,5 +1,6 @@
 import {expect} from 'chai';
-import {userList} from '../../src/userList';
+import {userList} from '../../src/methods/userList';
+import {register} from '../../src/methods/register';
 
 describe('Create deposite', () => {
 
@@ -8,8 +9,8 @@ describe('Create deposite', () => {
         expect(data.message).equal(expMessage);
     }
 
-    it('C19384 RUB - paymentType = card_rub and wallet = empty @master', async () => {
-        await userList.login_without_money();
+    it('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -20,13 +21,13 @@ describe('Create deposite', () => {
         //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
-
-    it('C19382 RUB - paymentType = tele2_rub and wallet != null @master', async () => {
-        await userList.login_without_money();
+    //TODO нужна тестовая симкарта теле2
+    it.skip('C19382 RUB - paymentType = tele2_rub and wallet != null @master', async () => {
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
-            wallet: '89545654565',
+            wallet: '89772520000',
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
@@ -35,7 +36,7 @@ describe('Create deposite', () => {
     });
 
     it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -43,13 +44,12 @@ describe('Create deposite', () => {
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        // console.log(data);
-        expect(data).to.deep.include({status: 400});
-        expect(data).to.deep.include({message: 'Неверный формат кошелька'});
+        console.log(data);
+        checkErrorMsg(data, 'Неверный формат кошелька');
     });
 
-    it('C19385 USD - paymentType = card_rub and wallet = null @master', async () => {
-        await userList.login_without_money();
+    it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: 100,
@@ -62,7 +62,7 @@ describe('Create deposite', () => {
     });
 
     it('C19386 Must not pass', async () => {
-        await userList.login_without_money();
+        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
             wallet: '',
@@ -133,9 +133,10 @@ describe('Create deposite', () => {
 
             amount: '100',
             wallet: 'порпорпорпэ',
-            paymentType: 'card_rub',
+            paymentType: 'card_rub'
             //currency: 'RUB'
         });
+        console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 });

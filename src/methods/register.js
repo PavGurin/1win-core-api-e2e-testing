@@ -1,4 +1,4 @@
-import {randomNum, randomStr} from './randomizer';
+import {randomNum, randomStr} from '../randomizer';
 
 const partner_key = 'test001';
 
