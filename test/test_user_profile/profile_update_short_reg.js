@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {register} from '../../src/register';
 import {update_profile} from '../../src/ms_user';
-import {randomStr} from '../../src/randomizer';
+import {randomNum, randomStr} from '../../src/randomizer';
 
 describe('Profile update after oneClick registration', () => {
 
@@ -17,12 +17,43 @@ describe('Profile update after oneClick registration', () => {
      }
      */
 
+    //todo phone change, pwd change, birthday change
     it('C19323 (+) change name', async () => {
 
         const {data} = await register.one_click_reg();
         // console.log(data);
         const password = data.password;
         const newName = randomStr();
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            name: newName
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.name).to.equal(newName);
+    });
+
+    it('C19323 (-) change to short name', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newName = randomStr(2);
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            name: newName
+        });
+        // console.log(updatedUser);
+        expect(updatedUser.name).to.equal(newName);
+    });
+
+    it('C19323 (-) change to long name', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+        const newName = randomStr(17);
 
         const {data: {updatedUser}} = await update_profile({
             password: password,
@@ -80,9 +111,24 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             country: 'countryWasChanged'
         });
-        // console.log(updatedUser);
+        console.log(updatedUser);
         expect(updatedUser.country).to.equal(default_country);
     });
+
+    it('C19323 (+) change phone', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: {updatedUser}} = await update_profile({
+            password: password,
+            phone: randomNum().toString()
+        });
+        console.log(updatedUser);
+        expect(updatedUser.country).to.equal(default_country);
+    });
+
 });
 
 // const logout = () => socket.send('USER:auth-logout', {});
