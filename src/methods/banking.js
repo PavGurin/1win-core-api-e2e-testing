@@ -1,4 +1,4 @@
-import {randomStr} from "../randomizer";
+import {randomStr} from '../randomizer';
 
 export const banking = {
 
@@ -18,6 +18,6 @@ export const banking = {
             currency: 'RUB'
         });
         //console.log(JSON.stringify(result, null, 2));
-    },
+    }
 
-}
+};

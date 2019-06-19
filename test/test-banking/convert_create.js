@@ -9,7 +9,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        // console.log(data);
         expect(data.status).equal(200);
     });
 

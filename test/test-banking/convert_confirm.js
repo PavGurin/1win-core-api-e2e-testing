@@ -1,5 +1,5 @@
-import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Сonvert confirm', () => {
 
@@ -7,7 +7,6 @@ describe('Сonvert confirm', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-confirm', {code: 7446561});
         // console.log(data);
-        expect(data.status).equal(404);
-        expect(data.message).equal('Not found');
+        checkErrorMsg(data, 'Неверный ключ запроса');
     });
 });

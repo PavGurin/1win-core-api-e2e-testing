@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
-import {register} from "../../src/methods/register";
+import {register} from '../../src/methods/register';
 
 describe('Create deposite', () => {
 
@@ -44,9 +44,8 @@ describe('Create deposite', () => {
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        // console.log(data);
-        expect(data).to.deep.include({status: 400});
-        expect(data).to.deep.include({message: 'Неверный формат кошелька'});
+        console.log(data);
+        checkErrorMsg(data, 'Неверный формат кошелька');
     });
 
     it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
@@ -121,7 +120,7 @@ describe('Create deposite', () => {
 
             amount: '100',
             wallet: null,
-            paymentType: 'card_rub',
+            paymentType: 'card_rub'
             //currency: 'RUB'
         });
         //console.log(data);
@@ -134,7 +133,7 @@ describe('Create deposite', () => {
 
             amount: '100',
             wallet: 'порпорпорпэ',
-            paymentType: 'card_rub',
+            paymentType: 'card_rub'
             //currency: 'RUB'
         });
         console.log(data);
