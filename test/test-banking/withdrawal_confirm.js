@@ -1,7 +1,7 @@
-import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
 import {register} from "../../src/methods/register";
 import {banking} from "../../src/methods/banking";
+import {checkErrMsg} from "../../src/responseChecker";
 
 describe('Withdrawal confirm', () => {
 
@@ -10,8 +10,7 @@ describe('Withdrawal confirm', () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 10704});
         //console.log(data);
-        expect(data.status).equal(403);
-        expect(data.message).equal('Выплата не найдена');
+        checkErrMsg(data, 403, 'Выплата не найдена')
     });
 
     it('C19339 (-) Incorrect code response 400', async () => {
@@ -19,7 +18,6 @@ describe('Withdrawal confirm', () => {
         await banking.withdrawal_create();
         const {data} = await socket.send('BANKING:withdrawal-confirm', {code: 99});
         //console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Неверный ключ запроса');
+        checkErrMsg(data, 400, 'Неверный ключ запроса')
     });
 });

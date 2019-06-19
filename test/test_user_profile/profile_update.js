@@ -290,7 +290,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             name: null
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, name is required, no default value provided');
     });
 
@@ -318,7 +318,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             email: null
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, email is required, no default value provided');
     });
 
@@ -332,7 +332,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             email: ''
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, email is invalid');
     });
 
@@ -346,7 +346,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             phone: null
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, phone is required, no default value provided');
     });
 
@@ -360,7 +360,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             phone: ''
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
     });
 
@@ -371,7 +371,7 @@ describe('Profile update after oneClick registration', () => {
         const {data: updatedUser} = await update_profile({
             password: null
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, password is required, no default value provided');
     });
 
@@ -382,7 +382,7 @@ describe('Profile update after oneClick registration', () => {
         const {data: updatedUser} = await update_profile({
             password: ''
         });
-        console.log(updatedUser);
+        //console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Неверный пароль');
     });
 
@@ -429,7 +429,7 @@ describe('Profile update after oneClick registration', () => {
         const {data} = await register.usual_reg();
         // console.log(data);
         const password = data.password;
-        console.log(data.name);
+        //console.log(data.name);
         const {data: {updatedUser: updatedUser}} = await update_profile({
             password: password,
             email: randomStr() + '@new.ru'

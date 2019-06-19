@@ -24,7 +24,7 @@ describe('Auth recovery forgot', () => {
                 account: testingPhone
             }
         );
-        console.log(data);
+        //console.log(data);
         expect(data).to.be.an('object');
         expect(data.userId).equal(default_id);
         expect(data.email).satisfies(email => email.startsWith(testingEmail.substr(0, 2)))

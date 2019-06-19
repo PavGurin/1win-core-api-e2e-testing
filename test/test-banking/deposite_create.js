@@ -1,13 +1,9 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
 import {register} from '../../src/methods/register';
+import {checkErrMsg} from "../../src/responseChecker";
 
 describe('Create deposite', () => {
-
-    function checkErrorMsg(data, expMessage) {
-        expect(data.status).equal(400);
-        expect(data.message).equal(expMessage);
-    }
 
     it('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
         await register.one_click_reg();
@@ -44,8 +40,8 @@ describe('Create deposite', () => {
             paymentType: 'tele2_rub',
             currency: 'RUB'
         });
-        console.log(data);
-        checkErrorMsg(data, 'Неверный формат кошелька');
+        //console.log(data);
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
@@ -83,7 +79,7 @@ describe('Create deposite', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        checkErrorMsg(data, 'Bad request, amount is required, no default value provided');
+        checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
     });
 
     it('C19388 (-) RUB - paymentType = card_rub and wallet = null', async () => {
@@ -96,8 +92,7 @@ describe('Create deposite', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Неверная сумма');
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it('C19389 (-) RUB - paymentType = card_rub and wallet = null', async () => {
@@ -110,8 +105,7 @@ describe('Create deposite', () => {
             currency: 'RUB'
         });
         // console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Bad request, amount is invalid');
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it('C19390 (-) RUB - paymentType = card_rub and currency = null', async () => {
@@ -136,7 +130,7 @@ describe('Create deposite', () => {
             paymentType: 'card_rub'
             //currency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         expect(data.currency).to.equal('RUB');
     });
 });

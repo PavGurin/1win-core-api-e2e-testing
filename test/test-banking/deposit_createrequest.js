@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import {register} from '../../src/methods/register';
+import {checkErrMsg} from "../../src/responseChecker";
 
 describe('Deposit requests', () => {
     //TODO больше проверок на PaymentType
@@ -32,7 +33,6 @@ describe('Deposit requests', () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-request', {h: 'gjhg'});
         // console.log(data);
-        expect(data.status).equal(404);
-        expect(data.message).equal('Запрос депозита не найден');
+        checkErrMsg(data, 404, 'Запрос депозита не найден')
     });
 });

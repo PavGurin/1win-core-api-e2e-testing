@@ -1,5 +1,5 @@
 import {userList} from '../../src/methods/userList';
-import {checkErrorMsg} from '../../src/responseChecker';
+import {checkErrMsg} from '../../src/responseChecker';
 
 describe('Сonvert confirm', () => {
 
@@ -7,6 +7,6 @@ describe('Сonvert confirm', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-confirm', {code: 7446561});
         // console.log(data);
-        checkErrorMsg(data, 'Неверный ключ запроса');
+        checkErrMsg(data, 400, 'Неверный ключ запроса')
     });
 });

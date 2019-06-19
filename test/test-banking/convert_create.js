@@ -1,5 +1,6 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
+import {checkErrMsg} from "../../src/responseChecker";
 
 describe('Convert', () => {
 
@@ -86,8 +87,7 @@ describe('Convert', () => {
             receiverCurrency: 'USD'
         });
         // console.log(data);
-        expect(data).to.deep.include({status: 403});
-        expect(data).to.deep.include({message: 'Недостаточно средств'});
+        checkErrMsg(data, 403, 'Недостаточно средств')
     });
 
     it('C19348 Create after login valid request 1000 USD -> RUB(not enough money) ', async () => {
