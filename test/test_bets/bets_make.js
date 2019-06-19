@@ -28,7 +28,7 @@ describe("Bets check", () => {
                 }
             }
         );
-        console.log(betData);
+        //console.log(betData);
 
         expect(betData).to.deep.include({status: 403});
         expect(betData).to.deep.include({message: 'Недостаточно средств'});
@@ -57,7 +57,7 @@ describe("Bets check", () => {
                 }
             }
         );
-        console.log(betData);
+        //console.log(betData);
 
         expect(betData).to.deep.include({status: 403});
         expect(betData).to.deep.include({message: 'Недостаточно средств'});

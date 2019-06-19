@@ -1,6 +1,6 @@
+import {randomNum, randomStr} from './randomizer';
+
 const partner_key = 'test001';
-// const birthday = 946587600002;
-// const default_password = '123456';
 
 export const register = {
 
@@ -8,10 +8,26 @@ export const register = {
         return await socket.send('USER:auth-register',
             {
                 isShort: true,
-                country: 'ru',
+                country: default_country,
                 timezone: 23,
                 partner_key: partner_key
             });
+    },
+
+    async usual_reg(usualRegistration) {
+        return await socket.send('USER:auth-register',
+            {
+                isShort: false,
+                name: randomStr(),
+                email: randomStr(5) + '_test@new.xyz',
+                phone: randomNum().toString(),
+                password: default_password,
+                repeat_password: default_password,
+                country: default_country,
+                timezone: 23,
+                birthday: 946587600000,
+                partner_key: partner_key,
+                ...usualRegistration
+            });
     }
 };
-
