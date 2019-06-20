@@ -1,11 +1,8 @@
 import {expect} from 'chai';
 import {checkErrorMsg} from '../../src/responseChecker';
+import {register} from '../../src/methods/register';
 
 describe('Auth recovery confirm', () => {
-
-    const new_password = '123456';
-    const userId = 1491435; // prod 1490385
-    const correct_code = 6391721;
 
     //TODO need to get correct_code from mail
     it.skip('C19316 (+) with correct code', async () => {
@@ -21,15 +18,22 @@ describe('Auth recovery confirm', () => {
         expect(data.error).to.equal(false);
     });
 
-    //TODO request to recovery > confirm request
+    // register > ask for recovery > try to confirm > check
     it('C19317 (-) with incorrect code', async () => {
-        const {data} = await socket.send('USER:forgot-confirm', {
+        const {data: regData} = await register.one_click_reg();
+        // console.log(regData);
 
-            userId: userId,
-            code: 1234567,
-            password: new_password,
-            repeat_password: new_password
+        await socket.send('USER:forgot-recovery', {
+            account: regData.email
         });
-        checkErrorMsg(data, 'Неверный ключ запроса');
+
+        const {data: confirmReq} = await socket.send('USER:forgot-confirm', {
+            userId: regData.id,
+            code: 1234567,
+            password: default_password,
+            repeat_password: default_password
+        });
+        // console.log(confirmReq);
+        checkErrorMsg(confirmReq, 'Неверный ключ запроса');
     });
 });
