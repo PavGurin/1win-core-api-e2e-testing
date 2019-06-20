@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {checkErrorMsg} from '../../src/responseChecker';
+import {checkError404, checkErrorMsg} from '../../src/responseChecker';
 import {register} from '../../src/methods/register';
 
 describe('Auth recovery forgot', () => {
@@ -34,16 +34,13 @@ describe('Auth recovery forgot', () => {
         checkSuccess(regData, recoveryReq);
     });
 
+    // maybe error message will be changed
     it('C19320 (-) nonexistent user', async () => {
-        // восстановление пароля с несуществующим пользователем должно возвращать ошибку
-        try {
-            await socket.send('USER:forgot-recovery', {
-                account: 'nonexistent_user'
-            });
-            expect('но не упал').equal('Тест должен упасть');
-        } catch (e) {
-            expect(true).equal(true);
-        }
+        const {data} = await socket.send('USER:forgot-recovery', {
+            account: 'nonexistent_user'
+        });
+        // console.log(data);
+        checkError404(data, 'Bad Request.');
     });
 
     it('C19321 (-) empty account field', async () => {

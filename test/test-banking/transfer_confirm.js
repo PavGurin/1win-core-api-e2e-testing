@@ -1,8 +1,7 @@
-import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
-import {register} from "../../src/methods/register";
-import {banking} from "../../src/methods/banking";
-
+import {register} from '../../src/methods/register';
+import {banking} from '../../src/methods/banking';
+import {checkError404, checkErrorMsg} from '../../src/responseChecker';
 
 describe('Transfer confirm', () => {
 
@@ -11,8 +10,7 @@ describe('Transfer confirm', () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 5372831});
         // console.log(data);
-        expect(data.status).equal(404);
-        expect(data.message).equal('Перевод не найден');
+        checkError404(data, 'Перевод не найден');
     });
 
     it('C19366 (-) Incorrect code with 400 code response', async () => {
@@ -20,7 +18,6 @@ describe('Transfer confirm', () => {
         await banking.transfet_create();
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 111});
         // console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Неверный ключ запроса');
+        checkErrorMsg(data, 'Неверный ключ запроса');
     });
 });

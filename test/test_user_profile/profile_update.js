@@ -451,5 +451,34 @@ describe('Profile update after oneClick registration', () => {
         });
         // console.log(updatedUser);
         expect(data.birthday).to.not.equal(updatedUser.birthday);
+        expect(updatedUser.birthday).to.equal(newBirthday);
+    });
+
+    it('C21419 (-) null birthday', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            birthday: null
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, birthday is required');
+    });
+
+    it('C21420 (-) empty birth1day', async () => {
+
+        const {data} = await register.one_click_reg();
+        // console.log(data);
+        const password = data.password;
+
+        const {data: updatedUser} = await update_profile({
+            password: password,
+            birthday: ''
+        });
+        // console.log(updatedUser);
+        checkErrorMsg(updatedUser, 'Bad request, birthday should have a type of number, but found string');
     });
 });
