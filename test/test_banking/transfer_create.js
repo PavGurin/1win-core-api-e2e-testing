@@ -96,9 +96,10 @@ describe('Transfer', () => {
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
             amount: 2,
+            //currency: 'RUB'
             }
         );
-        //console.log(data);
+        console.log(data);
         expect(data.confirmationRequested).equal(true);
         expect(data.email).not.equal(null);
     });
