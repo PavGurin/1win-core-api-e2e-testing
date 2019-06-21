@@ -17,29 +17,6 @@ describe('Transfer', () => {
         checkErrMsg(data, 400, 'Недостаточно средств')
     });
 
-    it('C19368 Without money , not enough amount + USD', async () => {
-        await register.one_click_reg();
-        const {data} = await socket.send('BANKING:transfer-create', {
-                targetEmail: 'test_transfer@mailinator.com',
-                amount: 1,
-                currency: 'USD'
-            }
-        );
-        checkErrMsg(data, 400, 'Недостаточно средств')
-    });
-
-    it('C19369 (-) Without money , enough amount + USD', async () => {
-        await register.one_click_reg();
-        const {data} = await socket.send('BANKING:transfer-create', {
-                targetEmail: 'test_transfer@mailinator.com',
-                amount: 100,
-                currency: 'USD'
-            }
-        );
-        //console.log(data);
-        checkErrMsg(data, 400, 'Недостаточно средств')
-    });
-
     it('C19370 (-) Without money , enough amount + RUB', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-create', {
@@ -67,30 +44,6 @@ describe('Transfer', () => {
 
     });
 
-    it('C19372 (+) With money + USD, amount = 1 USD', async () => {
-        await userList.login_with_real_money();
-        const {data} = await socket.send('BANKING:transfer-create', {
-                targetEmail: 'test_transfer@mailinator.com',
-                amount: 1,
-                currency: 'USD'
-            }
-        );
-        //console.log(data);
-        checkErrMsg(data, 400, 'Недостаточно средств')
-    });
-
-    it('C19373 (+) With money + USD, amount = 2 USD', async () => {
-        await userList.login_with_real_money();
-        const {data} = await socket.send('BANKING:transfer-create', {
-                targetEmail: 'test_transfer@mailinator.com',
-                amount: 2,
-                currency: 'USD'
-            }
-        );
-        //console.log(data);
-        checkErrMsg(data, 400, 'Недостаточно средств')
-    });
-
     it('C19374 (+) With money, currency = null', async () => {
         await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:transfer-create', {
@@ -114,4 +67,55 @@ describe('Transfer', () => {
         //console.log(data);
         checkErrMsg(data, 400, 'Недостаточно средств')
     });
+});
+
+describe('Transfer USD', () => {
+
+    it('C19373 (+) With money + USD, amount = 2 USD', async () => {
+        await userList.login_with_real_money();
+        const {data} = await socket.send('BANKING:transfer-create', {
+                targetEmail: 'test_transfer@mailinator.com',
+                amount: 2,
+                currency: 'USD'
+            }
+        );
+        //console.log(data);
+        checkErrMsg(data, 400, 'Недостаточно средств')
+    });
+
+    it('C19372 (+) With money + USD, amount = 1 USD', async () => {
+        await userList.login_with_real_money();
+        const {data} = await socket.send('BANKING:transfer-create', {
+                targetEmail: 'test_transfer@mailinator.com',
+                amount: 1,
+                currency: 'USD'
+            }
+        );
+        //console.log(data);
+        checkErrMsg(data, 400, 'Недостаточно средств')
+    });
+
+    it('C19368 Without money , not enough amount + USD', async () => {
+        await register.one_click_reg();
+        const {data} = await socket.send('BANKING:transfer-create', {
+                targetEmail: 'test_transfer@mailinator.com',
+                amount: 1,
+                currency: 'USD'
+            }
+        );
+        checkErrMsg(data, 400, 'Недостаточно средств')
+    });
+
+    it('C19369 (-) Without money , enough amount + USD', async () => {
+        await register.one_click_reg();
+        const {data} = await socket.send('BANKING:transfer-create', {
+                targetEmail: 'test_transfer@mailinator.com',
+                amount: 100,
+                currency: 'USD'
+            }
+        );
+        //console.log(data);
+        checkErrMsg(data, 400, 'Недостаточно средств')
+    });
+
 });
