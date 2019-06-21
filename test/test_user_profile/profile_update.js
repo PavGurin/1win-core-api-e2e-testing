@@ -41,13 +41,12 @@ describe('Profile update after oneClick registration', () => {
         const password = data.password;
         const newName = randomStr(2);
 
-        const {data: {updatedUser}} = await update_profile({
+        const {data: updatedUser} = await update_profile({
             password: password,
             name: newName
         });
         // console.log(updatedUser);
-        expect(data.name).to.equal(updatedUser.name);
-        checkErrorMsg(updatedUser, 'error');
+        checkErrorMsg(updatedUser, 'Bad request, name is invalid');
     });
 
     it('C21395 (-) change to long name', async () => {
@@ -57,13 +56,12 @@ describe('Profile update after oneClick registration', () => {
         const password = data.password;
         const newName = randomStr(17);
 
-        const {data: {updatedUser}} = await update_profile({
+        const {data: updatedUser} = await update_profile({
             password: password,
             name: newName
         });
         // console.log(updatedUser);
-        expect(data.name).to.equal(updatedUser.name);
-        checkErrorMsg(updatedUser, 'error');
+        checkErrorMsg(updatedUser, 'Bad request, name is invalid');
     });
 
     it('C21396 (+) change eMail', async () => {
@@ -277,6 +275,7 @@ describe('Profile update after oneClick registration', () => {
             login: updatedUser.email,
             password: newPassword
         });
+        // console.log(updatedUser);
         checkErrorMsg(loginResult, 'Неверный email или пароль');
     });
 
@@ -290,7 +289,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             name: null
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, name is required, no default value provided');
     });
 
@@ -305,7 +304,7 @@ describe('Profile update after oneClick registration', () => {
             name: ''
         });
         // console.log(updatedUser);
-        checkErrorMsg(updatedUser, 'Bad request, name is required, no default value provided');
+        checkErrorMsg(updatedUser, 'Bad request, name is invalid');
     });
 
     it('C21407 (-) null email', async () => {
@@ -318,7 +317,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             email: null
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, email is required, no default value provided');
     });
 
@@ -332,7 +331,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             email: ''
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, email is invalid');
     });
 
@@ -346,7 +345,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             phone: null
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, phone is required, no default value provided');
     });
 
@@ -360,7 +359,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             phone: ''
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
     });
 
@@ -371,7 +370,7 @@ describe('Profile update after oneClick registration', () => {
         const {data: updatedUser} = await update_profile({
             password: null
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, password is required, no default value provided');
     });
 
@@ -382,7 +381,7 @@ describe('Profile update after oneClick registration', () => {
         const {data: updatedUser} = await update_profile({
             password: ''
         });
-        console.log(updatedUser);
+        // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Неверный пароль');
     });
 

@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {checkError404, checkErrorMsg} from '../../src/responseChecker';
+import {checkErrorMsg} from '../../src/responseChecker';
 import {register} from '../../src/methods/register';
 
 describe('Auth recovery forgot', () => {
@@ -39,8 +39,8 @@ describe('Auth recovery forgot', () => {
         const {data} = await socket.send('USER:forgot-recovery', {
             account: 'nonexistent_user'
         });
-        // console.log(data);
-        checkError404(data, 'Bad Request.');
+        console.log(data);
+        checkErrorMsg(data, 'Пользователь не существует');
     });
 
     it('C19321 (-) empty account field', async () => {
