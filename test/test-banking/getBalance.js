@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
-import {register} from "../../src/methods/register";
+import {register} from '../../src/methods/register';
 
 describe('Balance get', () => {
 
@@ -28,5 +28,4 @@ describe('Balance get', () => {
         expect(data["2"].balance).equal(0);
         expect(data["2"].currency).equal('EUR');
     });
-
 });
