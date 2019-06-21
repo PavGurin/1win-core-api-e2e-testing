@@ -5,7 +5,6 @@ import {checkErrMsg} from "../../src/responseChecker";
 
 describe('Create deposite', () => {
 
-
     it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
