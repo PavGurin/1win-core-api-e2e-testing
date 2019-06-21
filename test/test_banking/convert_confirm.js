@@ -1,7 +1,7 @@
 import {userList} from '../../src/methods/userList';
 import {checkErrMsg} from '../../src/responseChecker';
 
-describe('Сonvert confirm', () => {
+describe.skip('Сonvert confirm', () => {
 
     it('C19352 (-) Incorrect code', async () => {
         await userList.login_with_RUB();
