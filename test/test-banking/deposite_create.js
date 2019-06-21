@@ -114,20 +114,42 @@ describe('Create deposite', () => {
         expect(data.message).equal('Bad request, amount is invalid');
     });
 
-    it('C19390 (-) RUB - paymentType = card_rub and currency = null', async () => {
-        await userList.login_with_RUB();
+    it('C19390 (+) RUB - paymentType = card_rub and currency = null', async () => {
+        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
             amount: '100',
-            wallet: null,
-            paymentType: 'card_rub'
+            wallet: '00001111222223333',
+            paymentType: 'card_rub',
             //currency: 'RUB'
         });
         //console.log(data);
-        expect(data.currency).to.equal('RUB');
+        expect(data.apiResponse.error).equal(false);
+        expect(data.currency).equal('RUB');
+        expect(data.user_id).not.equal(null);
+        expect(data.paymentType).equal('card_rub');
+        expect(data.amount).equal(100);
     });
 
-    it('C19391 (-) RUB - paymentType = card_rub and wallet != null', async () => {
+    it('C22187 (+) RUB - paymentType = card_rub and currency = null', async () => {
+        await userList.login_with_real_money();
+        const {data} = await socket.send('BANKING:deposit-create', {
+
+            amount: '100',
+            wallet: '',
+            paymentType: 'card_rub',
+            //currency: 'RUB'
+        });
+        //console.log(data);
+        expect(data.apiResponse.error).equal(false);
+        expect(data.currency).equal('RUB');
+        expect(data.user_id).not.equal(null);
+        expect(data.paymentType).equal('card_rub');
+        expect(data.amount).equal(100);
+
+    });
+
+    it('C19391 (+) RUB - paymentType = card_rub and wallet != null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -136,7 +158,12 @@ describe('Create deposite', () => {
             paymentType: 'card_rub'
             //currency: 'RUB'
         });
+        //console.log(data);
         console.log(data);
-        expect(data.currency).to.equal('RUB');
+        expect(data.apiResponse.error).equal(false);
+        expect(data.currency).equal('RUB');
+        expect(data.user_id).not.equal(null);
+        expect(data.paymentType).equal('card_rub');
+        expect(data.amount).equal(100);
     });
 });
