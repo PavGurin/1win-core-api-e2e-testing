@@ -39,7 +39,7 @@ describe('Auth recovery forgot', () => {
         const {data} = await socket.send('USER:forgot-recovery', {
             account: 'nonexistent_user'
         });
-        console.log(data);
+        // console.log(data);
         checkErrorMsg(data, 'Пользователь не существует');
     });
 
