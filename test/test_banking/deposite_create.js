@@ -59,7 +59,7 @@ describe('Create deposite', () => {
 
 });
 
-describe.skip('Create deposite - RUB @master', () => {
+describe('Create deposite - RUB @master', () => {
 
     it('C19384 RUB - paymentType = card_rub and wallet = empty', async () => {
         await register.one_click_reg();
