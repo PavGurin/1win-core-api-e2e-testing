@@ -1,12 +1,14 @@
-import {expect} from "chai"
+import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
+import {register} from '../../src/methods/register';
 
 describe("Bets check", () => {
 
     //TODO вынести методы в глобальные переменные по созданию ставки
     //TODO после обновить старые тесты с маркером dev
     it("Bets make ordinar without money", async () => {
-        await userList.login_without_money();
+        const {data: regReq} = await register.one_click_reg();
+        await userList.login_with_params(regReq.email, regReq.password);
         const {betData} = await socket.send("BETS:bets-make",
             {
                 "currency": "RUB",
@@ -62,5 +64,4 @@ describe("Bets check", () => {
         expect(betData).to.deep.include({status: 403});
         expect(betData).to.deep.include({message: 'Недостаточно средств'});
     })
-
 });
