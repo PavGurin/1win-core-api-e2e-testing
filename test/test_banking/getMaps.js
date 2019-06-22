@@ -33,7 +33,7 @@ describe('Get methods map', () => {
     it('C19358 Payment methods map without login', async () => {
 
         const {data} = await socket.send('BANKING:methods-payment');
-        //console.log(data);
+        console.log(data);
         expect(data).to.be.an('object');
         expect(data.card_rub.text.en).equal('Bank card');
         expect(data.card_rub.text.ru).equal('Банковская карта');
