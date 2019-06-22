@@ -106,6 +106,54 @@ describe('Create deposite for card_rub invalid - RUB', () => {
         checkErrMsg(400, 'Неверная сумма')
     });
 
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(null, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = empty', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(' ', '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = undefined', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(undefined, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub('fjfj', '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub('(#&@(@&%', '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub('50', '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
     it(' amount < min amount', async () => {
         const {user} = await register.one_click_reg();
         const {data1} = await banking.deposite_create_rub(0.6, '',

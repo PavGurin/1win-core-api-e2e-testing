@@ -108,6 +108,54 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
         checkErrMsg(400, 'Неверная сумма')
     });
 
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(null, '',
+            'piastrix_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = empty', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(' ', '',
+            'piastrix_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = undefined', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(undefined, '',
+            'piastrix_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub('fjfj', '',
+            'piastrix_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub('(#&@(@&%', '',
+            'piastrix_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub('50', '',
+            'piastrix_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
     it(' amount < min amount', async () => {
         const {user} = await register.one_click_reg();
         const {data1} = await banking.deposite_create_rub(0.6, '',
