@@ -22,7 +22,7 @@ describe('Deposit requests', () => {
             amount: 100,
             wallet: '',
             paymentType: 'card_rub',
-            currency: 'RUB'
+            currency: currency
         });
         //console.log(data);
         expect(data.redirectUrl).not.equal(null);
