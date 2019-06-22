@@ -7,33 +7,33 @@ import {checkErrMsg} from "../../../../src/responseChecker";
 //     const {user} = await register.one_click_reg();
 //     }
 // );
-const paymentType = 'card_rub';
+const paymentType = 'beeline_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for card_rub - USD @master', () => {
+describe.skip('Create deposite for beeline_rub - USD @master', () => {
 
-    it(' (+) amount = 100 & wallet = empty', async () => {
+    it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100, '', paymentType, currency);
+            100, '+79215598286', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 100)
     });
 
-    it(' (+) amount = 100.01 & wallet = symbols', async () => {
+    it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100.01, '123 autotests', paymentType, currency);
+            100.01, '79215598286', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 100.01)
     });
 
-    it(' amount = 2000 & wallet = symbols', async () => {
+    it(' amount = 2000 & wallet = (8)phone', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            2000, 'порпорпорпэ', paymentType, currency);
+            2000, '89215598286', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 2000)
@@ -41,7 +41,9 @@ describe.skip('Create deposite for card_rub - USD @master', () => {
 
     it(' min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(10, '123234345456 etryrt', paymentType, currency);
+        const {data} = await banking.deposite_create_rub(10,
+            '+79215598286', paymentType, currency);
+
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 10)
@@ -49,7 +51,9 @@ describe.skip('Create deposite for card_rub - USD @master', () => {
 
     it('> min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(11, '12№%:№%:45456etryrt', paymentType, currency);
+        const {data} = await banking.deposite_create_rub(11,
+            '+79215598286', paymentType, currency);
+
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 11)
@@ -57,58 +61,58 @@ describe.skip('Create deposite for card_rub - USD @master', () => {
 
     it(' max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(100000, '09090909999',
-            paymentType, currency);
+        const {data} = await banking.deposite_create_rub(15000,
+            '+79215598286', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
-            paymentType, 100000)
+            paymentType, 15000)
     });
 
     it('< max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(99999, '0[[[?<><?999',
+        const {data} = await banking.deposite_create_rub(14999, '+79215598286',
             paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
-            paymentType, 99999)
-    });
-
-    //Не знаю, какой должен быть результат
-    it(' wallet = undefined', async () => {
-        const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(100, undefined,
-            paymentType, currency);
-        //console.log(data);
-        succses_deposit_create(data, currency, user.id,
-            paymentType, 100)
+            paymentType, 14999)
     });
 
     it(' without currency', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
-            wallet: '00001111222223333',
+            wallet: '+79215598286',
             paymentType: paymentType,
         });
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 100)
     });
+
+    it('< max amount & wallet = valid short number', async () => {
+        //TODO узнать валидный короткий номер городского телефона
+        const {user} = await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(14999, '+79001234',
+            paymentType, currency);
+        //console.log(data);
+        succses_deposit_create(data, currency, user.id,
+            paymentType, 14999)
+    });
 });
 
-describe('Create deposite for card_rub invalid - USD', () => {
+describe('Create deposite for beeline_rub invalid - USD', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(0, '',
+        const {data} = await banking.deposite_create_rub(0, '+79215598286',
             paymentType, currency);
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it(' amount = null', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(null, '',
+        const {data} = await banking.deposite_create_rub(null, '+79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
@@ -116,7 +120,7 @@ describe('Create deposite for card_rub invalid - USD', () => {
 
     it(' amount = empty', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(' ', '',
+        const {data} = await banking.deposite_create_rub(' ', '79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
@@ -124,15 +128,15 @@ describe('Create deposite for card_rub invalid - USD', () => {
 
     it(' amount = undefined', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(undefined, '',
+        const {data} = await banking.deposite_create_rub(undefined, '79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
     });
 
-    it(' amount = latinic', async () => {
+    it(' amount = latanic', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub('fjfj', '',
+        const {data} = await banking.deposite_create_rub('fjfj', '79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
@@ -140,42 +144,50 @@ describe('Create deposite for card_rub invalid - USD', () => {
 
     it(' amount = string', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub('50', '',
+        const {data} = await banking.deposite_create_rub('50', '79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Неверная сумма')
+    });
+
+    it('  amount double < min amount', async () => {
+        await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(0.6, '79215598286',
+            paymentType, currency);
+        //console.log(data);
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(0.6, '',
+        const {data} = await banking.deposite_create_rub(9, '79215598286',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(data, 400, 'Неверная сумма')
-    });
-
-    it(' 1 < amount < min amount', async () => {
-        await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(9, '',
-            paymentType, currency);
-        console.log(data);
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(100001, '',
+        const {data} = await banking.deposite_create_rub(15001, '79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' amount doudle > max amount ', async () => {
+    it(' amount double > max amount', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(100000.56, '',
+        const {data} = await banking.deposite_create_rub(15000.000001, '79215598286',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(data, 400, 'Неверная сумма')
+    });
+
+    it(' wallet = undefined', async () => {
+        await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(100, undefined,
+            paymentType, currency);
+        //console.log(data);
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = null', async () => {
@@ -186,24 +198,38 @@ describe('Create deposite for card_rub invalid - USD', () => {
         checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
-    it(' wallet = long string', async () => {
+    it(' wallet = empty', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(10,
-            //TODO посмотреть количество символов доступных в кошельке
-            '1231231231231231453453345345342312312312312123123123123',
+        const {data} = await banking.deposite_create_rub(100, '',
             paymentType, currency);
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
-    //Не знаю что тут должно быть
-    it(' incorrect paymentType = card_rub_test', async () => {
+    it(' wallet = number', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(10,
+        const {data} = await banking.deposite_create_rub(100, 111122223330000,
+            paymentType, currency);
+        //console.log(data);
+        checkErrMsg(data, 400, 'Bad request, wallet should have a type of string, but found number')
+    });
+
+    it(' wallet = short phone', async () => {
+        await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(100, +7123,
+            paymentType, currency);
+        //console.log(data);
+        checkErrMsg(data, 400, 'Bad request, wallet should have a type of string, but found number')
+    });
+
+    //Не знаю что тут должно быть
+    it(' incorrect paymentType = beeline_rub_test', async () => {
+        await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
-            '3123123123',
-            'card_rub_test', currency);
-        console.log(data);
+            '79215598286',
+            'beeline_rub_test', currency);
+        //console.log(data);
         checkErrMsg(data, 400, '?????')
     });
 });

@@ -8,9 +8,9 @@ import {checkErrMsg} from "../../../../src/responseChecker";
 //     }
 // );
 const paymentType = 'qiwi_rub';
-const currency = 'RUB';
+const currency = 'USD';
 
-describe('Create deposite for qiwi_rub - RUB @master', () => {
+describe.skip('Create deposite for qiwi_rub - USD @master', () => {
 
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {user} = await register.one_click_reg();
@@ -238,7 +238,7 @@ describe('Create deposite for qiwi_rub - RUB @master', () => {
     });
 });
 
-describe('Create deposite for qiwi_rub invalid - RUB', () => {
+describe('Create deposite for qiwi_rub invalid - USD', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
