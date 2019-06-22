@@ -76,7 +76,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
     //Не знаю, какой должен быть результат
     it(' without currency', async () => {
         const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(100, undefined,
+        const {data} = await banking.deposite_create_rub(100, undefined,
             'card_rub', 'RUB')
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
@@ -99,104 +99,104 @@ describe('Create deposite for card_rub - RUB @master', () => {
 describe('Create deposite for card_rub invalid - RUB', () => {
 
     it(' amount = 0', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(0, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(0, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(null, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(null, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = empty', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(' ', '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(' ', '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = undefined', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(undefined, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(undefined, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub('fjfj', '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub('fjfj', '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub('(#&@(@&%', '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub('(#&@(@&%', '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub('50', '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub('50', '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(0.6, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(0.6, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(9, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(9, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(100001, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(100001, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(100000.56, '',
+        await register.one_click_reg();
+        await banking.deposite_create_rub(100000.56, '',
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' wallet = null', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(1, null,
+        await register.one_click_reg();
+        await banking.deposite_create_rub(100, null,
             'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
     });
 
     it(' wallet = long string', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(1,
+        await register.one_click_reg();
+        await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
             'card_rub', 'RUB')
@@ -206,8 +206,8 @@ describe('Create deposite for card_rub invalid - RUB', () => {
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = card_rub_test', async () => {
-        const {user} = await register.one_click_reg();
-        const {data1} = await banking.deposite_create_rub(1,
+        await register.one_click_reg();
+        await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
             'card_rub_test', 'RUB')
