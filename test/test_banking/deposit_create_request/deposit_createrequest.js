@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {register} from '../../src/methods/register';
-import {checkErrMsg} from "../../src/responseChecker";
+import {register} from '../../../src/methods/register';
+import {checkErrMsg} from "../../../src/responseChecker";
 
 describe('Deposit requests', () => {
     //TODO больше проверок на PaymentType

@@ -18,6 +18,17 @@ export const banking = {
             currency: 'RUB'
         });
         //console.log(JSON.stringify(result, null, 2));
-    }
+    },
 
+
+    async deposite_create_rub(amount, wallet, paymentType, currency) {
+        const result = await socket.send('BANKING:withdrawal-create', {
+            amount: amount,
+            wallet: wallet,
+            paymentType: paymentType,
+            currency: currency,
+        });
+    },
 };
+
+

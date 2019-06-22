@@ -1,8 +1,18 @@
 import {userList} from '../../../src/methods/userList';
 import {register} from '../../../src/methods/register';
 import {checkErrMsg} from "../../../src/responseChecker";
+import {banking} from "../../../src/methods/banking";
 
 describe('Create deposite - RUB validation messages', () => {
+
+    //Завести багу на 500, в ответе должно приходить 400 с текстом ошибки
+    it('< max amount & wallet = numbers', async () => {
+        const {user} = await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(100, null,
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверный формат кошелька')
+    });
 
     it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
         await register.one_click_reg();
