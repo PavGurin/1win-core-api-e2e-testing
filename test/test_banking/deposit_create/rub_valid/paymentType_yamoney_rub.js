@@ -1,6 +1,7 @@
 import {register} from '../../src/methods/register';
 import {banking} from "../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../src/expects/expect_banking";
+import {checkErrMsg} from "../../../../src/responseChecker";
 
 // beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
 //     const {user} = await register.one_click_reg();
@@ -94,5 +95,77 @@ describe('Create deposite for yamoney_rub - RUB @master', () => {
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
             'yamoney_rub', 100)
+    });
+});
+
+describe('Create deposite for yamoney_rub invalid - RUB', () => {
+
+    it(' amount = 0', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(0, '',
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount < min amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(0.6, '',
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount < min amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(9, '',
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount > max amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(100001, '',
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount > max amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(100000.56, '',
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' wallet = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(1, null,
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверный формат кошелька')
+    });
+
+    it(' wallet = long string', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(1,
+            //TODO посмотреть количество символов доступных в кошельке
+            '1231231231231231453453345345342312312312312123123123123',
+            'yamoney_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверный формат кошелька')
+    });
+
+    //Не знаю что тут должно быть
+    it(' incorrect paymentType = yamoney_rub_test', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(1,
+            //TODO посмотреть количество символов доступных в кошельке
+            '1231231231231231453453345345342312312312312123123123123',
+            'yamoney_rub_test', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, '?????')
     });
 });

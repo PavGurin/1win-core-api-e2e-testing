@@ -1,6 +1,7 @@
 import {register} from '../../src/methods/register';
 import {banking} from "../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../src/expects/expect_banking";
+import {checkErrMsg} from "../../../../src/responseChecker";
 
 // beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
 //     const {user} = await register.one_click_reg();
@@ -92,5 +93,77 @@ describe('Create deposite for card_rub - RUB @master', () => {
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
             'card_rub', 100)
+    });
+});
+
+describe('Create deposite for card_rub invalid - RUB', () => {
+
+    it(' amount = 0', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(0, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount < min amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(0.6, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount < min amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(9, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount > max amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(100001, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' amount > max amount', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(100000.56, '',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверная сумма')
+    });
+
+    it(' wallet = null', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(1, null,
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверный формат кошелька')
+    });
+
+    it(' wallet = long string', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(1,
+            //TODO посмотреть количество символов доступных в кошельке
+            '1231231231231231453453345345342312312312312123123123123',
+            'card_rub', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, 'Неверный формат кошелька')
+    });
+
+    //Не знаю что тут должно быть
+    it(' incorrect paymentType = card_rub_test', async () => {
+        const {user} = await register.one_click_reg();
+        const {data1} = await banking.deposite_create_rub(1,
+            //TODO посмотреть количество символов доступных в кошельке
+            '1231231231231231453453345345342312312312312123123123123',
+            'card_rub_test', 'RUB')
+        //console.log(data);
+        checkErrMsg(400, '?????')
     });
 });
