@@ -76,7 +76,7 @@ describe('Create deposite for piastrix_rub - RUB @master', () => {
     });
 
     //Не знаю, какой должен быть результат
-    it(' without currency', async () => {
+    it(' wallet = undefined', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, undefined,
             'piastrix_rub', 'RUB')
@@ -132,7 +132,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = null', async () => {
+    it(' amount = latinic', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub('fjfj', '',
             'piastrix_rub', 'RUB')
@@ -140,7 +140,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = null', async () => {
+    it(' amount = symbols', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub('(#&@(@&%', '',
             'piastrix_rub', 'RUB')
@@ -148,7 +148,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = null', async () => {
+    it(' amount = string', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub('50', '',
             'piastrix_rub', 'RUB')
