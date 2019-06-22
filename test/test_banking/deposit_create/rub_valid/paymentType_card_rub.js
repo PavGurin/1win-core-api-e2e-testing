@@ -7,10 +7,10 @@ import {succses_deposit_create} from "../../../../src/expects/expect_banking";
 //     }
 // );
 
-describe('Create deposite - RUB @master', () => {
+describe('Create deposite for card_rub - RUB @master', () => {
 
     it(' (+) amount = 100 & wallet = empty', async () => {
-        //const {user} = await register.one_click_reg();
+        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100, '', 'card_rub', 'RUB');
         //console.log(data);
