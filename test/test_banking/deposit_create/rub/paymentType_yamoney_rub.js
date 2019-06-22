@@ -6,6 +6,7 @@ import {checkErrMsg} from "../../../../src/responseChecker";
 // beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
 //     const {user} = await register.one_click_reg();
 //     }
+//
 // );
 
 describe('Create deposite for yamoney_rub - RUB @master', () => {
