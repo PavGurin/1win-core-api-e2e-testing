@@ -2,6 +2,9 @@ import {expect} from 'chai';
 import {register} from '../../../src/methods/register';
 import {checkErrMsg} from "../../../src/responseChecker";
 
+const currency = 'RUB';
+const paymentType = 'card_rub';
+
 describe('Deposit requests', () => {
     //TODO больше проверок на PaymentType
     it('C19376 (-) create without currency @master', async () => {
@@ -9,9 +12,9 @@ describe('Deposit requests', () => {
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
-            paymentType: 'card_rub'
+            paymentType: paymentType,
         });
-        // console.log(data);
+        console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -21,10 +24,10 @@ describe('Deposit requests', () => {
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
-            paymentType: 'card_rub',
+            paymentType: paymentType,
             currency: currency
         });
-        //console.log(data);
+        console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });

@@ -29,6 +29,15 @@ export const banking = {
             currency: currency,
         });
     },
+
+    async deposit_create_request(amount, wallet, paymentType, currency) {
+        return await socket.send('BANKING:deposit-create-request', {
+            amount: amount,
+            wallet: wallet,
+            paymentType: paymentType,
+            currency: currency
+        });
+    },
 };
 
 
