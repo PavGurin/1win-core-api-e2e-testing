@@ -194,7 +194,6 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
             'beeline_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
-
     });
 
     it(' wallet = null', async () => {
@@ -228,7 +227,6 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
     });
-
 
     it(' wallet = long string', async () => {
         await register.one_click_reg();
