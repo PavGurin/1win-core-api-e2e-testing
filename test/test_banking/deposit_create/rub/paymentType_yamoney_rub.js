@@ -6,10 +6,12 @@ import {checkErrMsg} from "../../../../src/responseChecker";
 // beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
 //     const {user} = await register.one_click_reg();
 //     }
-//
 // );
 
-describe('Create deposite for yamoney_rub - RUB @master', () => {
+const paymentType = 'yamoney_rub';
+const currency = 'RUB';
+
+describe('Create deposite for yamoney_ru - RUB @master', () => {
 
     it(' (+) amount = 100 & wallet = empty', async () => {
         const {user} = await register.one_click_reg();
@@ -106,7 +108,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(0, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it(' amount = null', async () => {
@@ -114,7 +116,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(null, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
     });
 
     it(' amount = empty', async () => {
@@ -122,7 +124,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(' ', '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
     });
 
     it(' amount = undefined', async () => {
@@ -130,7 +132,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(undefined, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
     });
 
     it(' amount = latinic', async () => {
@@ -138,7 +140,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub('fjfj', '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
     });
 
     it(' amount = symbols', async () => {
@@ -146,7 +148,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub('(#&@(@&%', '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
     });
 
     it(' amount = number', async () => {
@@ -154,15 +156,15 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub('50', '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' amount < min amount', async () => {
+    it(' amount double < min amount', async () => {
         await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(0.6, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it(' amount < min amount', async () => {
@@ -170,7 +172,7 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(9, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
@@ -178,15 +180,15 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(100001, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' amount > max amount', async () => {
+    it(' amount double > max amount', async () => {
         await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100000.56, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' wallet = null', async () => {
@@ -194,27 +196,27 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(100, null,
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = long string', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(100,
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = yamoney_ru_test', async () => {
         await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(100,
             //TODO посмотреть количество символов доступных в кошельке
-            '1231231231231231453453345345342312312312312123123123123',
+            '12312312',
             'yamoney_ru_test', currency);
         //console.log(data);
-        checkErrMsg(400, '?????')
+        checkErrMsg(data, 400, '?????')
     });
 });
