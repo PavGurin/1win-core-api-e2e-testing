@@ -43,8 +43,7 @@ describe('Create deposite for mts_rub - RUB @master', () => {
     it(' min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(10,
-            '+79001234567', paymentType, currency)
-
+            '+79001234567', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 10)
@@ -53,8 +52,7 @@ describe('Create deposite for mts_rub - RUB @master', () => {
     it('> min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(11,
-            '+79001234567', paymentType, currency)
-
+            '+79001234567', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 11)
@@ -63,7 +61,7 @@ describe('Create deposite for mts_rub - RUB @master', () => {
     it(' max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14999,
-            '+79001234567', paymentType, currency)
+            '+79001234567', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 14999)
@@ -72,7 +70,7 @@ describe('Create deposite for mts_rub - RUB @master', () => {
     it('< max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14998, '+79001234567',
-            paymentType, currency)
+            paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 14998)
@@ -94,7 +92,7 @@ describe('Create deposite for mts_rub - RUB @master', () => {
         //TODO узнать валидный короткий номер городского телефона
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14997, '+79001234',
-            paymentType, currency)
+            paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 14997)
@@ -105,149 +103,149 @@ describe('Create deposite for mts_rub invalid - RUB', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(0, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(null, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(null, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(' ', '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(' ', '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = undefined', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(undefined, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(undefined, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = latanic', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('fjfj', '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub('fjfj', '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = sy,bols', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('(#&@(@&%', '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub('(#&@(@&%', '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('50', '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub('50', '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0.6, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(0.6, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(9, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(9, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(15000, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(15000, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(14999.000001, '+79001234567',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(14999.000001, '+79001234567',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' wallet = undefined', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, undefined,
-            paymentType, currency)
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, null,
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(100, null,
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, '',
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(100, '',
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = number', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, 111122223330000,
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(100, 111122223330000,
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = short phone', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, +7123,
-            paymentType, currency)
+        const {data} = await banking.deposite_create_rub(100, +7123,
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = long string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(1,
             '+797798778987',
-            paymentType, currency)
+            paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = mts_rub_test', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '+79001234567',
             'mts_rub_test', currency)
         //console.log(data);
-        checkErrMsg(400, '?????')
+        checkErrMsg(data, 400, '?????')
     });
 });

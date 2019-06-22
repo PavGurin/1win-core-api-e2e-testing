@@ -104,7 +104,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0, '',
+        const {data} = await banking.deposite_create_rub(0, '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -112,7 +112,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(null, '',
+        const {data} = await banking.deposite_create_rub(null, '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -120,7 +120,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(' ', '',
+        const {data} = await banking.deposite_create_rub(' ', '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -128,7 +128,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = undefined', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(undefined, '',
+        const {data} = await banking.deposite_create_rub(undefined, '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -136,7 +136,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = latinic', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('fjfj', '',
+        const {data} = await banking.deposite_create_rub('fjfj', '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -144,7 +144,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = symbols', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('(#&@(@&%', '',
+        const {data} = await banking.deposite_create_rub('(#&@(@&%', '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -152,7 +152,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('50', '',
+        const {data} = await banking.deposite_create_rub('50', '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -160,7 +160,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0.6, '',
+        const {data} = await banking.deposite_create_rub(0.6, '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -168,7 +168,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100001, '',
+        const {data} = await banking.deposite_create_rub(100001, '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -176,7 +176,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100000.56, '',
+        const {data} = await banking.deposite_create_rub(100000.56, '',
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
@@ -184,7 +184,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' wallet = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1, null,
+        const {data} = await banking.deposite_create_rub(1, null,
             paymentType, currency);
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
@@ -192,7 +192,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' wallet = long string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
             paymentType, currency);
@@ -203,7 +203,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
     //Не знаю что тут должно быть
     it(' incorrect paymentType = piastrix_rub_test', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
             'piastrix_rub_test', currency);

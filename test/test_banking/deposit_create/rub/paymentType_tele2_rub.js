@@ -105,151 +105,151 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0, '+79772520000',
+        const {data} = await banking.deposite_create_rub(0, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(null, '+79772520000',
+        const {data} = await banking.deposite_create_rub(null, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(' ', '+79772520000',
+        const {data} = await banking.deposite_create_rub(' ', '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = undefined', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(undefined, '+79772520000',
+        const {data} = await banking.deposite_create_rub(undefined, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = latanic', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('fjfj', '+79772520000',
+        const {data} = await banking.deposite_create_rub('fjfj', '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = symbols', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('(#&@(@&%', '+79772520000',
+        const {data} = await banking.deposite_create_rub('(#&@(@&%', '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount = string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('50', '+79772520000',
+        const {data} = await banking.deposite_create_rub('50', '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0.6, '+79772520000',
+        const {data} = await banking.deposite_create_rub(0.6, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(9, '+79772520000',
+        const {data} = await banking.deposite_create_rub(9, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(15001, '+79772520000',
+        const {data} = await banking.deposite_create_rub(15001, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(15000.000001, '+79772520000',
+        const {data} = await banking.deposite_create_rub(15000.000001, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it(' wallet = undefined', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, undefined,
+        const {data} = await banking.deposite_create_rub(100, undefined,
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
 
     });
 
     it(' wallet = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, null,
+        const {data} = await banking.deposite_create_rub(100, null,
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, '',
+        const {data} = await banking.deposite_create_rub(100, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = number', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, 111122223330000,
+        const {data} = await banking.deposite_create_rub(100, 111122223330000,
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     it(' wallet = short phone', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, +7123,
+        const {data} = await banking.deposite_create_rub(100, +7123,
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
 
     it(' wallet = long string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(1,
             '+797798778987',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
+        checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = tele2_rub_test', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(1,
+        const {data} = await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '+79001234567',
             'tele2_rub_test', currency);
         //console.log(data);
-        checkErrMsg(400, '?????')
+        checkErrMsg(data, 400, '?????')
     });
 });
