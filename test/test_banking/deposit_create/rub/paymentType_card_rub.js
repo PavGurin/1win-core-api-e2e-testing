@@ -1,4 +1,4 @@
-import {register} from '../../src/methods/register';
+import {register} from '../../../../src/methods/register';
 import {banking} from "../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../src/responseChecker";
@@ -8,244 +8,209 @@ import {checkErrMsg} from "../../../../src/responseChecker";
 //     }
 // );
 
-describe.skip('Create deposite for megafon_rub - RUB @master', () => {
-//TODO нужна тестовая симкарта теле2
-    it(' (+) amount = 100 & wallet = (+7)phone', async () => {
+describe('Create deposite for card_rub - RUB @master', () => {
+
+    it(' (+) amount = 100 & wallet = empty', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100, '+79001234567', 'megafon_rub', 'RUB');
+            100, '', 'card_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 100)
+            'card_rub', 100)
     });
 
-    it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
+    it(' (+) amount = 100.01 & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100.01, '79001234567', 'megafon_rub', 'RUB');
+            100.01, '123 autotests', 'card_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 100.01)
+            'card_rub', 100.01)
     });
 
-    it(' amount = 2000 & wallet = (8)phone', async () => {
+    it(' amount = 2000 & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            2000, '89001234567', 'megafon_rub', 'RUB');
+            2000, 'порпорпорпэ', 'card_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 2000)
+            'card_rub', 2000)
     });
 
     it(' min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(10,
-            '+79001234567', 'megafon_rub', 'RUB');
+        const {data} = await banking.deposite_create_rub(10, '123234345456 etryrt', 'card_rub', 'RUB')
 
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 10)
+            'card_rub', 10)
     });
 
     it('> min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(11,
-            '+79001234567', 'megafon_rub', 'RUB');
+        const {data} = await banking.deposite_create_rub(11, '12№%:№%:45456etryrt', 'card_rub', 'RUB')
 
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 11)
+            'card_rub', 11)
     });
 
     it(' max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(15000,
-            '+79001234567', 'megafon_rub', 'RUB');
+        const {data} = await banking.deposite_create_rub(100000, '09090909999',
+            'card_rub', 'RUB')
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 15000)
+            'card_rub', 100000)
     });
 
     it('< max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(14999, '+79001234567',
-            'megafon_rub', 'RUB');
+        const {data} = await banking.deposite_create_rub(99999, '0[[[?<><?999',
+            'card_rub', 'RUB')
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 14999)
+            'card_rub', 99999)
+    });
+
+    //Не знаю, какой должен быть результат
+    it(' wallet = undefined', async () => {
+        const {user} = await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(100, undefined,
+            'card_rub', 'RUB')
+        //console.log(data);
+        succses_deposit_create(data, 'RUB', user.id,
+            'card_rub', 100)
     });
 
     it(' without currency', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
-            wallet: '+79001234567',
-            paymentType: 'megafon_rub',
+            wallet: '00001111222223333',
+            paymentType: 'card_rub',
         });
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 100)
-    });
-
-    it('< max amount & wallet = valid short number', async () => {
-        //TODO узнать валидный короткий номер городского телефона
-        const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(14999, '+79001234',
-            'megafon_rub', 'RUB');
-        //console.log(data);
-        succses_deposit_create(data, 'RUB', user.id,
-            'megafon_rub', 14999)
+            'card_rub', 100)
     });
 });
 
-describe('Create deposite for megafon_rub invalid - RUB', () => {
+describe('Create deposite for card_rub invalid - RUB', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0, '+79001234567',
-            'megafon_rub', 'RUB');
-        //console.log(data);
+        await banking.deposite_create_rub(0, '',
+            'card_rub', 'RUB')
+        console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(null, '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(null, '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(' ', '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(' ', '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = undefined', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(undefined, '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(undefined, '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = latanic', async () => {
+    it(' amount = latinic', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('fjfj', '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub('fjfj', '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = sy,bols', async () => {
+    it(' amount = symbols', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('(#&@(@&%', '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub('(#&@(@&%', '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('50', '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub('50', '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0.6, '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(0.6, '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(9, '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(9, '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(15001, '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(100001, '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(15000.000001, '+79001234567',
-            'megafon_rub', 'RUB');
+        await banking.deposite_create_rub(100000.56, '',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
-    });
-
-    it(' wallet = undefined', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, undefined,
-            'megafon_rub', 'RUB');
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-
     });
 
     it(' wallet = null', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub(100, null,
-            'megafon_rub', 'RUB');
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
     });
-
-    it(' wallet = empty', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, '',
-            'megafon_rub', 'RUB');
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-    });
-
-    it(' wallet = number', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, 111122223330000,
-            'megafon_rub', 'RUB');
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-    });
-
-    it(' wallet = short phone', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, +7123,
-            'megafon_rub', 'RUB');
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-    });
-
 
     it(' wallet = long string', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub(1,
-            '+797798778987',
-            'megafon_rub', 'RUB');
+            //TODO посмотреть количество символов доступных в кошельке
+            '1231231231231231453453345345342312312312312123123123123',
+            'card_rub', 'RUB')
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
     });
 
     //Не знаю что тут должно быть
-    it(' incorrect paymentType = megafon_rub_test', async () => {
+    it(' incorrect paymentType = card_rub_test', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
-            '+79001234567',
-            'megafon_rub_test', 'RUB');
+            '1231231231231231453453345345342312312312312123123123123',
+            'card_rub_test', 'RUB')
         //console.log(data);
         checkErrMsg(400, '?????')
     });

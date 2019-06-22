@@ -1,4 +1,4 @@
-import {register} from '../../src/methods/register';
+import {register} from '../../../../src/methods/register';
 import {banking} from "../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../src/responseChecker";

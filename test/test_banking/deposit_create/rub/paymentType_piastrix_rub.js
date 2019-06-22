@@ -1,4 +1,4 @@
-import {register} from '../../src/methods/register';
+import {register} from '../../../../src/methods/register';
 import {banking} from "../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../src/responseChecker";
@@ -8,222 +8,182 @@ import {checkErrMsg} from "../../../../src/responseChecker";
 //     }
 // );
 
-describe.skip('Create deposite for mts_rub - RUB @master', () => {
-//TODO нужна тестовая симкарта теле2
-    it(' (+) amount = 100 & wallet = (+7)phone', async () => {
+describe('Create deposite for piastrix_rub - RUB @master', () => {
+
+    it(' (+) amount = 100 & wallet = empty', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100, '+79001234567', 'mts_rub', 'RUB');
+            100, '', 'piastrix_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 100)
+            'piastrix_rub', 100)
     });
 
-    it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
+    it(' (+) amount = 100.01 & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100.01, '79001234567', 'mts_rub', 'RUB');
+            100.01, '123 autotests', 'piastrix_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 100.01)
+            'piastrix_rub', 100.01)
     });
 
-    it(' amount = 2000 & wallet = (8)phone', async () => {
+    it(' amount = 2000 & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            2000, '89001234567', 'mts_rub', 'RUB');
+            2000, 'порпорпорпэ', 'piastrix_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 2000)
+            'piastrix_rub', 2000)
     });
 
     it(' min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(10,
-            '+79001234567', 'mts_rub', 'RUB')
+        const {data} = await banking.deposite_create_rub(1,
+            '123234345456 etryrt', 'piastrix_rub', 'RUB');
 
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 10)
+            'piastrix_rub', 1)
     });
 
     it('> min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(11,
-            '+79001234567', 'mts_rub', 'RUB')
+        const {data} = await banking.deposite_create_rub(2,
+            '12№%:№%:45456etryrt', 'piastrix_rub', 'RUB');
 
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 11)
+            'piastrix_rub', 2)
     });
 
     it(' max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(14999,
-            '+79001234567', 'mts_rub', 'RUB')
+        const {data} = await banking.deposite_create_rub(100000, '09090909999',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 14999)
+            'piastrix_rub', 100000)
     });
 
     it('< max amount & wallet = numbers', async () => {
         const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(14998, '+79001234567',
-            'mts_rub', 'RUB')
+        const {data} = await banking.deposite_create_rub(99999, '0[[[?<><?999',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 14998)
+            'piastrix_rub', 99999)
+    });
+
+    //Не знаю, какой должен быть результат
+    it(' wallet = undefined', async () => {
+        const {user} = await register.one_click_reg();
+        const {data} = await banking.deposite_create_rub(100, undefined,
+            'piastrix_rub', 'RUB');
+        //console.log(data);
+        succses_deposit_create(data, 'RUB', user.id,
+            'piastrix_rub', 100)
     });
 
     it(' without currency', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
-            wallet: '+79001234567',
-            paymentType: 'mts_rub',
+            wallet: '00001111222223333',
+            paymentType: 'piastrix_rub',
         });
         //console.log(data);
         succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 100)
-    });
-
-    it('< max amount & wallet = valid short number', async () => {
-        //TODO узнать валидный короткий номер городского телефона
-        const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(14997, '+79001234',
-            'mts_rub', 'RUB')
-        //console.log(data);
-        succses_deposit_create(data, 'RUB', user.id,
-            'mts_rub', 14997)
+            'piastrix_rub', 100)
     });
 });
 
-describe('Create deposite for mts_rub invalid - RUB', () => {
+describe('Create deposite for piastrix_rub invalid - RUB', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0, '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(0, '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(null, '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(null, '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = empty', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(' ', '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(' ', '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = undefined', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(undefined, '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(undefined, '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = latanic', async () => {
+    it(' amount = latinic', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('fjfj', '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub('fjfj', '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
-    it(' amount = sy,bols', async () => {
+    it(' amount = symbols', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('(#&@(@&%', '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub('(#&@(@&%', '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount = string', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub('50', '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub('50', '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount < min amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(0.6, '+79001234567',
-            'mts_rub', 'RUB')
-        //console.log(data);
-        checkErrMsg(400, 'Неверная сумма')
-    });
-
-    it(' amount < min amount', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(9, '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(0.6, '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(15000, '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(100001, '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
     });
 
     it(' amount > max amount', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(14999.000001, '+79001234567',
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(100000.56, '',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверная сумма')
-    });
-
-    it(' wallet = undefined', async () => {
-        const {user} = await register.one_click_reg();
-        const {data} = await banking.deposite_create_rub(100, undefined,
-            'mts_rub', 'RUB')
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
     });
 
     it(' wallet = null', async () => {
         await register.one_click_reg();
-        await banking.deposite_create_rub(100, null,
-            'mts_rub', 'RUB')
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-    });
-
-    it(' wallet = empty', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, '',
-            'mts_rub', 'RUB')
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-    });
-
-    it(' wallet = number', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, 111122223330000,
-            'mts_rub', 'RUB')
-        //console.log(data);
-        checkErrMsg(400, 'Неверный формат кошелька')
-    });
-
-    it(' wallet = short phone', async () => {
-        await register.one_click_reg();
-        await banking.deposite_create_rub(100, +7123,
-            'mts_rub', 'RUB')
+        await banking.deposite_create_rub(1, null,
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
     });
@@ -231,19 +191,20 @@ describe('Create deposite for mts_rub invalid - RUB', () => {
     it(' wallet = long string', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub(1,
-            '+797798778987',
-            'mts_rub', 'RUB')
+            //TODO посмотреть количество символов доступных в кошельке
+            '1231231231231231453453345345342312312312312123123123123',
+            'piastrix_rub', 'RUB');
         //console.log(data);
         checkErrMsg(400, 'Неверный формат кошелька')
     });
 
     //Не знаю что тут должно быть
-    it(' incorrect paymentType = mts_rub_test', async () => {
+    it(' incorrect paymentType = piastrix_rub_test', async () => {
         await register.one_click_reg();
         await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
-            '+79001234567',
-            'mts_rub_test', 'RUB')
+            '1231231231231231453453345345342312312312312123123123123',
+            'piastrix_rub_test', 'RUB');
         //console.log(data);
         checkErrMsg(400, '?????')
     });

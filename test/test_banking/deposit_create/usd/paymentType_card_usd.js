@@ -1,4 +1,4 @@
-import {register} from "../../../src/methods/register";
+import {register} from "../../../../src/methods/register";
 import {expect} from "chai";
 
 describe.skip('Create deposite - USD @master', () => {
