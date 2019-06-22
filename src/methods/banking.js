@@ -11,7 +11,7 @@ export const banking = {
     },
 
     async withdrawal_create() {
-        const result = await socket.send('BANKING:withdrawal-create', {
+        return await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
             payment_system: 'card_rub',
@@ -22,7 +22,7 @@ export const banking = {
 
 
     async deposite_create_rub(amount, wallet, paymentType, currency) {
-        const result = await socket.send('BANKING:withdrawal-create', {
+        return await socket.send('BANKING:deposit-create', {
             amount: amount,
             wallet: wallet,
             paymentType: paymentType,

@@ -9,7 +9,7 @@ describe.skip('Create deposite - USD @master', () => {
 
             amount: 100,
             wallet: '',
-            paymentType: 'card_rub',
+            paymentType: paymentType,
             currency: 'USD'
         });
         //console.log(data);
@@ -21,7 +21,7 @@ describe.skip('Create deposite - USD @master', () => {
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
             wallet: '',
-            paymentType: 'card_rub',
+            paymentType: paymentType,
             currency: 'USD'
         });
         //console.log(data);
