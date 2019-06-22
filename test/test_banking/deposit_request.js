@@ -1,5 +1,5 @@
-import {register} from '../../../src/methods/register';
-import {checkErrMsg} from "../../../src/responseChecker";
+import {register} from '../../src/methods/register';
+import {checkErrMsg} from "../../src/responseChecker";
 import {banking} from "../../src/methods/banking";
 
 const currency = 'RUB';
