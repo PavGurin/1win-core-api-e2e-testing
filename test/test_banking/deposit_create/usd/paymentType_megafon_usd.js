@@ -15,8 +15,7 @@ describe.skip('Create deposite for megafon_rub - USD @master', () => {
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
-            100, '79215598286' +
-            '1234567', paymentType, currency);
+            100, '79215598286', paymentType, currency);
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
             paymentType, 100)
@@ -43,8 +42,7 @@ describe.skip('Create deposite for megafon_rub - USD @master', () => {
     it(' min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(10,
-            '79215598286' +
-            '1234567', paymentType, currency);
+            '79215598286', paymentType, currency);
 
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
@@ -54,8 +52,7 @@ describe.skip('Create deposite for megafon_rub - USD @master', () => {
     it('> min amount & wallet = symbols', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(11,
-            '79215598286' +
-            '1234567', paymentType, currency);
+            '79215598286', paymentType, currency);
 
         //console.log(data);
         succses_deposit_create(data, currency, user.id,
