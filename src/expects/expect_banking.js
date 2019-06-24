@@ -6,4 +6,10 @@ export function succses_deposit_create(data, expectedCurrency, expectedUserId, e
     expect(data.user_id).equal(expectedUserId);
     expect(data.paymentType).equal(expectedPaymentType);
     expect(data.amount).equal(expectedAmount);
+};
+
+export function succses_withdrawal_create(data) {
+    expect(data).to.be.an('object');
+    expect(data.email).not.equal(null);
+    expect(data.message).equal(undefined);
 }

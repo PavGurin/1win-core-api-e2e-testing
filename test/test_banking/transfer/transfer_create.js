@@ -69,7 +69,7 @@ describe('Transfer', () => {
     });
 });
 
-describe.skip('Transfer USD', () => {
+describe('Transfer USD', () => {
 
     it('C19373 (+) With money + USD, amount = 2 USD', async () => {
         await userList.login_with_real_money();

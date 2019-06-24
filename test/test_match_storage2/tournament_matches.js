@@ -17,7 +17,7 @@ describe("Tournament hot", () => {
 
 });
 
-describe.skip("Tournament hot filter: prematch", () => {
+describe("Tournament hot filter: prematch", () => {
 
     it(" - tournament-matches live 1 hour", async () => {
         const {data} = await socket.send("MATCH-STORAGE-2:tournament-matches", {

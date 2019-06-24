@@ -16,7 +16,7 @@ describe('Transfer confirm', () => {
 
     it('C19366 (-) Incorrect code with 400 code response', async () => {
         await userList.login_with_real_money();
-        await banking.transfet_create();
+        await banking.transfer_create(100, 'RUB');
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 111});
         // console.log(data);
         checkErrMsg(data, 400, 'Неверный ключ запроса')

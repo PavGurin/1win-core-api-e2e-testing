@@ -11,7 +11,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'tele2_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for tele2 - USD @master', () => {
+describe('Create deposite for tele2 - USD @master', () => {
 //TODO нужна тестовая симкарта теле2
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {user} = await register.one_click_reg();

@@ -11,7 +11,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for yamoney_ru - USD @master', () => {
+describe('Create deposite for yamoney_ru - USD @master', () => {
 
     it(' (+) amount = 100 & wallet = empty', async () => {
         const {user} = await register.one_click_reg();

@@ -10,7 +10,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'card_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for card_rub - USD @master', () => {
+describe('Create deposite for card_rub - USD @master', () => {
 
     it(' (+) amount = 100 & wallet = empty', async () => {
         const {user} = await register.one_click_reg();

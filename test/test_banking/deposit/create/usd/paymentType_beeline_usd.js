@@ -10,7 +10,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'beeline_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for beeline_rub - USD @master', () => {
+describe('Create deposite for beeline_rub - USD @master', () => {
 
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {user} = await register.one_click_reg();
