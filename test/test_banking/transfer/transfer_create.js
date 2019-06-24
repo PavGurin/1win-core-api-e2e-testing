@@ -52,7 +52,7 @@ describe('Transfer', () => {
             //currency: 'RUB'
             }
         );
-        console.log(data);
+        //console.log(data);
         expect(data.confirmationRequested).equal(true);
         expect(data.email).not.equal(null);
     });
@@ -72,7 +72,7 @@ describe('Transfer', () => {
 describe('Transfer USD', () => {
 
     it('C19373 (+) With money + USD, amount = 2 USD', async () => {
-        await userList.login_with_real_money();
+        await userList.login_with_RUB_USD();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 2,
@@ -84,7 +84,7 @@ describe('Transfer USD', () => {
     });
 
     it('C19372 (+) With money + USD, amount = 1 USD', async () => {
-        await userList.login_with_real_money();
+        await userList.login_with_RUB_USD();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
@@ -96,18 +96,19 @@ describe('Transfer USD', () => {
     });
 
     it('C19368 Without money , not enough amount + USD', async () => {
-        await register.one_click_reg();
+        await userList.login_with_RUB_USD();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 1,
                 currency: 'USD'
             }
         );
+        //console.log(data);
         checkErrMsg(data, 400, 'Недостаточно средств')
     });
 
     it('C19369 (-) Without money , enough amount + USD', async () => {
-        await register.one_click_reg();
+        await userList.login_with_RUB_USD();
         const {data} = await socket.send('BANKING:transfer-create', {
                 targetEmail: 'test_transfer@mailinator.com',
                 amount: 100,

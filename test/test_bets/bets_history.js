@@ -118,7 +118,7 @@ describe('Bets history', () => {
             }
         });
 
-        console.log(betsMap);
+        //console.log(betsMap);
         expect(Object.entries(betsMap).length).equal(3);
         expect(Object.values(betsMap).every(({betType}) => betType === 'ordinary')).equal(true);
     });
