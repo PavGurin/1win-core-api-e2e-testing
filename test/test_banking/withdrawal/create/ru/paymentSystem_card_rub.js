@@ -32,28 +32,28 @@ describe('Withdrawal create with invalid test cases ', () => {
     it('(-) Without money ', async () => {
         await register.one_click_reg();
         const {data} = await banking.withdrawal_create(100, '5446546', payment_system, currency)
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad Request.');
     });
 
     it('C19279 (-) Without money card_rub + valid wallet ', async () => {
         await register.one_click_reg();
         const {data} = await banking.withdrawal_create(100, '0000111122223333', payment_system, currency)
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
     it(' (-) Without money card_rub + amount = string ', async () => {
         await register.one_click_reg();
         const {data} = await banking.withdrawal_create('100', '0000111122223333', payment_system, currency)
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
     it('C19324 (-) With money invalid', async () => {
         await userList.login_with_real_money();
         const {data} = await banking.withdrawal_create(100, '5446546', payment_system, currency)
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad Request.');
     });
 

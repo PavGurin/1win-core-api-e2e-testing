@@ -13,7 +13,7 @@ describe('Deposit requests', () => {
             wallet: '',
             paymentType: paymentType,
         });
-        console.log(data);
+        //console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -26,7 +26,7 @@ describe('Deposit requests', () => {
             paymentType: paymentType,
             currency: currency
         });
-        console.log(data);
+        //console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });

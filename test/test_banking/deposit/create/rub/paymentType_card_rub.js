@@ -158,7 +158,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
         await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(9, '',
             paymentType, currency);
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
@@ -192,7 +192,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
             paymentType, currency);
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
@@ -203,7 +203,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
             //TODO посмотреть количество символов доступных в кошельке
             '3123123123',
             'card_rub_test', currency);
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, '?????')
     });
 });

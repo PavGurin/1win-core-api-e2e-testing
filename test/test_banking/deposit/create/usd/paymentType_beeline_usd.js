@@ -106,7 +106,7 @@ describe('Create deposite for beeline_rub invalid - USD', () => {
         await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(0, '+79215598286',
             paymentType, currency);
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
