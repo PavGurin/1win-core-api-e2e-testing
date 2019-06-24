@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
-import {register} from '../../src/methods/register';
+import {generateCoupon, getTournamentMatches} from '../../src/methods/better';
 
 describe('Bets check', () => {
 
@@ -8,70 +8,54 @@ describe('Bets check', () => {
     //TODO после обновить старые тесты с маркером dev
 
     it('Bets make ver1', async () => {
-        const {data} = await socket.send('MATCH-STORAGE-2:sport-categories', {
+        await userList.login_with_real_money();
+        /**
+         get available matches
+         service 'live/prematch'
+         sportId => (football = 1)
+         */
+
+        const {data: matches} = await getTournamentMatches({
             service: 'prematch',
-            sportId: '1',
-            timeFilter: {
-                date: false,
-                hour: false
-            }
+            sportId: '1'
         });
-        console.log(data);
-        const {betData} = await socket.send('BETS:bets-make',
+
+        const coupon = generateCoupon(matches);
+
+        // const singleMatch = Object.values(matches.matchMap)[0];
+        // const odd = singleMatch.baseOddsConfig[0].cellList[0].odd;
+        // // const coupon = new Coupon({...odd});
+
+        console.log('xx');
+        // console.log(match);
+        // console.log(odd);
+        console.log(coupon);
+
+        const response = await socket.send('BETS:bets-make',
             {
-                'currency': 'RUB',
-                'betsMap': {
-                    '': {
-                        'amount': 13,
-                        'couponList': [
+                currency: 'RUB',
+                betsMap: {
+                    [coupon.couponId]: {
+                        amount: 1,
+                        couponList: [
                             {
-                                'service': 'prematch',
-                                'matchId': 16493397,
-                                'typeId': 386,
-                                'subTypeId': 0,
-                                'outCome': 'Draw / No',
-                                'specialValue': '*',
-                                'coefficient': '7.98'
+                                service: coupon.service,
+                                matchId: coupon.matchId,
+                                typeId: coupon.typeId,
+                                subTypeId: coupon.subTypeId,
+                                outCome: coupon.outCome,
+                                specialValue: coupon.specialValue,
+                                coefficient: Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd.coefficient
                             }
                         ]
                     }
                 }
             }
         );
-        console.log(betData);
+        console.log(response);
     });
 
-    it('Bets make ordinar without money', async () => {
-        const {data: regReq} = await register.one_click_reg();
-        await userList.login_with_params(regReq.email, regReq.password);
-        const {betData} = await socket.send('BETS:bets-make',
-            {
-                'currency': 'RUB',
-                'betsMap': {
-                    'prematch_16493397_386_0_Draw / No_*': {
-                        'amount': 1,
-                        'couponList': [
-                            {
-                                'service': 'prematch',
-                                'matchId': 16493397,
-                                'typeId': 386,
-                                'subTypeId': 0,
-                                'outCome': 'Draw / No',
-                                'specialValue': '*',
-                                'coefficient': '7.98'
-                            }
-                        ]
-                    }
-                }
-            }
-        );
-        //console.log(betData);
-
-        expect(betData).to.deep.include({status: 403});
-        expect(betData).to.deep.include({message: 'Недостаточно средств'});
-    });
-
-    it('Bets make ordinar with money', async () => {
+    it.skip('Bets make ordinar with money', async () => {
         await userList.login_with_RUB();
         const {betData} = await socket.send('BETS:bets-make',
             {
