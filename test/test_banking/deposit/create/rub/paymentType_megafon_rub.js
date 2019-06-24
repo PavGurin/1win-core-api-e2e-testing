@@ -3,7 +3,6 @@ import {banking} from "../../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../../src/responseChecker";
 
-
 const paymentType = 'megafon_rub';
 const currency = 'RUB';
 

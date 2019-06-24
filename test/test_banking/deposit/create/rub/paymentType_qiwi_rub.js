@@ -3,10 +3,6 @@ import {banking} from "../../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../../src/responseChecker";
 
-// beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
-//     const {user} = await register.one_click_reg();
-//     }
-// );
 const paymentType = 'qiwi_rub';
 const currency = 'RUB';
 
