@@ -13,146 +13,128 @@ const currency = 'USD';
 describe('Create deposite for qiwi_rub - USD @master', () => {
 
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100, '+79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 100)
+        succses_deposit_create(data, currency, paymentType, 100)
     });
 
     it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100.01, '79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 100.01)
+        succses_deposit_create(data, currency, paymentType, 100.01)
     });
 
     it(' amount = 2000 & wallet = (8)phone', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             2000, '89001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 2000)
+        succses_deposit_create(data, currency, paymentType, 2000)
 
     });
 
     it(' min amount & wallet =  = (+91)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(10,
             '+919001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 10)
+        succses_deposit_create(data, currency, paymentType, 10)
 
     });
 
     it('> min amount & wallet = (+994)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(11,
             '+9949001234567', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 11)
+        succses_deposit_create(data, currency, paymentType, 11)
 
     });
 
     it(' max amount & wallet = (+82)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15000,
             '+829001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15000)
+        succses_deposit_create(data, currency, paymentType, 15000)
 
     });
 
     it('< max amount & wallet = (+372)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14999, '+3729001234567',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 14999)
+        succses_deposit_create(data, currency, paymentType, 14999)
 
     });
 
     it(' without currency & wallet = (+375)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
             wallet: '+3759001234567',
             paymentType: paymentType,
         });
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 100)
+        succses_deposit_create(data, currency, paymentType, 100)
     });
 
     it(' max amount & wallet = (+374)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+3749001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+44)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+449001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+998)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+9989001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+972)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+9729001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+66)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+669001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+90)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+909001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+81)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+8149001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+1)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+19001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+507)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+5079001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+77)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15, '+779001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id, paymentType, 15)
+        succses_deposit_create(data, currency, paymentType, 15)
     });
 
     it(' max amount & wallet = (+380)', async () => {
@@ -160,7 +142,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+3809001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -169,7 +151,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+3719001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -178,7 +160,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+3709001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -187,7 +169,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+9969001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -196,7 +178,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+99559001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -205,7 +187,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+9929001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -214,7 +196,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+3739001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -223,7 +205,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15,
             '+849001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15)
     });
 
@@ -233,7 +215,7 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14999, '+79001234',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14999)
     });
 });

@@ -17,7 +17,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             100, '79215598286', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -26,7 +26,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             100.01, '79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100.01)
     });
 
@@ -35,7 +35,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             2000, '89001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 2000)
     });
 
@@ -45,7 +45,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
             '79215598286', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 10)
     });
 
@@ -55,7 +55,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
             '79215598286', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 11)
     });
 
@@ -64,7 +64,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15000,
             '+79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15000)
     });
 
@@ -73,7 +73,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14999, '+79001234567',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14999)
     });
 
@@ -85,7 +85,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
             paymentType: paymentType,
         });
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -95,7 +95,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14999, '+79001234',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14999)
     });
 });

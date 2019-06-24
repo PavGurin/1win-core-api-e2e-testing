@@ -18,7 +18,7 @@ describe('Create deposite for tele2 - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             100, '+79772520000', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -27,7 +27,7 @@ describe('Create deposite for tele2 - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             100.01, '79772520000', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100.01)
     });
 
@@ -36,7 +36,7 @@ describe('Create deposite for tele2 - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             2000, '89772520000', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 2000)
     });
 
@@ -46,7 +46,7 @@ describe('Create deposite for tele2 - USD @master', () => {
             '+79772520000', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 10)
     });
 
@@ -56,7 +56,7 @@ describe('Create deposite for tele2 - USD @master', () => {
             '+79772520000', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 11)
     });
 
@@ -65,7 +65,7 @@ describe('Create deposite for tele2 - USD @master', () => {
         const {data} = await banking.deposite_create_rub(15000, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 15000)
     });
 
@@ -74,7 +74,7 @@ describe('Create deposite for tele2 - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14999, '+79772520000',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14999)
     });
 
@@ -86,7 +86,7 @@ describe('Create deposite for tele2 - USD @master', () => {
             paymentType: paymentType,
         });
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -96,7 +96,7 @@ describe('Create deposite for tele2 - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14999, '+79772520',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14999)
     });
 });

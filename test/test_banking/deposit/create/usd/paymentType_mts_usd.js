@@ -18,7 +18,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             100, '+79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -27,7 +27,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             100.01, '79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100.01)
     });
 
@@ -36,7 +36,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(
             2000, '89001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 2000)
     });
 
@@ -45,7 +45,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(10,
             '+79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 10)
     });
 
@@ -54,7 +54,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(11,
             '+79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 11)
     });
 
@@ -63,7 +63,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14999,
             '+79001234567', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14999)
     });
 
@@ -72,7 +72,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14998, '+79001234567',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14998)
     });
 
@@ -84,7 +84,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
             paymentType: paymentType,
         });
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -94,7 +94,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
         const {data} = await banking.deposite_create_rub(14997, '+79001234',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 14997)
     });
 });

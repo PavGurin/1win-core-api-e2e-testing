@@ -12,12 +12,16 @@ const currency = 'RUB';
 
 describe('Create deposite for card_rub - RUB @master', () => {
 
+    beforeEach(async () => {
+
+    });
+
     it('C22535 - (+) amount = 100 & wallet = empty', async () => {
         const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100, '', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -26,7 +30,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(
             100.01, '123 autotests', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100.01)
     });
 
@@ -35,7 +39,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(
             2000, 'порпорпорпэ', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 2000)
     });
 
@@ -44,7 +48,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(10, '123234345456 etryrt',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 10)
     });
 
@@ -53,7 +57,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(11, '12№%:№%:45456etryrt',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 11)
     });
 
@@ -62,7 +66,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(100000, '09090909999',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100000)
     });
 
@@ -71,7 +75,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(99999, '0[[[?<><?999',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 99999)
     });
 
@@ -81,7 +85,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
         const {data} = await banking.deposite_create_rub(100, undefined,
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
@@ -93,7 +97,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
             paymentType: paymentType,
         });
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 });
@@ -101,7 +105,7 @@ describe('Create deposite for card_rub - RUB @master', () => {
 describe('Create deposite for card_rub invalid - RUB', () => {
 
     it('C22510 - amount = 0', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(0, '',
             paymentType, currency);
         //console.log(data);
@@ -109,7 +113,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22511 - amount = null', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(null, '',
             paymentType, currency);
         //console.log(data);
@@ -117,7 +121,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22512 - amount = empty', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(' ', '',
             paymentType, currency);
         //console.log(data);
@@ -125,7 +129,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22513 - amount = undefined', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(undefined, '',
             paymentType, currency);
         //console.log(data);
@@ -133,7 +137,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22514 - amount = string', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub('fjfj', '',
             paymentType, currency);
         //console.log(data);
@@ -141,7 +145,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22515 - amount = string - number', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub('50', '',
             paymentType, currency);
         //console.log(data);
@@ -149,7 +153,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22516 - amount double < min amount', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(0.6, '',
             paymentType, currency);
         //console.log(data);
@@ -157,7 +161,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22517 - 1 < amount < min amount', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(9, '',
             paymentType, currency);
         //console.log(data);
@@ -165,7 +169,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22518 - amount > max amount', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(100001, '',
             paymentType, currency);
         //console.log(data);
@@ -173,7 +177,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22519 - amount doudle > max amount ', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(100000.56, '',
             paymentType, currency);
         //console.log(data);
@@ -181,7 +185,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22521 - wallet = null', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(100, null,
             paymentType, currency);
         //console.log(data);
@@ -189,7 +193,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     });
 
     it('C22521 - wallet = long string', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(10,
             //TODO посмотреть количество символов доступных в кошельке
             '1231231231231231453453345345342312312312312123123123123',
@@ -200,7 +204,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
 
     //Не знаю что тут должно быть
     it('C22525 - incorrect paymentType = card_rub_test', async () => {
-        await register.one_click_reg();
+
         const {data} = await banking.deposite_create_rub(10,
             //TODO посмотреть количество символов доступных в кошельке
             '3123123123',

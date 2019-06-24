@@ -12,90 +12,85 @@ const currency = 'RUB';
 
 describe('Create deposite for piastrix_rub - RUB @master', () => {
 
+    beforeEach(async () => {
+        await register.one_click_reg();
+    });
+
     it(' (+) amount = 100 & wallet = empty', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100, '', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
     it(' (+) amount = 100.01 & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100.01, '123 autotests', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100.01)
     });
 
     it(' amount = 2000 & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             2000, 'порпорпорпэ', paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 2000)
     });
 
     it(' min amount & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(1,
             '123234345456 etryrt', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 1)
     });
 
     it('> min amount & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(2,
             '12№%:№%:45456etryrt', paymentType, currency);
 
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 2)
     });
 
     it(' max amount & wallet = numbers', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100000, '09090909999',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100000)
     });
 
     it('< max amount & wallet = numbers', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(99999, '0[[[?<><?999',
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 99999)
     });
 
     //Не знаю, какой должен быть результат
     it(' wallet = undefined', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, undefined,
             paymentType, currency);
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 
     it(' without currency', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
             wallet: '00001111222223333',
             paymentType: paymentType,
         });
         //console.log(data);
-        succses_deposit_create(data, currency, user.id,
+        succses_deposit_create(data, currency,
             paymentType, 100)
     });
 });
