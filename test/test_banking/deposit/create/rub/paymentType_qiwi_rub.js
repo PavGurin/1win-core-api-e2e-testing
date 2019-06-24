@@ -9,7 +9,7 @@ const currency = 'RUB';
 describe('Create deposite for qiwi_rub - RUB @master', () => {
 
     beforeEach(async () => {
-
+        await register.one_click_reg();
     });
 
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {

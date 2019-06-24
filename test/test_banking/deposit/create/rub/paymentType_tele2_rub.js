@@ -1,6 +1,7 @@
 import {banking} from "../../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../../src/responseChecker";
+import {register} from "../../../../../src/methods/register";
 
 const paymentType = 'tele2_rub';
 const currency = 'RUB';
@@ -8,7 +9,7 @@ const currency = 'RUB';
 describe('Create deposite for tele2 - RUB @master', () => {
 
     beforeEach(async () => {
-
+        await register.one_click_reg();
     });
 
 //TODO нужна тестовая симкарта теле2

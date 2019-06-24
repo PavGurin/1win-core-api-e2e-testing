@@ -14,7 +14,6 @@ const currency = 'USD';
 describe('Create deposite for tele2 - USD @master', () => {
 //TODO нужна тестовая симкарта теле2
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100, '+79772520000', paymentType, currency);
         //console.log(data);
@@ -23,7 +22,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100.01, '79772520000', paymentType, currency);
         //console.log(data);
@@ -32,7 +30,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it(' amount = 2000 & wallet = (8)phone', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             2000, '89772520000', paymentType, currency);
         //console.log(data);
@@ -41,7 +38,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it(' min amount & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(10,
             '+79772520000', paymentType, currency);
 
@@ -51,7 +47,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it('> min amount & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(11,
             '+79772520000', paymentType, currency);
 
@@ -61,7 +56,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it(' max amount & wallet = numbers', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15000, '+79772520000',
             paymentType, currency);
         //console.log(data);
@@ -70,7 +64,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it('< max amount & wallet = numbers', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14999, '+79772520000',
             paymentType, currency);
         //console.log(data);
@@ -79,7 +72,6 @@ describe('Create deposite for tele2 - USD @master', () => {
     });
 
     it(' without currency', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
             wallet: '+79772520000',
@@ -92,7 +84,6 @@ describe('Create deposite for tele2 - USD @master', () => {
 
     it('< max amount & wallet = valid short number', async () => {
         //TODO узнать валидный короткий номер городского телефона
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14999, '+79772520',
             paymentType, currency);
         //console.log(data);

@@ -138,7 +138,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+380)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+3809001234567', paymentType, currency);
         //console.log(data);
@@ -147,7 +146,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+371)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+3719001234567', paymentType, currency);
         //console.log(data);
@@ -156,7 +154,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+370)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+3709001234567', paymentType, currency);
         //console.log(data);
@@ -165,7 +162,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+996)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+9969001234567', paymentType, currency);
         //console.log(data);
@@ -174,7 +170,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+9955)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+99559001234567', paymentType, currency);
         //console.log(data);
@@ -183,7 +178,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+992)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+9929001234567', paymentType, currency);
         //console.log(data);
@@ -192,7 +186,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+373)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+3739001234567', paymentType, currency);
         //console.log(data);
@@ -201,7 +194,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = (+84)', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(15,
             '+849001234567', paymentType, currency);
         //console.log(data);
@@ -211,7 +203,6 @@ describe('Create deposite for qiwi_rub - USD @master', () => {
 
     it('< max amount & wallet = valid short number', async () => {
         //TODO узнать валидный короткий номер городского телефона
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(14999, '+79001234',
             paymentType, currency);
         //console.log(data);

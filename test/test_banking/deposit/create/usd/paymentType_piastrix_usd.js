@@ -13,7 +13,6 @@ const currency = 'USD';
 describe('Create deposite for piastrix_rub - USD @master', () => {
 
     it(' (+) amount = 100 & wallet = empty', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100, '', paymentType, currency);
         //console.log(data);
@@ -22,7 +21,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it(' (+) amount = 100.01 & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             100.01, '123 autotests', paymentType, currency);
         //console.log(data);
@@ -31,7 +29,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it(' amount = 2000 & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(
             2000, 'порпорпорпэ', paymentType, currency);
         //console.log(data);
@@ -40,7 +37,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it(' min amount & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(1,
             '123234345456 etryrt', paymentType, currency);
 
@@ -50,7 +46,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it('> min amount & wallet = symbols', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(2,
             '12№%:№%:45456etryrt', paymentType, currency);
 
@@ -60,7 +55,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it(' max amount & wallet = numbers', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100000, '09090909999',
             paymentType, currency);
         //console.log(data);
@@ -69,7 +63,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it('< max amount & wallet = numbers', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(99999, '0[[[?<><?999',
             paymentType, currency);
         //console.log(data);
@@ -79,7 +72,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
 
     //Не знаю, какой должен быть результат
     it(' wallet = undefined', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, undefined,
             paymentType, currency);
         //console.log(data);
@@ -88,7 +80,6 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
     });
 
     it(' without currency', async () => {
-        const {user} = await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
             wallet: '00001111222223333',
