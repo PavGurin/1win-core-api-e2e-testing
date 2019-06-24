@@ -12,6 +12,10 @@ const currency = 'USD';
 
 describe('Create deposite for megafon_rub - USD @master', () => {
 
+    beforeEach(async () => {
+        await register.one_click_reg();
+    });
+
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {data} = await banking.deposite_create_rub(
             100, '79215598286', paymentType, currency);
@@ -207,7 +211,6 @@ describe('Create deposite for megafon_rub invalid - USD', () => {
     });
 
     it(' wallet = short phone', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, '+7123',
             paymentType, currency);
         //console.log(data);
@@ -216,7 +219,6 @@ describe('Create deposite for megafon_rub invalid - USD', () => {
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = megafon_rub_test', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(1,
             //TODO посмотреть количество символов доступных в кошельке
             '+79001234567',
@@ -227,7 +229,6 @@ describe('Create deposite for megafon_rub invalid - USD', () => {
 
     //Не знаю что тут должно быть
     it(' wallet = long phone', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100,
             //TODO посмотреть количество символов доступных в кошельке
             '+790012345670909',

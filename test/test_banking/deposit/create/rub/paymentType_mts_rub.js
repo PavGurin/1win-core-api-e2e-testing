@@ -229,7 +229,6 @@ describe('Create deposite for mts_rub invalid - RUB', () => {
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = mts_rub_test', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100,
             //TODO посмотреть количество символов доступных в кошельке
             '+79001234567',

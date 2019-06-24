@@ -12,6 +12,10 @@ const currency = 'USD';
 
 describe('Create deposite for card_rub - USD @master', () => {
 
+    beforeEach(async () => {
+        await register.one_click_reg();
+    });
+
     it(' (+) amount = 100 & wallet = empty', async () => {
         const {data} = await banking.deposite_create_rub(
             100, '', paymentType, currency);

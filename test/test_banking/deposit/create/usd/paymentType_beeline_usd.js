@@ -12,6 +12,10 @@ const currency = 'USD';
 
 describe('Create deposite for beeline_rub - USD @master', () => {
 
+    beforeEach(async () => {
+        await register.one_click_reg();
+    });
+
     it(' (+) amount = 100 & wallet = (+7)phone', async () => {
         const {data} = await banking.deposite_create_rub(
             100, '+79215598286', paymentType, currency);

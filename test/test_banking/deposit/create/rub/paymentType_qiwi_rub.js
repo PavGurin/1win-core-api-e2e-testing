@@ -326,7 +326,6 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
     });
 
     it(' wallet = number', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, 111122223330000,
             paymentType, currency);
         //console.log(data);
@@ -334,7 +333,6 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
     });
 
     it(' wallet = short phone', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100, '+7123',
             paymentType, currency);
         //console.log(data);
@@ -342,7 +340,6 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
     });
 
     it(' wallet = long string', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100,
             '+797798778987',
             paymentType, currency);
@@ -352,7 +349,6 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
 
     //Не знаю что тут должно быть
     it(' incorrect paymentType = qiwi_rub_test', async () => {
-        await register.one_click_reg();
         const {data} = await banking.deposite_create_rub(100,
             //TODO посмотреть количество символов доступных в кошельке
             '+79001234567',
