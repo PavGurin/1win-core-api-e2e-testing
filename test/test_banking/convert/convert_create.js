@@ -26,7 +26,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -36,7 +36,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -46,7 +46,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -56,7 +56,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
         expect(data.status).equal(400);
     });
@@ -67,7 +67,7 @@ describe('Convert', () => {
             senderCurrency: 'rrrr',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, senderCurrency is invalid')
         expect(data.status).equal(400);
     });
@@ -78,7 +78,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: null
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
         expect(data.status).equal(400);
     });
@@ -89,7 +89,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: undefined
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
         expect(data.status).equal(400);
     });
@@ -100,7 +100,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'EUR'
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
         expect(data.status).equal(400);
     });
@@ -111,7 +111,7 @@ describe('Convert', () => {
             senderCurrency: 'EUR',
             receiverCurrency: 'USD'
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
         expect(data.status).equal(400);
     });
@@ -123,7 +123,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -133,7 +133,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'USD'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -143,7 +143,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -153,7 +153,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -163,7 +163,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        //console.log(data);
+        console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств')
     });
 
@@ -173,7 +173,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -183,7 +183,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -193,7 +193,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 
@@ -203,7 +203,21 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        //console.log(data);
+        console.log(data);
         expect(data.status).equal(200);
     });
 });
+
+describe('Convert12', () => {
+
+    it('not money ', async () => {
+        await userList.login_with_RUB()
+        const {data} = await socket.send('BANKING:convert-create', {
+            amount: 1.9,
+            senderCurrency: 'USD',
+            receiverCurrency: 'RUB'
+        });
+        console.log(data);
+        checkErrMsg(data, 403, 'Недостаточно средств')
+    });
+})

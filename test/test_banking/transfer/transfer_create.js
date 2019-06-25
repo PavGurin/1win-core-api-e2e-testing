@@ -79,8 +79,9 @@ describe('Transfer USD', () => {
                 currency: 'USD'
             }
         );
-        //console.log(data);
-        checkErrMsg(data, 400, 'Недостаточно средств')
+        console.log(data);
+        expect(data.confirmationRequested).equal(true);
+        expect(data.email).not.equal(null);
     });
 
     it('C19372 (+) With money + USD, amount = 1 USD', async () => {
