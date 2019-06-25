@@ -46,7 +46,7 @@ class TestrailReporter {
     }
 
     addResult(test, error) {
-        if (fullTitle(test)) test.state = 'blocked'
+        if (fullTitle(test).includes(config.filter)) test.state = 'blocked'
         this.results.push({
             status_id: statusId(test.state),
             case_id: titleToCaseId(test.title) || -1,
