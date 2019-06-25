@@ -9,7 +9,7 @@ describe('Create deposite', () => {
         expect(data.message).equal(expMessage);
     }
 
-    it(' RUB - paymentType = card_rub and wallet = empty', async () => {
+    it('C22616 - RUB - paymentType = card_rub and wallet = empty', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
