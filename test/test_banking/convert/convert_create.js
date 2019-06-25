@@ -4,7 +4,7 @@ import {checkErrMsg} from "../../../src/responseChecker";
 
 describe('Convert', () => {
 
-    beforeEach(async () => {
+    before(async () => {
         await userList.login_with_RUB_USD();
     });
 
@@ -16,8 +16,9 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('C19341 Create before login not enough money', async () => {
@@ -26,8 +27,9 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        checkErrMsg(data, 403, 'Некорректное значение amount')
+
     });
 
     it('55C19341 Create before login not enough money', async () => {
@@ -36,8 +38,9 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('C19342 Create after login valid request 100 RUB -> USD', async () => {
@@ -46,8 +49,9 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('C19343 Create after login valid request 1 USD -> RUB ', async () => {
@@ -100,9 +104,9 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'EUR'
         });
-        console.log(data);
-        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
-        expect(data.status).equal(400);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('0 Create after login valid request 1 USD -> RUB ', async () => {
@@ -111,9 +115,9 @@ describe('Convert', () => {
             senderCurrency: 'EUR',
             receiverCurrency: 'USD'
         });
-        console.log(data);
-        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
-        expect(data.status).equal(400);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
 
@@ -123,8 +127,9 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('C19344 Create after login valid request 1 USD -> USD ', async () => {
@@ -133,8 +138,9 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'USD'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('C19345 Create after login valid request 1 RUB -> RUB ', async () => {
@@ -143,8 +149,8 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        checkErrMsg(data, 403, 'Некорректный формат валюты')
     });
 
     it('C19346 Create after login valid request 100 RUB -> RUB ', async () => {
@@ -153,8 +159,8 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        checkErrMsg(data, 403, 'Некорректный формат валюты')
     });
 
     it('C19347 Create after login valid request 10000 RUB -> USD(not enough money) ', async () => {
@@ -174,7 +180,7 @@ describe('Convert', () => {
             receiverCurrency: 'RUB'
         });
         console.log(data);
-        expect(data.status).equal(200);
+        checkErrMsg(data, 403, 'Недостаточно средств')
     });
 
     it('C19349 Create after login valid request 0.9 USD -> RUB(enough money) ', async () => {
@@ -183,8 +189,9 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        expect(data.email).not.equal(null);
+        expect(data.amount).not.equal(0);
     });
 
     it('C19350 Create after login valid request negative amount USD -> RUB(enough money) ', async () => {
@@ -193,8 +200,9 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        checkErrMsg(data, 403, 'Некорректное значение amount')
+
     });
 
     it('C19351 Create after login valid request negative amount RUB -> USD(enough money) ', async () => {
@@ -203,8 +211,9 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
-        expect(data.status).equal(200);
+        //console.log(data);
+        checkErrMsg(data, 403, 'Некорректное значение amount')
+
     });
 });
 

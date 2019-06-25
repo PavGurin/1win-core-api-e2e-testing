@@ -6,9 +6,11 @@ import {checkErrMsg} from "../../../src/responseChecker";
 
 describe('Withdrawal create with user without money ', () => {
 
+    before(async () => {
+        await register.one_click_reg();
+    });
 
     it('C19278 (-) Without money', async () => {
-        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '5446546',
@@ -20,7 +22,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19279 (-) Without money card_rub + valid wallet ', async () => {
-        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
@@ -32,7 +33,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19324 (-) With money invalid', async () => {
-        await register.one_click_reg();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '5446546',
@@ -43,8 +43,15 @@ describe('Withdrawal create with user without money ', () => {
         checkErrMsg(data, 400, 'Bad Request.');
     });
 
-    it('C19325 (+) With money card_rub + valid wallet', async () => {
+});
+
+describe('Withdrawal create with user with money ', () => {
+
+    before(async () => {
         await userList.login_with_real_money();
+    });
+
+    it('C19325 (+) With money card_rub + valid wallet', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
@@ -58,7 +65,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19326 (+) With money card_uah + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
@@ -72,7 +78,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19327 (+) With money card_uah + valid wallet + USD', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
@@ -86,7 +91,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19328 (+) With money beeline_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'beeline_rub',
@@ -100,7 +104,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19329 (+) With money beeline_rub + valid wallet + USD', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'beeline_rub',
@@ -114,7 +117,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19330 (+) With money megafon_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'megafon_rub',
@@ -127,7 +129,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19331 (+) With money mts_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'mts_rub',
@@ -140,7 +141,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19332 (+) With money qiwi_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'qiwi_rub',
@@ -153,7 +153,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19333 (+) With money tele2_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'tele2_rub',
@@ -166,7 +165,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19334 (+) With money yamoney_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'yamoney_rub',
@@ -179,7 +177,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19335 (+) With money webmoney_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'webmoney_rub',
@@ -192,7 +189,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19336 (+) With money payeer_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'payeer_rub',
@@ -205,7 +201,6 @@ describe('Withdrawal create with user without money ', () => {
     });
 
     it('C19337 (+) With money advcash_rub + valid wallet + RUB', async () => {
-        await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             payment_system: 'advcash_rub',
@@ -216,4 +211,6 @@ describe('Withdrawal create with user without money ', () => {
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
+
+
 });

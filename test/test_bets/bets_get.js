@@ -7,6 +7,7 @@ describe('Bets get', () => {
 
     it('(-) user without bet history', async () => {
 
+        //TODO -  зачем после реги авторизация?
         const {data: regReq} = await register.one_click_reg();
         await userList.login_with_params(regReq.email, regReq.password);
 

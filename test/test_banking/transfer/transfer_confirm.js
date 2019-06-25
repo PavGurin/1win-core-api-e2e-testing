@@ -4,7 +4,7 @@ import {banking} from "../../../src/methods/banking";
 import {checkErrMsg} from "../../../src/responseChecker";
 
 
-describe('Transfer confirm', () => {
+describe('Transfer confirm invalid', () => {
 
     //TODO продумать логику теста так, чтобы нужный код подставлялся сам в момент запуска теста
     it('C19365 (-) Incorrect code with 404 code response', async () => {
@@ -14,6 +14,10 @@ describe('Transfer confirm', () => {
         checkErrMsg(data, 404, 'Перевод не найден');
     });
 
+});
+
+describe('Transfer confirm with money', () => {
+
     it('C19366 (-) Incorrect code with 400 code response', async () => {
         await userList.login_with_real_money();
         await banking.transfer_create(100, 'RUB');
@@ -21,4 +25,5 @@ describe('Transfer confirm', () => {
         // console.log(data);
         checkErrMsg(data, 400, 'Неверный ключ запроса')
     });
+
 });

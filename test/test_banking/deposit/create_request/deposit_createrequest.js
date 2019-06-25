@@ -5,9 +5,13 @@ const currency = 'RUB';
 const paymentType = 'card_rub';
 
 describe('Deposit requests', () => {
+
+    before(async () => {
+        await register.one_click_reg();
+    });
+
     //TODO больше проверок на PaymentType
     it('C19376 (-) create without currency @master', async () => {
-        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
@@ -19,7 +23,6 @@ describe('Deposit requests', () => {
     });
 
     it(' (+) create with currency @master', async () => {
-        await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',

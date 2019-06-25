@@ -7,8 +7,11 @@ const paymentType = 'card_rub';
 
 describe('Deposit requests', () => {
 
-    it('C19377 (-) with incorrect hash ', async () => {
+    before(async () => {
         await register.one_click_reg();
+    });
+
+    it('C19377 (-) with incorrect hash ', async () => {
         await banking.deposit_create_request(100, '', paymentType, currency)
         const {data} = await socket.send('BANKING:deposit-request', {h: 'gjhg'});
         // console.log(data);
