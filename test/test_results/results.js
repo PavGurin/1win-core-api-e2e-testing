@@ -12,10 +12,10 @@ describe("Results", () => {
         return date.getDate() + "/" + (date.getMonth() + 1);
     }
 
+    it("C22707 - (+) results with date filtration", async () => {
     for(var i = 0; i <=6; i++ ) {
         var date = getFormattedDate(i);
-        it("C22707 - (+) results with date filtration, date: " + date, async () => {
-            const {data} = await socket.send("RESULT:results-all", {
+                    const {data} = await socket.send("RESULT:results-all", {
                 timeFilter: {
                     date: date,
                     hoursToStart: false
@@ -26,6 +26,6 @@ describe("Results", () => {
             //TODO добавить нормальных проверок
             //expect(data[1].tournamentMap[1].matchMap[1].dateOfMatch).to.be.above(date.getUnixTimestamp());
             //expect(data[1].tournamentMap[1].matchMap[1].dateOfMatch).to.be.below((date.setDate(date.getDate()+1)).getUnixTimestamp());
-        })
-    }
+        }
+    })
 })
