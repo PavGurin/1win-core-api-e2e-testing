@@ -13,7 +13,7 @@ const currency = 'USD';
 
 describe('Create deposite for yamoney_ru - USD @master', () => {
 
-    beforeEach(async () => {
+    before(async () => {
         await register.one_click_reg();
     });
 

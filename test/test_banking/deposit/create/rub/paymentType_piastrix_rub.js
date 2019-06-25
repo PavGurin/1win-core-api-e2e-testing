@@ -8,7 +8,7 @@ const currency = 'RUB';
 
 describe('Create deposite for piastrix_rub - RUB @master', () => {
 
-    beforeEach(async () => {
+    before(async () => {
         await register.one_click_reg();
     });
 

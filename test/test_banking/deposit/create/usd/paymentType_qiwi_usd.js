@@ -12,7 +12,7 @@ const currency = 'USD';
 
 describe('Create deposite for qiwi_rub - USD @master', () => {
 
-    beforeEach(async () => {
+    before(async () => {
         await register.one_click_reg();
     });
 
