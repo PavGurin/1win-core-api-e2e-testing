@@ -1,7 +1,7 @@
 import {expect} from 'chai';
-import {userList} from '../../src/methods/userList';
+import {userList} from '../../../src/methods/userList';
+import {checkErrMsg} from "../../../src/responseChecker";
 
-//returns withdrawal value
 describe('Withdrawal get', () => {
 
     //TODO изменить тесты - сделать вывод и получить этот id
@@ -10,8 +10,7 @@ describe('Withdrawal get', () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:withdrawal-get', {id: 205});
         // console.log(data);
-        expect(data.status).equal(404);
-        expect(data.message).equal('Выплата не найдена');
+        checkErrMsg(data, 404, 'Выплата не найдена')
     });
 
     it('C19362 (+) Get - 100 RUB money-transfer - @dev ', async () => {
@@ -41,7 +40,6 @@ describe('Withdrawal get', () => {
     it('C19364 (-) Get - Bad request, id is required ', async () => {
         const {data} = await socket.send('BANKING:withdrawal-get', {id: null});
         // console.log(data);
-        expect(data.status).equal(400);
-        expect(data.message).equal('Bad request, id is required');
+        checkErrMsg(data, 400, 'Bad request, id is required')
     });
 });

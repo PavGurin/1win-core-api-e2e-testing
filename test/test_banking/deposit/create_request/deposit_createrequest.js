@@ -1,6 +1,8 @@
 import {expect} from 'chai';
-import {register} from '../../src/methods/register';
-import {checkError404} from '../../src/responseChecker';
+import {register} from '../../../../src/methods/register';
+
+const currency = 'RUB';
+const paymentType = 'card_rub';
 
 describe('Deposit requests', () => {
     //TODO больше проверок на PaymentType
@@ -9,9 +11,9 @@ describe('Deposit requests', () => {
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
-            paymentType: 'card_rub'
+            paymentType: paymentType,
         });
-        // console.log(data);
+        //console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -21,18 +23,12 @@ describe('Deposit requests', () => {
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
-            paymentType: 'card_rub',
-            currency: 'RUB'
+            paymentType: paymentType,
+            currency: currency
         });
         //console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });
 
-    it('C19377 (-) with incorrect hash ', async () => {
-        await register.one_click_reg();
-        const {data} = await socket.send('BANKING:deposit-request', {h: 'gjhg'});
-        // console.log(data);
-        checkError404(data, 'Запрос депозита не найден');
-    });
 });

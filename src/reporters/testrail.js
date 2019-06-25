@@ -15,6 +15,15 @@ const statusId = (mochaState) => ({
     failed: 5,
 }[mochaState])
 
+const fullTitle = (suite) => {
+    const titles = []
+    while (suite && suite.title) {
+        titles.push(suite.title)
+        suite = suite.parent
+    }
+    return titles.reverse().join(' ')
+}
+
 const titleToCaseId = testTitle => (/\bT?C(\d+)\b/g.exec(testTitle) || [-1])[1];
 
 class TestrailReporter {
@@ -37,11 +46,11 @@ class TestrailReporter {
     }
 
     addResult(test, error) {
-        if (test.title.includes(config.filter)) test.state = 'blocked'
+        if (fullTitle(test).includes(config.filter)) test.state = 'blocked'
         this.results.push({
             status_id: statusId(test.state),
             case_id: titleToCaseId(test.title) || -1,
-            comment: String(error),
+            comment: String(error || ''),
             elapsed: test.duration && `${test.duration / 1000}s`,
         })
     }
