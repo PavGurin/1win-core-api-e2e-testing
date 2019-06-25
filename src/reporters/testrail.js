@@ -46,7 +46,7 @@ class TestrailReporter {
     }
 
     addResult(test, error) {
-        if (fullTitle(test)) test.state = 'blocked'
+        if (fullTitle(test).includes(config.filter)) test.state = 'blocked'
         this.results.push({
             status_id: statusId(test.state),
             case_id: titleToCaseId(test.title) || -1,
@@ -56,18 +56,19 @@ class TestrailReporter {
     }
 
     async publish() {
-        try {
-            const { data: { id } } = await this.instance.post(`add_run/${config.projectId}`, {
-                name: config.runName,
-                include_all: true,
-            })
-            await this.instance.post(`/add_results_for_cases/${id}`, {
-                results: this.results.filter(({ case_id }) => case_id !== -1),
-            });
-        } catch (e) {
-            console.log(e)
+        const { data: { id } } = await this.instance.post(`add_run/${config.projectId}`, {
+            name: config.runName,
+            include_all: true,
+        })
+        this.results = this.results
+            .filter(({ case_id }) => case_id !== -1)
+        for (const result of this.results) {
+            try {
+                await this.instance.post(`/add_results_for_cases/${id}`, { results: [result] })
+            } catch (e) {
+                console.log(e)
+            }
         }
-
     }
 }
 
