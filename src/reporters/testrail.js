@@ -47,21 +47,18 @@ class TestrailReporter {
     }
 
     async publish() {
-        const { data: { id } } = await this.instance.post(`add_run/${config.projectId}`, {
-            name: config.runName,
-            include_all: true,
-        })
-        this.results
-            .filter(({ case_id }) => case_id !== -1)
-            .map((result) => {
-                try {
-                    await this.instance.post(`/add_results_for_cases/${id}`, {
-                        results: [result],
-                    });
-                } catch (e) {
-                    console.log(e)
-                }
+        try {
+            const { data: { id } } = await this.instance.post(`add_run/${config.projectId}`, {
+                name: config.runName,
+                include_all: true,
             })
+            await this.instance.post(`/add_results_for_cases/${id}`, {
+                results: this.results.filter(({ case_id }) => case_id !== -1),
+            });
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 }
 
