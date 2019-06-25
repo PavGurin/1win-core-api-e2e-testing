@@ -10,7 +10,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'beeline_rub';
 const currency = 'USD';
 
-describe('Create deposite for beeline_rub - USD @master', () => {
+describe.skip('Create deposite for beeline_rub - USD @master', () => {
 
     before(async () => {
         await register.one_click_reg();
@@ -95,7 +95,7 @@ describe('Create deposite for beeline_rub - USD @master', () => {
     });
 });
 
-describe('Create deposite for beeline_rub invalid - USD', () => {
+describe.skip('Create deposite for beeline_rub invalid - USD', () => {
 
     it(' amount = 0', async () => {
         await register.one_click_reg();

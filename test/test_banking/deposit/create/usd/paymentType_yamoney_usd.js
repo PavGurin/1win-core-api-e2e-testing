@@ -11,7 +11,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
-describe('Create deposite for yamoney_ru - USD @master', () => {
+describe.skip('Create deposite for yamoney_ru - USD @master', () => {
 
     before(async () => {
         await register.one_click_reg();
@@ -96,7 +96,7 @@ describe('Create deposite for yamoney_ru - USD @master', () => {
     });
 });
 
-describe('Create deposite for yamoney_ru invalid - USD', () => {
+describe.skip('Create deposite for yamoney_ru invalid - USD', () => {
 
     it(' amount = 0', async () => {
         const {data} = await banking.deposite_create_rub(0, '',

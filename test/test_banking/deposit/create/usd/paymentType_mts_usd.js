@@ -11,7 +11,7 @@ import {checkErrMsg} from "../../../../../src/responseChecker";
 const paymentType = 'mts_rub';
 const currency = 'USD';
 
-describe('Create deposite for mts_rub - USD @master', () => {
+describe.skip('Create deposite for mts_rub - USD @master', () => {
 
     before(async () => {
         await register.one_click_reg();
@@ -94,7 +94,7 @@ describe('Create deposite for mts_rub - USD @master', () => {
     });
 });
 
-describe('Create deposite for mts_rub invalid - USD', () => {
+describe.skip('Create deposite for mts_rub invalid - USD', () => {
 
     it(' amount = 0', async () => {
         const {data} = await banking.deposite_create_rub(0, '+79001234567',
