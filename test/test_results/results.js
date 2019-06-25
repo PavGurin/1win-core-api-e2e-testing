@@ -10,7 +10,6 @@ describe("Results", () => {
         var date = new Date();
         date.setDate(date.getDate() - daysAgo);
         return date.getDate() + "/" + (date.getMonth() + 1);
-
     }
 
     for(var i = 0; i <=6; i++ ) {
