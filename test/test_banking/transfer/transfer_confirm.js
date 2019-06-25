@@ -1,7 +1,8 @@
-import {userList} from '../../src/methods/userList';
-import {register} from '../../src/methods/register';
-import {banking} from '../../src/methods/banking';
-import {checkError404, checkErrorMsg} from '../../src/responseChecker';
+import {userList} from '../../../src/methods/userList';
+import {register} from "../../../src/methods/register";
+import {banking} from "../../../src/methods/banking";
+import {checkErrMsg} from "../../../src/responseChecker";
+
 
 describe('Transfer confirm', () => {
 
@@ -10,14 +11,14 @@ describe('Transfer confirm', () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 5372831});
         // console.log(data);
-        checkError404(data, 'Перевод не найден');
+        checkErrMsg(data, 404, 'Перевод не найден');
     });
 
     it('C19366 (-) Incorrect code with 400 code response', async () => {
         await userList.login_with_real_money();
-        await banking.transfet_create();
+        await banking.transfer_create(100, 'RUB');
         const {data} = await socket.send('BANKING:transfer-confirm', {code: 111});
         // console.log(data);
-        checkErrorMsg(data, 'Неверный ключ запроса');
+        checkErrMsg(data, 400, 'Неверный ключ запроса')
     });
 });

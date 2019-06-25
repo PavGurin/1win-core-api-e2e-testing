@@ -1,13 +1,11 @@
 import {expect} from 'chai';
-import {register} from '../../src/methods/register';
-import {userList} from "../../src/methods/userList";
+import {register} from '../../../src/methods/register';
+import {userList} from "../../../src/methods/userList";
+import {checkErrMsg} from "../../../src/responseChecker";
+
 
 describe('Withdrawal create with user without money ', () => {
 
-    function checkErrMsg(data, expStatus, expMessage) {
-        expect(data.status).equal(expStatus);
-        expect(data.message).equal(expMessage);
-    }
 
     it('C19278 (-) Without money', async () => {
         await register.one_click_reg();
@@ -54,6 +52,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -67,6 +66,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -80,6 +80,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'USD'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -93,6 +94,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'RUB'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -106,6 +108,7 @@ describe('Withdrawal create with user without money ', () => {
             currency: 'USD'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -118,6 +121,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -130,6 +134,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -142,6 +147,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null)
         expect(data.message).equal(undefined);
     });
@@ -154,6 +160,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+79215645656'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -166,6 +173,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: '+4100100000000'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -178,6 +186,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'R123456789000'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -190,6 +199,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'P0000000000'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -202,6 +212,7 @@ describe('Withdrawal create with user without money ', () => {
             wallet: 'mail@example.com'
         });
         //console.log(data);
+        expect(data).to.be.an('object');
         expect(data.email).not.equal(null);
         expect(data.message).equal(undefined);
     });

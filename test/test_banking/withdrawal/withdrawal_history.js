@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {userList} from '../../src/methods/userList';
-import {register} from "../../src/methods/register";
+import {userList} from '../../../src/methods/userList';
+import {register} from "../../../src/methods/register";
 
 //returns withdrawals sorted by time
 describe('Withdrawal history', () => {
