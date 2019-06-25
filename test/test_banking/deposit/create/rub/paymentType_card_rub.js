@@ -179,7 +179,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
-    it('C22521 - wallet = long string', async () => {
+    it('C22520 - wallet = long string', async () => {
 
         const {data} = await banking.deposite_create_rub(10,
             //TODO посмотреть количество символов доступных в кошельке
