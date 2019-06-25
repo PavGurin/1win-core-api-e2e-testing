@@ -8,12 +8,12 @@ const currency = 'RUB';
 
 describe('Create deposite for tele2 - RUB @master', () => {
 
-    beforeEach(async () => {
+    before(async () => {
         await register.one_click_reg();
     });
 
 //TODO нужна тестовая симкарта теле2
-    it(' (+) amount = 100 & wallet = (+7)phone', async () => {
+    it('C22672 - (+) amount = 100 & wallet = (+7)phone', async () => {
         const {data} = await banking.deposite_create_rub(
             100, '+79772520000', paymentType, currency);
         //console.log(data);
@@ -21,7 +21,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 100)
     });
 
-    it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
+    it('C22673 - (+) amount = 100.01 & wallet = (7)phone', async () => {
         const {data} = await banking.deposite_create_rub(
             100.01, '79772520000', paymentType, currency);
         //console.log(data);
@@ -29,7 +29,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 100.01)
     });
 
-    it(' amount = 2000 & wallet = (8)phone', async () => {
+    it('C22674 - amount = 2000 & wallet = (8)phone', async () => {
         const {data} = await banking.deposite_create_rub(
             2000, '89772520000', paymentType, currency);
         //console.log(data);
@@ -37,7 +37,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 2000)
     });
 
-    it(' min amount & wallet = symbols', async () => {
+    it('C22675 - min amount & wallet = symbols', async () => {
         const {data} = await banking.deposite_create_rub(10,
             '+79772520000', paymentType, currency);
 
@@ -46,7 +46,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 10)
     });
 
-    it('> min amount & wallet = symbols', async () => {
+    it('C22676 - > min amount & wallet = symbols', async () => {
         const {data} = await banking.deposite_create_rub(11,
             '+79772520000', paymentType, currency);
 
@@ -55,7 +55,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 11)
     });
 
-    it(' max amount & wallet = numbers', async () => {
+    it('C22677 - max amount & wallet = numbers', async () => {
         const {data} = await banking.deposite_create_rub(15000, '+79772520000',
             paymentType, currency);
         //console.log(data);
@@ -63,7 +63,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 15000)
     });
 
-    it('< max amount & wallet = numbers', async () => {
+    it('C22678 - < max amount & wallet = numbers', async () => {
         const {data} = await banking.deposite_create_rub(14999, '+79772520000',
             paymentType, currency);
         //console.log(data);
@@ -71,7 +71,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 14999)
     });
 
-    it(' without currency', async () => {
+    it('C22679 - without currency', async () => {
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: '100',
             wallet: '+79772520000',
@@ -82,7 +82,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
             paymentType, 100)
     });
 
-    it('< max amount & wallet = valid short number', async () => {
+    it('C22680 - < max amount & wallet = valid short number', async () => {
         //TODO узнать валидный короткий номер городского телефона
         const {data} = await banking.deposite_create_rub(14999, '+79772520',
             paymentType, currency);
@@ -94,7 +94,7 @@ describe('Create deposite for tele2 - RUB @master', () => {
 
 describe('Create deposite for tele2_rub invalid - RUB', () => {
 
-    it(' amount = 0', async () => {
+    it('C22681 - amount = 0', async () => {
 
         const {data} = await banking.deposite_create_rub(0, '+79772520000',
             paymentType, currency);
@@ -102,7 +102,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
-    it(' amount = null', async () => {
+    it('C22682 - amount = null', async () => {
 
         const {data} = await banking.deposite_create_rub(null, '+79772520000',
             paymentType, currency);
@@ -110,7 +110,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
     });
 
-    it(' amount = empty', async () => {
+    it('C22683 - amount = empty', async () => {
 
         const {data} = await banking.deposite_create_rub(' ', '+79772520000',
             paymentType, currency);
@@ -118,7 +118,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
     });
 
-    it(' amount = undefined', async () => {
+    it('C22684 - amount = undefined', async () => {
 
         const {data} = await banking.deposite_create_rub(undefined, '+79772520000',
             paymentType, currency);
@@ -126,7 +126,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided')
     });
 
-    it(' amount = latanic', async () => {
+    it('C22685 - amount = string', async () => {
 
         const {data} = await banking.deposite_create_rub('fjfj', '+79772520000',
             paymentType, currency);
@@ -134,15 +134,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
     });
 
-    it(' amount = symbols', async () => {
-
-        const {data} = await banking.deposite_create_rub('(#&@(@&%', '+79772520000',
-            paymentType, currency);
-        //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
-    });
-
-    it(' amount = string', async () => {
+    it('C22686 - amount = string-number', async () => {
 
         const {data} = await banking.deposite_create_rub('50', '+79772520000',
             paymentType, currency);
@@ -150,7 +142,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' amount double < min amount', async () => {
+    it('C22687 - amount double < min amount', async () => {
 
         const {data} = await banking.deposite_create_rub(0.6, '+79772520000',
             paymentType, currency);
@@ -158,7 +150,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
-    it(' amount < min amount', async () => {
+    it('C22688 - amount < min amount', async () => {
 
         const {data} = await banking.deposite_create_rub(9, '+79772520000',
             paymentType, currency);
@@ -166,7 +158,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' amount > max amount', async () => {
+    it('C22689 - amount > max amount', async () => {
 
         const {data} = await banking.deposite_create_rub(15001, '+79772520000',
             paymentType, currency);
@@ -174,7 +166,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' amount double > max amount', async () => {
+    it('C22690 - amount double > max amount', async () => {
 
         const {data} = await banking.deposite_create_rub(15000.000001, '+79772520000',
             paymentType, currency);
@@ -182,7 +174,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверная сумма')
     });
 
-    it(' wallet = undefined', async () => {
+    it('C22691 - wallet = undefined', async () => {
 
         const {data} = await banking.deposite_create_rub(100, undefined,
             paymentType, currency);
@@ -191,7 +183,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
 
     });
 
-    it(' wallet = null', async () => {
+    it('C22692 - wallet = null', async () => {
 
         const {data} = await banking.deposite_create_rub(100, null,
             paymentType, currency);
@@ -199,7 +191,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
-    it(' wallet = empty', async () => {
+    it('C22694 - wallet = empty', async () => {
 
         const {data} = await banking.deposite_create_rub(100, '',
             paymentType, currency);
@@ -207,7 +199,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Неверный формат кошелька')
     });
 
-    it(' wallet = number', async () => {
+    it('C22695 - wallet = number', async () => {
 
         const {data} = await banking.deposite_create_rub(100, 111122223330000,
             paymentType, currency);
@@ -215,7 +207,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
         checkErrMsg(data, 400, 'Bad request, wallet should have a type of string, but found number')
     });
 
-    it(' wallet = short phone', async () => {
+    it('C22696 - wallet = short phone', async () => {
 
         const {data} = await banking.deposite_create_rub(100, '+7123',
             paymentType, currency);
@@ -224,7 +216,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
     });
 
 
-    it(' wallet = long string', async () => {
+    it('C22697 - wallet = long string', async () => {
 
         const {data} = await banking.deposite_create_rub(100,
             '+797798778987',
@@ -234,7 +226,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
     });
 
     //Не знаю что тут должно быть
-    it(' incorrect paymentType = tele2_rub_test', async () => {
+    it('C22693 incorrect paymentType = tele2_rub_test', async () => {
 
         const {data} = await banking.deposite_create_rub(100,
             //TODO посмотреть количество символов доступных в кошельке
