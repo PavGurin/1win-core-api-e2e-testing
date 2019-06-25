@@ -22,7 +22,7 @@ describe('Create deposite', () => {
         expect(data.currency).to.equal('RUB');
     });
     //TODO нужна тестовая симкарта теле2
-    it.skip('C19382 RUB - paymentType = tele2_rub and wallet != null @master', async () => {
+    it.skip(' RUB - paymentType = tele2_rub and wallet != null @master', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -35,7 +35,7 @@ describe('Create deposite', () => {
         expect(data.currency).to.equal('RUB');
     });
 
-    it('C19383 RUB - paymentType = tele2_rub and wallet = null', async () => {
+    it(' RUB - paymentType = tele2_rub and wallet = null', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -48,7 +48,7 @@ describe('Create deposite', () => {
         checkErrorMsg(data, 'Неверный формат кошелька');
     });
 
-    it('C19385 USD - paymentType = card_rub and wallet = null', async () => {
+    it(' USD - paymentType = card_rub and wallet = null', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -61,7 +61,7 @@ describe('Create deposite', () => {
         expect(data.currency).to.equal('USD');
     });
 
-    it('C19386 Must not pass', async () => {
+    it(' Must not pass', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:deposit-create', {
             amount: 10,
@@ -73,7 +73,7 @@ describe('Create deposite', () => {
         expect(data.message).to.equal(undefined);
     });
 
-    it('C19387 (-) RUB - paymentType = card_rub and amount = null', async () => {
+    it(' (-) RUB - paymentType = card_rub and amount = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -86,7 +86,7 @@ describe('Create deposite', () => {
         checkErrorMsg(data, 'Bad request, amount is required, no default value provided');
     });
 
-    it('C19388 (-) RUB - paymentType = card_rub and wallet = null', async () => {
+    it(' (-) RUB - paymentType = card_rub and wallet = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -100,7 +100,7 @@ describe('Create deposite', () => {
         expect(data.message).equal('Неверная сумма');
     });
 
-    it('C19389 (-) RUB - paymentType = card_rub and wallet = null', async () => {
+    it(' (-) RUB - paymentType = card_rub and wallet = null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -114,7 +114,7 @@ describe('Create deposite', () => {
         expect(data.message).equal('Bad request, amount is invalid');
     });
 
-    it('C19390 (+) RUB - paymentType = card_rub and currency = null', async () => {
+    it(' (+) RUB - paymentType = card_rub and currency = null', async () => {
         await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -131,7 +131,7 @@ describe('Create deposite', () => {
         expect(data.amount).equal(100);
     });
 
-    it('C22187 (+) RUB - paymentType = card_rub and currency = null', async () => {
+    it(' (+) RUB - paymentType = card_rub and currency = null', async () => {
         await userList.login_with_real_money();
         const {data} = await socket.send('BANKING:deposit-create', {
 
@@ -149,7 +149,7 @@ describe('Create deposite', () => {
 
     });
 
-    it('C19391 (+) RUB - paymentType = card_rub and wallet != null', async () => {
+    it(' (+) RUB - paymentType = card_rub and wallet != null', async () => {
         await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:deposit-create', {
 
