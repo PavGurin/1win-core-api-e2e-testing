@@ -144,7 +144,7 @@ describe('Create deposite for card_rub invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(0.6, '',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(data, 400, 'Неверная сумма')
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it('C22517 - 1 < amount < min amount', async () => {
