@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {register} from "../../src/methods/register";
 
-describe('Get methods map @master', () => {
+describe('Get methods map', () => {
 
     it('C19355 Withdrawal methods map with login', async () => {
         await register.one_click_reg();
