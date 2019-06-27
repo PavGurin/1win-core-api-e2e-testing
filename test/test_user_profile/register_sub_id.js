@@ -27,7 +27,7 @@ describe('Register with sub id parameter', () => {
   }
 
   const visit_domain = 'some_domain';
-  const partner_key = 'test001';
+  const PartnerKey = 'test001';
   const default_password = '123456';
 
   // (+) for positive tests (-) for negative tests
@@ -43,7 +43,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -61,7 +61,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -79,7 +79,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -97,7 +97,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -115,7 +115,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -133,7 +133,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -151,7 +151,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -169,7 +169,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -187,7 +187,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -205,7 +205,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -224,7 +224,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -243,7 +243,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
@@ -262,7 +262,7 @@ describe('Register with sub id parameter', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);

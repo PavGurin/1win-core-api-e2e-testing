@@ -1,6 +1,6 @@
-import {expect} from 'chai';
-import {userList} from '../../../src/methods/userList';
-import {checkErrMsg} from '../../../src/responseChecker';
+import { expect } from 'chai';
+import { userList } from '../../../src/methods/userList';
+import { checkErrMsg } from '../../../src/responseChecker';
 
 describe('Convert', () => {
   before(async () => {
@@ -10,7 +10,7 @@ describe('Convert', () => {
   // глобальная комиссия на переводы = 5%
 
   it('C19340 Create before login', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 100,
       senderCurrency: 'RUB',
       receiverCurrency: 'USD',
@@ -21,7 +21,7 @@ describe('Convert', () => {
   });
 
   it('C19341 Create before login not enough money', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 0,
       senderCurrency: 'RUB',
       receiverCurrency: 'USD',
@@ -31,7 +31,7 @@ describe('Convert', () => {
   });
 
   it('55C19341 Create before login not enough money', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 100,
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',
@@ -42,7 +42,7 @@ describe('Convert', () => {
   });
 
   it('C19342 Create after login valid request 100 RUB -> USD', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 100,
       senderCurrency: 'RUB',
       receiverCurrency: 'USD',
@@ -53,7 +53,7 @@ describe('Convert', () => {
   });
 
   it('C19343 Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 'tuytuyty',
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',
@@ -64,7 +64,7 @@ describe('Convert', () => {
   });
 
   it(' Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: '1',
       senderCurrency: 'rrrr',
       receiverCurrency: 'RUB',
@@ -75,7 +75,7 @@ describe('Convert', () => {
   });
 
   it(' () Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: '1',
       senderCurrency: 'RUB',
       receiverCurrency: null,
@@ -86,7 +86,7 @@ describe('Convert', () => {
   });
 
   it(' ()oo Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: '1',
       senderCurrency: 'RUB',
       receiverCurrency: undefined,
@@ -97,7 +97,7 @@ describe('Convert', () => {
   });
 
   it(' oo Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: '1',
       senderCurrency: 'RUB',
       receiverCurrency: 'EUR',
@@ -108,7 +108,7 @@ describe('Convert', () => {
   });
 
   it('0 Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: '1',
       senderCurrency: 'EUR',
       receiverCurrency: 'USD',
@@ -120,7 +120,7 @@ describe('Convert', () => {
 
 
   it('C19343 - Create after login valid request 1 USD -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: '1',
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',
@@ -131,7 +131,7 @@ describe('Convert', () => {
   });
 
   it('C19344 Create after login valid request 1 USD -> USD ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 1,
       senderCurrency: 'USD',
       receiverCurrency: 'USD',
@@ -142,7 +142,7 @@ describe('Convert', () => {
   });
 
   it('C19345 Create after login valid request 1 RUB -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 1,
       senderCurrency: 'RUB',
       receiverCurrency: 'RUB',
@@ -152,7 +152,7 @@ describe('Convert', () => {
   });
 
   it('C19346 Create after login valid request 100 RUB -> RUB ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 100,
       senderCurrency: 'RUB',
       receiverCurrency: 'RUB',
@@ -162,7 +162,7 @@ describe('Convert', () => {
   });
 
   it('C19347 Create after login valid request 10000 RUB -> USD(not enough money) ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 10000,
       senderCurrency: 'RUB',
       receiverCurrency: 'USD',
@@ -172,7 +172,7 @@ describe('Convert', () => {
   });
 
   it('C19348 Create after login valid request 1000 USD -> RUB(not enough money) ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 1000,
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',
@@ -182,7 +182,7 @@ describe('Convert', () => {
   });
 
   it('C19349 Create after login valid request 0.9 USD -> RUB(enough money) ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 0.9,
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',
@@ -193,7 +193,7 @@ describe('Convert', () => {
   });
 
   it('C19350 Create after login valid request negative amount USD -> RUB(enough money) ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: -0.9,
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',
@@ -203,7 +203,7 @@ describe('Convert', () => {
   });
 
   it('C19351 Create after login valid request negative amount RUB -> USD(enough money) ', async () => {
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: -100.9,
       senderCurrency: 'RUB',
       receiverCurrency: 'USD',
@@ -216,7 +216,7 @@ describe('Convert', () => {
 describe('Convert12', () => {
   it('not money ', async () => {
     await userList.login_with_RUB();
-    const {data} = await socket.send('BANKING:convert-create', {
+    const { data } = await socket.send('BANKING:convert-create', {
       amount: 1.9,
       senderCurrency: 'USD',
       receiverCurrency: 'RUB',

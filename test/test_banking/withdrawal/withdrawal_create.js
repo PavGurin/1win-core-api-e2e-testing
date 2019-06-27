@@ -13,7 +13,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '5446546',
-            payment_system: 'card_rub',
+            paymentSystem: 'card_rub',
             currency: 'RUB',
         });
         // console.log(data);
@@ -24,7 +24,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
-            payment_system: 'card_rub',
+            paymentSystem: 'card_rub',
             currency: 'RUB',
         });
         // console.log(data);
@@ -35,7 +35,7 @@ describe('Withdrawal create with user without money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '5446546',
-            payment_system: 'card_rub',
+            paymentSystem: 'card_rub',
             currency: 'RUB',
         });
         // console.log(data);
@@ -52,7 +52,7 @@ describe('Withdrawal create with user with money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
-            payment_system: 'card_rub',
+            paymentSystem: 'card_rub',
             currency: 'RUB',
         });
         // console.log(data);
@@ -65,7 +65,7 @@ describe('Withdrawal create with user with money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
-            payment_system: 'card_uah',
+            paymentSystem: 'card_uah',
             currency: 'RUB',
         });
         // console.log(data);
@@ -78,7 +78,7 @@ describe('Withdrawal create with user with money ', () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
             wallet: '0000111122223333',
-            payment_system: 'card_uah',
+            paymentSystem: 'card_uah',
             currency: 'USD',
         });
         // console.log(data);
@@ -90,7 +90,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19328 (+) With money beeline_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'beeline_rub',
+            paymentSystem: 'beeline_rub',
             wallet: '+79215645654',
             currency: 'RUB',
         });
@@ -103,7 +103,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19329 (+) With money beeline_rub + valid wallet + USD', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'beeline_rub',
+            paymentSystem: 'beeline_rub',
             wallet: '+79215645656',
             currency: 'USD',
         });
@@ -116,7 +116,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19330 (+) With money megafon_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'megafon_rub',
+            paymentSystem: 'megafon_rub',
             wallet: '+79215645656',
         });
         // console.log(data);
@@ -128,7 +128,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19331 (+) With money mts_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'mts_rub',
+            paymentSystem: 'mts_rub',
             wallet: '+79215645656',
         });
         // console.log(data);
@@ -140,7 +140,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19332 (+) With money qiwi_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'qiwi_rub',
+            paymentSystem: 'qiwi_rub',
             wallet: '+79215645656',
         });
         // console.log(data);
@@ -152,7 +152,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19333 (+) With money tele2_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'tele2_rub',
+            paymentSystem: 'tele2_rub',
             wallet: '+79215645656',
         });
         // console.log(data);
@@ -164,7 +164,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19334 (+) With money yamoney_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'yamoney_rub',
+            paymentSystem: 'yamoney_rub',
             wallet: '+4100100000000',
         });
         // console.log(data);
@@ -176,7 +176,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19335 (+) With money webmoney_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'webmoney_rub',
+            paymentSystem: 'webmoney_rub',
             wallet: 'R123456789000',
         });
         // console.log(data);
@@ -188,7 +188,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19336 (+) With money payeer_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'payeer_rub',
+            paymentSystem: 'payeer_rub',
             wallet: 'P0000000000',
         });
         // console.log(data);
@@ -200,7 +200,7 @@ describe('Withdrawal create with user with money ', () => {
     it('C19337 (+) With money advcash_rub + valid wallet + RUB', async () => {
         const {data} = await socket.send('BANKING:withdrawal-create', {
             amount: '100',
-            payment_system: 'advcash_rub',
+            paymentSystem: 'advcash_rub',
             wallet: 'mail@example.com',
         });
         // console.log(data);

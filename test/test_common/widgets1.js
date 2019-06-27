@@ -1,8 +1,8 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 
 describe('Widgets 1', () => {
   it('C21143 - (+) valid request', async () => {
-    const {data} = await socket.send('COMMON:widgets-1', {
+    const { data } = await socket.send('COMMON:widgets-1', {
 
       matchId: '-1',
     });

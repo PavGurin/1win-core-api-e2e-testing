@@ -3,7 +3,7 @@ import { randomStr } from '../randomizer';
 export const userList = {
 
   async login_with_params(login, password, tg_hash) {
-    return await socket.send('USER:auth-login', {
+    return socket.send('USER:auth-login', {
       login,
       password,
       tg_hash,

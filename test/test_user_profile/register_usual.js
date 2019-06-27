@@ -27,11 +27,11 @@ describe('Register -Usual schema', () => {
   }
 
   const visit_domain = 'some_domain';
-  const partner_key = 'test001';
+  const PartnerKey = 'test001';
   const default_password = '123456';
 
   // (+) for positive tests (-) for negative tests
-  it('C19305 (+) + visit_domain + partner_key', async () => {
+  it('C19305 (+) + visit_domain + PartnerKey', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
@@ -42,13 +42,13 @@ describe('Register -Usual schema', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
   });
 
-  it('C19306 (+) + visit_domain - partner_key', async () => {
+  it('C19306 (+) + visit_domain - PartnerKey', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
@@ -65,7 +65,7 @@ describe('Register -Usual schema', () => {
     checkRegInfo(data, testStr, testNum);
   });
 
-  it('C19307 (+) - visit_domain + partner_key', async () => {
+  it('C19307 (+) - visit_domain + PartnerKey', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
@@ -76,13 +76,13 @@ describe('Register -Usual schema', () => {
       phone: `921${testNum}`,
       password: default_password,
       repeat_password: default_password,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum);
   });
 
-  it('C19308 (-) - visit_domain - partner_key', async () => {
+  it('C19308 (-) - visit_domain - PartnerKey', async () => {
     const {data} = await defaultRequest({
       isShort: false,
       name: randomStr(),
@@ -107,7 +107,7 @@ describe('Register -Usual schema', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
@@ -125,7 +125,7 @@ describe('Register -Usual schema', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
@@ -142,7 +142,7 @@ describe('Register -Usual schema', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
@@ -159,7 +159,7 @@ describe('Register -Usual schema', () => {
       password: default_password,
       repeat_password: default_password,
       visit_domain,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
@@ -176,7 +176,7 @@ describe('Register -Usual schema', () => {
       phone: `921${testNum}`,
       password: testStr,
       repeat_password: `${testStr}1`,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Password confirmation not matches to password');
@@ -193,7 +193,7 @@ describe('Register -Usual schema', () => {
       phone: `921${testNum}`,
       password: testStr,
       repeat_password: testStr,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
@@ -210,7 +210,7 @@ describe('Register -Usual schema', () => {
       phone: `921${testNum}`,
       password: testStr,
       repeat_password: testStr,
-      partner_key,
+      PartnerKey,
     });
     // console.log(data);
     checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');

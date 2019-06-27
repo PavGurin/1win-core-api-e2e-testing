@@ -5,25 +5,25 @@ import { randomStr } from '../randomizer';
 export const banking = {
 
   async transfer_create(amount, currency) {
-    return await socket.send('BANKING:transfer-create', {
+    return socket.send('BANKING:transfer-create', {
       targetEmail: `${randomStr(5)}_transfet@test.xyz`,
       amount,
       currency,
     });
   },
 
-  async withdrawal_create(amount, wallet, payment_system, currency) {
-    return await socket.send('BANKING:withdrawal-create', {
+  async withdrawal_create(amount, wallet, paymentSystem, currency) {
+    return socket.send('BANKING:withdrawal-create', {
       amount,
       wallet,
-      payment_system,
+      paymentSystem,
       currency,
     });
     // console.log(JSON.stringify(result, null, 2));
   },
 
   async deposite_create_rub(amount, wallet, paymentType, currency) {
-    return await socket.send('BANKING:deposit-create', {
+    return socket.send('BANKING:deposit-create', {
       amount,
       wallet,
       paymentType,

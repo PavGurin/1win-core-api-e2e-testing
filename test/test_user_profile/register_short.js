@@ -9,7 +9,7 @@ describe('Register - Short schema', () => {
             ...params,
         });
 
-    const partner_key = 'test001';
+    const PartnerKey = 'test001';
 
     // проверка ответа успешной регистрации
     function checkRegInfo(data) {
@@ -23,17 +23,17 @@ describe('Register - Short schema', () => {
             .to.equal('someCountry');
     }
 
-    // register via short scheme with 'visit_domain' and 'partner_key'
-    it('C19301 (+) with visit_domain with partner_key', async () => {
+    // register via short scheme with 'visit_domain' and 'PartnerKey'
+    it('C19301 (+) with visit_domain with PartnerKey', async () => {
         const {data} = await defaultRequest({
             visit_domain: 'someDomain',
-            partner_key,
+            PartnerKey,
         });
         // console.log(data);
         checkRegInfo(data);
     });
 
-    it('C19302 (+) with visit domain w/o partner_key', async () => {
+    it('C19302 (+) with visit domain w/o PartnerKey', async () => {
         const {data} = await defaultRequest({
             visit_domain: 'someDomain',
         });
@@ -41,17 +41,17 @@ describe('Register - Short schema', () => {
         checkRegInfo(data);
     });
 
-    it('C19303 (+) w/o visit_domain with partner_key', async () => {
+    it('C19303 (+) w/o visit_domain with PartnerKey', async () => {
         const {data} = await defaultRequest({
-            partner_key,
+            PartnerKey,
         });
         // console.log(data);
         checkRegInfo(data);
-        expect(data.partner_key)
-            .to.equal(partner_key);
+        expect(data.PartnerKey)
+            .to.equal(PartnerKey);
     });
 
-    it('C19304 (-) w/o visit_domain w/o partner_key', async () => {
+    it('C19304 (-) w/o visit_domain w/o PartnerKey', async () => {
         // request without mandatory params
         const {data} = await defaultRequest();
         // console.log(data);
