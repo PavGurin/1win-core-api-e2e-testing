@@ -281,4 +281,24 @@ describe('Register with sub id parameter', () => {
         // console.log(data);
         checkRegInfo(data, testStr, testNum);
     });
+
+    // sub1 should be saved, sub2 and sub3 shouldn't
+    it(' (+) sub1, sub2, sub3 without partner key must be in BD', async () => {
+
+        const testStr = randomStr();
+        const testNum = randomNum();
+
+        const {data} = await defaultRequest({
+            name: testStr,
+            sub_ids: 'sub1=legal&sub2=legal&sub3=legal&sub4=legal&sub5=legal',
+            email: testStr + '_test@xyz.com',
+            phone: '921' + testNum,
+            password: default_password,
+            repeat_password: default_password,
+            visit_domain: visit_domain,
+        });
+        // console.log(data);
+        checkRegInfo(data, testStr, testNum);
+    });
+
 });

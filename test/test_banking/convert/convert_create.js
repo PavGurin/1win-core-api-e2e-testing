@@ -61,7 +61,7 @@ describe('Convert', () => {
             receiverCurrency: 'RUB'
         });
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
+        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
         expect(data.status).equal(400);
     });
 
@@ -72,7 +72,7 @@ describe('Convert', () => {
             receiverCurrency: 'RUB'
         });
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, senderCurrency is invalid')
+        checkErrMsg(data, 400, 'Bad request, senderCurrency is invalid');
         expect(data.status).equal(400);
     });
 
@@ -83,7 +83,7 @@ describe('Convert', () => {
             receiverCurrency: null
         });
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
+        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided');
         expect(data.status).equal(400);
     });
 
@@ -94,7 +94,7 @@ describe('Convert', () => {
             receiverCurrency: undefined
         });
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
+        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided');
         expect(data.status).equal(400);
     });
 
@@ -220,7 +220,7 @@ describe('Convert', () => {
 describe('Convert12', () => {
 
     it('not money ', async () => {
-        await userList.login_with_RUB()
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1.9,
             senderCurrency: 'USD',
@@ -229,4 +229,4 @@ describe('Convert12', () => {
         //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств')
     });
-})
+});

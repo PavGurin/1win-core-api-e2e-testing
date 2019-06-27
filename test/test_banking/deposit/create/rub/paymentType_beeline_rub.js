@@ -2,6 +2,7 @@ import {register} from '../../../../../src/methods/register';
 import {banking} from "../../../../../src/methods/banking";
 import {succses_deposit_create} from "../../../../../src/expects/expect_banking";
 import {checkErrMsg} from "../../../../../src/responseChecker";
+import {userList} from "../../../../../src/methods/userList";
 
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
@@ -84,6 +85,10 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
 });
 
 describe('Create deposite for beeline_rub invalid - RUB', () => {
+
+    before(async () => {
+        await userList.login_with_real_money();
+    });
 
     it('C22494 - amount = 0', async () => {
 
