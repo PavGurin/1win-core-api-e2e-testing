@@ -20,10 +20,11 @@
     "babel-node-modules": "^0.0.1",
     "babel-polyfill": "^6.26.0",
     "chai": "4.2.0",
-    "mocha": "5.2.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.4"
   },
   "dependencies": {
+    "fast-xml-parser": "^3.12.16",
     "mocha-junit-reporter": "^1.22.0",
     "mocha-multi-reporters": "^1.1.7",
     "query-string": "^6.2.0",

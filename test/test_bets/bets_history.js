@@ -34,7 +34,7 @@ describe('Bets history', () => {
                 betType: ['ordinary', 'express']
             }
         });
-        console.log(data);
+        //console.log(data);
         expect(data.status).equal(400);
         expect(data.message).equal('Bad request, order is required, no default value provided');
     });
@@ -118,7 +118,7 @@ describe('Bets history', () => {
             }
         });
 
-        console.log(betsMap);
+        //console.log(betsMap);
         expect(Object.entries(betsMap).length).equal(3);
         expect(Object.values(betsMap).every(({betType}) => betType === 'ordinary')).equal(true);
     });
@@ -179,7 +179,7 @@ describe('Bets history', () => {
                 betType: ['ordinary', 'express']
             }
         });
-        console.log(betsMap);
+        //console.log(betsMap);
         expect(Object.entries(betsMap).length).equal(15);
         expect(Object.values(betsMap).every(({status}) => status === 2)).equal(true);
     });

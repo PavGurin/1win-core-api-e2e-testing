@@ -428,7 +428,7 @@ describe('Profile update after oneClick registration', () => {
         const {data} = await register.usual_reg();
         // console.log(data);
         const password = data.password;
-        console.log(data.name);
+        //console.log(data.name);
         const {data: {updatedUser: updatedUser}} = await update_profile({
             password: password,
             email: randomStr() + '@new.ru'
