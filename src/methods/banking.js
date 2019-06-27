@@ -1,6 +1,6 @@
 import axios from 'axios';
 import parser from 'fast-xml-parser';
-import {randomStr} from '../randomizer';
+import { randomStr } from '../randomizer';
 
 export const banking = {
 
@@ -48,7 +48,7 @@ export const banking = {
  * @param {Date?} date дата на которую нужно посмотреть стоймость, если не указана, то сегодня
  */
 export const cbCurrency = (charCode, date = new Date()) => axios
-    .get(`http://www.cbr.ru/scripts/XML_daily.asp?date_req=${(`0${date.getDate()}`).slice(-2)}/${(`0${date.getMonth() + 1}`).slice(-2)}/${date.getFullYear()}`)
-    .then(({data}) => parser.parse(data).ValCurs.Valute)
-    .then(currencies => currencies.find(currency => currency.CharCode === charCode))
-    .then(currency => currency.Value);
+  .get(`http://www.cbr.ru/scripts/XML_daily.asp?date_req=${(`0${date.getDate()}`).slice(-2)}/${(`0${date.getMonth() + 1}`).slice(-2)}/${date.getFullYear()}`)
+  .then(({ data }) => parser.parse(data).ValCurs.Valute)
+  .then(currencies => currencies.find(currency => currency.CharCode === charCode))
+  .then(currency => currency.Value);
