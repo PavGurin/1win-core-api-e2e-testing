@@ -1,14 +1,18 @@
 import {expect} from 'chai';
 import {userList} from '../../src/methods/userList';
-import {generateCoupon, getTournamentMatches} from '../../src/methods/better';
+import {generateCoupon, getTournamentMatches, makeBet} from '../../src/methods/better';
 
-describe('Bets check', () => {
+describe('Bets make', () => {
 
     //TODO вынести методы в глобальные переменные по созданию ставки
     //TODO после обновить старые тесты с маркером dev
 
-    it('Bets make ver1', async () => {
+    beforeEach(async () => {
         await userList.login_with_real_money();
+    });
+
+    it('Prematch - ordinary bet', async () => {
+
         /**
          get available matches
          service 'live/prematch'
@@ -17,45 +21,37 @@ describe('Bets check', () => {
 
         const {data: matches} = await getTournamentMatches({
             service: 'prematch',
-            sportId: '1'
+            // sportId: '1'
         });
 
-        const coupon = generateCoupon(matches);
+        const coupon = await generateCoupon(matches);
 
-        // const singleMatch = Object.values(matches.matchMap)[0];
-        // const odd = singleMatch.baseOddsConfig[0].cellList[0].odd;
-        // // const coupon = new Coupon({...odd});
+        const betResponse = await makeBet(coupon);
 
-        console.log('xx');
-        // console.log(match);
-        // console.log(odd);
-        console.log(coupon);
-
-        const response = await socket.send('BETS:bets-make',
-            {
-                currency: 'RUB',
-                betsMap: {
-                    [coupon.couponId]: {
-                        amount: 1,
-                        couponList: [
-                            {
-                                service: coupon.service,
-                                matchId: coupon.matchId,
-                                typeId: coupon.typeId,
-                                subTypeId: coupon.subTypeId,
-                                outCome: coupon.outCome,
-                                specialValue: coupon.specialValue,
-                                coefficient: Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd.coefficient
-                            }
-                        ]
-                    }
-                }
-            }
-        );
-        console.log(response);
+        console.log(betResponse);
     });
 
-    it.skip('Bets make ordinar with money', async () => {
+    it('Prematch - express bet', async () => {
+
+        /**
+         get available matches
+         service 'live/prematch'
+         sportId => (football = 1)
+         */
+
+        const {data: matches} = await getTournamentMatches({
+            service: 'prematch'
+            // sportId: '1'
+        });
+
+        const coupon = await generateCoupon(matches);
+
+        const betResponse = await makeBet(coupon);
+
+        console.log(betResponse);
+    });
+
+    it.skip('Bets make ordinary with money', async () => {
         await userList.login_with_RUB();
         const {betData} = await socket.send('BETS:bets-make',
             {
