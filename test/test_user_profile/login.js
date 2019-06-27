@@ -5,7 +5,6 @@ import {userList} from '../../src/methods/userList';
 import {register} from '../../src/methods/register';
 
 describe('Login', () => {
-
     // (+) for positive tests (-) for negative tests
     it('C19293 (+) login by email', async () => {
         const {data} = await register.one_click_reg();
@@ -22,18 +21,16 @@ describe('Login', () => {
     });
 
     it('C19295 (-) nonexistent user', async () => {
-
         const {data} = await socket.send('USER:auth-login', {
             login: 'nonexistent_user@yep.fail',
             password: default_password,
-            tg_hash: randomStr(5)
+            tg_hash: randomStr(5),
         });
         // console.log(data);
         checkErrorMsg(data, 'Неверный email или пароль');
     });
 
     it('C19296 (-) wrong password', async () => {
-
         const {data: regResult} = await register.one_click_reg();
         const {data} = await userList.login_with_params(regResult.email, 'wrongPass');
         // console.log(data);
@@ -41,18 +38,16 @@ describe('Login', () => {
     });
 
     it('C19297 (-) empty login', async () => {
-
         const {data} = await socket.send('USER:auth-login', {
             login: '',
             password: default_password,
-            tg_hash: randomStr(5)
+            tg_hash: randomStr(5),
         });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, login is invalid');
     });
 
     it('C19298 (-) empty password', async () => {
-
         const {data: regResult} = await register.one_click_reg();
         const {data} = await userList.login_with_params(regResult.email, '');
         // console.log(data);
@@ -63,7 +58,7 @@ describe('Login', () => {
         const {data} = await socket.send('USER:auth-login', {
             login: randomStr(17),
             password: '',
-            tg_hash: randomStr(5)
+            tg_hash: randomStr(5),
         });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, password is invalid');

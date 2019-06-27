@@ -1,34 +1,31 @@
-import {expect} from "chai"
+import {expect} from 'chai';
 
-describe("Sport-tournaments", () => {
-
-
-    it("C21150 - Sport-tournaments prematch", async () => {
-        const {data} = await socket.send("MATCH-STORAGE-2:sport-tournaments", {
+describe('Sport-tournaments', () => {
+    it('C21150 - Sport-tournaments prematch', async () => {
+        const {data} = await socket.send('MATCH-STORAGE-2:sport-tournaments', {
             service: 'prematch',
             sportId: 'all',
             timeFilter: {
                 date: false,
-                hour: false
-            }
+                hour: false,
+            },
         });
 
-        //console.log(data);
+        // console.log(data);
         expect(data.service).equal('prematch');
     });
 
-    it("C21151 - Sport-tournaments live", async () => {
-        const {data} = await socket.send("MATCH-STORAGE-2:sport-tournaments", {
+    it('C21151 - Sport-tournaments live', async () => {
+        const {data} = await socket.send('MATCH-STORAGE-2:sport-tournaments', {
             service: 'live',
             sportId: 'all',
             timeFilter: {
                 date: false,
-                hour: false
-            }
+                hour: false,
+            },
         });
 
-        //console.log(data);
+        // console.log(data);
         expect(data.service).equal('live');
     });
-
 });
