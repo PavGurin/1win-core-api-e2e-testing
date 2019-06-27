@@ -234,7 +234,7 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(' ', '+79001234567',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it('C22632 - amount = undefined', async () => {
@@ -267,7 +267,7 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(0.6, '+79001234567',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount is invalid')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it('C22636 - amount < min amount', async () => {

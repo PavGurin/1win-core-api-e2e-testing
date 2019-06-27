@@ -81,14 +81,6 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
             paymentType, 100)
     });
 
-    it('C22493 - < max amount & wallet = valid short number', async () => {
-        //TODO узнать валидный короткий номер городского телефона
-        const {data} = await banking.deposite_create_rub(14999, '+79001234',
-            paymentType, currency);
-        //console.log(data);
-        succses_deposit_create(data, currency,
-            paymentType, 14999)
-    });
 });
 
 describe('Create deposite for beeline_rub invalid - RUB', () => {
@@ -114,7 +106,7 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(' ', '79215598286',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
+        checkErrMsg(data, 400, 'Bad request, amount is invalid')
     });
 
     it('C22497 - amount = undefined', async () => {
@@ -146,7 +138,7 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
         const {data} = await banking.deposite_create_rub(0.6, '79215598286',
             paymentType, currency);
         //console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount is invalid')
+        checkErrMsg(data, 400, 'Неверная сумма')
     });
 
     it('C22501 - amount < min amount', async () => {
@@ -222,5 +214,15 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
             'beeline_rub_test', currency);
         //console.log(data);
         checkErrMsg(data, 400, '?????')
+    });
+
+    //TODO непонятно должно ли проходить
+    it('C22493 - < max amount & wallet = valid short number', async () => {
+        //TODO узнать валидный короткий номер городского телефона
+        const {data} = await banking.deposite_create_rub(14999, '+79001234',
+            paymentType, currency);
+        //console.log(data);
+        succses_deposit_create(data, currency,
+            paymentType, 14999)
     });
 });

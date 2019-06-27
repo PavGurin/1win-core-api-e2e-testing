@@ -7,7 +7,7 @@ describe('Balance get', () => {
     it('C19353 (+) Without money', async () => {
         await register.one_click_reg();
         const {data} = await socket.send('BANKING:balance-get');
-        // console.log(data);
+        //console.log(data);
         expect(data["0"].balance).equal(0);
         expect(data["0"].currency).equal('RUB');
         expect(data["1"].balance).equal(0);

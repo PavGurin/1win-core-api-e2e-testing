@@ -60,7 +60,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
         expect(data.status).equal(400);
     });
@@ -71,7 +71,7 @@ describe('Convert', () => {
             senderCurrency: 'rrrr',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad request, senderCurrency is invalid')
         expect(data.status).equal(400);
     });
@@ -82,7 +82,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: null
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
         expect(data.status).equal(400);
     });
@@ -93,7 +93,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: undefined
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
         expect(data.status).equal(400);
     });
@@ -169,7 +169,7 @@ describe('Convert', () => {
             senderCurrency: 'RUB',
             receiverCurrency: 'USD'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств')
     });
 
@@ -179,7 +179,7 @@ describe('Convert', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств')
     });
 
@@ -226,7 +226,7 @@ describe('Convert12', () => {
             senderCurrency: 'USD',
             receiverCurrency: 'RUB'
         });
-        console.log(data);
+        //console.log(data);
         checkErrMsg(data, 403, 'Недостаточно средств')
     });
 })
