@@ -1,9 +1,10 @@
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 import queryString from 'query-string';
 
-import config from './config'
+import config from './config';
+
 export default class SocketClient {
-    constructor({token, path = config.backendURL, lang = "ru"}) {
+    constructor({token, path = config.backendURL, lang = 'ru'}) {
         this.path = path;
         this.token = token;
         this.lang = lang;
@@ -28,21 +29,21 @@ export default class SocketClient {
         if (this.token) {
             options.query.Authorization = this.token.trim();
         }
-        options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false });
+        options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false});
 
         const promise = new Promise((resolve, reject) => {
             this.socket = io(this.path, options);
             this.socket.on('connect', () => {
                 resolve();
             });
-    
+
             // if socket disconnected or can't connect this try
             this.socket.on('connect_error', (e) => {
-                console.log('work?')
-                console.error(e)
-                reject()
+                console.log('work?');
+                console.error(e);
+                reject();
             });
-    
+
             // response from server
             this.socket.on('a', this.handleResponse.bind(this));
         });
@@ -92,5 +93,4 @@ export default class SocketClient {
         // remove request from request map
         delete this.requestMap[msg.msgid];
     }
-
 }

@@ -4,56 +4,47 @@ import {checkError404, checkErrorMsg} from '../../src/responseChecker';
 import {register} from '../../src/methods/register';
 
 describe('Bets get', () => {
-
     it('(-) user without bet history', async () => {
-
-        //TODO -  зачем после реги авторизация?
+        // TODO -  зачем после реги авторизация?
         const {data: regReq} = await register.one_click_reg();
         await userList.login_with_params(regReq.email, regReq.password);
 
         const {data} = await socket.send('BETS:bets-get', {
-                id: 23,
-                language: null
-            }
-        );
+            id: 23,
+            language: null,
+        });
         // console.log(data);
         checkError404(data, 'Ставка не найдена');
     });
 
     it('(-) without ID field', async () => {
-
         const {data: regReq} = await register.one_click_reg();
         await userList.login_with_params(regReq.email, regReq.password);
 
         const {data} = await socket.send('BETS:bets-get', {
-                language: null
-            }
-        );
+            language: null,
+        });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, id is required');
     });
 
     it('(-) empty ID field', async () => {
-
         const {data: regReq} = await register.one_click_reg();
         await userList.login_with_params(regReq.email, regReq.password);
 
         const {data} = await socket.send('BETS:bets-get', {
-                id: '',
-                language: null
-            }
-        );
+            id: '',
+            language: null,
+        });
         // console.log(data);
         checkErrorMsg(data, 'Bad request, id should have a type of number, but found string');
     });
 
     it('(-) non authorized user get bet', async () => {
-
         const {data} = await socket.send('BETS:bets-get', {
-                id: 23,
-                language: null
-            }
-        );
+            id: 23,
+            language: null,
+        });
         // console.log(data);
         checkError404(data, 'Ставка не найдена');
     });
@@ -63,10 +54,9 @@ describe('Bets get', () => {
 
         const {data: login} = await userList.login_with_real_money();
         const {data: getBet} = await socket.send('BETS:bets-get', {
-                id: test_bet_id,
-                language: null
-            }
-        );
+            id: test_bet_id,
+            language: null,
+        });
         // console.log(data);
         expect(login.id).equal(getBet.id_user);
         expect(getBet.betType).equal('ordinary');
@@ -82,11 +72,10 @@ describe('Bets get', () => {
 
         const {data: login} = await userList.login_with_real_money();
         const {data: getBet} = await socket.send('BETS:bets-get', {
-                id: test_bet_id,
-                language: null
-            }
-        );
-        //console.log(data);
+            id: test_bet_id,
+            language: null,
+        });
+        // console.log(data);
         expect(login.id).equal(getBet.id_user);
         expect(getBet.betType).equal('express');
         expect(getBet.currency).equal('RUB');

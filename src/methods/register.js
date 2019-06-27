@@ -10,7 +10,7 @@ export const register = {
                 isShort: true,
                 country: default_country,
                 timezone: 23,
-                partner_key: partner_key
+                partner_key,
             });
     },
 
@@ -19,15 +19,15 @@ export const register = {
             {
                 isShort: false,
                 name: randomStr(),
-                email: randomStr(5) + '_test@new.xyz',
+                email: `${randomStr(5)}_test@new.xyz`,
                 phone: randomNum().toString(),
                 password: default_password,
                 repeat_password: default_password,
                 country: default_country,
                 timezone: 23,
                 birthday: 946587600000,
-                partner_key: partner_key,
-                ...usualRegistration
+                partner_key,
+                ...usualRegistration,
             });
-    }
+    },
 };
