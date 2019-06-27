@@ -1,12 +1,12 @@
 import {expect} from 'chai';
 
 describe('Register - Short schema', () => {
-    const defaultRequest = (params) => socket.send('USER:auth-register',
+    const defaultRequest = params => socket.send('USER:auth-register',
         {
             isShort: true,
             country: 'someCountry',
             timezone: 23,
-            ...params
+            ...params,
         });
 
     const partner_key = 'test001';
@@ -25,28 +25,25 @@ describe('Register - Short schema', () => {
 
     // register via short scheme with 'visit_domain' and 'partner_key'
     it('C19301 (+) with visit_domain with partner_key', async () => {
-
         const {data} = await defaultRequest({
             visit_domain: 'someDomain',
-            partner_key: partner_key
+            partner_key,
         });
         // console.log(data);
         checkRegInfo(data);
     });
 
     it('C19302 (+) with visit domain w/o partner_key', async () => {
-
         const {data} = await defaultRequest({
-            visit_domain: 'someDomain'
+            visit_domain: 'someDomain',
         });
         // console.log(data);
         checkRegInfo(data);
     });
 
     it('C19303 (+) w/o visit_domain with partner_key', async () => {
-
         const {data} = await defaultRequest({
-            partner_key: partner_key
+            partner_key,
         });
         // console.log(data);
         checkRegInfo(data);

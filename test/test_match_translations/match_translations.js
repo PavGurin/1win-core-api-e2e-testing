@@ -1,13 +1,10 @@
-import {expect} from "chai"
+import {expect} from 'chai';
 
-describe("MATCH-TRANSLATIONS", () => {
+describe('MATCH-TRANSLATIONS', () => {
+    it('C21144 - (+) valid request', async () => {
+        const {data} = await socket.send('MATCH-TRANSLATIONS:translations', {});
 
-
-    it("C21144 - (+) valid request", async () => {
-        const {data} = await socket.send("MATCH-TRANSLATIONS:translations", {});
-
-        //console.log(data);
+        // console.log(data);
         expect(data.transaction).include([]);
     });
-
 });

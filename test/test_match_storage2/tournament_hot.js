@@ -1,13 +1,10 @@
-import {expect} from "chai"
+import {expect} from 'chai';
 
-describe("Tournament hot", () => {
+describe('Tournament hot', () => {
+    it('C21152 - Tournament hot without parameters ', async () => {
+        const {data} = await socket.send('MATCH-STORAGE-2:tournament-hot', {});
 
-
-    it("C21152 - Tournament hot without parameters ", async () => {
-        const {data} = await socket.send("MATCH-STORAGE-2:tournament-hot", {});
-
-        //console.log(data);
+        // console.log(data);
         expect(data).not.equal(null);
     });
-
 });

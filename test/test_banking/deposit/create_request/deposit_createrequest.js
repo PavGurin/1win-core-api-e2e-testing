@@ -5,19 +5,18 @@ const currency = 'RUB';
 const paymentType = 'card_rub';
 
 describe('Deposit requests', () => {
-
     before(async () => {
         await register.one_click_reg();
     });
 
-    //TODO больше проверок на PaymentType
+    // TODO больше проверок на PaymentType
     it('C19376 (-) create without currency @master', async () => {
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
-            paymentType: paymentType,
+            paymentType,
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });
@@ -26,12 +25,11 @@ describe('Deposit requests', () => {
         const {data} = await socket.send('BANKING:deposit-create-request', {
             amount: 100,
             wallet: '',
-            paymentType: paymentType,
-            currency: currency
+            paymentType,
+            currency,
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.redirectUrl).not.equal(null);
         expect(data.message).equal(undefined);
     });
-
 });
