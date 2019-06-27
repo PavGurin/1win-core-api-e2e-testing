@@ -4,7 +4,7 @@ import queryString from 'query-string';
 import config from './config';
 
 export default class SocketClient {
-  constructor({ token, path = config.backendURL, lang = 'ru' }) {
+  constructor({token, path = config.backendURL, lang = 'ru'}) {
     this.path = path;
     this.token = token;
     this.lang = lang;
@@ -29,7 +29,7 @@ export default class SocketClient {
     if (this.token) {
       options.query.Authorization = this.token.trim();
     }
-    options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false });
+    options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false});
 
     const promise = new Promise((resolve, reject) => {
       this.socket = io(this.path, options);
