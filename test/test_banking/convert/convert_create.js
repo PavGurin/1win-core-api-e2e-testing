@@ -1,22 +1,21 @@
 import {expect} from 'chai';
 import {userList} from '../../../src/methods/userList';
-import {checkErrMsg} from "../../../src/responseChecker";
+import {checkErrMsg} from '../../../src/responseChecker';
 
 describe('Convert', () => {
-
     before(async () => {
         await userList.login_with_RUB_USD();
     });
 
-    //глобальная комиссия на переводы = 5%
+    // глобальная комиссия на переводы = 5%
 
     it('C19340 Create before login', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 100,
             senderCurrency: 'RUB',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -25,20 +24,19 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 0,
             senderCurrency: 'RUB',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
-        //console.log(data);
-        checkErrMsg(data, 403, 'Некорректное значение amount')
-
+        // console.log(data);
+        checkErrMsg(data, 403, 'Некорректное значение amount');
     });
 
     it('55C19341 Create before login not enough money', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 100,
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -47,9 +45,9 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 100,
             senderCurrency: 'RUB',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -58,10 +56,10 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 'tuytuyty',
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
         console.log(data);
-        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string')
+        checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
         expect(data.status).equal(400);
     });
 
@@ -69,10 +67,10 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: '1',
             senderCurrency: 'rrrr',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
         console.log(data);
-        checkErrMsg(data, 400, 'Bad request, senderCurrency is invalid')
+        checkErrMsg(data, 400, 'Bad request, senderCurrency is invalid');
         expect(data.status).equal(400);
     });
 
@@ -80,10 +78,10 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: '1',
             senderCurrency: 'RUB',
-            receiverCurrency: null
+            receiverCurrency: null,
         });
         console.log(data);
-        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
+        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided');
         expect(data.status).equal(400);
     });
 
@@ -91,10 +89,10 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: '1',
             senderCurrency: 'RUB',
-            receiverCurrency: undefined
+            receiverCurrency: undefined,
         });
         console.log(data);
-        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided')
+        checkErrMsg(data, 400, 'Bad request, receiverCurrency is required, no default value provided');
         expect(data.status).equal(400);
     });
 
@@ -102,9 +100,9 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: '1',
             senderCurrency: 'RUB',
-            receiverCurrency: 'EUR'
+            receiverCurrency: 'EUR',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -113,9 +111,9 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: '1',
             senderCurrency: 'EUR',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -125,9 +123,9 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: '1',
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -136,9 +134,9 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1,
             senderCurrency: 'USD',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -147,49 +145,49 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1,
             senderCurrency: 'RUB',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
-        //console.log(data);
-        checkErrMsg(data, 403, 'Некорректный формат валюты')
+        // console.log(data);
+        checkErrMsg(data, 403, 'Некорректный формат валюты');
     });
 
     it('C19346 Create after login valid request 100 RUB -> RUB ', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 100,
             senderCurrency: 'RUB',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
-        //console.log(data);
-        checkErrMsg(data, 403, 'Некорректный формат валюты')
+        // console.log(data);
+        checkErrMsg(data, 403, 'Некорректный формат валюты');
     });
 
     it('C19347 Create after login valid request 10000 RUB -> USD(not enough money) ', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 10000,
             senderCurrency: 'RUB',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
         console.log(data);
-        checkErrMsg(data, 403, 'Недостаточно средств')
+        checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
     it('C19348 Create after login valid request 1000 USD -> RUB(not enough money) ', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1000,
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
         console.log(data);
-        checkErrMsg(data, 403, 'Недостаточно средств')
+        checkErrMsg(data, 403, 'Недостаточно средств');
     });
 
     it('C19349 Create after login valid request 0.9 USD -> RUB(enough money) ', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 0.9,
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
-        //console.log(data);
+        // console.log(data);
         expect(data.email).not.equal(null);
         expect(data.amount).not.equal(0);
     });
@@ -198,35 +196,32 @@ describe('Convert', () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: -0.9,
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
-        //console.log(data);
-        checkErrMsg(data, 403, 'Некорректное значение amount')
-
+        // console.log(data);
+        checkErrMsg(data, 403, 'Некорректное значение amount');
     });
 
     it('C19351 Create after login valid request negative amount RUB -> USD(enough money) ', async () => {
         const {data} = await socket.send('BANKING:convert-create', {
             amount: -100.9,
             senderCurrency: 'RUB',
-            receiverCurrency: 'USD'
+            receiverCurrency: 'USD',
         });
-        //console.log(data);
-        checkErrMsg(data, 403, 'Некорректное значение amount')
-
+        // console.log(data);
+        checkErrMsg(data, 403, 'Некорректное значение amount');
     });
 });
 
 describe('Convert12', () => {
-
     it('not money ', async () => {
-        await userList.login_with_RUB()
+        await userList.login_with_RUB();
         const {data} = await socket.send('BANKING:convert-create', {
             amount: 1.9,
             senderCurrency: 'USD',
-            receiverCurrency: 'RUB'
+            receiverCurrency: 'RUB',
         });
         console.log(data);
-        checkErrMsg(data, 403, 'Недостаточно средств')
+        checkErrMsg(data, 403, 'Недостаточно средств');
     });
-})
+});
