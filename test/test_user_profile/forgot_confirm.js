@@ -1,11 +1,11 @@
-import {expect} from 'chai';
-import {checkErrorMsg} from '../../src/responseChecker';
-import {register} from '../../src/methods/register';
+import { expect } from 'chai';
+import { checkErrorMsg } from '../../src/responseChecker';
+import { register } from '../../src/methods/register';
 
 describe('Auth recovery confirm', () => {
   // TODO need to get correct_code from mail
   it.skip('C19316 (+) with correct code', async () => {
-    const {data} = await socket.send('USER:forgot-confirm', {
+    const { data } = await socket.send('USER:forgot-confirm', {
 
       userId,
       code: correct_code,
@@ -18,14 +18,14 @@ describe('Auth recovery confirm', () => {
 
   // register > ask for recovery > try to confirm > check
   it('C19317 (-) with incorrect code', async () => {
-    const {data: regData} = await register.one_click_reg();
+    const { data: regData } = await register.one_click_reg();
     // console.log(regData);
 
     await socket.send('USER:forgot-recovery', {
       account: regData.email,
     });
 
-    const {data: confirmReq} = await socket.send('USER:forgot-confirm', {
+    const { data: confirmReq } = await socket.send('USER:forgot-confirm', {
       userId: regData.id,
       code: 1234567,
       password: default_password,
