@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
 
 
-describe('Get data about user from user.meta', () => {
+describe('C26424 - Get data about user from user.meta', () => {
   it('all expects', async () => {
     userList.login_with_RUB_USD();
     const meta = await socket.userMeta;
