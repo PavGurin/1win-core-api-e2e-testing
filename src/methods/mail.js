@@ -33,7 +33,6 @@ export const mail = {
     const message = {};
     message.subject = result.data['0'].mail_subject;
     message.text = result.data['0'].mail_text_only;
-    // eslint-disable-next-line no-useless-escape
     message.code = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|\₽|\€|\@)/)[0];
     await mail.deleteMessage(result.data['0'].mail_id);
     return message;

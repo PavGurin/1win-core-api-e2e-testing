@@ -90,7 +90,6 @@ export default class SocketClient {
     const request = this.requestMap[msg.msgid];
 
     if (msg.needParse) {
-      // eslint-disable-next-line no-param-reassign
       msg.data = JSON.parse(msg.data);
     }
 
