@@ -73,14 +73,16 @@ describe('Login', () => {
 
   it('C19926 (+) short tg_hash (4 symbols)', async () => {
     const { data: regResult } = await register.one_click_reg();
-    const { status } = await userList.login_with_params(regResult.email, randomStr(19), randomStr(4));
+    const { status } = await userList.login_with_params(regResult.email, randomStr(19),
+      randomStr(4));
     // console.log(data);
     expect(status).equal(200);
   });
 
   it('C19927 (+) long tg_hash (6 symbols)', async () => {
     const { data: regResult } = await register.one_click_reg();
-    const { status } = await userList.login_with_params(regResult.email, randomStr(19), randomStr(6));
+    const { status } = await userList.login_with_params(regResult.email, randomStr(19),
+      randomStr(6));
     // console.log(data);
     // console.log(data);
     expect(status).equal(200);

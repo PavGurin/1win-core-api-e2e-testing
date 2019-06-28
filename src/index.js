@@ -4,7 +4,6 @@ import queryString from 'query-string';
 import config from './config';
 
 export default class SocketClient {
-
   constructor({ token, path = config.backendURL, lang = 'ru' }) {
     this.path = path;
     this.token = token;
@@ -44,8 +43,8 @@ export default class SocketClient {
 
       // if socket disconnected or can't connect this try
       this.socket.on('connect_error', (e) => {
-        console.log('work?');
-        console.error(e);
+        // console.log('work?');
+        // console.error(e);
         reject();
       });
 

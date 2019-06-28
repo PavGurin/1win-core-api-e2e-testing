@@ -83,7 +83,7 @@ describe('Transfer with money - USD', () => {
       amount: 10000,
       currency: 'EUR',
     });
-    console.log(data);
+    // console.log(data);
     checkErrMsg(data, 400, 'Недостаточно средств');
   });
 });

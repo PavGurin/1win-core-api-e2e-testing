@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 
-export function succses_deposit_create(data, expectedCurrency, expectedPaymentType, expectedAmount) {
+// eslint-disable-next-line max-len
+export function succses_deposit_create(data,
+  expectedCurrency, expectedPaymentType, expectedAmount) {
   expect(data.apiResponse.error).equal(false);
   expect(data.currency).equal(expectedCurrency);
   expect(data.paymentType).equal(expectedPaymentType);

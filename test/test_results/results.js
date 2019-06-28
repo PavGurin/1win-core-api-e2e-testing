@@ -23,8 +23,10 @@ describe('Results', () => {
       // console.log(data);
       expect(data).to.be.an('object');
       // TODO добавить нормальных проверок
-      // expect(data[1].tournamentMap[1].matchMap[1].dateOfMatch).to.be.above(date.getUnixTimestamp());
-      // expect(data[1].tournamentMap[1].matchMap[1].dateOfMatch).to.be.below((date.setDate(date.getDate()+1)).getUnixTimestamp());
+      // expect(data[1].tournamentMap[1].matchMap[1].dateOfMatch).
+      // to.be.above(date.getUnixTimestamp());
+      // expect(data[1].tournamentMap[1].matchMap[1].dateOfMatch).
+      // to.be.below((date.setDate(date.getDate()+1)).getUnixTimestamp());
     }
   });
 });

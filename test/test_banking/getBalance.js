@@ -30,7 +30,7 @@ describe('Balance get', () => {
   it('C21429 (+) Balance USD, RUB, EUR > 0', async () => {
     await userList.login_with_real_money();
     const { data } = await socket.send('BANKING:balance-get');
-    console.log(data);
+    // console.log(data);
     expect(data['0'].balance).not.equal(0);
     expect(data['0'].currency).equal('RUB');
     expect(data['1'].balance).not.equal(0);

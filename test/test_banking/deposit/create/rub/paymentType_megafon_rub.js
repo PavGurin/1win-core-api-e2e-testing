@@ -97,7 +97,7 @@ describe('Create deposite for megafon_rub invalid - RUB', () => {
   it('C22544 - amount = 0', async () => {
     const { data } = await banking.deposite_create_rub(0, '+79001234567',
       paymentType, currency);
-    console.log(data);
+    // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
@@ -146,7 +146,7 @@ describe('Create deposite for megafon_rub invalid - RUB', () => {
   it('C22551 - amount < min amount', async () => {
     const { data } = await banking.deposite_create_rub(9, '+79001234567',
       paymentType, currency);
-    console.log(data);
+    // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 

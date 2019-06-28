@@ -23,7 +23,6 @@ export const mail = {
   // text - текст письма
   // code - код подтверждения из письма
   async get_message(emailAddress) {
-
     const result = await axios.get(`https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${md5(emailAddress)}/format/json`, {
       headers: {
         'X-RapidAPI-Host': 'privatix-temp-mail-v1.p.rapidapi.com',
@@ -46,6 +45,6 @@ export const mail = {
         'X-RapidAPI-Host': 'privatix-temp-mail-v1.p.rapidapi.com',
         'X-RapidAPI-Key': '0b48a4497amsh0cccc524b8436bfp167b9ejsnb5deb31896ca',
       },
-    })
+    });
   },
 };

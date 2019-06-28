@@ -4,7 +4,8 @@ import { banking } from '../../../src/methods/banking';
 import { checkErrMsg } from '../../../src/responseChecker';
 
 describe('Withdrawal confirm', () => {
-  // TODO необходимо продумать тест с созданием перевода и подставлять в этот тест всегда актуальный код
+  // TODO необходимо продумать тест с созданием перевода и подставлять
+  //  в этот тест всегда актуальный код
   it('C19338 (-) Incorrect code code response 403', async () => {
     await register.one_click_reg();
     const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 10704 });
