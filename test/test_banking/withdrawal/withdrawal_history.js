@@ -5,14 +5,14 @@ import { register } from '../../../src/methods/register';
 // returns withdrawals sorted by time
 describe('Withdrawal history', () => {
   it('C19359 - (+) without withdrawal', async () => {
-    await register.one_click_reg();
+    await register.oneClickReg();
     const { data } = await socket.send('BANKING:withdrawal-history');
     // console.log(data);
     expect(data.length).equal(0);
   });
 
   it('C19360 -(+) with withdrawal @dev', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { data } = await socket.send('BANKING:withdrawal-history');
     // console.log(data);
     expect(data['0'].id).equal(163);

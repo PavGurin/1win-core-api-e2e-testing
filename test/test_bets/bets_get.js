@@ -6,8 +6,8 @@ import { register } from '../../src/methods/register';
 describe('Bets get', () => {
   it('(-) user without bet history', async () => {
     // TODO -  зачем после реги авторизация?
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
 
     const { data } = await socket.send('BETS:bets-get', {
       id: 23,
@@ -18,8 +18,8 @@ describe('Bets get', () => {
   });
 
   it('(-) without ID field', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
 
     const { data } = await socket.send('BETS:bets-get', {
       language: null,
@@ -29,8 +29,8 @@ describe('Bets get', () => {
   });
 
   it('(-) empty ID field', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
 
     const { data } = await socket.send('BETS:bets-get', {
       id: '',
@@ -50,40 +50,40 @@ describe('Bets get', () => {
   });
 
   it('(+) get ordinary bet by id', async () => {
-    const test_bet_id = 35;
+    const testBetId = 35;
 
-    const { data: login } = await userList.login_with_real_money();
+    const { data: login } = await userList.loginWithRealMoney();
     const { data: getBet } = await socket.send('BETS:bets-get', {
-      id: test_bet_id,
+      id: testBetId,
       language: null,
     });
     // console.log(data);
     expect(login.id).equal(getBet.id_user);
     expect(getBet.betType).equal('ordinary');
     expect(getBet.currency).equal('RUB');
-    expect(getBet.id).equal(test_bet_id);
+    expect(getBet.id).equal(testBetId);
     for (let i = 0; i < getBet.selectionList.length; i++) {
-      expect(getBet.selectionList[i].bet_id).equal(test_bet_id);
+      expect(getBet.selectionList[i].bet_id).equal(testBetId);
     }
   });
 
   it('(+) get express bet by id', async () => {
-    const test_bet_id = 38;
+    const testBetId = 38;
 
-    const { data: login } = await userList.login_with_real_money();
+    const { data: login } = await userList.loginWithRealMoney();
     const { data: getBet } = await socket.send('BETS:bets-get', {
-      id: test_bet_id,
+      id: testBetId,
       language: null,
     });
     // console.log(data);
     expect(login.id).equal(getBet.id_user);
     expect(getBet.betType).equal('express');
     expect(getBet.currency).equal('RUB');
-    expect(getBet.id).equal(test_bet_id);
+    expect(getBet.id).equal(testBetId);
     expect(getBet.selectionList.length).equal(2);
     // проверяет 'bet_id' каждой ставки экспресса (должно совпадать
     for (let i = 0; i < getBet.selectionList.length; i++) {
-      expect(getBet.selectionList[i].bet_id).equal(test_bet_id);
+      expect(getBet.selectionList[i].bet_id).equal(testBetId);
     }
   });
 });

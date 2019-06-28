@@ -1,3 +1,4 @@
+/* eslint camelcase: 'off' */
 import { expect } from 'chai';
 import { randomNum, randomStr } from '../../src/randomizer';
 import { checkErrorMsg } from '../../src/responseChecker';
@@ -17,7 +18,7 @@ describe('Register -Usual schema', () => {
     expect(data.email)
       .to.equal(`${testText}_test@xyz.com`);
     expect(data.password)
-      .to.equal(default_password);
+      .to.equal(defaultPassword);
     expect(data.phone)
       .to.equal(`921${testNumber}`);
     expect(data.name)
@@ -28,7 +29,6 @@ describe('Register -Usual schema', () => {
 
   const visit_domain = 'some_domain';
   const PartnerKey = 'test001';
-  const default_password = '123456';
 
   // (+) for positive tests (-) for negative tests
   it('C19305 (+) + visit_domain + PartnerKey', async () => {
@@ -39,8 +39,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -57,8 +57,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
     });
     // console.log(data);
@@ -74,8 +74,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       PartnerKey,
     });
     // console.log(data);
@@ -88,8 +88,8 @@ describe('Register -Usual schema', () => {
       name: randomStr(),
       email: `${randomStr()}test@xyz.com`,
       phone: `921${randomNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
     });
     // console.log(data);
     checkErrorMsg(data, 'Visit domain is required if partner key does not specified');
@@ -104,8 +104,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -122,8 +122,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -139,8 +139,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: randomStr(4),
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -156,8 +156,8 @@ describe('Register -Usual schema', () => {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: randomStr(31),
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });

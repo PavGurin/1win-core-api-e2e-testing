@@ -5,7 +5,7 @@ import { checkErrMsg } from '../../../src/responseChecker';
 
 describe('Transfer with money - RUB', () => {
   before(async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
   });
 
   it('C19371 (+) With money', async () => {
@@ -42,7 +42,7 @@ describe('Transfer with money - RUB', () => {
 
 describe('Transfer with money - USD', () => {
   before(async () => {
-    await userList.login_with_RUB_USD();
+    await userList.loginWithRubUsd();
   });
 
   it('C19373 (+) With money + USD, amount = 2 USD', async () => {
@@ -90,7 +90,7 @@ describe('Transfer with money - USD', () => {
 
 describe('Transfer without money', () => {
   before(async () => {
-    await register.one_click_reg();
+    await register.oneClickReg();
   });
 
   it('C19367 (-) Without money , not enough amount + RUB', async () => {

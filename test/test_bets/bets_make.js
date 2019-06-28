@@ -6,8 +6,8 @@ describe('Bets check', () => {
   // TODO вынести методы в глобальные переменные по созданию ставки
   // TODO после обновить старые тесты с маркером dev
   it('Bets make ordinar without money', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { betData } = await socket.send('BETS:bets-make',
       {
         currency: 'RUB',
@@ -35,7 +35,7 @@ describe('Bets check', () => {
   });
 
   it('Bets make ordinar with money', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { betData } = await socket.send('BETS:bets-make',
       {
         currency: 'RUB',

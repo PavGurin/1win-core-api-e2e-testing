@@ -6,7 +6,7 @@ import { checkErrMsg } from '../../../src/responseChecker';
 
 describe('Withdrawal create with user without money ', () => {
   before(async () => {
-    await register.one_click_reg();
+    await register.oneClickReg();
   });
 
   it('C19278 (-) Without money', async () => {
@@ -45,7 +45,7 @@ describe('Withdrawal create with user without money ', () => {
 
 describe('Withdrawal create with user with money ', () => {
   before(async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
   });
 
   it('C19325 (+) With money card_rub + valid wallet', async () => {
@@ -55,7 +55,7 @@ describe('Withdrawal create with user with money ', () => {
       paymentSystem: 'card_rub',
       currency: 'RUB',
     });
-    console.log(data);
+    // console.log(data);
     expect(data).to.be.an('object');
     expect(data.email).not.equal(null);
     expect(data.message).equal(undefined);

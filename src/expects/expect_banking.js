@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 // eslint-disable-next-line max-len
-export function succses_deposit_create(data,
+export function successDepositCreate(data,
   expectedCurrency, expectedPaymentType, expectedAmount) {
   expect(data.apiResponse.error).equal(false);
   expect(data.currency).equal(expectedCurrency);
@@ -9,7 +9,7 @@ export function succses_deposit_create(data,
   expect(data.amount).equal(expectedAmount);
 }
 
-export function succses_withdrawal_create(data) {
+export function successWithdrawalCreate(data) {
   expect(data).to.be.an('object');
   expect(data.email).not.equal(null);
   expect(data.message).equal(undefined);

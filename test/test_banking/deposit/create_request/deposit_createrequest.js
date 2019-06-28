@@ -6,7 +6,7 @@ const paymentType = 'card_rub';
 
 describe('Deposit requests', () => {
   before(async () => {
-    await register.one_click_reg();
+    await register.oneClickReg();
   });
 
   // TODO больше проверок на PaymentType

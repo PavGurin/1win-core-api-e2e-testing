@@ -2,7 +2,7 @@
 export function randomStr(length = 6) {
   if (length > 10) {
     let finalStr = '';
-    for (let i = 0; i < ((length - length % 10) / 10); i++) {
+    for (let i = 0; i < (((length - length) % 10) / 10); i++) {
       finalStr += Math.random().toString(36).slice(-10);
     }
     if (length % 10 === 0) {

@@ -1,3 +1,4 @@
+/* eslint camelcase: 'off' */
 import { expect } from 'chai';
 import { randomNum, randomStr } from '../../src/randomizer';
 
@@ -17,7 +18,7 @@ describe('Register with sub id parameter', () => {
     expect(data.email)
       .to.equal(`${testText}_test@xyz.com`);
     expect(data.password)
-      .to.equal(default_password);
+      .to.equal(defaultPassword);
     expect(data.phone)
       .to.equal(`921${testNumber}`);
     expect(data.name)
@@ -28,7 +29,6 @@ describe('Register with sub id parameter', () => {
 
   const visit_domain = 'some_domain';
   const PartnerKey = 'test001';
-  const default_password = '123456';
 
   // (+) for positive tests (-) for negative tests
   it('C20067 (+) Sub id 1', async () => {
@@ -40,8 +40,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=sub_1',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -58,8 +58,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub2=sub_2',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -76,8 +76,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub3=sub_3',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -94,8 +94,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub4=sub_4',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -112,8 +112,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub5=sub_5',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -130,8 +130,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=sub_1&sub2=sub_2&sub3=sub_3&sub4=sub_4&sub5=sub_5',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -148,8 +148,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=sub_1&sub3=sub_3&sub5=sub_5',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -166,8 +166,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=_-',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -184,8 +184,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=кириллица',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -202,8 +202,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=/\\?*= +|`~\'\"±§^',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -221,8 +221,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=-_=&sub2=?*^',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -240,8 +240,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: 'sub1=legal&sub2=?*^&sub3=^mixed^',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });
@@ -259,8 +259,8 @@ describe('Register with sub id parameter', () => {
       sub_ids: `sub1=${randomStr(505)}`,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
-      password: default_password,
-      repeat_password: default_password,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
     });

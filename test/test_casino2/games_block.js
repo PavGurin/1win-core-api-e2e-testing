@@ -8,7 +8,7 @@ describe('Games-block', () => {
       categories: [],
     });
 
-    console.log(data);
+    // console.log(data);
     expect(data['0'].hasDemo).not.equal(null);
   });
 });

@@ -11,7 +11,7 @@ describe('Auth recovery forgot', () => {
   }
 
   it('C19318 (+) recovery by email', async () => {
-    const { data: regData } = await register.one_click_reg();
+    const { data: regData } = await register.oneClickReg();
     // console.log(regData);
 
     const { data: recoveryReq } = await socket.send('USER:forgot-recovery', {
@@ -22,7 +22,7 @@ describe('Auth recovery forgot', () => {
   });
 
   it('C19319 (+) recovery by phone', async () => {
-    const { data: regData } = await register.one_click_reg();
+    const { data: regData } = await register.oneClickReg();
     // console.log(regData);
 
     const { data: recoveryReq } = await socket.send('USER:forgot-recovery', {

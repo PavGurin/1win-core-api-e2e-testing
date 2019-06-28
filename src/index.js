@@ -42,9 +42,9 @@ export default class SocketClient {
       });
 
       // if socket disconnected or can't connect this try
-      this.socket.on('connect_error', (e) => {
+      this.socket.on('connect_error', () => {
         // console.log('work?');
-        // console.error(e);
+        // console.error();
         reject();
       });
 
@@ -90,6 +90,7 @@ export default class SocketClient {
     const request = this.requestMap[msg.msgid];
 
     if (msg.needParse) {
+      // eslint-disable-next-line no-param-reassign
       msg.data = JSON.parse(msg.data);
     }
 

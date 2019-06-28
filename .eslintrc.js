@@ -7,6 +7,8 @@ module.exports = {
   extends: 'airbnb-base',
   globals: {
     socket: true,
+    defaultCountry: true,
+    defaultPassword: true,
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
@@ -16,6 +18,8 @@ module.exports = {
   },
   rules: {
       'no-plusplus': 'off',
+      camelcase: 'warn',
+      'import/prefer-default-export':'off',
 
   },
 };

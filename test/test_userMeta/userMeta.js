@@ -5,9 +5,9 @@ import { userList } from '../../src/methods/userList';
 
 describe('C26424 - Get data about user from user.meta', () => {
   it('all expects', async () => {
-    userList.login_with_RUB_USD();
+    userList.loginWithRubUsd();
     const meta = await socket.userMeta;
-    console.log(meta);
+    // console.log(meta);
 
     expect(meta.withdrawal_block).equal(false);
     expect(meta.user_demo_withdrawal).equal(false);

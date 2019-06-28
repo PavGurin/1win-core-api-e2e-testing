@@ -4,7 +4,7 @@ import { register } from '../../src/methods/register';
 
 describe('Balance get', () => {
   it('C19353 (+) Without money', async () => {
-    await register.one_click_reg();
+    await register.oneClickReg();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
     expect(data['0'].balance).equal(0);
@@ -16,7 +16,7 @@ describe('Balance get', () => {
   });
 
   it('C19354 (+) With money rub ', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
     expect(data['0'].balance).not.equal(0);
@@ -28,7 +28,7 @@ describe('Balance get', () => {
   });
 
   it('C21429 (+) Balance USD, RUB, EUR > 0', async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
     expect(data['0'].balance).not.equal(0);

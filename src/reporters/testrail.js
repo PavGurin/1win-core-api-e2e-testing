@@ -1,3 +1,4 @@
+/* eslint camelcase: 'off' */
 import axios from 'axios';
 
 const config = {
@@ -19,6 +20,7 @@ const fullTitle = (suite) => {
   const titles = [];
   while (suite && suite.title) {
     titles.push(suite.title);
+    // eslint-disable-next-line no-param-reassign
     suite = suite.parent;
   }
   return titles.reverse().join(' ');
@@ -46,6 +48,7 @@ class TestrailReporter {
   }
 
   addResult(test, error) {
+    // eslint-disable-next-line no-param-reassign
     if (fullTitle(test).includes(config.filter)) test.state = 'blocked';
     this.results.push({
       status_id: statusId(test.state),
@@ -62,11 +65,13 @@ class TestrailReporter {
     });
     this.results = this.results
       .filter(({ case_id }) => case_id !== -1);
+    // eslint-disable-next-line no-restricted-syntax
     for (const result of this.results) {
       try {
+        // eslint-disable-next-line no-await-in-loop
         await this.instance.post(`/add_results_for_cases/${id}`, { results: [result] });
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     }
   }

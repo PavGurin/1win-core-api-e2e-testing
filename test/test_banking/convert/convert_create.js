@@ -4,7 +4,7 @@ import { checkErrMsg } from '../../../src/responseChecker';
 
 describe('Convert', () => {
   before(async () => {
-    await userList.login_with_RUB_USD();
+    await userList.loginWithRubUsd();
   });
 
   // глобальная комиссия на переводы = 5%
@@ -215,7 +215,7 @@ describe('Convert', () => {
 
 describe('Convert12', () => {
   it('not money ', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { data } = await socket.send('BANKING:convert-create', {
       amount: 1.9,
       senderCurrency: 'USD',
