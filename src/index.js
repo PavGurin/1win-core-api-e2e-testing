@@ -4,12 +4,17 @@ import queryString from 'query-string';
 import config from './config';
 
 export default class SocketClient {
+
   constructor({ token, path = config.backendURL, lang = 'ru' }) {
     this.path = path;
     this.token = token;
     this.lang = lang;
     this.hash = Date.now() + Math.floor(Math.random() * 100);
     this.requestMap = {};
+    this.resUsermeta = null;
+    this.userMeta = new Promise((res) => {
+      this.resUsermeta = res;
+    });
   }
 
   connect() {
@@ -76,7 +81,13 @@ export default class SocketClient {
   }
 
   handleResponse(msg) {
-    if (!msg.msgid) return;
+    if (!msg.msgid) {
+      if (msg.type === 'user.meta') {
+        this.resUsermeta(msg.data);
+        this.userMeta = msg.data;
+      }
+      return;
+    }
     const request = this.requestMap[msg.msgid];
 
     if (msg.needParse) {

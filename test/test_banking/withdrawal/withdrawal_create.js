@@ -55,7 +55,7 @@ describe('Withdrawal create with user with money ', () => {
       paymentSystem: 'card_rub',
       currency: 'RUB',
     });
-    // console.log(data);
+    console.log(data);
     expect(data).to.be.an('object');
     expect(data.email).not.equal(null);
     expect(data.message).equal(undefined);
