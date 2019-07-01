@@ -26,7 +26,7 @@ export const register = {
                 country: default_country,
                 timezone: 23,
                 birthday: 946587600000,
-                partnerKey,
+                partner_key: partnerKey,
                 ...usualRegistration
             });
     }

@@ -477,6 +477,7 @@ describe('Profile update after oneClick registration', () => {
             password: password,
             birthday: ''
         });
+        console.log('Баг заведен');
         // console.log(updatedUser);
         checkErrorMsg(updatedUser, 'Bad request, birthday should have a type of number, but found string');
     });
