@@ -28,7 +28,7 @@ describe('Bets make', () => {
 
         const betResponse = await makeBet(coupon);
 
-        console.log(betResponse);
+        // console.log(betResponse);
     });
 
     it('Prematch - express bet', async () => {
@@ -48,7 +48,7 @@ describe('Bets make', () => {
 
         const betResponse = await makeBet(coupon);
 
-        console.log(betResponse);
+        // console.log(betResponse);
     });
 
     it.skip('Bets make ordinary with money', async () => {
