@@ -1,26 +1,15 @@
-
-import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
+import { checkUserMeta } from '../../src/expects/userMeta';
 
 
 describe('C26424 - Get data about user from user.meta', () => {
   it('all expects', async () => {
-    userList.loginWithRubUsd();
-    const meta = await socket.userMeta;
-    // console.log(meta);
+    userList.loginWithRealMoney();
+    const data = await socket.userMeta;
+    console.log(data);
 
-    expect(meta.withdrawal_block).equal(false);
-    expect(meta.user_demo_withdrawal).equal(false);
-    expect(meta.withdrawal_manual_control).equal(false);
-    expect(meta['1win_tester']).equal(false);
-    expect(meta.bonus_amount).equal(0);
-    expect(meta.games.initial).equal(true);
-    expect(meta.full_block.initial).equal(false);
-    expect(meta.rules_accepted).equal(true);
-    expect(meta.ignore_mts).equal(false);
-    expect(meta.test_val).equal(true);
-    expect(meta.email_editable).equal(false);
-    expect(meta.password_need_to_be_changed).equal(false);
-    expect(meta.user_risk_coefficient).equal(1);
+    checkUserMeta(data, false, false, false,
+      false, 0, true, false, true, false,
+      true, false, false, 1);
   });
 });

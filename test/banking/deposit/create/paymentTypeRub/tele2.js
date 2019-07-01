@@ -113,7 +113,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
     const { data } = await banking.depositCreateRub(' ', '+79772520000',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('C22684 - amount = undefined', async () => {
@@ -141,7 +141,7 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
     const { data } = await banking.depositCreateRub(0.6, '+79772520000',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
+    checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22688 - amount < min amount', async () => {

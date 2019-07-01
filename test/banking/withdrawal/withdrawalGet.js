@@ -18,7 +18,7 @@ describe('Withdrawal get', () => {
     // console.log(data);
     expect(data.id).equal(163);
     expect(data.time).equal(1559039814000);
-    expect(data.paymentSystem).equal('money-transfer');
+    expect(data.payment_system).equal('money-transfer');
     expect(data.amount).equal(100);
     expect(data.status).equal(1);
     expect(data.wallet).equal('417');
@@ -30,7 +30,7 @@ describe('Withdrawal get', () => {
     // console.log(data);
     expect(data.id).equal(179);
     expect(data.time).equal(1559126426000);
-    expect(data.paymentSystem).equal('card_rub');
+    expect(data.payment_system).equal('card_rub');
     expect(data.amount).equal(100);
     expect(data.status).equal(0);
     expect(data.wallet).equal('5536913759650035');
