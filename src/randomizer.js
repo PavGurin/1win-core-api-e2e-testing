@@ -7,10 +7,10 @@ export function randomStr(length = 6) {
         }
         if (length % 10 === 0) {
             return finalStr;
-        } else
-            return finalStr + Math.random().toString(36).slice(-(length % 10));
-    } else
-        return Math.random().toString(36).slice(-length);
+        }
+        return finalStr + Math.random().toString(36).slice(-(length % 10));
+    }
+    return Math.random().toString(36).slice(-length);
 }
 
 export function randomNum() { // returns 7 numbers *** ** **

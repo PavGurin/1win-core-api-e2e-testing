@@ -5,7 +5,7 @@ export function succses_deposit_create(data, expectedCurrency, expectedPaymentTy
     expect(data.currency).equal(expectedCurrency);
     expect(data.paymentType).equal(expectedPaymentType);
     expect(data.amount).equal(expectedAmount);
-};
+}
 
 export function succses_withdrawal_create(data) {
     expect(data).to.be.an('object');

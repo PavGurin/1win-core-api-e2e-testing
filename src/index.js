@@ -1,14 +1,20 @@
-import io from 'socket.io-client'
+import io from 'socket.io-client';
 import queryString from 'query-string';
 
-import config from './config'
+import config from './config';
+
 export default class SocketClient {
-    constructor({token, path = config.backendURL, lang = "ru"}) {
+
+    constructor({token, path = config.backendURL, lang = 'ru'}) {
         this.path = path;
         this.token = token;
         this.lang = lang;
         this.hash = Date.now() + Math.floor(Math.random() * 100);
         this.requestMap = {};
+        this.resUsermeta = null;
+        this.userMeta = new Promise((res) => {
+            this.resUsermeta = res;
+        });
     }
 
     connect() {
@@ -20,29 +26,29 @@ export default class SocketClient {
             transports: ['websocket'],
             query: {
                 Language: this.lang,
-                isMobileApp: true,
-            },
+                isMobileApp: true
+            }
         };
 
         // add token to query
         if (this.token) {
             options.query.Authorization = this.token.trim();
         }
-        options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false });
+        options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false});
 
         const promise = new Promise((resolve, reject) => {
             this.socket = io(this.path, options);
             this.socket.on('connect', () => {
                 resolve();
             });
-    
+
             // if socket disconnected or can't connect this try
             this.socket.on('connect_error', (e) => {
-                console.log('work?')
-                console.error(e)
-                reject()
+                console.log('work?');
+                console.error(e);
+                reject();
             });
-    
+
             // response from server
             this.socket.on('a', this.handleResponse.bind(this));
         });
@@ -59,7 +65,7 @@ export default class SocketClient {
             sendTime: Date.now(),
             msgid: Math.random().toString(36).substr(2, 8),
             type,
-            data,
+            data
         };
 
         this.requestMap[request.msgid] = request;
@@ -75,7 +81,13 @@ export default class SocketClient {
     }
 
     handleResponse(msg) {
-        if (!msg.msgid) return;
+        if (!msg.msgid) {
+            if (msg.type === 'user.meta') {
+                this.resUsermeta(msg.data);
+                this.userMeta = msg.data;
+            }
+            return;
+        }
         const request = this.requestMap[msg.msgid];
 
         if (msg.needParse) {
@@ -92,5 +104,4 @@ export default class SocketClient {
         // remove request from request map
         delete this.requestMap[msg.msgid];
     }
-
 }

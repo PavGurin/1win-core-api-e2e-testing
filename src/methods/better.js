@@ -1,4 +1,4 @@
-import Coupon from './coupon';
+import Coupon from '../Coupon';
 
 export async function getTournamentMatches(filters) {
     return await socket.send('MATCH-STORAGE-2:tournament-matches', {

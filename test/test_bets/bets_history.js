@@ -138,11 +138,13 @@ describe('Bets history', () => {
             // полные настройки фильтра в блоке 'where'
             where: {
                 status: [0, 1, 2, 3],
-                // service: ['live', 'prematch'],
-                betType: ['ordinary', 'express']
+              service: ['prematch'],
+              betType: ['ordinary', 'express'],
+              dateFrom: 0
+              // dateTo:27062019,
             }
         });
-        // console.log(betsMap);
+      console.log(betsMap);
         expect(Object.entries(betsMap).length).equal(12);
     });
 
@@ -150,17 +152,17 @@ describe('Bets history', () => {
 
         await userList.login_with_real_money();
         const {data: {betsMap}} = await socket.send('BETS:bets-history', {
-            language: null,
+          language: 'ru',
             limit: [0, 5],
             order: ['id', 'DESC'],
 
             where: {
-                status: [1],
+              status: [0],
                 // service: ['live', 'prematch'],
                 betType: ['ordinary', 'express']
             }
         });
-        // console.log(betsMap);
+      console.log(betsMap);
         expect(Object.entries(betsMap).length).equal(0);
         expect(Object.values(betsMap).every(({status}) => status === 1)).equal(true);
     });
@@ -193,12 +195,12 @@ describe('Bets history', () => {
             order: ['id', 'DESC'],
 
             where: {
-                status: [3],
-                // service: ['live', 'prematch'],
+              status: [1],
+              service: ['live', 'prematch'],
                 betType: ['ordinary', 'express']
             }
         });
-        // console.log(betsMap);
+      console.log(betsMap);
         expect(Object.entries(betsMap).length).equal(15);
         expect(Object.values(betsMap).every(({status}) => status === 3)).equal(true);
     });

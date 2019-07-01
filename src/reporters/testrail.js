@@ -9,20 +9,20 @@ const config = {
     filter: process.env.TEST_FILTER
 };
 
-const statusId = (mochaState) => ({
+const statusId = mochaState => ({
     passed: 1,
     blocked: 2,
     failed: 5
 }[mochaState]);
 
 const fullTitle = (suite) => {
-    const titles = []
+    const titles = [];
     while (suite && suite.title) {
-        titles.push(suite.title)
-        suite = suite.parent
+        titles.push(suite.title);
+        suite = suite.parent;
     }
-    return titles.reverse().join(' ')
-}
+    return titles.reverse().join(' ');
+};
 
 const titleToCaseId = testTitle => (/\bT?C(\d+)\b/g.exec(testTitle) || [-1])[1];
 
@@ -46,30 +46,29 @@ class TestrailReporter {
     }
 
     addResult(test, error) {
-        if (fullTitle(test).includes(config.filter)) test.state = 'blocked'
+        if (fullTitle(test).includes(config.filter)) test.state = 'blocked';
         this.results.push({
             status_id: statusId(test.state),
             case_id: titleToCaseId(test.title) || -1,
             comment: String(error || ''),
-            elapsed: test.duration && `${test.duration / 1000}s`,
-        })
+            elapsed: test.duration && `${test.duration / 1000}s`
+        });
     }
 
     async publish() {
-        const { data: { id } } = await this.instance.post(`add_run/${config.projectId}`, {
+        const {data: {id}} = await this.instance.post(`add_run/${config.projectId}`, {
             name: config.runName,
-            include_all: true,
-        })
+            include_all: true
+        });
         this.results = this.results
-            .filter(({ case_id }) => case_id !== -1)
+                           .filter(({case_id}) => case_id !== -1);
         for (const result of this.results) {
             try {
-                await this.instance.post(`/add_results_for_cases/${id}`, { results: [result] })
+                await this.instance.post(`/add_results_for_cases/${id}`, {results: [result]});
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
         }
-
     }
 }
 
