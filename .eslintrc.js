@@ -1,0 +1,25 @@
+module.exports = {
+  env: {
+    browser: true,
+    es6: true,
+    mocha: true,
+  },
+  extends: 'airbnb-base',
+  globals: {
+    socket: true,
+    defaultCountry: true,
+    defaultPassword: true,
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  rules: {
+      'no-plusplus': 'off',
+      camelcase: 'warn',
+      'import/prefer-default-export':'off',
+
+  },
+};

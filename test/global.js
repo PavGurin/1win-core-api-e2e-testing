@@ -3,13 +3,13 @@ import SocketClient from '../src';
 let socket;
 
 before(async () => {
-    socket = new SocketClient({});
-    await socket.connect();
-    global.socket = socket;
-    global.default_country = 'ru';
-    global.default_password = '123123';
+  socket = new SocketClient({});
+  await socket.connect();
+  global.socket = socket;
+  global.defaultCountry = 'ru';
+  global.defaultPassword = '123123';
 });
 
 after(async () => {
-    socket.disconnect();
+  socket.disconnect();
 });

@@ -1,66 +1,67 @@
-import {randomStr} from '../randomizer';
+/* eslint camelcase: 'off' */
+import { randomStr } from '../randomizer';
 
 export const userList = {
 
-    async login_with_params(login, password, tg_hash) {
-        return socket.send('USER:auth-login', {
-            login,
-            password,
-            tg_hash
-        });
-    },
+  async loginWithParams(login, password, tg_hash) {
+    return socket.send('USER:auth-login', {
+      login,
+      password,
+      tg_hash,
+    });
+  },
 
-    // Prodlike
+  // Prodlike
 
-    async login_with_RUB() {
-        return await socket.send('USER:auth-login', {
-            login: 'test_withdrawal@mailinator.com',
-            password: '123123',
-            tg_hash: randomStr(5)
-        });
-    },
+  async loginWithRub() {
+    return socket.send('USER:auth-login', {
+      login: 'test_withdrawal@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 
-    async login_with_RUB_USD() {
-        // Должен быть баланс в валюте отличной от рублей
-        await socket.send('USER:auth-login', {
-            login: 'test_withdrawal2@mailinator.com',
-            password: '123123',
-            tg_hash: randomStr(5)
-        });
-    },
+  async loginWithRubUsd() {
+    // Должен быть баланс в валюте отличной от рублей
+    return socket.send('USER:auth-login', {
+      login: 'test_withdrawal2@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 
-    // С реальными деньгами! Использовать аккуратно)
-    async login_with_real_money() {
-        return await socket.send('USER:auth-login', {
-            login: 'nogm75@1win.xyz',
-            password: '123456'
-        });
-    },
+  // С реальными деньгами! Использовать аккуратно)
+  async loginWithRealMoney() {
+    return socket.send('USER:auth-login', {
+      login: 'nogm75@1win.xyz',
+      password: '123456',
+    });
+  },
 
-    async login_test_status() {
-        // У пользователя статит статус тестового пользователя
-        await socket.send('USER:auth-login', {
-            login: 'tester_status@mailinator.com',
-            password: '123123',
-            tg_hash: randomStr(5)
-        });
-    },
+  async loginTestStatus() {
+    // У пользователя статит статус тестового пользователя
+    return socket.send('USER:auth-login', {
+      login: 'tester_status@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 
-    async login_full_block() {
-        // У пользователя стоит полный блок
-        await socket.send('USER:auth-login', {
-            login: 'full_block_user@mailinator.com',
-            password: '123123',
-            tg_hash: randomStr(5)
-        });
-    },
+  async loginFullBlock() {
+    // У пользователя стоит полный блок
+    return socket.send('USER:auth-login', {
+      login: 'full_block_user@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 
-    async login_partial_block() {
-        // У пользователя стоит частичный блок
-        await socket.send('USER:auth-login', {
-            login: 'partial_block_user@mailinator.com',
-            password: '123123',
-            tg_hash: randomStr(5)
-        });
-    }
+  async loginPartialBlock() {
+    // У пользователя стоит частичный блок
+    return socket.send('USER:auth-login', {
+      login: 'partial_block_user@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 };
