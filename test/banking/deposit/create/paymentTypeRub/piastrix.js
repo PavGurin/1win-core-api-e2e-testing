@@ -112,7 +112,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
     const { data } = await banking.depositCreateRub(' ', '',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('C22606 - amount = undefined', async () => {
@@ -140,7 +140,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
+    checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22611 - amount > max amount', async () => {
