@@ -81,4 +81,5 @@ export const userList = {
       password: '123123',
       tg_hash: randomStr(5),
     });
+  },
 };
