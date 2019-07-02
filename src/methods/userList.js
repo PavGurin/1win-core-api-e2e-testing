@@ -65,6 +65,15 @@ export const userList = {
     });
   },
 
+  async loginManualControl() {
+    // У пользователя стоит частичный блок
+    return socket.send('USER:auth-login', {
+      login: 'partial_block_user@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
+
   async loginWithMailConfirmationCodes() {
     // Пользователь, с почты которого можно получать коды подтверждения
     return socket.send('USER:auth-login', {

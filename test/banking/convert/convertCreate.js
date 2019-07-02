@@ -27,7 +27,7 @@ describe('Convert', () => {
       receiverCurrency: 'USD',
     });
     // console.log(data);
-    checkErrMsg(data, 403, 'Некорректное значение amount');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('55C19341 Create before login not enough money', async () => {
@@ -148,7 +148,7 @@ describe('Convert', () => {
       receiverCurrency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 403, 'Некорректный формат валюты');
+    checkErrMsg(data, 404, 'Неверный запрос');
   });
 
   it('C19346 Create after login valid request 100 RUB -> RUB ', async () => {
@@ -158,7 +158,7 @@ describe('Convert', () => {
       receiverCurrency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 403, 'Некорректный формат валюты');
+    checkErrMsg(data, 404, 'Неверный запрос');
   });
 
   it('C19347 Create after login valid request 10000 RUB -> USD(not enough money) ', async () => {
@@ -199,7 +199,7 @@ describe('Convert', () => {
       receiverCurrency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 403, 'Некорректное значение amount');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('C19351 Create after login valid request negative amount RUB -> USD(enough money) ', async () => {
@@ -209,7 +209,7 @@ describe('Convert', () => {
       receiverCurrency: 'USD',
     });
     // console.log(data);
-    checkErrMsg(data, 403, 'Некорректное значение amount');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 });
 

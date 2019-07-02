@@ -1,3 +1,5 @@
+
+
 import axios from 'axios';
 import parser from 'fast-xml-parser';
 import { randomStr } from '../randomizer';
@@ -6,17 +8,17 @@ export const banking = {
 
   async transferCreate(amount, currency) {
     return socket.send('BANKING:transfer-create', {
-      targetEmail: `${randomStr(5)}_transfet@test.xyz`,
+      targetEmail: 'test_transfer@test.xyz',
       amount,
       currency,
     });
   },
 
-  async withdrawalCreate(amount, wallet, paymentSystem, currency) {
+  async withdrawalCreate(amount, wallet, payment_system, currency) {
     return socket.send('BANKING:withdrawal-create', {
       amount,
       wallet,
-      paymentSystem,
+      payment_system,
       currency,
     });
     // console.log(JSON.stringify(result, null, 2));
