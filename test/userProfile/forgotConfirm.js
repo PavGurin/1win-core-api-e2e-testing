@@ -1,26 +1,37 @@
 import { expect } from 'chai';
 import { checkErrorMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
+import { mail } from '../../src/methods/mail';
+import { sleep } from '../../src/methods/utils';
 
 describe('Auth recovery confirm', () => {
-  // TODO need to get correct_code from mail
-  it.skip('C19316 (+) with correct code', async () => {
-    const { data: regData } = await register.usualReg();
-    // console.log(regData);
 
-    await socket.send('USER:forgot-recovery', {
-      account: regData.email,
+  it('C19316 (+) with correct code', async () => {
+
+    const  mailAddress = 'confirmation_codes_user@dayloo.com';
+    const sentReq = await socket.send('USER:forgot-recovery', {
+      account: mailAddress,
     });
+    //console.log(sentReq);
 
-    const { data } = await socket.send('USER:forgot-confirm', {
+    // нужна задержка, т.к. письмо на почту приходит не сразу
+    // без задержки запрос на получение кода из письма будет отправлен слишком быстро, пока письма еще нет в почте
+    await sleep(4000);
 
-      userId: regData.id,
-      code: 123123,
-      password: 12123,
-      repeat_password: 123123,
+    const receivedMail = await mail.getMessage(mailAddress);
+    //console.log(receivedMail);
+    expect(receivedMail.subject).to.equal('1Win - Password recovery');
+
+    const confirmReq  = await socket.send('USER:forgot-confirm', {
+      userId: sentReq.data.userId,
+      code: receivedMail.code,
+      password: defaultPassword,
+      repeat_password: defaultPassword,
     });
-    // { error : false } - real expected response
-    expect(data.error).to.equal(false);
+    //console.log(confirmReq);
+
+    expect(confirmReq.data.error).to.equal(false);
+    expect(confirmReq.status).to.equal(200);
   });
 
   // register > ask for recovery > try to confirm > check
