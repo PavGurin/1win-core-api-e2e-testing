@@ -5,7 +5,7 @@ import { mail } from '../../src/methods/mail';
 import { sleep } from '../../src/methods/utils';
 
 describe('Auth recovery confirm', () => {
-  it('C19316 (+) with correct code', async () => {
+  it.skip('C19316 (+) with correct code', async () => {
     const mailAddress = 'confirmation_codes_user@dayloo.com';
     const sentReq = await socket.send('USER:forgot-recovery', {
       account: mailAddress,
