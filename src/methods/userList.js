@@ -73,4 +73,13 @@ export const userList = {
       tg_hash: randomStr(5),
     });
   },
+
+  async loginWithMailConfirmationCodes() {
+    // Пользователь, с почты которого можно получать коды подтверждения
+    return socket.send('USER:auth-login', {
+      login: 'confirmation_codes_user@dayloo.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 };

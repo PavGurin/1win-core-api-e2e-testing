@@ -1,16 +1,7 @@
 import { expect } from 'chai';
+import { getFormattedDate } from '../../src/methods/utils'
 
 describe('Results', () => {
-  // форматирование даты для отправки в виде дд/мм
-  // daysAgo - дата за сколько дней назад от текущего будет получена
-  // пример: getFormattedDate(0) - сегодняшняя дата, getFormattedDate(1) - вчерашняя
-  // TODO вынести из теста
-  function getFormattedDate(daysAgo) {
-    const date = new Date();
-    date.setDate(date.getDate() - daysAgo);
-    return `${date.getDate()}/${date.getMonth() + 1}`;
-  }
-
   it('C22707 - (+) results with date filtration', async () => {
     for (let i = 0; i <= 6; i++) {
       const date = getFormattedDate(i);

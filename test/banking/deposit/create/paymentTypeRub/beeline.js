@@ -22,16 +22,25 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
 
   it('C22486 - (+) amount = 100.01 & wallet = (7)phone', async () => {
     const { data } = await banking.depositCreateRub(
-      100.01, '79215598286', paymentType, currency,
+      100.01, '79215598287', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 100.01);
   });
 
+  it(' - (+) amount = 100.156 & wallet = (7)phone', async () => {
+    const { data } = await banking.depositCreateRub(
+      100.156, '79215598287', paymentType, currency,
+    );
+    // console.log(data);
+    successDepositCreate(data, currency,
+      paymentType, 100.156);
+  });
+
   it('C22487 - amount = 2000 & wallet = (8)phone', async () => {
     const { data } = await banking.depositCreateRub(
-      2000, '89215598286', paymentType, currency,
+      2000, '89215598288', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency,
@@ -40,7 +49,7 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
 
   it('C22488 - min amount & wallet = symbols', async () => {
     const { data } = await banking.depositCreateRub(10,
-      '+79215598286', paymentType, currency);
+      '+79215598289', paymentType, currency);
 
     // console.log(data);
     successDepositCreate(data, currency,
@@ -49,7 +58,7 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
 
   it('C22489 - > min amount & wallet = symbols', async () => {
     const { data } = await banking.depositCreateRub(11,
-      '+79215598286', paymentType, currency);
+      '+79215598216', paymentType, currency);
 
     // console.log(data);
     successDepositCreate(data, currency,
@@ -58,14 +67,14 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
 
   it('C22490 - max amount & wallet = numbers', async () => {
     const { data } = await banking.depositCreateRub(15000,
-      '+79215598286', paymentType, currency);
+      '+79215598226', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 15000);
   });
 
   it('C22491 - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(14999, '+79215598286',
+    const { data } = await banking.depositCreateRub(14999, '+79215598236',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -75,7 +84,7 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
   it('C22492 - without currency', async () => {
     const { data } = await socket.send('BANKING:deposit-create', {
       amount: '100',
-      wallet: '+79215598286',
+      wallet: '+79215598246',
       paymentType,
     });
     // console.log(data);
@@ -83,82 +92,74 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
       paymentType, 100);
   });
 
-  it('C22493 - < max amount & wallet = valid short number', async () => {
-    // TODO узнать валидный короткий номер городского телефона
-    const { data } = await banking.depositCreateRub(14999, '+79001234',
+  it('C22499 - amount = string-number', async () => {
+    const { data } = await banking.depositCreateRub('50', '79215598186',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 14999);
+      paymentType, 50);
   });
 });
 
 describe('Create deposite for beeline_rub invalid - RUB', () => {
   it('C22494 - amount = 0', async () => {
-    const { data } = await banking.depositCreateRub(0, '+79215598286',
+    const { data } = await banking.depositCreateRub(0, '+79215598256',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('C22495 - amount = null', async () => {
-    const { data } = await banking.depositCreateRub(null, '+79215598286',
+    const { data } = await banking.depositCreateRub(null, '+79215598266',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
   it('C22496 - amount = empty', async () => {
-    const { data } = await banking.depositCreateRub(' ', '79215598286',
+    const { data } = await banking.depositCreateRub(' ', '79215598276',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('C22497 - amount = undefined', async () => {
-    const { data } = await banking.depositCreateRub(undefined, '79215598286',
+    const { data } = await banking.depositCreateRub(undefined, '79215598206',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
   it('C22498 - amount = string', async () => {
-    const { data } = await banking.depositCreateRub('fjfj', '79215598286',
+    const { data } = await banking.depositCreateRub('fjfj', '79215598296',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
-  it('C22499 - amount = string-number', async () => {
-    const { data } = await banking.depositCreateRub('50', '79215598286',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
   it('C22500 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRub(0.6, '79215598286',
+    const { data } = await banking.depositCreateRub(0.6, '79215598386',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22501 - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(9, '79215598286',
+    const { data } = await banking.depositCreateRub(9, '79215598486',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22502 - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(15001, '79215598286',
+    const { data } = await banking.depositCreateRub(15001, '79215598586',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22503 - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(15000.000001, '79215598286',
+    const { data } = await banking.depositCreateRub(15000.000001, '79215598686',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
@@ -207,5 +208,14 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
       'beeline_rub_test', currency);
     // console.log(data);
     checkErrMsg(data, 400, '?????');
+  });
+
+  it('C22493 - < max amount & wallet = valid short number', async () => {
+    // TODO узнать валидный короткий номер городского телефона
+    const { data } = await banking.depositCreateRub(14999, '+79001234',
+      paymentType, currency);
+    // console.log(data);
+    successDepositCreate(data, currency,
+      paymentType, 14999);
   });
 });
