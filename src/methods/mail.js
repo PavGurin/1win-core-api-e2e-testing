@@ -1,50 +1,73 @@
 // методы для работы с почтой
-
-// описание тут https://rapidapi.com/Privatix/api/temp-mail
-// следить за количеством запросов тут https://dashboard.rapidapi.com/billing
-// токен для отправки запросов 0b48a4497amsh0cccc524b8436bfp167b9ejsnb5deb31896ca
-// !!! ВАЖНО !!! бесплатно можно отправить только сто запросов в день!
-// один вызов getMessage - это два запроса (получение и удаление письма)
-// ,т.е. вызывать getMessage можно не более 50 раз в день
-// новый "день" начинается в 15:00 по москве
-
-// пример использования:
-// const received = await mail.getMessage('fodiwotitu@virtualemail.info');
-// await console.log(received.code);
-
-
+// описание использованного api https://www.ahem.email/help/api
 import axios from 'axios';
-import md5 from 'md5';
 
 export const mail = {
+  // получение токена для запросов
+  async getToken() {
+    const tokenData = await axios.post('https://www.ahem.email/api/auth/token', {}, {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    // console.log(tokenData);
+    return tokenData.data.token;
+  },
+
+  // получение доступного домена
+  async getDomain() {
+    const token = await mail.getToken();
+    const properties = await axios.get('https://www.ahem.email/api/properties', {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(properties);
+    return properties.data.allowedDomains[0];
+  },
 
   // получение письма и кода из него
   // возвращает объект со свойствами:
-  // subject - тема письма
-  // text - текст письма
-  // code - код подтверждения из письма
+  //    subject - тема письма
+  //    text - текст письма
+  //    from_address - адрес отправителя письма
+  //    from_name - имя отправителя письма
+  //    code - код подтверждения из письма
   async getMessage(emailAddress) {
-    const result = await axios.get(`https://privatix-temp-mail-v1.p.rapidapi.com/request/mail/id/${md5(emailAddress)}/format/json`, {
+    const token = await mail.getToken();
+    const mailbox = emailAddress.match(/.*(?=@ahem.email)/)[0];
+    const mailboxData = await axios.get(`https://www.ahem.email/api/mailbox/${mailbox}/email`, {
       headers: {
-        'X-RapidAPI-Host': 'privatix-temp-mail-v1.p.rapidapi.com',
-        'X-RapidAPI-Key': '0b48a4497amsh0cccc524b8436bfp167b9ejsnb5deb31896ca',
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
+      },
+    });
+    const mailData = await axios.get(`https://www.ahem.email/api/mailbox/${mailbox}/email/${mailboxData.data[0].emailId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/json',
       },
     });
     const message = {};
-    message.subject = result.data['0'].mail_subject;
-    message.text = result.data['0'].mail_text_only;
-    message.code = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|\₽|\€|\@)/)[0];
-    await mail.deleteMessage(result.data['0'].mail_id);
+    message.subject = mailData.data.subject;
+    message.text = mailData.data.html;
+    message.from_address = mailData.data.from.value[0].address;
+    message.from_name = mailData.data.from.value[0].name;
+    message.code = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|₽|€|@)/)[0];
+    // console.log(message);
+    await mail.deleteMessage(mailbox, mailboxData.data[0].emailId);
     return message;
   },
 
-
-  // удаление письма по id
-  async deleteMessage(mailId) {
-    return axios.get(`https://privatix-temp-mail-v1.p.rapidapi.com/request/delete/id/${mailId}/`, {
+  // удаление письма
+  async deleteMessage(emailAddress, mailId) {
+    const token = await mail.getToken();
+    return axios.delete(`https://www.ahem.email/api/mailbox/${emailAddress}/email/${mailId}`, {
       headers: {
-        'X-RapidAPI-Host': 'privatix-temp-mail-v1.p.rapidapi.com',
-        'X-RapidAPI-Key': '0b48a4497amsh0cccc524b8436bfp167b9ejsnb5deb31896ca',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
       },
     });
   },
