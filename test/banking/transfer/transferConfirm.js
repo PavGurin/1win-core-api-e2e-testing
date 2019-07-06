@@ -7,6 +7,7 @@ import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
 import { logOut } from '../../../src/methods/user';
 
+
 describe('Transfer confirm invalid', () => {
   it('C19365 (-) Incorrect code with 404 code response', async () => {
     await register.oneClickReg();
@@ -142,4 +143,5 @@ describe('Transfer confirm with receiving code', () => {
     const balanceAfter1 = await banking.balanceCheck();
     expect(balanceAfter1).to.equal(balanceBefore1 + 20);
   });
+
 });
