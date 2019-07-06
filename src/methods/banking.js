@@ -1,5 +1,3 @@
-
-
 import axios from 'axios';
 import parser from 'fast-xml-parser';
 import { randomStr } from '../randomizer';
@@ -40,6 +38,13 @@ export const banking = {
       paymentType,
       currency,
     });
+  },
+
+  async balanceCheck() {
+    const balanceData = await socket.send('GET:balance', {
+      tg_hash: randomStr(5),
+    });
+    return balanceData.data.primary.amount;
   },
 };
 

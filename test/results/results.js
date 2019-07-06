@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { getFormattedDate } from '../../src/methods/utils'
+import { getFormattedDate } from '../../src/methods/utils';
 
 describe('Results', () => {
   it('C22707 - (+) results with date filtration', async () => {

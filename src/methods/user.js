@@ -11,3 +11,10 @@ export const updateProfile = updateProfile => socket.send('USER:profile-update',
     timezone: 1,
     ...updateProfile,
   });
+
+export async function logOut() {
+  // Выход текущего пользователя
+  return await socket.send('USER:auth-logout', {
+    tg_hash: randomStr(5),
+  });
+}
