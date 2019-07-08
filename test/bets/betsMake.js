@@ -1,7 +1,9 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 
-import {userList} from '../../src/methods/userList';
-import {generateCoupon, getTournamentMatches, makeBet, sportAll, sportCategories} from '../../src/methods/better';
+import { userList } from '../../src/methods/userList';
+import {
+  generateCoupon, getTournamentMatches, makeBet, sportAll, sportCategories,
+} from '../../src/methods/better';
 
 describe('Bets make', () => {
   // TODO вынести методы в глобальные переменные по созданию ставки
@@ -27,7 +29,7 @@ describe('Bets make', () => {
 
   it('sportAll', async () => {
     // serviceType live/prematch
-    const {data: {sportMap}} = await sportAll('prematch');
+    const { data: { sportMap } } = await sportAll('prematch');
     // console.log(sportMap);
 
     Object.values(sportMap).forEach((value) => {
@@ -39,12 +41,12 @@ describe('Bets make', () => {
   });
 
   it('sportCategories', async () => {
-    const {data: {sportMap: sportAllResponse}} = await sportAll(service);
+    const { data: { sportMap: sportAllResponse } } = await sportAll(service);
     // console.log(sportAllResponse);
-    const {sportId} = Object.values(sportAllResponse)[0];
+    const { sportId } = Object.values(sportAllResponse)[0];
     // console.log(sportId);
 
-    const {data: {sportCategoriesMap}} = await sportCategories(service, sportId);
+    const { data: { sportCategoriesMap } } = await sportCategories(service, sportId);
     // console.log(sportCategoriesMap);
     Object.values(sportCategoriesMap).forEach(((value) => {
       expect(value.categoryId).not.equal(null);
@@ -60,7 +62,7 @@ describe('Bets make', () => {
   it('Prematch - ordinary bet', async () => {
     const { data: matches } = await getTournamentMatches({
       service: 'prematch',
-      tournamentId: 12
+      tournamentId: 12,
     });
 
     const coupon = await generateCoupon(matches);
@@ -87,7 +89,7 @@ describe('Bets make', () => {
   });
 
   it('sport ', async () => {
-    const {data: {topTournaments}} = await sportAll({
+    const { data: { topTournaments } } = await sportAll({
       sportId: 1,
     });
     console.log(topTournaments);
