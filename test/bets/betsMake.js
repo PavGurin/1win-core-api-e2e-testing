@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 
 import {userList} from '../../src/methods/userList';
-import {generateCoupon, getTournamentMatches, makeBet, sportAll, sportTournaments} from '../../src/methods/better';
+import {generateCoupon, getTournamentMatches, makeBet, sportAll, sportCategories} from '../../src/methods/better';
 
 describe('Bets make', () => {
   // TODO вынести методы в глобальные переменные по созданию ставки
@@ -10,6 +10,8 @@ describe('Bets make', () => {
   beforeEach(async () => {
     await userList.loginWithRealMoney();
   });
+
+  const service = 'prematch';
 
   /**
    get available matches
@@ -36,13 +38,24 @@ describe('Bets make', () => {
     });
   });
 
-  it('re1', async () => {
-    const {data: {sportTournamentMap}} = await sportTournaments('prematch', 1);
-    console.log(sportTournamentMap);
-    const coupon = await generateCoupon(sportTournamentMap);
-    const betResponse = await makeBet(coupon);
-    console.log(betResponse);
+  it('sportCategories', async () => {
+    const {data: {sportMap: sportAllResponse}} = await sportAll(service);
+    // console.log(sportAllResponse);
+    const {sportId} = Object.values(sportAllResponse)[0];
+    // console.log(sportId);
+
+    const {data: {sportCategoriesMap}} = await sportCategories(service, sportId);
+    // console.log(sportCategoriesMap);
+    Object.values(sportCategoriesMap).forEach(((value) => {
+      expect(value.categoryId).not.equal(null);
+      expect(value.categoryName.en).not.equal(null);
+      expect(value.categoryName.ru).not.equal(null);
+      expect(value.sportId).not.equal(null);
+      expect(value.sportName.en).not.equal(null);
+      expect(value.sportName.ru).not.equal(null);
+    }));
   });
+
 
   it('Prematch - ordinary bet', async () => {
     const { data: matches } = await getTournamentMatches({
