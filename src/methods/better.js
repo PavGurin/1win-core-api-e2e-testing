@@ -1,5 +1,16 @@
 import Coupon from '../Coupon';
 
+// USELESS for bets
+export async function sportAll(serviceType) {
+    return await socket.send('MATCH-STORAGE-2:sport-all', {
+        service: serviceType,
+        timeFilter: {
+            date: false,
+            hour: false
+        }
+    });
+}
+
 export async function getTournamentMatches(filters) {
   return await socket.send('MATCH-STORAGE-2:tournament-matches', {
     service: 'prematch',
@@ -16,17 +27,6 @@ export async function sportTournaments(serviceType, sport_Id) {
     return await socket.send('MATCH-STORAGE-2:sport-tournaments', {
         service: serviceType,
         sportId: sport_Id
-    });
-}
-
-// USELESS for bets
-export async function sportAll(serviceType) {
-    return await socket.send('MATCH-STORAGE-2:sport-all', {
-        service: serviceType,
-        timeFilter: {
-            date: false,
-            hour: false
-        }
     });
 }
 
