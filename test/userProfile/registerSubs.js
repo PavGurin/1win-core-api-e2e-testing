@@ -1,6 +1,6 @@
 /* eslint camelcase: 'off' */
-import { expect } from 'chai';
-import { randomNum, randomStr } from '../../src/randomizer';
+import {expect} from 'chai';
+import {randomNum, randomStr} from '../../src/randomizer';
 
 // TODO для проверки работы тестов нужно добавить проверку api партнерки и сверять изменение данных
 describe('Register with sub id parameter', () => {
@@ -199,7 +199,7 @@ describe('Register with sub id parameter', () => {
 
     const { data } = await defaultRequest({
       name: testStr,
-      sub_ids: 'sub1=/\\?*= +|`~\'\"±§^',
+      sub_ids: 'sub1=/\\?*= +|`~\'"±§^',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
       password: defaultPassword,

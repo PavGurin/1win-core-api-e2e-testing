@@ -20,8 +20,11 @@ module.exports = {
     },
     rules: {
         'no-plusplus': 'off',
+        'no-unused-vars': 'off',
+        'no-unused-expressions': 'off',
+        'no-return-await': 'off',
+        'no-await-in-loop': 'off',
         camelcase: 'warn',
         'import/prefer-default-export': 'off'
-
     }
 };
