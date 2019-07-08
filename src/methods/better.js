@@ -2,7 +2,7 @@ import Coupon from '../Coupon';
 
 // USELESS for bets
 export async function sportAll(service) {
-  return await socket.send('MATCH-STORAGE-2:sport-all', {
+  return socket.send('MATCH-STORAGE-2:sport-all', {
     service,
     timeFilter: {
       date: false,
@@ -12,7 +12,7 @@ export async function sportAll(service) {
 }
 
 export async function sportCategories(service) {
-  return await socket.send('MATCH-STORAGE-2:sport-categories', {
+  return socket.send('MATCH-STORAGE-2:sport-categories', {
     service,
     sportId: 'all',
     timeFilter: {
@@ -24,7 +24,7 @@ export async function sportCategories(service) {
 }
 
 export async function getTournamentMatches(filters) {
-  return await socket.send('MATCH-STORAGE-2:tournament-matches', {
+  return socket.send('MATCH-STORAGE-2:tournament-matches', {
     service: 'prematch',
     // sportId: '12',
     timeFilter: {
@@ -36,7 +36,7 @@ export async function getTournamentMatches(filters) {
 }
 
 export async function sportTournaments(service, sportId) {
-  return await socket.send('MATCH-STORAGE-2:sport-tournaments', {
+  return socket.send('MATCH-STORAGE-2:sport-tournaments', {
     service,
     sportId,
   });
@@ -49,7 +49,7 @@ export function generateCoupon(matches) {
 }
 
 export async function makeBet(coupon) {
-  return await socket.send('BETS:bets-make',
+  return socket.send('BETS:bets-make',
     {
       currency: 'RUB',
       betsMap: {
