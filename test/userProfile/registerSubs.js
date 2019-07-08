@@ -1,6 +1,6 @@
 /* eslint camelcase: 'off' */
-import {expect} from 'chai';
-import {randomNum, randomStr} from '../../src/randomizer';
+import { expect } from 'chai';
+import { randomNum, randomStr } from '../../src/randomizer';
 
 // TODO для проверки работы тестов нужно добавить проверку api партнерки и сверять изменение данных
 describe('Register with sub id parameter', () => {

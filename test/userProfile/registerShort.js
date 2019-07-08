@@ -1,4 +1,4 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 
 describe('Register - Short schema', () => {
   const defaultRequest = params => socket.send('USER:auth-register',
@@ -26,7 +26,7 @@ describe('Register - Short schema', () => {
   it('C19301 (+) with visit_domain with PartnerKey', async () => {
     const { data } = await defaultRequest({
       visit_domain: 'someDomain',
-      partner_key: defaultPartnerKey
+      partner_key: defaultPartnerKey,
     });
     // console.log(data);
     checkRegInfo(data);
@@ -42,12 +42,12 @@ describe('Register - Short schema', () => {
 
   it('C19303 (+) w/o visit_domain with PartnerKey', async () => {
     const { data } = await defaultRequest({
-      partner_key: defaultPartnerKey
+      partner_key: defaultPartnerKey,
     });
     // console.log(data);
     checkRegInfo(data);
     expect(data.partner_key)
-        .to.equal(defaultPartnerKey);
+      .to.equal(defaultPartnerKey);
   });
 
   it('C19304 (-) w/o visit_domain w/o PartnerKey', async () => {

@@ -1,8 +1,8 @@
-import {expect} from 'chai';
-import {register} from '../../src/methods/register';
-import {updateProfile} from '../../src/methods/user';
-import {randomNum, randomStr} from '../../src/randomizer';
-import {checkErrorMsg} from '../../src/responseChecker';
+import { expect } from 'chai';
+import { register } from '../../src/methods/register';
+import { updateProfile } from '../../src/methods/user';
+import { randomNum, randomStr } from '../../src/randomizer';
+import { checkErrorMsg } from '../../src/responseChecker';
 
 describe('Profile update after oneClick registration', () => {
   /* Hint from documentation
