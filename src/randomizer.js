@@ -1,18 +1,15 @@
+const maxLength = 7;
 
-export function randomStr(length = 6) {
-    if (length > 10) {
-        let finalStr = '';
-        for (let i = 0; i < ((length - length % 10) / 10); i++) {
-            finalStr += Math.random().toString(36).slice(-10);
-        }
-        if (length % 10 === 0) {
-            return finalStr;
-        }
-        return finalStr + Math.random().toString(36).slice(-(length % 10));
-    }
-    return Math.random().toString(36).slice(-length);
-}
+const randomStr = (size = 6) => (
+  Math
+    .random()
+    .toString(36)
+    .substring(2, 9)
+    .substring(0, size)
+  + (size > maxLength ? randomStr(size - maxLength) : '')
+);
 
-export function randomNum() { // returns 7 numbers *** ** **
-    return Math.floor(Math.random() * 9999999) + 1;
-}
+export { randomStr };
+
+// returns 7 numbers *** ** **
+export const randomNum = () => Math.floor(Math.random() * 9999999) + 1;

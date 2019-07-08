@@ -6,17 +6,17 @@ export const banking = {
 
   async transferCreate(amount, currency) {
     return socket.send('BANKING:transfer-create', {
-      targetEmail: `${randomStr(5)}_transfet@test.xyz`,
+      targetEmail: 'test_transfer@test.xyz',
       amount,
       currency,
     });
   },
 
-  async withdrawalCreate(amount, wallet, paymentSystem, currency) {
+  async withdrawalCreate(amount, wallet, payment_system, currency) {
     return socket.send('BANKING:withdrawal-create', {
       amount,
       wallet,
-      paymentSystem,
+      payment_system,
       currency,
     });
     // console.log(JSON.stringify(result, null, 2));
@@ -38,6 +38,13 @@ export const banking = {
       paymentType,
       currency,
     });
+  },
+
+  async balanceCheck() {
+    const balanceData = await socket.send('GET:balance', {
+      tg_hash: randomStr(5),
+    });
+    return balanceData.data.primary.amount;
   },
 };
 

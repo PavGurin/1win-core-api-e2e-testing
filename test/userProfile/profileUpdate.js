@@ -1,8 +1,8 @@
-import { expect } from 'chai';
-import { register } from '../../src/methods/register';
-import { updateProfile } from '../../src/methods/user';
-import { randomNum, randomStr } from '../../src/randomizer';
-import { checkErrorMsg } from '../../src/responseChecker';
+import {expect} from 'chai';
+import {register} from '../../src/methods/register';
+import {updateProfile} from '../../src/methods/user';
+import {randomNum, randomStr} from '../../src/randomizer';
+import {checkErrorMsg} from '../../src/responseChecker';
 
 describe('Profile update after oneClick registration', () => {
   /* Hint from documentation
@@ -438,18 +438,5 @@ describe('Profile update after oneClick registration', () => {
     });
     // console.log(updatedUser);
     checkErrorMsg(updatedUser, 'Bad request, birthday is required');
-  });
-
-  it('C21420 (-) empty birth1day', async () => {
-    const { data } = await register.oneClickReg();
-    // console.log(data);
-    const { password } = data;
-
-    const { data: updatedUser } = await updateProfile({
-      password,
-      birthday: '',
-    });
-    // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, birthday should have a type of number, but found string');
   });
 });

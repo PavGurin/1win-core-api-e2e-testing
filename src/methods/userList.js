@@ -64,4 +64,40 @@ export const userList = {
       tg_hash: randomStr(5),
     });
   },
+
+  async loginManualControl() {
+    // У пользователя стоит частичный блок
+    return socket.send('USER:auth-login', {
+      login: 'partial_block_user@mailinator.com',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
+
+  async loginWithMailConfirmationCodes() {
+    // Пользователь, с почты которого можно получать коды подтверждения
+    return socket.send('USER:auth-login', {
+      login: 'confirmation_codes_user@ahem.email',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
+
+  async loginTransferToUser() {
+    // Пользователь, которому приходят переводы
+    return socket.send('USER:auth-login', {
+      login: 'test_transfer@test.xyz',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
+
+  async loginTransferToUser() {
+    // Пользователь, которому приходят подтверждения
+    return socket.send('USER:auth-login', {
+      login: 'test_transfer@test.xyz',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
 };
