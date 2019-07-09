@@ -6,12 +6,11 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'tele2_rub';
 const currency = 'RUB';
 
-describe('Create deposite for tele2 - RUB @master', () => {
+describe.skip('Create deposite for tele2 - RUB @master', () => {
   before(async () => {
     await register.oneClickReg();
   });
 
-  // TODO нужна тестовая симкарта теле2
   it('C22672 - (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreateRub(
       100, '+79772520000', paymentType, currency,
@@ -85,12 +84,19 @@ describe('Create deposite for tele2 - RUB @master', () => {
   });
 
   it('C22680 - < max amount & wallet = valid short number', async () => {
-    // TODO узнать валидный короткий номер городского телефона
     const { data } = await banking.depositCreateRub(14999, '+79772520',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 14999);
+  });
+
+  it('C22686 - amount = string-number', async () => {
+    const { data } = await banking.depositCreateRub('50', '+79772520000',
+      paymentType, currency);
+    // console.log(data);
+    successDepositCreate(data, currency,
+      paymentType, 50);
   });
 });
 
@@ -130,13 +136,6 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
-  it('C22686 - amount = string-number', async () => {
-    const { data } = await banking.depositCreateRub('50', '+79772520000',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
   it('C22687 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79772520000',
       paymentType, currency);
@@ -163,20 +162,6 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
-  it('C22691 - wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRub(100, undefined,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  it('C22692 - wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(100, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it('C22694 - wallet = empty', async () => {
@@ -212,10 +197,9 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
   // Не знаю что тут должно быть
   it('C22693 incorrect paymentType = tele2_rub_test', async () => {
     const { data } = await banking.depositCreateRub(100,
-      // TODO посмотреть количество символов доступных в кошельке
       '+79001234567',
       'tele2_rub_test', currency);
     // console.log(data);
-    checkErrMsg(data, 400, '?????');
+    checkErrMsg(data, 400, 'Неверный способ оплаты');
   });
 });

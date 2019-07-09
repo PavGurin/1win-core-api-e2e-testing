@@ -30,7 +30,7 @@ describe('Transfer confirm with money', () => {
 describe('Transfer confirm with receiving code', () => {
 // TODO что-то вынести в отдельные функции?
 
-  it.skip('C21435 (+) Correct code', async () => {
+  it('C21435 (+) Correct code', async () => {
     const loginData = await userList.loginWithMailConfirmationCodes();
     await banking.transferCreate(20, 'RUB');
 
@@ -45,7 +45,7 @@ describe('Transfer confirm with receiving code', () => {
     expect(confirmData.data.error).to.equal(false);
   });
 
-  it.skip('C21436 (-) Active code of other user with 400 code response', async () => {
+  it('C21436 (-) Active code of other user with 400 code response', async () => {
     const loginData = await userList.loginWithMailConfirmationCodes();
     await banking.transferCreate(20, 'RUB');
 
@@ -87,7 +87,7 @@ describe('Transfer confirm with receiving code', () => {
     // expect(confirmData.data.message).to.equal('Неверный ключ запроса');
   });
 
-  it.skip('C21438 (-) Second confirmation with the same code', async () => {
+  it('C21438 (-) Second confirmation with the same code', async () => {
     // пока будет падать, т.к. в ответ приходит 500 вместо 400 и сообщения об ошибке
     // баг https://fbet-gitlab.ex2b.co/initial-tasks/backend/issues/110
     const loginData = await userList.loginWithMailConfirmationCodes();
@@ -112,7 +112,7 @@ describe('Transfer confirm with receiving code', () => {
     expect(confirmData2.data.message).to.equal('Неверный ключ запроса');
   });
 
-  it.skip('C21440 (+) Balance checking after successful transfer', async () => {
+  it('C21440 (+) Balance checking after successful transfer', async () => {
     // проверка баланса у пользователя, которому будет перевод, до перевода
     await userList.loginTransferToUser();
     const balanceBefore1 = await banking.balanceCheck();

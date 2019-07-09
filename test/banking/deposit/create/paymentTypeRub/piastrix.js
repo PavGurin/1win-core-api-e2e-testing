@@ -6,7 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'piastrix_rub';
 const currency = 'RUB';
 
-describe('Create deposite for piastrix_rub - RUB @master', () => {
+describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   before(async () => {
     await register.oneClickReg();
   });
@@ -91,6 +91,14 @@ describe('Create deposite for piastrix_rub - RUB @master', () => {
     successDepositCreate(data, currency,
       paymentType, 100);
   });
+
+  it('C22608 - amount = string-number', async () => {
+    const { data } = await banking.depositCreateRub('50', '',
+      paymentType, currency);
+    // console.log(data);
+    successDepositCreate(data, currency,
+      paymentType, 50);
+  });
 });
 
 describe('Create deposite for piastrix_rub invalid - RUB', () => {
@@ -129,13 +137,6 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
-  it('C22608 - amount = string-number', async () => {
-    const { data } = await banking.depositCreateRub('50', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
   it('C22609 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);
@@ -157,29 +158,12 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22614 - wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(1, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  it('C22619 - wallet = long string', async () => {
-    const { data } = await banking.depositCreateRub(1,
-      // TODO посмотреть количество символов доступных в кошельке
-      '1231231231231231453453345345342312312312312123123123123',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
   // Не знаю что тут должно быть
   it('C22615 - incorrect paymentType = piastrix_rub_test', async () => {
     const { data } = await banking.depositCreateRub(1,
-      // TODO посмотреть количество символов доступных в кошельке
       '12312312312',
       'piastrix_rub_test', currency);
     // console.log(data);
-    checkErrMsg(data, 400, '?????');
+    checkErrMsg(data, 400, 'Неверный способ оплаты');
   });
 });

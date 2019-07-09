@@ -6,7 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'megafon_rub';
 const currency = 'RUB';
 
-describe('Create deposite for megafon_rub - RUB @master', () => {
+describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   before(async () => {
     await register.oneClickReg();
   });
@@ -84,13 +84,20 @@ describe('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it('C22534 - < max amount & wallet = valid short number', async () => {
-    // TODO узнать валидный короткий номер городского телефона
     const { data } = await banking.depositCreateRub(14999, '+79001234',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 14999);
   });
+
+  it('C22549 - amount = string', async () => {
+    const { data } = await banking.depositCreateRub('50', '+79001234567',
+      paymentType, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, '50');
+  });
+
 });
 
 describe('Create deposite for megafon_rub invalid - RUB', () => {
@@ -129,13 +136,6 @@ describe('Create deposite for megafon_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
-  it('C22549 - amount = string', async () => {
-    const { data } = await banking.depositCreateRub('50', '+79001234567',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
   it('C22550 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79001234567',
       paymentType, currency);
@@ -162,20 +162,6 @@ describe('Create deposite for megafon_rub invalid - RUB', () => {
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
-  it('C22554 - wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRub(100, undefined,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  it('C22555 - wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(100, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it('C22557 - wallet = empty', async () => {
@@ -206,13 +192,12 @@ describe('Create deposite for megafon_rub invalid - RUB', () => {
       '+79001234567',
       'megafon_rub_test', currency);
     // console.log(data);
-    checkErrMsg(data, 400, '?????');
+    checkErrMsg(data, 400, 'Неверный способ оплаты');
   });
 
   // Не знаю что тут должно быть
   it('C22560 wallet = long phone', async () => {
     const { data } = await banking.depositCreateRub(100,
-      // TODO посмотреть количество символов доступных в кошельке
       '+790012345670909',
       paymentType, currency);
     // console.log(data);

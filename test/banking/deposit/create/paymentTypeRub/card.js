@@ -6,7 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'card_rub';
 const currency = 'RUB';
 
-describe('Create deposite for card_rub - RUB @master', () => {
+describe.skip('Create deposite for card_rub - RUB @master', () => {
   before(async () => {
     await register.oneClickReg();
   });
@@ -162,29 +162,11 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22521 - wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(100, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  it('C22520 - wallet = long string', async () => {
-    const { data } = await banking.depositCreateRub(10,
-      // TODO посмотреть количество символов доступных в кошельке
-      '1231231231231231453453345345342312312312312123123123123',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  // Не знаю что тут должно быть
   it('C22525 - incorrect paymentType = card_rub_test', async () => {
     const { data } = await banking.depositCreateRub(10,
-      // TODO посмотреть количество символов доступных в кошельке
       '3123123123',
       'card_rub_test', currency);
     // console.log(data);
-    checkErrMsg(data, 400, '?????');
+    checkErrMsg(data, 400, 'Неверный способ оплаты');
   });
 });
