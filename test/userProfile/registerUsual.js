@@ -14,7 +14,7 @@ describe('Register -Usual schema', () => {
     });
 
   // проверка ответа успешной регистрации
-  function checkRegInfo(data, testText, testNumber) {
+  function checkRegInfo(data, testText, testNumber, currency) {
     expect(data.email)
       .to.equal(`${testText}_test@xyz.com`);
     expect(data.password)
@@ -25,6 +25,7 @@ describe('Register -Usual schema', () => {
       .to.equal(testText);
     expect(data.country)
       .to.equal('someCountry');
+    expect(data.currency).equal(currency);
   }
 
   // (+) for positive tests (-) for negative tests
@@ -42,7 +43,7 @@ describe('Register -Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C19306 (+) + visit_domain - PartnerKey', async () => {
@@ -57,9 +58,10 @@ describe('Register -Usual schema', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain: defaultVisitDomain,
+      currency: 'EUR',
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'EUR');
   });
 
   it('C19307 (+) - visit_domain + PartnerKey', async () => {
@@ -74,9 +76,10 @@ describe('Register -Usual schema', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       partner_key: defaultPartnerKey,
+      currency: 'USD',
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'USD');
   });
 
   it('C19308 (-) - visit_domain - PartnerKey', async () => {

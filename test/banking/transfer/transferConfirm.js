@@ -143,5 +143,4 @@ describe('Transfer confirm with receiving code', () => {
     const balanceAfter1 = await banking.balanceCheck();
     expect(balanceAfter1).to.equal(balanceBefore1 + 20);
   });
-
 });
