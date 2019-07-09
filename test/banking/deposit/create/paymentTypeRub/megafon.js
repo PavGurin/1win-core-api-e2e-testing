@@ -97,7 +97,6 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
     // console.log(data);
     checkErrMsg(data, 400, '50');
   });
-
 });
 
 describe('Create deposite for megafon_rub invalid - RUB', () => {
