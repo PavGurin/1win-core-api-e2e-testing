@@ -17,7 +17,7 @@ describe('Withdrawal create with user without money ', () => {
       currency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad Request.');
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it('C19279 (-) Without money card_rub + valid wallet ', async () => {
@@ -39,7 +39,7 @@ describe('Withdrawal create with user without money ', () => {
       currency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad Request.');
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 });
 
@@ -55,32 +55,6 @@ describe('Withdrawal create with user with money ', () => {
       wallet: '0000111122223333',
       payment_system: 'card_rub',
       currency: 'RUB',
-    });
-    // console.log(data);
-    expect(data).to.be.an('object');
-    expect(data.email).not.equal(null);
-    expect(data.message).equal(undefined);
-  });
-
-  it('C19326 (+) With money card_uah + valid wallet + RUB', async () => {
-    const { data } = await socket.send('BANKING:withdrawal-create', {
-      amount: '100',
-      wallet: '0000111122223333',
-      payment_system: 'card_uah',
-      currency: 'RUB',
-    });
-    // console.log(data);
-    expect(data).to.be.an('object');
-    expect(data.email).not.equal(null);
-    expect(data.message).equal(undefined);
-  });
-
-  it('C19327 (+) With money card_uah + valid wallet + USD', async () => {
-    const { data } = await socket.send('BANKING:withdrawal-create', {
-      amount: '100',
-      wallet: '0000111122223333',
-      payment_system: 'card_uah',
-      currency: 'USD',
     });
     // console.log(data);
     expect(data).to.be.an('object');
