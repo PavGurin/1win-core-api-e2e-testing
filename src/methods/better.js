@@ -11,34 +11,36 @@ export async function sportAll(service) {
   });
 }
 
-export async function sportCategories(service) {
+export async function sportCategories(service, sportId) {
   return socket.send('MATCH-STORAGE-2:sport-categories', {
     service,
-    sportId: 'all',
+    sportId,
     timeFilter: {
       date: false,
       hour: false,
     },
   });
-  // console.log(data);
 }
 
-export async function getTournamentMatches(filters) {
-  return socket.send('MATCH-STORAGE-2:tournament-matches', {
-    service: 'prematch',
-    // sportId: '12',
-    timeFilter: {
-      date: false,
-      hour: false,
-      ...filters,
-    },
-  });
-}
-
-export async function sportTournaments(service, sportId) {
+export async function sportTournaments(service, tournamentId) {
   return socket.send('MATCH-STORAGE-2:sport-tournaments', {
     service,
-    sportId,
+    tournamentId,
+    timeFilter: {
+      date: false,
+      hour: false,
+    },
+  });
+}
+
+export async function tournamentMatches(service, tournamentId) {
+  return socket.send('MATCH-STORAGE-2:tournament-matches', {
+    service,
+    timeFilter: {
+      date: false,
+      hoursToStart: 1,
+    },
+    tournamentId,
   });
 }
 
@@ -48,13 +50,13 @@ export function generateCoupon(matches) {
   return new Coupon({ ...Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd });
 }
 
-export async function makeBet(coupon) {
+export async function makeBet(coupon, currency, amount) {
   return socket.send('BETS:bets-make',
     {
-      currency: 'RUB',
+      currency,
       betsMap: {
         [coupon.couponId]: {
-          amount: 1,
+          amount,
           couponList: [
             {
               service: coupon.service,
