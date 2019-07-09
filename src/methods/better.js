@@ -78,7 +78,7 @@ export async function makeBet(coupon, currency, amount) {
 }
 
 export async function getMaxBetAmount(coupon, singleMatch) {
-  const x = await socket.send('BETS:maxBetAmount',
+  return socket.send('BETS:maxBetAmount',
     {
       couponList: [
         {
@@ -90,8 +90,8 @@ export async function getMaxBetAmount(coupon, singleMatch) {
             tournamentId: singleMatch.tournamentId,
           },
           odd: {
-            coefficient: toString(coupon.saveCoefficient),
-            outCome: toString(coupon.outCome),
+            coefficient: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].coefficient,
+            outCome: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].outCome,
             service: coupon.service,
             specialValue: coupon.specialValue,
             subTypeId: coupon.subTypeId,
@@ -100,6 +100,4 @@ export async function getMaxBetAmount(coupon, singleMatch) {
         },
       ],
     });
-
-  console.log(x);
 }

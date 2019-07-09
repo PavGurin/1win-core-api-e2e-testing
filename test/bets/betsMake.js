@@ -5,6 +5,7 @@ import {
   generateCoupon, generateCouponSingle, getMaxBetAmount, makeBet, sportAll, sportCategories, sportTournaments,
   tournamentMatches,
 } from '../../src/methods/better';
+import { sleep } from '../../src/methods/utils';
 
 describe('Bets make', () => {
   // TODO после обновить старые тесты с маркером dev
@@ -119,11 +120,38 @@ describe('Bets make', () => {
     const coupon = await generateCouponSingle(singleMatch);
     // console.log(coupon);
 
-    const xxx = getMaxBetAmount(coupon, singleMatch);
-    const { data } = await getMaxBetAmount(coupon, singleMatch);
+    const data = await getMaxBetAmount(coupon, singleMatch)
 
     console.log(data);
   });
+
+
+  it('Ordinary be11t', async () => {
+    const data = await socket.send('GET:maxBetAmount',
+      {
+        couponList: [
+          {
+            coefficient: 2.67,
+            match: {
+              categoryId: 26,
+              matchId: 17457501,
+              sportId: 1,
+              tournamentId: 26540,
+            },
+            odd: {
+              coefficient: '2.67',
+              outCome: '1',
+              service: 'prematch',
+              specialValue: '*',
+              subTypeId: 0,
+              typeId: 10,
+            },
+          },
+        ],
+      });
+    console.log(data);
+  });
+
 
   // it('Prematch - express bet', async () => {
   //   /**
