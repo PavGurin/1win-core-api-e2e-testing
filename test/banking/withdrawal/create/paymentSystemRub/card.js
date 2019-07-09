@@ -23,7 +23,7 @@ describe('Withdrawal create with valid test cases ', () => {
   it('C19324 (-) With money invalid', async () => {
     const { data } = await banking.withdrawalCreate(100, '5446546', payment_system, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad Request.');
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 });
 
@@ -42,7 +42,7 @@ describe('Withdrawal create with invalid test cases ', () => {
   it('(-) Without money ', async () => {
     const { data } = await banking.withdrawalCreate(100, '5446546', payment_system, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad Request.');
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it('C19279 (-) Without money card_rub + valid wallet ', async () => {

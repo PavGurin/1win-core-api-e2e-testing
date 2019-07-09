@@ -6,7 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
 
-describe('Create deposite for beeline_rub - RUB @master', () => {
+describe.skip('Create deposite for beeline_rub - RUB @master', () => {
   before(async () => {
     await register.oneClickReg();
   });
@@ -165,20 +165,6 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22504 - wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRub(100, undefined,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  it('C22505 - wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(100, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
   it('C22506 - wallet = empty', async () => {
     const { data } = await banking.depositCreateRub(100, '',
       paymentType, currency);
@@ -203,11 +189,10 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
   // Не знаю что тут должно быть
   it('C22509 - incorrect paymentType = beeline_rub_test', async () => {
     const { data } = await banking.depositCreateRub(1,
-      // TODO посмотреть количество символов доступных в кошельке
       '79215598286',
       'beeline_rub_test', currency);
     // console.log(data);
-    checkErrMsg(data, 400, '?????');
+    checkErrMsg(data, 400, 'Неверный способ оплаты');
   });
 
   it('C22493 - < max amount & wallet = valid short number', async () => {

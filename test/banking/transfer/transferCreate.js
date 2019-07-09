@@ -19,17 +19,6 @@ describe('Transfer with money - RUB', () => {
     expect(data.email).not.equal(null);
   });
 
-  it('C19374 (+) With money, wihtout currency ', async () => {
-    const { data } = await socket.send('BANKING:transfer-create', {
-      targetEmail: 'test_transfer@mailinator.com',
-      amount: 2,
-      // currency: 'RUB'
-    });
-    // console.log(data);
-    expect(data.confirmationRequested).equal(true);
-    expect(data.email).not.equal(null);
-  });
-
   it('C19375 (+) With money, currency = null and amount > 1000', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
@@ -37,6 +26,35 @@ describe('Transfer with money - RUB', () => {
     });
     // console.log(data);
     checkErrMsg(data, 400, 'Недостаточно средств');
+  });
+
+  it(' (+) amount > 20 ', async () => {
+    const { data } = await socket.send('BANKING:transfer-create', {
+      targetEmail: 'test_transfer@mailinator.com',
+      amount: 21,
+    });
+    // console.log(data);
+    expect(data.confirmationRequested).equal(true);
+    expect(data.email).not.equal(null);
+  });
+
+  it(' (-) 19 > amount > 20 ', async () => {
+    const { data } = await socket.send('BANKING:transfer-create', {
+      targetEmail: 'test_transfer@mailinator.com',
+      amount: 19.68,
+    });
+    // console.log(data);
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
+  });
+
+
+  it(' (-) amount < 20 ', async () => {
+    const { data } = await socket.send('BANKING:transfer-create', {
+      targetEmail: 'test_transfer@mailinator.com',
+      amount: 19,
+    });
+    // console.log(data);
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 });
 
@@ -100,7 +118,7 @@ describe('Transfer without money', () => {
       currency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 400, 'Недостаточно средств');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it('C19370 (-) Without money , enough amount + RUB', async () => {

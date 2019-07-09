@@ -91,13 +91,4 @@ export const userList = {
       tg_hash: randomStr(5),
     });
   },
-
-  async loginTransferToUser() {
-    // Пользователь, которому приходят подтверждения
-    return socket.send('USER:auth-login', {
-      login: 'test_transfer@test.xyz',
-      password: '123123',
-      tg_hash: randomStr(5),
-    });
-  },
 };
