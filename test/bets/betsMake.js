@@ -2,19 +2,21 @@ import { expect } from 'chai';
 
 import { userList } from '../../src/methods/userList';
 import {
-  generateCoupon, makeBet, sportAll, sportCategories, sportTournaments, tournamentMatches,
+  generateCoupon, generateCouponSingle, getMaxBetAmount, makeBet, sportAll, sportCategories, sportTournaments,
+  tournamentMatches,
 } from '../../src/methods/better';
 
 describe('Bets make', () => {
   // TODO после обновить старые тесты с маркером dev
 
   const currency = 'RUB';
+  const PREMATCH = 'prematch';
+  const live = 'live';
 
   beforeEach(async () => {
     await userList.loginWithRealMoney();
   });
 
-  const service = 'prematch';
 
   /**
    get available matches
@@ -46,12 +48,12 @@ describe('Bets make', () => {
 
   //+
   it('sportCategories', async () => {
-    const { data: { sportMap: sportAllResponse } } = await sportAll(service);
+    const { data: { sportMap: sportAllResponse } } = await sportAll(PREMATCH);
     // console.log(sportAllResponse);
     const { sportId } = Object.values(sportAllResponse)[0];
     // console.log(sportId);
 
-    const { data: { sportCategoriesMap } } = await sportCategories(service, sportId);
+    const { data: { sportCategoriesMap } } = await sportCategories(PREMATCH, sportId);
     // console.log(sportCategoriesMap);
     Object.values(sportCategoriesMap).forEach(((value) => {
       expect(value.categoryId).not.equal(null);
@@ -63,30 +65,26 @@ describe('Bets make', () => {
     }));
   });
 
-  it('tournamentMatches', async () => {
-    const { data: { sportMap: sportAllResponse } } = await sportAll(service);
-    console.log(sportAllResponse);
-    const { sportId } = Object.values(sportAllResponse)[0];
-    const { data: { sportCategoriesMap } } = await sportCategories(service, sportId);
-    console.log(sportCategoriesMap);
-  });
+  //+
+  it('Ordinary bet', async () => {
+    const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
+    // console.log(sportTournamentMap);
 
+    const { data: { matchMap } } = await tournamentMatches(PREMATCH,
+      Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId);
+    // console.log(matchMap);
 
-  it('Prematch - ordina1ry bet', async () => {
-    const { data: matches } = await sportTournaments('prematch', 'all');
+    const singleMatch = Object.values(matchMap)[0];
+    // console.log(singleMatch);
 
-    console.log(matches);
+    const coupon = await generateCouponSingle(singleMatch);
+    // console.log(coupon);
 
-    // const coupon = await generateCoupon(matches);
-    //
-    // // console.log(coupon);
-    //
-    // const betResponse = await makeBet(coupon, currency, 1);
-
+    const betResponse = await makeBet(coupon, currency, 1);
     // console.log(betResponse);
 
-    // expect(betResponse.data[coupon.couponId].error).equal(false);
-    // expect(betResponse.status).equal(200);
+    expect(betResponse.data[coupon.couponId].error).equal(false);
+    expect(betResponse.status).equal(200);
   });
 
   it('Prematch - ordinary bet', async () => {
@@ -105,6 +103,26 @@ describe('Bets make', () => {
 
     expect(betResponse.data[coupon.couponId].error).equal(false);
     expect(betResponse.status).equal(200);
+  });
+
+  it('MaxBetAmount', async () => {
+    const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
+    // console.log(sportTournamentMap);
+
+    const { data: { matchMap } } = await tournamentMatches(PREMATCH,
+      Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId);
+      // console.log(matchMap);
+
+    const singleMatch = Object.values(matchMap)[0];
+    // console.log(singleMatch);
+
+    const coupon = await generateCouponSingle(singleMatch);
+    // console.log(coupon);
+
+    const xxx = getMaxBetAmount(coupon, singleMatch);
+    const { data } = await getMaxBetAmount(coupon, singleMatch);
+
+    console.log(data);
   });
 
   // it('Prematch - express bet', async () => {

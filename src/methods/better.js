@@ -38,10 +38,14 @@ export async function tournamentMatches(service, tournamentId) {
     service,
     timeFilter: {
       date: false,
-      hoursToStart: 1,
+      hour: false,
     },
     tournamentId,
   });
+}
+
+export function generateCouponSingle(match) {
+  return new Coupon(match.baseOddsConfig[0].cellList[0].odd);
 }
 
 export function generateCoupon(matches) {
@@ -71,4 +75,31 @@ export async function makeBet(coupon, currency, amount) {
         },
       },
     });
+}
+
+export async function getMaxBetAmount(coupon, singleMatch) {
+  const x = await socket.send('BETS:maxBetAmount',
+    {
+      couponList: [
+        {
+          coefficient: coupon.saveCoefficient,
+          match: {
+            categoryId: singleMatch.categoryId,
+            matchId: coupon.matchId,
+            sportId: singleMatch.sportId,
+            tournamentId: singleMatch.tournamentId,
+          },
+          odd: {
+            coefficient: toString(coupon.saveCoefficient),
+            outCome: toString(coupon.outCome),
+            service: coupon.service,
+            specialValue: coupon.specialValue,
+            subTypeId: coupon.subTypeId,
+            typeId: coupon.typeId,
+          },
+        },
+      ],
+    });
+
+  console.log(x);
 }
