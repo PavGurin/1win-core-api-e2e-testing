@@ -44,7 +44,7 @@ export async function tournamentMatches(service, tournamentId) {
   });
 }
 
-export function generateCouponSingle(match) {
+export function generateOrdinaryCoupon(match) {
   return new Coupon(match.baseOddsConfig[0].cellList[0].odd);
 }
 
@@ -52,6 +52,33 @@ export function generateCoupon(matches) {
   // const singleMatch = Object.values(matches.matchMap)[0];
   // const odd = singleMatch.baseOddsConfig[0].cellList[0].odd;
   return new Coupon({ ...Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd });
+}
+
+export async function generateExpressCoupon(matchMap, count, amount) {
+  const coupons = Object
+    .values(matchMap)
+    .slice(0, count)
+    .map(it => generateOrdinaryCoupon(it));
+  const couponIds = coupons.map(({ couponId }) => couponId).join('?');
+  const couponList = coupons.map(coupon => ({
+    service: coupon.service,
+    matchId: coupon.matchId,
+    typeId: coupon.typeId,
+    subTypeId: coupon.subTypeId,
+    outCome: coupon.outCome,
+    specialValue: coupon.specialValue,
+    coefficient: coupon.saveCoefficient,
+  }));
+  return socket.send('BETS:bets-make',
+    {
+      currency: 'RUB',
+      betsMap: {
+        [couponIds]: {
+          amount,
+          couponList,
+        },
+      },
+    });
 }
 
 export async function makeBet(coupon, currency, amount) {

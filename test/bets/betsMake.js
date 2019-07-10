@@ -2,10 +2,15 @@ import { expect } from 'chai';
 
 import { userList } from '../../src/methods/userList';
 import {
-  generateCoupon, generateCouponSingle, getMaxBetAmount, makeBet, sportAll, sportCategories, sportTournaments,
+  generateCoupon, generateExpressCoupon,
+  generateOrdinaryCoupon,
+  getMaxBetAmount,
+  makeBet,
+  sportAll,
+  sportCategories,
+  sportTournaments,
   tournamentMatches,
 } from '../../src/methods/better';
-import { sleep } from '../../src/methods/utils';
 
 describe('Bets make', () => {
   // TODO после обновить старые тесты с маркером dev
@@ -71,18 +76,20 @@ describe('Bets make', () => {
     const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
     // console.log(sportTournamentMap);
 
-    const { data: { matchMap } } = await tournamentMatches(PREMATCH,
-      Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId);
+    const { data: { matchMap } } = await tournamentMatches(
+      PREMATCH,
+      Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
+    );
     // console.log(matchMap);
 
-    const singleMatch = Object.values(matchMap)[0];
-    // console.log(singleMatch);
+    const [singleMatch] = Object.values(matchMap);
+    console.log(singleMatch);
 
-    const coupon = await generateCouponSingle(singleMatch);
+    const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
     const betResponse = await makeBet(coupon, currency, 1);
-    // console.log(betResponse);
+    console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].error).equal(false);
     expect(betResponse.status).equal(200);
@@ -106,6 +113,7 @@ describe('Bets make', () => {
     expect(betResponse.status).equal(200);
   });
 
+  //+
   it('MaxBetAmount', async () => {
     const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
     // console.log(sportTournamentMap);
@@ -117,86 +125,24 @@ describe('Bets make', () => {
     const singleMatch = Object.values(matchMap)[0];
     // console.log(singleMatch);
 
-    const coupon = await generateCouponSingle(singleMatch);
+    const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
-    const data = await getMaxBetAmount(coupon, singleMatch)
+    const data = await getMaxBetAmount(coupon, singleMatch);
 
     console.log(data);
   });
 
+  it('Prematch - express bet', async () => {
+    const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
+    // console.log(sportTournamentMap);
 
-  it('Ordinary be11t', async () => {
-    const data = await socket.send('GET:maxBetAmount',
-      {
-        couponList: [
-          {
-            coefficient: 2.67,
-            match: {
-              categoryId: 26,
-              matchId: 17457501,
-              sportId: 1,
-              tournamentId: 26540,
-            },
-            odd: {
-              coefficient: '2.67',
-              outCome: '1',
-              service: 'prematch',
-              specialValue: '*',
-              subTypeId: 0,
-              typeId: 10,
-            },
-          },
-        ],
-      });
+    const { data: { matchMap } } = await tournamentMatches(
+      PREMATCH,
+      Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
+    );
+
+    const data = await generateExpressCoupon(matchMap, 2, 1);
     console.log(data);
   });
-
-
-  // it('Prematch - express bet', async () => {
-  //   /**
-  //        get available matches
-  //        service 'live/prematch'
-  //        sportId => (football = 1)
-  //        */
-  //
-  //   const { data: matches } = await getTournamentMatches({
-  //     service: 'prematch',
-  //     // sportId: '1'
-  //   });
-  //
-  //   const coupon = await generateCoupon(matches);
-  //
-  //   const betResponse = await makeBet(coupon);
-  //
-  //   // console.log(betResponse);
-  // });
-  //
-  // it.skip('Bets make ordinary with money', async () => {
-  //   await userList.login_with_RUB();
-  //   const { betData } = await socket.send('BETS:bets-make',
-  //     {
-  //       currency: 'RUB',
-  //       betsMap: {
-  //         'prematch_16493397_386_0_Draw / No_*': {
-  //           amount: 13,
-  //           couponList: [
-  //             {
-  //               service: 'prematch',
-  //               matchId: 16493397,
-  //               typeId: 386,
-  //               subTypeId: 0,
-  //               outCome: 'Draw / No',
-  //               specialValue: '*',
-  //               coefficient: '7.98',
-  //             },
-  //           ],
-  //         },
-  //       },
-  //     });
-  //   // console.log(betData);
-  //
-  //   expect(betData).to.deep.include({ status: 403 });
-  //   expect(betData).to.deep.include({ message: 'Недостаточно средств' });
-  // });
 });
