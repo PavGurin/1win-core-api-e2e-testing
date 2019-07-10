@@ -1,49 +1,5 @@
 import Coupon from '../Coupon';
 
-// USELESS for bets
-export async function sportAll(service) {
-  return socket.send('MATCH-STORAGE-2:sport-all', {
-    service,
-    timeFilter: {
-      date: false,
-      hour: false,
-    },
-  });
-}
-
-export async function sportCategories(service, sportId) {
-  return socket.send('MATCH-STORAGE-2:sport-categories', {
-    service,
-    sportId,
-    timeFilter: {
-      date: false,
-      hour: false,
-    },
-  });
-}
-
-export async function sportTournaments(service, tournamentId) {
-  return socket.send('MATCH-STORAGE-2:sport-tournaments', {
-    service,
-    tournamentId,
-    timeFilter: {
-      date: false,
-      hour: false,
-    },
-  });
-}
-
-export async function tournamentMatches(service, tournamentId) {
-  return socket.send('MATCH-STORAGE-2:tournament-matches', {
-    service,
-    timeFilter: {
-      date: false,
-      hour: false,
-    },
-    tournamentId,
-  });
-}
-
 export function generateOrdinaryCoupon(match) {
   return new Coupon(match.baseOddsConfig[0].cellList[0].odd);
 }
@@ -54,7 +10,7 @@ export function generateCoupon(matches) {
   return new Coupon({ ...Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd });
 }
 
-export async function generateExpressCoupon(matchMap, count, amount) {
+export function generateExpressCoupon(matchMap, count, amount) {
   const coupons = Object
     .values(matchMap)
     .slice(0, count)
@@ -69,19 +25,49 @@ export async function generateExpressCoupon(matchMap, count, amount) {
     specialValue: coupon.specialValue,
     coefficient: coupon.saveCoefficient,
   }));
+  return {
+    currency: 'RUB',
+    betsMap: {
+      [couponIds]: {
+        amount,
+        couponList,
+      },
+    },
+  };
+}
+
+export async function makeExpressBet(coupon) {
   return socket.send('BETS:bets-make',
     {
-      currency: 'RUB',
+      currency: coupon[0],
+      betsMap: coupon[1],
+    });
+}
+
+export async function makeOrdinaryBetOld(coupon, currency, amount) {
+  return socket.send('POST:makeBet',
+    {
+      currency,
       betsMap: {
-        [couponIds]: {
+        [coupon.couponId]: {
           amount,
-          couponList,
+          couponList: [
+            {
+              service: coupon.service,
+              matchId: coupon.matchId,
+              typeId: coupon.typeId,
+              subTypeId: coupon.subTypeId,
+              outCome: coupon.outCome,
+              specialValue: coupon.specialValue,
+              coefficient: coupon.saveCoefficient,
+            },
+          ],
         },
       },
     });
 }
 
-export async function makeBet(coupon, currency, amount) {
+export async function makeOrdinaryBet(coupon, currency, amount) {
   return socket.send('BETS:bets-make',
     {
       currency,
@@ -105,7 +91,32 @@ export async function makeBet(coupon, currency, amount) {
 }
 
 export async function getMaxBetAmount(coupon, singleMatch) {
-  return socket.send('BETS:maxBetAmount',
+  return socket.send('BETS:bets-maxBetAmount',
+    {
+      couponList: [
+        {
+          coefficient: coupon.saveCoefficient,
+          match: {
+            categoryId: singleMatch.categoryId,
+            matchId: coupon.matchId,
+            sportId: singleMatch.sportId,
+            tournamentId: singleMatch.tournamentId,
+          },
+          odd: {
+            coefficient: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].coefficient,
+            outCome: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].outCome,
+            service: coupon.service,
+            specialValue: coupon.specialValue,
+            subTypeId: coupon.subTypeId,
+            typeId: coupon.typeId,
+          },
+        },
+      ],
+    });
+}
+
+export async function getMaxBetAmountOld(coupon, singleMatch) {
+  return socket.send('GET:maxBetAmount',
     {
       couponList: [
         {
