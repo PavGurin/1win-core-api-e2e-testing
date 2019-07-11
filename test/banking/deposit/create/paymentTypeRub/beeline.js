@@ -141,7 +141,7 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
     const { data } = await banking.depositCreateRub(0.6, '79215598386',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
+    checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22501 - amount < min amount', async () => {
