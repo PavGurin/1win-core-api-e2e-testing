@@ -48,6 +48,14 @@ export const banking = {
     });
   },
 
+  async convertCreate(amount, senderCurrency, receiverCurrency) {
+    return socket.send('BANKING:convert-create', {
+      amount,
+      senderCurrency,
+      receiverCurrency,
+    });
+  },
+
   async balanceCheck() {
     const balanceData = await socket.send('GET:balance', {
       tg_hash: randomStr(5),
@@ -57,10 +65,10 @@ export const banking = {
 };
 
 /**
- * Получение стоймости валюты в рублях
+ * Получение стоимости валюты в рублях
  *
  * @param {string} charCode код валюты
- * @param {Date?} date дата на которую нужно посмотреть стоймость, если не указана, то сегодня
+ * @param {Date?} date дата на которую нужно посмотреть стоимость, если не указана, то сегодня
  */
 export const cbCurrency = (charCode, date = new Date()) => axios
   .get(`http://www.cbr.ru/scripts/XML_daily.asp?date_req=${(`0${date.getDate()}`).slice(-2)}/${(`0${date.getMonth() + 1}`).slice(-2)}/${date.getFullYear()}`)
