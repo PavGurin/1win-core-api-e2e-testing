@@ -4,6 +4,14 @@ import { randomStr } from '../randomizer';
 
 export const banking = {
 
+  async transferCreateAll(targetEmail, amount, currency) {
+    return socket.send('BANKING:transfer-create', {
+      targetEmail,
+      amount,
+      currency,
+    });
+  },
+
   async transferCreate(amount, currency) {
     return socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@test.xyz',
