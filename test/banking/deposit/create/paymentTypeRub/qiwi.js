@@ -300,18 +300,10 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
-  it('C22645 wallet = long phone', async () => {
-    const { data } = await banking.depositCreateRub(100,
-      '+797798778987',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
   // Не знаю что тут должно быть
   it('C22641 - incorrect paymentType = qiwi_rub_test', async () => {
     const { data } = await banking.depositCreateRub(100,
-      '+79001234567',
+      '+79001234568',
       'qiwi_rub_test', currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный способ оплаты');
