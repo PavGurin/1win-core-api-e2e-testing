@@ -73,6 +73,11 @@ export default class SocketClient {
       request.resolve = resolve;
       request.reject = reject;
     });
+    setTimeout(() => {
+      if (this.requestMap[request.msgid]) {
+        this.requestMap[request.msgid].reject();
+      }
+    }, 5e4);
 
     this.socket.emit('d', request);
 
@@ -87,17 +92,19 @@ export default class SocketClient {
       }
       return;
     }
-    const request = this.requestMap[msg.msgid];
+    const { resolve, reject } = this.requestMap[msg.msgid];
 
+    delete this.requestMap[msg.msgid];
     if (msg.needParse) {
+      // eslint-disable-next-line no-param-reassign
       msg.data = JSON.parse(msg.data);
     }
 
     // use resolve callback when response have success status
     if (msg.data.status && msg.data.status >= 200 && msg.data.status < 300) {
-      request.resolve(msg.data);
+      resolve(msg.data);
     } else {
-      request.reject(msg.data);
+      reject(msg.data);
     }
 
     // remove request from request map

@@ -20,8 +20,10 @@ module.exports = {
     },
     rules: {
         'no-plusplus': 'off',
-        camelcase: 'warn',
-        'import/prefer-default-export': 'off'
+        camelcase: 'off',
+        'import/prefer-default-export': 'off',
+        'no-unused-vars': 'warn',
+			  'no-unused-expressions': 'warn'
 
     }
 };

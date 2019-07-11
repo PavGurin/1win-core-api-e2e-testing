@@ -5,7 +5,7 @@ describe('Results', () => {
   it('C22707 - (+) results with date filtration', async () => {
     for (let i = 0; i <= 6; i++) {
       const date = getFormattedDate(i);
-      const { data } = await socket.send('RESULT:results-all', {
+      const { data } = socket.send('RESULT:results-all', {
         timeFilter: {
           date,
           hoursToStart: false,

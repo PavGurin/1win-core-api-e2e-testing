@@ -12,9 +12,10 @@ describe('Deposit requests', () => {
   // TODO больше проверок на PaymentType
   it('C19376 (-) create without currency @master', async () => {
     const { data } = await socket.send('BANKING:deposit-create-request', {
-      amount: 100,
-      wallet: '',
+      amount: 101,
+      wallet: ' ',
       paymentType,
+      currency,
     });
     // console.log(data);
     expect(data.redirectUrl).not.equal(null);

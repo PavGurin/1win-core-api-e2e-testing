@@ -15,7 +15,7 @@ describe.skip('Create deposite for mts_rub - RUB @master', () => {
     const { data } = await banking.depositCreateRub(
       100, '+79001234567', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency,
       paymentType, 100);
   });

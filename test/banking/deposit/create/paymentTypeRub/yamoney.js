@@ -15,7 +15,7 @@ describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
     const { data } = await banking.depositCreateRub(
       100, '', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency,
       paymentType, 100);
   });

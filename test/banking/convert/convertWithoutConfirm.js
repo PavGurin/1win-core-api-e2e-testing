@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import { userForAutoConfirm } from '../../../src/methods/userForAutoConfirm';
 
-// TODO дописать тесты когда запустят конвертацию
-describe('Convert with money - RUB', () => {
+describe.skip('Convert with money - RUB', () => {
   it(' (+) With money', async () => {
     await userForAutoConfirm.EmailMail();
 

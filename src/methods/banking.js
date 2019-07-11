@@ -2,6 +2,7 @@ import axios from 'axios';
 import parser from 'fast-xml-parser';
 import { randomStr } from '../randomizer';
 
+
 export const banking = {
 
   async transferCreateAll(targetEmail, amount, currency) {
@@ -39,7 +40,7 @@ export const banking = {
     });
   },
 
-  async depositCreateRequest(amount, wallet, paymentType, currency) {
+  async depositCreateRequestRub(amount, wallet, paymentType, currency) {
     return socket.send('BANKING:deposit-create-request', {
       amount,
       wallet,

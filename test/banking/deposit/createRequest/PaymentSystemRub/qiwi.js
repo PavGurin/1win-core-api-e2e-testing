@@ -1,74 +1,70 @@
+import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { userList } from '../../../../../src/methods/userList';
 
-// beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
-//     const {user} = await register.oneClickReg();
-//     }
-// );
 const paymentType = 'qiwi_rub';
-const currency = 'USD';
+const currency = 'RUB';
 
-describe.skip('Create deposite for qiwi_rub - USD @master', () => {
+describe.skip('Create deposite for qiwi_rub - RUB @master', () => {
   before(async () => {
-    await userList.loginWithRealMoney();
+    await register.oneClickReg();
   });
 
-  it(' (+) amount = 100 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+  it('C22620 - (+) amount = 100 & wallet = (+7)phone', async () => {
+    const { data } = await banking.depositCreateRequestRub(
       100, '+79001234567', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency, paymentType, 100);
   });
 
-  it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+  it('C22621 (+) amount = 100.01 & wallet = (7)phone', async () => {
+    const { data } = await banking.depositCreateRequestRub(
       100.01, '79001234567', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency, paymentType, 100.01);
   });
 
-  it(' amount = 2000 & wallet = (8)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+  it('C22622 amount = 2000 & wallet = (8)phone', async () => {
+    const { data } = await banking.depositCreateRequestRub(
       2000, '89001234567', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 2000);
   });
 
-  it(' min amount & wallet =  = (+91)', async () => {
-    const { data } = await banking.depositCreateRub(10,
+  it('C22623 min amount & wallet = (+91)', async () => {
+    const { data } = await banking.depositCreateRequestRub(10,
       '+919001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 10);
   });
 
-  it('> min amount & wallet = (+994)', async () => {
-    const { data } = await banking.depositCreateRub(11,
+  it('C22624 - > min amount & wallet = (+994)', async () => {
+    const { data } = await banking.depositCreateRequestRub(11,
       '+9949001234567', paymentType, currency);
 
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 11);
   });
 
-  it(' max amount & wallet = (+82)', async () => {
-    const { data } = await banking.depositCreateRub(15000,
+  it('C22625 - max amount & wallet = (+82)', async () => {
+    const { data } = await banking.depositCreateRequestRub(15000,
       '+829001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15000);
   });
 
-  it('< max amount & wallet = (+372)', async () => {
-    const { data } = await banking.depositCreateRub(14999, '+3729001234567',
+  it('C22626 - < max amount & wallet = (+372)', async () => {
+    const { data } = await banking.depositCreateRequestRub(14999, '+3729001234567',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 14999);
   });
 
-  it(' without currency & wallet = (+375)', async () => {
+  it('C22627 - without currency & wallet = (+375)', async () => {
     const { data } = await socket.send('BANKING:deposit-create', {
       amount: '100',
       wallet: '+3759001234567',
@@ -78,67 +74,67 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
     successDepositCreate(data, currency, paymentType, 100);
   });
 
-  it(' max amount & wallet = (+374)', async () => {
-    const { data } = await banking.depositCreateRub(15, '+3749001234567', paymentType, currency);
+  it('C22628 - amount & wallet = (+374)', async () => {
+    const { data } = await banking.depositCreateRequestRub(15, '+3749001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+44)', async () => {
+  it('C22710 - amount & wallet = (+44)', async () => {
     const { data } = await banking.depositCreateRub(15, '+449001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+998)', async () => {
+  it('C22711 - amount & wallet = (+998)', async () => {
     const { data } = await banking.depositCreateRub(15, '+9989001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+972)', async () => {
+  it('C22712 - amount & wallet = (+972)', async () => {
     const { data } = await banking.depositCreateRub(15, '+9729001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+66)', async () => {
+  it('C22713 - amount & wallet = (+66)', async () => {
     const { data } = await banking.depositCreateRub(15, '+669001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+90)', async () => {
+  it('C22714 - amount & wallet = (+90)', async () => {
     const { data } = await banking.depositCreateRub(15, '+909001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+81)', async () => {
+  it('C22715 - amount & wallet = (+81)', async () => {
     const { data } = await banking.depositCreateRub(15, '+8149001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+1)', async () => {
+  it('C22716 - amount & wallet = (+1)', async () => {
     const { data } = await banking.depositCreateRub(15, '+19001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+507)', async () => {
+  it('C22717 - amount & wallet = (+507)', async () => {
     const { data } = await banking.depositCreateRub(15, '+5079001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+77)', async () => {
+  it('C22718 - amount & wallet = (+77)', async () => {
     const { data } = await banking.depositCreateRub(15, '+779001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency, paymentType, 15);
   });
 
-  it(' max amount & wallet = (+380)', async () => {
+  it('C22719 - amount & wallet = (+380)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+3809001234567', paymentType, currency);
     // console.log(data);
@@ -146,7 +142,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+371)', async () => {
+  it('C22720 - amount & wallet = (+371)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+3719001234567', paymentType, currency);
     // console.log(data);
@@ -154,7 +150,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+370)', async () => {
+  it('C22721 - amount & wallet = (+370)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+3709001234567', paymentType, currency);
     // console.log(data);
@@ -162,7 +158,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+996)', async () => {
+  it('C22722 - amount & wallet = (+996)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+9969001234567', paymentType, currency);
     // console.log(data);
@@ -170,7 +166,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+9955)', async () => {
+  it('C22723 - amount & wallet = (+9955)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+99559001234567', paymentType, currency);
     // console.log(data);
@@ -178,7 +174,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+992)', async () => {
+  it('C22724 - amount & wallet = (+992)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+9929001234567', paymentType, currency);
     // console.log(data);
@@ -186,7 +182,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+373)', async () => {
+  it('C22725 - amount & wallet = (+373)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+3739001234567', paymentType, currency);
     // console.log(data);
@@ -194,7 +190,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it(' max amount & wallet = (+84)', async () => {
+  it('C22726 - amount & wallet = (+84)', async () => {
     const { data } = await banking.depositCreateRub(15,
       '+849001234567', paymentType, currency);
     // console.log(data);
@@ -202,7 +198,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
       paymentType, 15);
   });
 
-  it('< max amount & wallet = valid short number', async () => {
+  it('C22727 - < max amount & wallet = valid short number', async () => {
     // TODO узнать валидный короткий номер городского телефона
     const { data } = await banking.depositCreateRub(14999, '+79001234',
       paymentType, currency);
@@ -212,120 +208,114 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for qiwi_rub invalid - USD', () => {
-  it(' amount = 0', async () => {
+describe.skip('Create deposite for qiwi_rub invalid - RUB', () => {
+  it('C22629 - amount = 0', async () => {
     const { data } = await banking.depositCreateRub(0, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
-  it(' amount = null', async () => {
+  it('C22630 - amount = null', async () => {
     const { data } = await banking.depositCreateRub(null, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
-  it(' amount = empty', async () => {
+  it('C22631 - amount = empty', async () => {
     const { data } = await banking.depositCreateRub(' ', '+79001234567',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
+    checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
-  it(' amount = undefined', async () => {
+  it('C22632 - amount = undefined', async () => {
     const { data } = await banking.depositCreateRub(undefined, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
-  it(' amount = latanic', async () => {
+  it('C22633 - amount = string', async () => {
     const { data } = await banking.depositCreateRub('fjfj', '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
-  it(' amount = sy,bols', async () => {
-    const { data } = await banking.depositCreateRub('(#&@(@&%', '+79001234567',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
 
-  it(' amount = string', async () => {
+  it('C22634 - amount = number - string', async () => {
     const { data } = await banking.depositCreateRub('50', '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' amount double < min amount', async () => {
+  it('C22635 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79001234567',
       paymentType, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
+    checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' amount < min amount', async () => {
+  it('C22636 - amount < min amount', async () => {
     const { data } = await banking.depositCreateRub(9, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' amount > max amount', async () => {
+  it('C22637 - amount > max amount', async () => {
     const { data } = await banking.depositCreateRub(15001, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' amount double > max amount', async () => {
+  it('C22638 - amount double > max amount', async () => {
     const { data } = await banking.depositCreateRub(15000.000001, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' wallet = undefined', async () => {
+  it('C22639 - wallet = undefined', async () => {
     const { data } = await banking.depositCreateRub(100, undefined,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
-  it(' wallet = null', async () => {
+  it('C22640 - wallet = null', async () => {
     const { data } = await banking.depositCreateRub(100, null,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
-  it(' wallet = empty', async () => {
+  it('C22642 - wallet = empty', async () => {
     const { data } = await banking.depositCreateRub(100, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
-  it(' wallet = number', async () => {
+  it('C22643 - wallet = number', async () => {
     const { data } = await banking.depositCreateRub(100, 111122223330000,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, wallet should have a type of string, but found number');
   });
 
-  it(' wallet = short phone', async () => {
+  it('C22644 - wallet = short phone', async () => {
     const { data } = await banking.depositCreateRub(100, '+7123',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
-  it(' wallet = long string', async () => {
+  it('C22645 wallet = long phone', async () => {
     const { data } = await banking.depositCreateRub(100,
       '+797798778987',
       paymentType, currency);
@@ -334,7 +324,7 @@ describe.skip('Create deposite for qiwi_rub invalid - USD', () => {
   });
 
   // Не знаю что тут должно быть
-  it(' incorrect paymentType = qiwi_rub_test', async () => {
+  it('C22641 - incorrect paymentType = qiwi_rub_test', async () => {
     const { data } = await banking.depositCreateRub(100,
       // TODO посмотреть количество символов доступных в кошельке
       '+79001234567',
