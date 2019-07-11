@@ -5,7 +5,7 @@ const partnerKey = 'test001';
 export const register = {
 
   async oneClickReg() {
-    return await socket.send('USER:auth-register',
+    return socket.send('USER:auth-register',
       {
         isShort: true,
         country: defaultCountry,
@@ -15,7 +15,7 @@ export const register = {
   },
 
   async usualReg(usualRegistration) {
-    return await socket.send('USER:auth-register',
+    return socket.send('USER:auth-register',
       {
         isShort: false,
         name: randomStr(),
