@@ -1,7 +1,7 @@
-import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { userList } from '../../../../../src/methods/userList';
 
 // beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
 //     const {user} = await register.oneClickReg();
@@ -13,7 +13,7 @@ const currency = 'USD';
 
 describe.skip('Create deposite for tele2 - USD @master', () => {
   before(async () => {
-    await register.oneClickReg();
+    await userList.loginWithRealMoney();
   });
 
   // TODO нужна тестовая симкарта теле2

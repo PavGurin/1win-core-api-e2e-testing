@@ -15,10 +15,10 @@ describe('Withdrawal history', () => {
     await userList.loginWithRub();
     const { data } = await socket.send('BANKING:withdrawal-history');
     // console.log(data);
-    expect(data['0'].id).equal(163);
-    expect(data['0'].time).equal(1559039814000);
-    expect(data['0'].payment_system).equal('money-transfer');
-    expect(data['0'].amount).equal(100);
-    expect(data['0'].status).equal(1);
+    expect(data[0].id).equal(163);
+    expect(data[0].time).equal(1559039814000);
+    expect(data[0].payment_system).equal('money-transfer');
+    expect(data[0].amount).equal(100);
+    expect(data[0].status).equal(1);
   });
 });

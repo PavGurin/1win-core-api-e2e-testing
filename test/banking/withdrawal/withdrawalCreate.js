@@ -3,7 +3,6 @@ import { register } from '../../../src/methods/register';
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
 
-
 describe('Withdrawal create with user without money ', () => {
   before(async () => {
     await register.oneClickReg();
@@ -45,7 +44,7 @@ describe('Withdrawal create with user without money ', () => {
 
 describe('Withdrawal create with user with money ', () => {
   before(async () => {
-    const { data1 } = await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney();
     // console.log(data1);
   });
 

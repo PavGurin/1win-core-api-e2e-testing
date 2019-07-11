@@ -1,7 +1,7 @@
 import Coupon from '../Coupon';
 
 export async function getTournamentMatches(filters) {
-  return await socket.send('MATCH-STORAGE-2:tournament-matches', {
+  return socket.send('MATCH-STORAGE-2:tournament-matches', {
     service: 'prematch',
     // sportId: '12',
     timeFilter: {
@@ -19,7 +19,7 @@ export function generateCoupon(matches) {
 }
 
 export async function makeBet(coupon) {
-  return await socket.send('BETS:bets-make',
+  return socket.send('BETS:bets-make',
     {
       currency: 'RUB',
       betsMap: {

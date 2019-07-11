@@ -1,6 +1,6 @@
 import { randomNum, randomStr } from '../randomizer';
 
-export const updateProfile = updateProfile => socket.send('USER:profile-update',
+export const updateProfile = newProfile => socket.send('USER:profile-update',
   {
     name: randomStr(),
     email: `${randomStr(5)}_test@new.xyz`,
@@ -9,12 +9,12 @@ export const updateProfile = updateProfile => socket.send('USER:profile-update',
     birthday: 946587600002,
     country: defaultCountry,
     timezone: 1,
-    ...updateProfile,
+    ...newProfile,
   });
 
 export async function logOut() {
   // Выход текущего пользователя
-  return await socket.send('USER:auth-logout', {
+  return socket.send('USER:auth-logout', {
     tg_hash: randomStr(5),
   });
 }

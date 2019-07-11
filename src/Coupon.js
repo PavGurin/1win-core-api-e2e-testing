@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const [NOT_STATUS, TYPE_SUCCESS, TYPE_ERROR, TYPE_ERROR_INFO] = [
   'not',
   'success',

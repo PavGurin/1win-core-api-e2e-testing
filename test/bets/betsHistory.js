@@ -4,8 +4,8 @@ import { register } from '../../src/methods/register';
 
 describe('Bets history', () => {
   it('(+) user w/o bet history default filter', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 20],
@@ -21,8 +21,8 @@ describe('Bets history', () => {
   });
 
   it('(-) no order value', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 20],
@@ -37,8 +37,8 @@ describe('Bets history', () => {
   });
 
   it('(-) no limit value', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       order: ['id', 'DESC'],
@@ -52,8 +52,8 @@ describe('Bets history', () => {
   });
 
   it('(+) user w/o bet history asc order', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 20],
@@ -68,8 +68,8 @@ describe('Bets history', () => {
   });
 
   it('(+) user w/o bet history, bet type \'express\'', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 20],
@@ -84,8 +84,8 @@ describe('Bets history', () => {
   });
 
   it('(+) user w/o bet history, bet type \'ordinary\'', async () => {
-    const { data: regReq } = await register.one_click_reg();
-    await userList.login_with_params(regReq.email, regReq.password);
+    const { data: regReq } = await register.oneClickReg();
+    await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 20],
@@ -100,7 +100,7 @@ describe('Bets history', () => {
   });
 
   it('(+) user with bet history, bet type \'ordinary\'', async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 3],
@@ -121,7 +121,7 @@ describe('Bets history', () => {
 
   // TODO 'service' should be fixed to run ALL filters
   it.skip('(+) all filters with all available values', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 20],
@@ -140,7 +140,7 @@ describe('Bets history', () => {
   });
 
   it.skip('(+) only \'lost\' bets status (status = 1)', async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: 'ru',
       limit: [0, 5],
@@ -158,7 +158,7 @@ describe('Bets history', () => {
   });
 
   it.skip('(+) only \'returned\' bets status (status = 2)', async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 15],
@@ -176,7 +176,7 @@ describe('Bets history', () => {
   });
 
   it.skip('(+) only \'won\' bets status (status = 3)', async () => {
-    await userList.login_with_real_money();
+    await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 15],
@@ -194,7 +194,7 @@ describe('Bets history', () => {
   });
 
   it('(-) [0,0] limit', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [0, 0],
@@ -211,7 +211,7 @@ describe('Bets history', () => {
   });
 
   it('(-) limits \'from\' value > than \'to\' value', async () => {
-    await userList.login_with_RUB();
+    await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [10, 0],
@@ -228,8 +228,8 @@ describe('Bets history', () => {
   });
 
   // TODO fix expect
-  it.skip('(-) 5 limits + 5 offset, where all filters, where service = null', async () => {
-    await userList.login_with_RUB();
+  it('(-) 5 limits + 5 offset, where all filters, where service = null', async () => {
+    await userList.loginWithRub();
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [5, 5],
@@ -247,8 +247,8 @@ describe('Bets history', () => {
   });
 
   // TODO fix expect
-  it.skip('(+) 5 limits + 2 offset, where all filters, where service = null', async () => {
-    await userList.login_with_RUB();
+  it('(+) 5 limits + 2 offset, where all filters, where service = null', async () => {
+    await userList.loginWithRub();
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
       limit: [2, 5],

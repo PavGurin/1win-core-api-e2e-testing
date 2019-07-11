@@ -1,31 +1,27 @@
+import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { userList } from '../../../../../src/methods/userList';
 
-// beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
-//     const {user} = await register.oneClickReg();
-//     }
-// );
 const paymentType = 'piastrix_rub';
-const currency = 'USD';
+const currency = 'RUB';
 
-describe.skip('Create deposite for piastrix_rub - USD @master', () => {
+describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   before(async () => {
-    await userList.loginWithRealMoney();
+    await register.oneClickReg();
   });
 
-  it(' (+) amount = 100 & wallet = empty', async () => {
-    const { data } = await banking.depositCreateRub(
+  it('C22594 - (+) amount = 100 & wallet = empty', async () => {
+    const { data } = await banking.depositCreateRequestRub(
       100, '', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency,
       paymentType, 100);
   });
 
-  it(' (+) amount = 100.01 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
+  it('C22595 - (+) amount = 100.01 & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRequestRub(
       100.01, '123 autotests', paymentType, currency,
     );
     // console.log(data);
@@ -33,8 +29,8 @@ describe.skip('Create deposite for piastrix_rub - USD @master', () => {
       paymentType, 100.01);
   });
 
-  it(' amount = 2000 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
+  it('C22596 - amount = 2000 & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRequestRub(
       2000, 'порпорпорпэ', paymentType, currency,
     );
     // console.log(data);
@@ -42,8 +38,8 @@ describe.skip('Create deposite for piastrix_rub - USD @master', () => {
       paymentType, 2000);
   });
 
-  it(' min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(1,
+  it('C22597 - min amount & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRequestRub(1,
       '123234345456 etryrt', paymentType, currency);
 
     // console.log(data);
@@ -51,8 +47,8 @@ describe.skip('Create deposite for piastrix_rub - USD @master', () => {
       paymentType, 1);
   });
 
-  it('> min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(2,
+  it('C22598 - > min amount & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRequestRub(2,
       '12№%:№%:45456etryrt', paymentType, currency);
 
     // console.log(data);
@@ -60,16 +56,16 @@ describe.skip('Create deposite for piastrix_rub - USD @master', () => {
       paymentType, 2);
   });
 
-  it(' max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(100000, '09090909999',
+  it('C22599 - max amount & wallet = numbers', async () => {
+    const { data } = await banking.depositCreateRequestRub(100000, '09090909999',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 100000);
   });
 
-  it('< max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(99999, '0[[[?<><?999',
+  it('C22600 - < max amount & wallet = numbers', async () => {
+    const { data } = await banking.depositCreateRequestRub(99999, '0[[[?<><?999',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -77,15 +73,15 @@ describe.skip('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   // Не знаю, какой должен быть результат
-  it(' wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRub(100, undefined,
+  it('C22602 - wallet = undefined', async () => {
+    const { data } = await banking.depositCreateRequestRub(100, undefined,
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 100);
   });
 
-  it(' without currency', async () => {
+  it('C22601 - without currency', async () => {
     const { data } = await socket.send('BANKING:deposit-create', {
       amount: '100',
       wallet: '00001111222223333',
@@ -97,79 +93,79 @@ describe.skip('Create deposite for piastrix_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for piastrix_rub invalid - USD', () => {
-  it(' amount = 0', async () => {
-    const { data } = await banking.depositCreateRub(0, '',
+describe.skip('Create deposite for piastrix_rub invalid - RUB', () => {
+  it('C22603 - amount = 0', async () => {
+    const { data } = await banking.depositCreateRequestRub(0, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
-  it(' amount = null', async () => {
-    const { data } = await banking.depositCreateRub(null, '',
+  it('C22604 - amount = null', async () => {
+    const { data } = await banking.depositCreateRequestRub(null, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
-  it(' amount = empty', async () => {
-    const { data } = await banking.depositCreateRub(' ', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
-
-  it(' amount = undefined', async () => {
-    const { data } = await banking.depositCreateRub(undefined, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
-  });
-
-  it(' amount = latinic', async () => {
-    const { data } = await banking.depositCreateRub('fjfj', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
-
-  it(' amount = string', async () => {
-    const { data } = await banking.depositCreateRub('50', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
-  it(' amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(0.6, '',
+  it('C22605 - amount = empty', async () => {
+    const { data } = await banking.depositCreateRequestRub(' ', '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
-  it(' amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(100001, '',
+  it('C22606 - amount = undefined', async () => {
+    const { data } = await banking.depositCreateRequestRub(undefined, '',
+      paymentType, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
+  });
+
+  it('C22607 - amount = string', async () => {
+    const { data } = await banking.depositCreateRequestRub('fjfj', '',
+      paymentType, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
+  });
+
+  it('C22608 - amount = string-number', async () => {
+    const { data } = await banking.depositCreateRequestRub('50', '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(100000.56, '',
+  it('C22609 - amount double < min amount', async () => {
+    const { data } = await banking.depositCreateRequestRub(0.6, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(1, null,
+  it('C22611 - amount > max amount', async () => {
+    const { data } = await banking.depositCreateRequestRub(100001, '',
+      paymentType, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, 'Неверная сумма');
+  });
+
+  it('C22612 - amount double > max amount', async () => {
+    const { data } = await banking.depositCreateRequestRub(100000.56, '',
+      paymentType, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, 'Неверная сумма');
+  });
+
+  it('C22614 - wallet = null', async () => {
+    const { data } = await banking.depositCreateRequestRub(1, null,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
-  it(' wallet = long string', async () => {
-    const { data } = await banking.depositCreateRub(1,
+  it('C22619 - wallet = long string', async () => {
+    const { data } = await banking.depositCreateRequestRub(1,
       // TODO посмотреть количество символов доступных в кошельке
       '1231231231231231453453345345342312312312312123123123123',
       paymentType, currency);
@@ -178,8 +174,8 @@ describe.skip('Create deposite for piastrix_rub invalid - USD', () => {
   });
 
   // Не знаю что тут должно быть
-  it(' incorrect paymentType = piastrix_rub_test', async () => {
-    const { data } = await banking.depositCreateRub(1,
+  it('C22615 - incorrect paymentType = piastrix_rub_test', async () => {
+    const { data } = await banking.depositCreateRequestRub(1,
       // TODO посмотреть количество символов доступных в кошельке
       '12312312312',
       'piastrix_rub_test', currency);

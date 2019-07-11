@@ -13,16 +13,16 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
 
   it('C22526 - (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreateRub(
-      100, '79215598286', paymentType, currency,
+      100, '+79001234567', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency,
       paymentType, 100);
   });
 
   it('C22527 - (+) amount = 100.01 & wallet = (7)phone', async () => {
     const { data } = await banking.depositCreateRub(
-      100.01, '79001234567', paymentType, currency,
+      100.0156, '79001234567', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency,

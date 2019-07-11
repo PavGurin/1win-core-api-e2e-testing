@@ -200,7 +200,7 @@ describe('Register with sub id parameter', () => {
 
     const { data } = await defaultRequest({
       name: testStr,
-      sub_ids: 'sub1=/\\?*= +|`~\'\"±§^',
+      sub_ids: 'sub1=/?*= +|`~±§^',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
       password: defaultPassword,

@@ -1,8 +1,5 @@
 // функция для создания задержки, ms - на сколько миллисекунд
-export function sleep(ms) {
-  const startTime = (new Date()).getTime();
-  while ((new Date()).getTime() < startTime + ms) {}
-}
+export const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 // форматирование даты для отправки в виде дд/мм
 // daysAgo - дата за сколько дней назад от текущего будет получена

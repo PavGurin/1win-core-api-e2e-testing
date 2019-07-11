@@ -6,10 +6,17 @@ variables:
   DOCKER_HOST: tcp://docker:2375/
   DOCKER_DRIVER: overlay2
 
+#lint:
+#  stage: lint
+#  script:
+#    - npm i
+#    - npm run lint
+
 services:
   - docker:dind
 
 stages:
+#  - lint
   - tests
 
 .api_test: &api_test
