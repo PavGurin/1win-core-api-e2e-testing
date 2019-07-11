@@ -41,12 +41,12 @@ export default class Coupon {
     this.saveCoefficient = +coefficient;
 
     // old
-    this.maxBetAmount = 0;
+    // this.maxBetAmount = 0;
     this.sum = 100;
     this.marketName = '';
     this.status = NOT_STATUS;
     this.dataResponse = {};
-    this.maxBetAmountLoading = true;
+    // this.maxBetAmountLoading = true;
   }
 
   static genId({

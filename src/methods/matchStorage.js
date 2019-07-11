@@ -40,3 +40,14 @@ export async function tournamentMatches(service, tournamentId) {
     tournamentId,
   });
 }
+
+export async function getSingleMatch(service) {
+  const { data: { sportTournamentMap } } = await sportTournaments(service, 'all');
+  // console.log(sportTournamentMap);
+
+  const { data: { matchMap } } = await tournamentMatches(
+    service,
+    Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
+  );
+  return Object.values(matchMap);
+}
