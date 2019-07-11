@@ -29,7 +29,8 @@ describe('Сonvert confirm', () => {
   afterEach(async () => { await logOut(); });
 
   it('C27124 (+) Сorrect code', async () => {
-    // const confirmData = await socket.send('BANKING:convert-confirm', { code: receivedMail.code });
+    // const confirmData = await socket.send('BANKING:convert-confirm',
+    // { code: receivedMail.code });
     // console.log(confirmData);
     // expect(confirmData.status).to.equal(200);
     // expect(confirmData.data.id).to.exist;
