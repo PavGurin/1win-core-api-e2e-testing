@@ -20,7 +20,7 @@ describe('Withdrawal confirm invalid', () => {
   it('C19339 (-) Incorrect code response 400', async () => {
     await userList.loginWithRealMoney();
     await banking.withdrawalCreate(100, '1111222200003333', 'card_rub', 'RUB');
-    const { data } = await socket.send('BANKING:withdrawal-confirm', { ode: 99 });
+    const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 99 });
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный ключ запроса');
   });
@@ -37,7 +37,7 @@ describe('Withdrawal with confirmation codes', () => {
     balance.before = 200;
     await banking.withdrawalCreate(100, '5469550073662048', 'card_rub', 'RUB');
     // задержка для получения письма
-    sleep(4000);
+    await sleep(4000);
     receivedMail = await mail.getMessage(user.data.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение вывода', 'Confirmation - 1Win', 'confirmation@fbet.top');
   });
@@ -66,7 +66,7 @@ describe('Withdrawal with confirmation codes', () => {
     // Error: Timeout of 10000ms exceeded.
 
     // задержка в 5 минут, чтобы код протух
-    sleep(300000);
+    await sleep(300000);
     const confirmData = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);
@@ -88,7 +88,7 @@ describe('Withdrawal with confirmation codes', () => {
 
   it('C27220 (-) Active code of other operation that was obtained after withdrawal code', async () => {
     await banking.transferCreate(20, 'RUB');
-    sleep(4500);
+    await sleep(4500);
     const transferMail = await mail.getMessage(user.data.email);
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
     expect(confirm.status).to.equal(200);
@@ -124,12 +124,12 @@ describe('Withdrawal with confirmation codes', () => {
 });
 
 describe('Transfer before withdrawal', () => {
-  it('C27219 (-) Active code of other operation that was obtained before withdrawal code', async () => {
+  it('C27222 (-) Active code of other operation that was obtained before withdrawal code', async () => {
     const user = await register.regMailWithConfirmationCodes();
     await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 200 WHERE id_user = ${user.data.id} ;`);
 
     await banking.transferCreate(20, 'RUB');
-    sleep(4500);
+    await sleep(4500);
     const transferMail = await mail.getMessage(user.data.email);
     // console.log(transferMail);
 

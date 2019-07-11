@@ -63,7 +63,7 @@ describe('Transfer with money - USD', () => {
     await userList.loginWithRubUsd();
   });
 
-  it('C19373 (+) With money + USD, amount = 2 USD', async () => {
+  it.skip('C19373 (+) With money + USD, amount = 2 USD', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 2,
@@ -84,7 +84,7 @@ describe('Transfer with money - USD', () => {
     checkErrMsg(data, 400, 'Недостаточно средств');
   });
 
-  it('C19368 Without money , not enough amount + USD', async () => {
+  it.skip('C19368 Without money , not enough amount + USD', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 1,

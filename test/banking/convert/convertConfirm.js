@@ -6,7 +6,7 @@ import { mail } from '../../../src/methods/mail';
 import { logOut } from '../../../src/methods/user';
 import { sleep } from '../../../src/methods/utils';
 
-describe('Сonvert confirm', () => {
+describe.skip('Сonvert confirm', () => {
   let receivedMail = {};
   const balance = {};
 
@@ -59,7 +59,7 @@ describe('Сonvert confirm', () => {
     // Error: Timeout of 10000ms exceeded.
 
     // задержка в 5 минут, чтобы код протух
-    sleep(300000);
+    await sleep(300000);
     const confirmData = await socket.send('BANKING:convert-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);

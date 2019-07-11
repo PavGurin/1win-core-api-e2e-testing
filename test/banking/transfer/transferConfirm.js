@@ -39,7 +39,7 @@ describe('Transfer confirm with receiving code', () => {
     await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 120 WHERE id_user = ${user.data.id} ;`);
     await banking.transferCreate(120, 'RUB');
     // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
+    await sleep(4000);
     receivedMail = await mail.getMessage(user.data.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
   });
@@ -69,7 +69,7 @@ describe('Transfer confirm with receiving code', () => {
     // Error: Timeout of 10000ms exceeded.
 
     // задержка в 5 минут, чтобы код протух
-    sleep(60000);
+    await sleep(60000);
     const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);
@@ -91,7 +91,7 @@ describe('Transfer confirm with receiving code', () => {
 
   it('C27217 (-) Active code of other operation that was obtained after transfer code', async () => {
     await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
-    sleep(4000);
+    await sleep(4000);
     const withdrawalMail = await mail.getMessage(user.data.email);
     // console.log(withdrawalMail);
     const confirm = await socket.send('BANKING:transfer-confirm', { code: withdrawalMail.code });
@@ -103,7 +103,7 @@ describe('Transfer confirm with receiving code', () => {
   it('C27218 (-) Active code of other transfer of this user', async () => {
     // console.log(receivedMail);
     await banking.transferCreate(25.1, 'RUB');
-    sleep(4000);
+    await sleep(4000);
     await mail.getMessage(user.data.email);
     const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     expect(confirm.status).to.equal(200);
@@ -117,7 +117,7 @@ describe('Withdrawal before transfer', () => {
     const user = await register.regMailWithConfirmationCodes();
     await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 120 WHERE id_user = ${user.data.id} ;`);
     await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
-    sleep(3000);
+    await sleep(3000);
     const withdrawalMail = await mail.getMessage(user.data.email);
 
     await banking.transferCreate(20, 'RUB');
@@ -148,7 +148,7 @@ describe('Balance checking', () => {
 
     await banking.transferCreate(20, 'RUB');
     // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
+    await sleep(4000);
     receivedMail = await mail.getMessage(user.data.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
   });
