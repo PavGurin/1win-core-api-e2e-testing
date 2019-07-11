@@ -1,13 +1,7 @@
 import Coupon from '../Coupon';
 
-export function generateOrdinaryCoupon(match) {
+export function generateOrdinaryCoupon(match, currency, amount) {
   return new Coupon(match.baseOddsConfig[0].cellList[0].odd);
-}
-
-export function generateCoupon(matches) {
-  // const singleMatch = Object.values(matches.matchMap)[0];
-  // const odd = singleMatch.baseOddsConfig[0].cellList[0].odd;
-  return new Coupon({ ...Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd });
 }
 
 export function generateExpressCoupon(matchMap, count, amount) {
