@@ -14,3 +14,8 @@ export function checkError404(data, expectedMessage) {
   expect(data.status).equal(404);
   expect(data.message).equal(expectedMessage);
 }
+
+export function checkSuccess(socketResponse) {
+  expect(socketResponse.status).equal(200);
+  expect(socketResponse.data.error).to.be.oneOf([false, undefined]);
+}
