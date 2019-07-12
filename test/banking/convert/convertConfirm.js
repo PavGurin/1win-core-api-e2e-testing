@@ -15,12 +15,12 @@ describe.skip('Сonvert confirm', () => {
     // TODO нужны функции для проверки баланса в долларах и евро и сохранять его в balance
     balance.rub = await banking.balanceCheck();
 
-    const convertData = banking.convertCreate('1.59', 'USD', 'RUB');
+    banking.convertCreate('1.59', 'USD', 'RUB');
     // TODO посмотреть что приходит
-    console.log(convertData);
+    // console.log(convertData);
     receivedMail = await mail.getMessage(loginData.data.email);
     // TODO проверить что приходит в subject
-    console.log(receivedMail);
+    // console.log(receivedMail);
     expect(receivedMail.subject).to.equal('1Win - Подтверждение конвертации');
     expect(receivedMail.from_name).to.equal('Confirmation - 1Win');
     expect(receivedMail.from_address).to.equal('confirmation@fbet.top');
@@ -71,6 +71,7 @@ describe.skip('Сonvert confirm', () => {
     const confirmData = await socket.send('BANKING:convert-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);
+    // eslint-disable-next-line no-unused-expressions
     expect(confirmData.data.id).to.exist;
 
     // второе подтверждение
@@ -86,7 +87,7 @@ describe.skip('Сonvert confirm', () => {
     const recMail = await mail.getMessage('confirmation_codes_user@ahem.email');
     const confirmData = await socket.send('BANKING:convert-confirm', { code: recMail.code });
     expect(confirmData.status).to.equal(200);
-    console.log(confirmData);
+    // console.log(confirmData);
     // checkErrMsg(confirmData.data, 400, 'Неверный ключ запроса');
   });
 
@@ -95,10 +96,10 @@ describe.skip('Сonvert confirm', () => {
   it(' (-) Active code of other operation that was obtained before withdrawal code', async () => {});
 
   it('C (+) Balance checking after successful convert', async () => {
-    const loginData = await userList.loginWithMailConfirmationCodes();
-    const convertData = await banking.convertCreate(100, 'RUB', 'USD');
-    const a = await cbCurrency('USD');
-    console.log(a);
+    await userList.loginWithMailConfirmationCodes();
+    await banking.convertCreate(100, 'RUB', 'USD');
+    await cbCurrency('USD');
+    // console.log(a);
   });
 
   it(' (-) Balance checking after not successful convert', async () => {

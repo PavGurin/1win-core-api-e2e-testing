@@ -55,9 +55,9 @@ describe('Withdrawal with confirmation codes', () => {
     await banking.withdrawalCreate(100, '5469550073662048',
       'card_rub', 'RUB');
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
-    // console.log(confirmData);
+    // console.log(confirm);
     expect(confirm.status).to.equal(200);
-    checkErrMsg(confirm.data, 403, 'Выплата не найдена');
+    checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
   });
 
   it.skip('C27121 (-) Expired code', async () => {
@@ -73,7 +73,7 @@ describe('Withdrawal with confirmation codes', () => {
     // checkErrMsg(confirmData.data, 404, 'Выплата не найдена');
   });
 
-  it('C27120 (-) Second confirmation with the same code', async () => {
+  it('C27122 (-) Second confirmation with the same code', async () => {
     // первое подтверждение
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirmData);
@@ -102,7 +102,7 @@ describe('Withdrawal with confirmation codes', () => {
     checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
   });
 
-  it('C27120 (+) Balance checking after successful withdrawal', async () => {
+  it('C27123 (+) Balance checking after successful withdrawal', async () => {
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     checkSuccess(confirm);

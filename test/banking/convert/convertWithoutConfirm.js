@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userForAutoConfirm } from '../../../src/methods/userForAutoConfirm';
 
 describe.skip('Convert with money - RUB', () => {

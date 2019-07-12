@@ -32,14 +32,13 @@ describe('Withdrawal create with invalid test cases ', () => {
     await register.oneClickReg();
   });
 
-
   it('(-) Without money, wallet = string', async () => {
     const { data } = await banking.withdrawalCreate(100, 5446546, payment_system, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, wallet should have a type of string, but found number');
   });
 
-  it('(-) Without money ', async () => {
+  it('C19278 - (-) Without money ', async () => {
     const { data } = await banking.withdrawalCreate(100, '5446546', payment_system, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');

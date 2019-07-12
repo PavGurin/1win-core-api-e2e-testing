@@ -21,7 +21,7 @@ describe('Sport categories', () => {
     expect(data.sportCategoriesMap['0'].sportName.ru).not.equal(null);
   });
 
-  it('C21149 - (+) valid request live @master', async () => {
+  it.skip('C21149 - (+) valid request live @master', async () => {
     const { data } = await socket.send('MATCH-STORAGE-2:sport-categories', {
       service: 'live',
       sportId: 'all',
