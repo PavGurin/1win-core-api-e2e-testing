@@ -2,10 +2,12 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
-import { checkErrMsg } from '../../../src/responseChecker';
+import { checkErrMsg, checkSuccess } from '../../../src/responseChecker';
 import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
 import { logOut } from '../../../src/methods/user';
+import { mysqlConnection } from '../../../src/methods/mysqlConnection';
+import { checkMailRequisites } from '../../../src/expects/exMail';
 
 
 describe('Transfer confirm invalid', () => {
@@ -28,41 +30,37 @@ describe('Transfer confirm with money', () => {
 });
 
 describe('Transfer confirm with receiving code', () => {
-// TODO что-то вынести в отдельные функции?
+  let receivedMail = {};
+  let user = {};
+
+  // перед каждым тестом просиходит логин, ссздание перевода, получение письма с почты
+  beforeEach(async () => {
+    user = await register.regMailWithConfirmationCodes();
+    await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 120 WHERE id_user = ${user.data.id} ;`);
+    await banking.transferCreate(120, 'RUB');
+    // задержка, чтобы письмо успело придти на почту
+    await sleep(4000);
+    receivedMail = await mail.getMessage(user.data.email);
+    checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
+  });
+  afterEach(async () => {
+    await logOut();
+  });
 
   it('C21435 (+) Correct code', async () => {
-    const loginData = await userList.loginWithMailConfirmationCodes();
-    await banking.transferCreate(20, 'RUB');
-
-    // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
-    const receivedMail = await mail.getMessage(loginData.data.email);
-    expect(receivedMail.subject).to.equal('1Win - Подтверждение перевода');
-
-    const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
-    // console.log(confirmData);
-    expect(confirmData.status).to.equal(200);
-    expect(confirmData.data.error).to.equal(false);
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
+    checkSuccess(confirm);
   });
 
   it('C21436 (-) Active code of other user with 400 code response', async () => {
-    const loginData = await userList.loginWithMailConfirmationCodes();
-    await banking.transferCreate(20, 'RUB');
-
-    // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
-    const receivedMail = await mail.getMessage(loginData.data.email);
-    expect(receivedMail.subject).to.equal('1Win - Подтверждение перевода');
-
     await logOut();
     await userList.loginWithRealMoney();
     await banking.transferCreate(20, 'RUB');
 
-    const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
-    expect(confirmData.status).to.equal(200);
-    expect(confirmData.data.status).to.equal(400);
-    expect(confirmData.data.message).to.equal('Неверный ключ запроса');
+    expect(confirm.status).to.equal(200);
+    checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
   });
 
   it.skip('C21437 (-) Expired code with 404 code response', async () => {
@@ -70,77 +68,124 @@ describe('Transfer confirm with receiving code', () => {
     // надо ждать 5 минут (300 000 мс), а у нас в настройках задан таймаут 10000 мс
     // Error: Timeout of 10000ms exceeded.
 
-    const loginData = await userList.loginWithMailConfirmationCodes();
-    await banking.transferCreate(20, 'RUB');
-
-    // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
-    const receivedMail = await mail.getMessage(loginData.data.email);
-    expect(receivedMail.subject).to.equal('1Win - Подтверждение перевода');
-
     // задержка в 5 минут, чтобы код протух
-    sleep(300000);
+    await sleep(60000);
     const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);
-    expect(confirmData.data.status).to.equal(404);
-    // expect(confirmData.data.message).to.equal('Неверный ключ запроса');
+    // checkErrMsg(confirmData.data, 404, 'Неверный ключ запроса');
   });
 
   it('C21438 (-) Second confirmation with the same code', async () => {
-    // пока будет падать, т.к. в ответ приходит 500 вместо 400 и сообщения об ошибке
-    // баг https://fbet-gitlab.ex2b.co/initial-tasks/backend/issues/110
-    const loginData = await userList.loginWithMailConfirmationCodes();
-    await banking.transferCreate(20, 'RUB');
-
-    // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
-    const receivedMail = await mail.getMessage(loginData.data.email);
-    expect(receivedMail.subject).to.equal('1Win - Подтверждение перевода');
-
     // первое подтверждение
-    const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
-    expect(confirmData.status).to.equal(200);
-    expect(confirmData.data.error).to.equal(false);
+    checkSuccess(confirm);
 
     // второе подтверждение
-    const confirmData2 = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
+    const confirm2 = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData2);
-    expect(confirmData2.status).to.equal(200);
-    expect(confirmData2.data.status).to.equal(400);
-    expect(confirmData2.data.message).to.equal('Неверный ключ запроса');
+    expect(confirm2.status).to.equal(200);
+    checkErrMsg(confirm2.data, 400, 'Неверный ключ запроса');
   });
 
-  it('C21440 (+) Balance checking after successful transfer', async () => {
+  it('C27217 (-) Active code of other operation that was obtained after transfer code', async () => {
+    await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
+    await sleep(4000);
+    const withdrawalMail = await mail.getMessage(user.data.email);
+    // console.log(withdrawalMail);
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: withdrawalMail.code });
+    expect(confirm.status).to.equal(200);
+    // console.log(confirmData);
+    checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
+  });
+
+  it('C27218 (-) Active code of other transfer of this user', async () => {
+    // console.log(receivedMail);
+    await banking.transferCreate(25.1, 'RUB');
+    await sleep(4000);
+    await mail.getMessage(user.data.email);
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
+    expect(confirm.status).to.equal(200);
+    // console.log(confirmData);
+    checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
+  });
+});
+
+describe('Withdrawal before transfer', () => {
+  it('C27219 (-) Active code of other operation that was obtained before transfer code', async () => {
+    const user = await register.regMailWithConfirmationCodes();
+    await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 120 WHERE id_user = ${user.data.id} ;`);
+    await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
+    await sleep(3000);
+    const withdrawalMail = await mail.getMessage(user.data.email);
+
+    await banking.transferCreate(20, 'RUB');
+
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: withdrawalMail.code });
+    expect(confirm.status).to.equal(200);
+    // console.log(confirmData);
+    checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
+  });
+});
+
+describe('Balance checking', () => {
+  // в этом объекте хранится инфа из письма с почты
+  let receivedMail = {};
+  // баланс до перевода у обоих пользователей
+  const balance = {};
+
+  beforeEach(async () => {
     // проверка баланса у пользователя, которому будет перевод, до перевода
     await userList.loginTransferToUser();
-    const balanceBefore1 = await banking.balanceCheck();
+    balance.TransferToUserBefore = await banking.balanceCheck();
     await logOut();
 
     // проверка баланса у пользователя, который будет делать перевод, до перевода
-    const loginData = await userList.loginWithMailConfirmationCodes();
-    const balanceBefore2 = await banking.balanceCheck();
+    const user = await register.regMailWithConfirmationCodes();
+    await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 20 WHERE id_user = ${user.data.id} ;`);
+    balance.TransferFromUserBefore = 20;
 
-    // перевод
     await banking.transferCreate(20, 'RUB');
     // задержка, чтобы письмо успело придти на почту
-    sleep(4000);
-    const receivedMail = await mail.getMessage(loginData.data.email);
-    expect(receivedMail.subject).to.equal('1Win - Подтверждение перевода');
-    const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
+    await sleep(4000);
+    receivedMail = await mail.getMessage(user.data.email);
+    checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
+  });
+
+  afterEach(async () => { await logOut(); });
+
+  it('C21440 (+) after successful transfer', async () => {
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
-    expect(confirmData.status).to.equal(200);
-    expect(confirmData.data.error).to.equal(false);
+    checkSuccess(confirm);
 
     // проверка баланса у пользователя, который делал перевод, после перевода
-    const balanceAfter2 = await banking.balanceCheck();
-    expect(balanceAfter2).to.equal(balanceBefore2 - 20);
+    balance.TransferFromUserAfter = await banking.balanceCheck();
 
     // проверка баланса у пользователя, которому был перевод, после перевода
     await logOut();
     await userList.loginTransferToUser();
-    const balanceAfter1 = await banking.balanceCheck();
-    expect(balanceAfter1).to.equal(balanceBefore1 + 20);
+    balance.TransferToUserAfter = await banking.balanceCheck();
+
+    expect(balance.TransferFromUserAfter).to.equal(balance.TransferFromUserBefore - 20);
+    expect(balance.TransferToUserAfter).to.equal(balance.TransferToUserBefore + 20);
+  });
+
+  it('C27200 (-) after not successful transfer', async () => {
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code + 1 });
+    expect(confirm.status).to.equal(200);
+    expect(confirm.data.status).to.equal(400);
+
+    // проверка баланса у пользователя, который делал перевод, после перевода
+    balance.TransferFromUserAfter = await banking.balanceCheck();
+
+    // проверка баланса у пользователя, которому был перевод, после перевода
+    await logOut();
+    await userList.loginTransferToUser();
+    balance.TransferToUserAfter = await banking.balanceCheck();
+
+    expect(balance.TransferFromUserAfter).to.equal(balance.TransferFromUserBefore);
+    expect(balance.TransferToUserAfter).to.equal(balance.TransferToUserBefore);
   });
 });

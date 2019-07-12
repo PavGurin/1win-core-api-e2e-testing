@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
 
-describe('Convert', () => {
+describe.skip('Convert', () => {
   before(async () => {
     await userList.loginWithRubUsd();
   });
@@ -213,7 +213,7 @@ describe('Convert', () => {
   });
 });
 
-describe('Convert12', () => {
+describe.skip('Convert12', () => {
   it('not money ', async () => {
     await userList.loginWithRub();
     const { data } = await socket.send('BANKING:convert-create', {

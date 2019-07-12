@@ -10,6 +10,7 @@ services:
   - docker:dind
 
 stages:
+  - lint
   - tests
 
 .api_test: &api_test
@@ -23,6 +24,12 @@ stages:
   artifacts:
     reports:
       junit: artifacts/test-output.xml
+
+lint:
+  stage: lint
+  script:
+   - npm i
+   - npm run eslint
 
 backend_staging:
   variables:

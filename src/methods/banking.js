@@ -2,7 +2,16 @@ import axios from 'axios';
 import parser from 'fast-xml-parser';
 import { randomStr } from '../randomizer';
 
+
 export const banking = {
+
+  async transferCreateAll(targetEmail, amount, currency) {
+    return socket.send('BANKING:transfer-create', {
+      targetEmail,
+      amount,
+      currency,
+    });
+  },
 
   async transferCreate(amount, currency) {
     return socket.send('BANKING:transfer-create', {
@@ -31,12 +40,20 @@ export const banking = {
     });
   },
 
-  async depositCreateRequest(amount, wallet, paymentType, currency) {
+  async depositCreateRequestRub(amount, wallet, paymentType, currency) {
     return socket.send('BANKING:deposit-create-request', {
       amount,
       wallet,
       paymentType,
       currency,
+    });
+  },
+
+  async convertCreate(amount, senderCurrency, receiverCurrency) {
+    return socket.send('BANKING:convert-create', {
+      amount,
+      senderCurrency,
+      receiverCurrency,
     });
   },
 
@@ -49,10 +66,10 @@ export const banking = {
 };
 
 /**
- * Получение стоймости валюты в рублях
+ * Получение стоимости валюты в рублях
  *
  * @param {string} charCode код валюты
- * @param {Date?} date дата на которую нужно посмотреть стоймость, если не указана, то сегодня
+ * @param {Date?} date дата на которую нужно посмотреть стоимость, если не указана, то сегодня
  */
 export const cbCurrency = (charCode, date = new Date()) => axios
   .get(`http://www.cbr.ru/scripts/XML_daily.asp?date_req=${(`0${date.getDate()}`).slice(-2)}/${(`0${date.getMonth() + 1}`).slice(-2)}/${date.getFullYear()}`)

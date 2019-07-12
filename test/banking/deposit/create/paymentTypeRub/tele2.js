@@ -15,7 +15,7 @@ describe.skip('Create deposite for tele2 - RUB @master', () => {
     const { data } = await banking.depositCreateRub(
       100, '+79772520000', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency,
       paymentType, 100);
   });

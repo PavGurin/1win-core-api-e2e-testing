@@ -5,7 +5,7 @@ const partnerKey = 'test001';
 export const register = {
 
   async oneClickReg() {
-    return await socket.send('USER:auth-register',
+    return socket.send('USER:auth-register',
       {
         isShort: true,
         country: defaultCountry,
@@ -15,7 +15,7 @@ export const register = {
   },
 
   async usualReg(usualRegistration) {
-    return await socket.send('USER:auth-register',
+    return socket.send('USER:auth-register',
       {
         isShort: false,
         name: randomStr(),
@@ -28,6 +28,21 @@ export const register = {
         birthday: 946587600000,
         partner_key: partnerKey,
         ...usualRegistration,
+      });
+  },
+  async regMailWithConfirmationCodes() {
+    return socket.send('USER:auth-register',
+      {
+        isShort: false,
+        name: randomStr(),
+        email: `${randomStr(10)}_test@ahem.email`,
+        phone: randomNum().toString(),
+        password: defaultPassword,
+        repeat_password: defaultPassword,
+        country: defaultCountry,
+        timezone: 23,
+        birthday: 946587600000,
+        partner_key: partnerKey,
       });
   },
 };

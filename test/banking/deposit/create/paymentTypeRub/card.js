@@ -20,9 +20,18 @@ describe.skip('Create deposite for card_rub - RUB @master', () => {
       paymentType, 100);
   });
 
+  // TODO возвращается 500 если передаем amount c 3мя знаками после запятой
+  it(' - (+) amount = 100.01 & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRub(
+      100.013, '123 autotests', paymentType, currency,
+    );
+    // console.log
+    successDepositCreate(data, currency,
+      paymentType, 100.01);
+  });
   it('C22536 - (+) amount = 100.01 & wallet = symbols', async () => {
     const { data } = await banking.depositCreateRub(
-      100.01, '123 autotests', paymentType, currency,
+      100.013, '123 autotests', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency,
@@ -70,7 +79,6 @@ describe.skip('Create deposite for card_rub - RUB @master', () => {
       paymentType, 99999);
   });
 
-  // Не знаю, какой должен быть результат
   it('C22543 - wallet = undefined', async () => {
     const { data } = await banking.depositCreateRub(100, undefined,
       paymentType, currency);
@@ -89,6 +97,15 @@ describe.skip('Create deposite for card_rub - RUB @master', () => {
     successDepositCreate(data, currency,
       paymentType, 100);
   });
+
+  it('C22515 - amount = string - number', async () => {
+    const { data } = await banking.depositCreateRub('50', '',
+      paymentType, currency);
+    // console.log
+    checkErrMsg(data, 400, 'Неверная сумма');
+  });
+
+  // TODO - без реги отправить запрос на создание депозита - 500 хотя в БД зписывается
 });
 
 describe('Create deposite for card_rub invalid - RUB', () => {
@@ -127,13 +144,6 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
-  it('C22515 - amount = string - number', async () => {
-    const { data } = await banking.depositCreateRub('50', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
   it('C22516 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);
@@ -162,6 +172,24 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
+  // TODO 500ка
+  it('C22521 - wallet = null', async () => {
+    const { data } = await banking.depositCreateRub(100, null,
+      paymentType, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
+  });
+
+  it('C22520 - wallet = long string', async () => {
+    const { data } = await banking.depositCreateRub(10,
+      // TODO посмотреть количество символов доступных в кошельке
+      '1231231231231231453453345345342312312312312123123123123',
+      paymentType, currency);
+    // console.log
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
+  });
+
+  // Не знаю что тут должно быть
   it('C22525 - incorrect paymentType = card_rub_test', async () => {
     const { data } = await banking.depositCreateRub(10,
       '3123123123',

@@ -1,7 +1,7 @@
-import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { register } from '../../../../../src/methods/register';
 
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
@@ -13,7 +13,7 @@ describe.skip('Create deposite for beeline_rub - RUB @master', () => {
 
   it('C22485 - (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreateRub(
-      100, '+79215598286', paymentType, currency,
+      100, '+79001234567', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency,
@@ -189,18 +189,9 @@ describe('Create deposite for beeline_rub invalid - RUB', () => {
   // Не знаю что тут должно быть
   it('C22509 - incorrect paymentType = beeline_rub_test', async () => {
     const { data } = await banking.depositCreateRub(1,
-      '79215598286',
+      '+79215598286',
       'beeline_rub_test', currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный способ оплаты');
-  });
-
-  it('C22493 - < max amount & wallet = valid short number', async () => {
-    // TODO узнать валидный короткий номер городского телефона
-    const { data } = await banking.depositCreateRub(14999, '+79001234',
-      paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 14999);
   });
 });

@@ -2,6 +2,7 @@ import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { userList } from '../../../../../src/methods/userList';
 
 // beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
 //     const {user} = await register.oneClickReg();
@@ -12,14 +13,14 @@ const currency = 'USD';
 
 describe.skip('Create deposite for beeline_rub - USD @master', () => {
   before(async () => {
-    await register.oneClickReg();
+    await userList.loginWithRealMoney();
   });
 
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreateRub(
-      100, '+79215598286', paymentType, currency,
+      50, '+79215598286', paymentType, currency,
     );
-    // console.log(data);
+    // console.log
     successDepositCreate(data, currency,
       paymentType, 100);
   });

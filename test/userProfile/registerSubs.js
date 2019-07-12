@@ -14,7 +14,7 @@ describe('Register with sub id parameter', () => {
     });
 
   // проверка ответа успешной регистрации
-  function checkRegInfo(data, testText, testNumber) {
+  function checkRegInfo(data, testText, testNumber, currency) {
     expect(data.email)
       .to.equal(`${testText}_test@xyz.com`);
     expect(data.password)
@@ -25,6 +25,7 @@ describe('Register with sub id parameter', () => {
       .to.equal(testText);
     expect(data.country)
       .to.equal('someCountry');
+    expect(data.currency).equal(currency);
   }
 
   const visit_domain = 'some_domain';
@@ -46,7 +47,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20068 (+) Sub id 2', async () => {
@@ -64,7 +65,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20069 (+) Sub id 3', async () => {
@@ -82,7 +83,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20070 (+) Sub id 4', async () => {
@@ -100,7 +101,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20071 (+) Sub id 5', async () => {
@@ -118,7 +119,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20072 (+) All sub ids (from 1 to 5)', async () => {
@@ -136,7 +137,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20073 (+) Sub ids (1-3-5)', async () => {
@@ -154,7 +155,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20074 (+) Sub id with legal symbols', async () => {
@@ -172,7 +173,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20075 (-) Sub id with rus language', async () => {
@@ -190,7 +191,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   it('C20076 (-) Sub id with illegal symbols', async () => {
@@ -199,7 +200,7 @@ describe('Register with sub id parameter', () => {
 
     const { data } = await defaultRequest({
       name: testStr,
-      sub_ids: 'sub1=/\\?*= +|`~\'"±§^',
+      sub_ids: 'sub1=/?*= +|`~±§^',
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
       password: defaultPassword,
@@ -208,7 +209,7 @@ describe('Register with sub id parameter', () => {
       PartnerKey,
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'RUB');
   });
 
   // shouldn't be saved
@@ -225,9 +226,10 @@ describe('Register with sub id parameter', () => {
       repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
+      currency: 'USD',
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'USD');
   });
 
   // sub1 should be saved, sub2 and sub3 shouldn't
@@ -244,9 +246,10 @@ describe('Register with sub id parameter', () => {
       repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
+      currency: 'EUR',
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'EUR');
   });
 
   // TODO add check that test DB saves 128 symbols
@@ -263,8 +266,9 @@ describe('Register with sub id parameter', () => {
       repeat_password: defaultPassword,
       visit_domain,
       PartnerKey,
+      currency: 'USD',
     });
     // console.log(data);
-    checkRegInfo(data, testStr, testNum);
+    checkRegInfo(data, testStr, testNum, 'USD');
   });
 });
