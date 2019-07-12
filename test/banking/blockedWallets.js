@@ -11,7 +11,7 @@ describe.skip('Manual control wallets(?)', () => {
     await userList.loginManualControl();
   });
 
-  it('deposit @master', async () => {
+  it.skip('deposit @master', async () => {
     await socket.userMeta;
     // console.log(data1);
     const { data } = await banking.depositCreateRub(100, '79772520000',

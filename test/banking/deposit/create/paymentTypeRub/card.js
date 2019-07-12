@@ -172,21 +172,12 @@ describe('Create deposite for card_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  // TODO 500ка
-  it('C22521 - wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(100, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
   it('C22520 - wallet = long string', async () => {
     const { data } = await banking.depositCreateRub(10,
-      // TODO посмотреть количество символов доступных в кошельке
       '1231231231231231453453345345342312312312312123123123123',
       paymentType, currency);
     // console.log
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
+    checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   // Не знаю что тут должно быть

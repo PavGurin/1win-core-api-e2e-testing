@@ -17,7 +17,7 @@ describe('Sport all', () => {
     expect(data.sportMap['1'].sportName.ru).not.equal(null);
   });
 
-  it('C21147 - (+) valid request live @master', async () => {
+  it.skip('C21147 - (+) valid request live @master', async () => {
     const { data } = await socket.send('MATCH-STORAGE-2:sport-all', {
       service: 'live',
       timeFilter: {

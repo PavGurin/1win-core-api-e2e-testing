@@ -12,16 +12,16 @@ describe('Withdrawal create with valid test cases ', () => {
     await userList.loginWithRealMoney();
   });
 
-  it('C19325 (+) With money card_rub + valid wallet', async () => {
+  it('C19336 - (+) With money card_rub + valid wallet', async () => {
     const { data } = await banking.withdrawalCreate(90, 'P0000000000',
       payment_system, currency);
     // console.log(data);
     successWithdrawalCreate(data);
   });
 
-  it('C19324 (-) With money invalid', async () => {
+  it(' (-) With money invalid', async () => {
     const { data } = await banking.withdrawalCreate(100, '5446546', payment_system, currency);
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad Request.');
+    checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 });

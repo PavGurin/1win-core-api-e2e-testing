@@ -26,6 +26,6 @@ describe('Tournament hot filter: prematch', () => {
       tournamentId: 'all',
     });
     // console.log(data);
-    expect(data.service).equal('live');
+    expect(data.service).equal('prematch');
   });
 });
