@@ -9,7 +9,7 @@ describe('Change currency', () => {
       currency: 'RUB',
     });
 
-    checkErrMsg(data, 404, 'Bad request');
+    checkErrMsg(data, 400, 'Bad Request.');
   });
 
   it('C27441 - should be bad request, user have RUB yet ', async () => {
@@ -17,8 +17,8 @@ describe('Change currency', () => {
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'RUB',
     });
-
-    checkErrMsg(data, 404, 'Bad request');
+    // console.log(data);
+    expect(data.currency).to.equal('RUB');
   });
 
   it('C27442 - should be bad request, unexist currency (string) ', async () => {
@@ -70,7 +70,7 @@ describe('Change currency', () => {
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'USD',
     });
-
+    // console.log(data);
     expect(data.currency).to.equal('USD');
   });
 
