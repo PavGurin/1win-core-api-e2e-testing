@@ -1,6 +1,6 @@
 import { randomNum, randomStr } from '../randomizer';
 
-const partnerKey = 'test001';
+const partner_key = 'test001';
 
 export const register = {
 
@@ -10,7 +10,7 @@ export const register = {
         isShort: true,
         country: defaultCountry,
         timezone: 23,
-        partner_key: partnerKey,
+        partner_key,
       });
   },
 
@@ -26,7 +26,7 @@ export const register = {
         country: defaultCountry,
         timezone: 23,
         birthday: 946587600000,
-        partner_key: partnerKey,
+        partner_key,
         ...usualRegistration,
       });
   },
@@ -42,7 +42,7 @@ export const register = {
         country: defaultCountry,
         timezone: 23,
         birthday: 946587600000,
-        partner_key: partnerKey,
+        partner_key,
       });
   },
 };

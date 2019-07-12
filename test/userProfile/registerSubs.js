@@ -1,6 +1,7 @@
 /* eslint camelcase: 'off' */
 import { expect } from 'chai';
 import { randomNum, randomStr } from '../../src/randomizer';
+import { dbSubIdCheck, emptyDbSubIdCheck } from '../../src/methods/dbSubIdCheck';
 
 // TODO для проверки работы тестов нужно добавить проверку api партнерки и сверять изменение данных
 describe('Register with sub id parameter', () => {
@@ -29,7 +30,7 @@ describe('Register with sub id parameter', () => {
   }
 
   const visit_domain = 'some_domain';
-  const PartnerKey = 'test001';
+  const partner_key = 'test001';
 
   // (+) for positive tests (-) for negative tests
   it('C20067 (+) Sub id 1', async () => {
@@ -44,10 +45,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: 'sub_1',
+      sub2: null,
+      sub3: null,
+      sub4: null,
+      sub5: null,
+    });
   });
 
   it('C20068 (+) Sub id 2', async () => {
@@ -62,10 +70,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: null,
+      sub2: 'sub_2',
+      sub3: null,
+      sub4: null,
+      sub5: null,
+    });
   });
 
   it('C20069 (+) Sub id 3', async () => {
@@ -80,10 +95,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: null,
+      sub2: null,
+      sub3: 'sub_3',
+      sub4: null,
+      sub5: null,
+    });
   });
 
   it('C20070 (+) Sub id 4', async () => {
@@ -98,10 +120,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: null,
+      sub2: null,
+      sub3: null,
+      sub4: 'sub_4',
+      sub5: null,
+    });
   });
 
   it('C20071 (+) Sub id 5', async () => {
@@ -116,10 +145,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: null,
+      sub2: null,
+      sub3: null,
+      sub4: null,
+      sub5: 'sub_5',
+    });
   });
 
   it('C20072 (+) All sub ids (from 1 to 5)', async () => {
@@ -134,10 +170,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: 'sub_1',
+      sub2: 'sub_2',
+      sub3: 'sub_3',
+      sub4: 'sub_4',
+      sub5: 'sub_5',
+    });
   });
 
   it('C20073 (+) Sub ids (1-3-5)', async () => {
@@ -152,10 +195,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: 'sub_1',
+      sub2: null,
+      sub3: 'sub_3',
+      sub4: null,
+      sub5: 'sub_5',
+    });
   });
 
   it('C20074 (+) Sub id with legal symbols', async () => {
@@ -170,10 +220,17 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: '_=',
+      sub2: null,
+      sub3: null,
+      sub4: null,
+      sub5: null,
+    });
   });
 
   it('C20075 (-) Sub id with rus language', async () => {
@@ -188,10 +245,11 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await emptyDbSubIdCheck(data.id, 'REGISTRATION');
   });
 
   it('C20076 (-) Sub id with illegal symbols', async () => {
@@ -206,10 +264,11 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await emptyDbSubIdCheck(data.id, 'REGISTRATION');
   });
 
   // shouldn't be saved
@@ -225,11 +284,12 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
       currency: 'USD',
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'USD');
+    await emptyDbSubIdCheck(data.id, 'REGISTRATION');
   });
 
   // sub1 should be saved, sub2 and sub3 shouldn't
@@ -245,30 +305,44 @@ describe('Register with sub id parameter', () => {
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
       currency: 'EUR',
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'EUR');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: 'legal',
+      sub2: null,
+      sub3: null,
+      sub4: null,
+      sub5: null,
+    });
   });
 
-  // TODO add check that test DB saves 128 symbols
   it('C20486 (+) Sub with 500+ length', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
+    const subId1 = randomStr(505);
 
     const { data } = await defaultRequest({
       name: testStr,
-      sub_ids: `sub1=${randomStr(505)}`,
+      sub_ids: `sub1=${subId1}`,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
       password: defaultPassword,
       repeat_password: defaultPassword,
       visit_domain,
-      PartnerKey,
+      partner_key,
       currency: 'USD',
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'USD');
+    await dbSubIdCheck(data.id, 'REGISTRATION', {
+      sub1: (subId1.slice(0, 128)),
+      sub2: null,
+      sub3: null,
+      sub4: null,
+      sub5: null,
+    });
   });
 });
