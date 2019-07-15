@@ -18,7 +18,6 @@ describe('Login', () => {
     const { status } = await userList.loginWithParams(data.phone, data.password);
     // console.log(status);
     expect(status).equal(200);
-    expect(status).equal(200);
   });
 
   it('C19295 (-) nonexistent user', async () => {

@@ -3,7 +3,6 @@ import { userList } from '../../src/methods/userList';
 import { sportAll, sportCategories } from '../../src/methods/matchStorage';
 
 describe('Bets make', () => {
-
   const PREMATCH = 'prematch';
   const LIVE = 'live';
 
