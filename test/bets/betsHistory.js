@@ -3,7 +3,7 @@ import { userList } from '../../src/methods/userList';
 import { register } from '../../src/methods/register';
 
 describe('Bets history', () => {
-  it('(+) user w/o bet history default filter', async () => {
+  it('C27571 (+) user w/o bet history default filter', async () => {
     const { data: regReq } = await register.oneClickReg();
     await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
@@ -20,7 +20,7 @@ describe('Bets history', () => {
     expect(data.betsMap).to.be.empty;
   });
 
-  it('(-) no order value', async () => {
+  it('C27572 (-) no order value', async () => {
     const { data: regReq } = await register.oneClickReg();
     await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
@@ -31,12 +31,12 @@ describe('Bets history', () => {
         betType: ['ordinary', 'express'],
       },
     });
-      // console.log(data);
+    // console.log(data);
     expect(data.status).equal(400);
     expect(data.message).equal('Bad request, order is required, no default value provided');
   });
 
-  it('(-) no limit value', async () => {
+  it('C27573 (-) no limit value', async () => {
     const { data: regReq } = await register.oneClickReg();
     await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
@@ -51,7 +51,7 @@ describe('Bets history', () => {
     expect(data.message).equal('Bad request, limit is required, no default value provided');
   });
 
-  it('(+) user w/o bet history asc order', async () => {
+  it('C27574 (+) user w/o bet history asc order', async () => {
     const { data: regReq } = await register.oneClickReg();
     await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
@@ -67,7 +67,7 @@ describe('Bets history', () => {
     expect(data.betsMap).to.be.empty;
   });
 
-  it('(+) user w/o bet history, bet type \'express\'', async () => {
+  it('C27575 (+) user w/o bet history, bet type \'express\'', async () => {
     const { data: regReq } = await register.oneClickReg();
     await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
@@ -83,7 +83,7 @@ describe('Bets history', () => {
     expect(data.betsMap).to.be.empty;
   });
 
-  it('(+) user w/o bet history, bet type \'ordinary\'', async () => {
+  it('C27576 (+) user w/o bet history, bet type \'ordinary\'', async () => {
     const { data: regReq } = await register.oneClickReg();
     await userList.loginWithParams(regReq.email, regReq.password);
     const { data } = await socket.send('BETS:bets-history', {
@@ -99,7 +99,7 @@ describe('Bets history', () => {
     expect(data.betsMap).to.be.empty;
   });
 
-  it('(+) user with bet history, bet type \'ordinary\'', async () => {
+  it('C27577 (+) user with bet history, bet type \'ordinary\'', async () => {
     await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -120,7 +120,7 @@ describe('Bets history', () => {
    * */
 
   // TODO 'service' should be fixed to run ALL filters
-  it.skip('(+) all filters with all available values', async () => {
+  it.skip('C27578 (+) all filters with all available values', async () => {
     await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -139,7 +139,7 @@ describe('Bets history', () => {
     expect(Object.entries(betsMap).length).equal(12);
   });
 
-  it.skip('(+) only \'lost\' bets status (status = 1)', async () => {
+  it.skip('C27579 (+) only \'lost\' bets status (status = 1)', async () => {
     await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: 'ru',
@@ -157,7 +157,7 @@ describe('Bets history', () => {
     expect(Object.values(betsMap).every(({ status }) => status === 1)).equal(true);
   });
 
-  it.skip('(+) only \'returned\' bets status (status = 2)', async () => {
+  it.skip('C27580 (+) only \'returned\' bets status (status = 2)', async () => {
     await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -175,7 +175,7 @@ describe('Bets history', () => {
     expect(Object.values(betsMap).every(({ status }) => status === 2)).equal(true);
   });
 
-  it.skip('(+) only \'won\' bets status (status = 3)', async () => {
+  it.skip('C27581 (+) only \'won\' bets status (status = 3)', async () => {
     await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -193,7 +193,7 @@ describe('Bets history', () => {
     expect(Object.values(betsMap).every(({ status }) => status === 3)).equal(true);
   });
 
-  it('(-) [0,0] limit', async () => {
+  it('C27582 (-) [0,0] limit', async () => {
     await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -210,7 +210,7 @@ describe('Bets history', () => {
     expect(betsMap).to.be.empty;
   });
 
-  it('(-) limits \'from\' value > than \'to\' value', async () => {
+  it('C27583 (-) limits \'from\' value > than \'to\' value', async () => {
     await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -228,7 +228,7 @@ describe('Bets history', () => {
   });
 
   // TODO fix expect
-  it('(-) 5 limits + 5 offset, where all filters, where service = null', async () => {
+  it('C27584 (-) 5 limits + 5 offset, where all filters, where service = null', async () => {
     await userList.loginWithRub();
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
@@ -247,7 +247,7 @@ describe('Bets history', () => {
   });
 
   // TODO fix expect
-  it('(+) 5 limits + 2 offset, where all filters, where service = null', async () => {
+  it('C27585 (+) 5 limits + 2 offset, where all filters, where service = null', async () => {
     await userList.loginWithRub();
     const { data } = await socket.send('BETS:bets-history', {
       language: null,

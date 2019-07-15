@@ -1,30 +1,50 @@
 import Coupon from '../Coupon';
 
-export async function getTournamentMatches(filters) {
-  return socket.send('MATCH-STORAGE-2:tournament-matches', {
-    service: 'prematch',
-    // sportId: '12',
-    timeFilter: {
-      date: false,
-      hour: false,
-      ...filters,
+export function generateOrdinaryCoupon(match) {
+  return new Coupon(match.baseOddsConfig[0].cellList[0].odd);
+}
+
+export function generateExpressCoupon(matchMap, count, amount) {
+  const coupons = Object
+    .values(matchMap)
+    .slice(0, count)
+    .map(it => generateOrdinaryCoupon(it));
+  const couponIds = coupons.map(({ couponId }) => couponId).join('?');
+  const couponList = coupons.map(coupon => ({
+    service: coupon.service,
+    matchId: coupon.matchId,
+    typeId: coupon.typeId,
+    subTypeId: coupon.subTypeId,
+    outCome: coupon.outCome,
+    specialValue: coupon.specialValue,
+    coefficient: coupon.saveCoefficient,
+  }));
+  return {
+    currency: 'RUB',
+    betsMap: {
+      [couponIds]: {
+        amount,
+        couponList,
+      },
     },
-  });
+  };
 }
 
-export function generateCoupon(matches) {
-  // const singleMatch = Object.values(matches.matchMap)[0];
-  // const odd = singleMatch.baseOddsConfig[0].cellList[0].odd;
-  return new Coupon({ ...Object.values(matches.matchMap)[0].baseOddsConfig[0].cellList[0].odd });
-}
-
-export async function makeBet(coupon) {
+export async function makeExpressBet(coupon) {
   return socket.send('BETS:bets-make',
     {
-      currency: 'RUB',
+      currency: coupon[0],
+      betsMap: coupon[1],
+    });
+}
+
+export async function makeOrdinaryBetOld(coupon, currency, amount) {
+  return socket.send('POST:makeBet',
+    {
+      currency,
       betsMap: {
         [coupon.couponId]: {
-          amount: 1,
+          amount,
           couponList: [
             {
               service: coupon.service,
@@ -38,5 +58,78 @@ export async function makeBet(coupon) {
           ],
         },
       },
+    });
+}
+
+export async function makeOrdinaryBet(coupon, currency, amount) {
+  return socket.send('BETS:bets-make',
+    {
+      currency,
+      betsMap: {
+        [coupon.couponId]: {
+          amount,
+          couponList: [
+            {
+              service: coupon.service,
+              matchId: coupon.matchId,
+              typeId: coupon.typeId,
+              subTypeId: coupon.subTypeId,
+              outCome: coupon.outCome,
+              specialValue: coupon.specialValue,
+              coefficient: coupon.saveCoefficient,
+            },
+          ],
+        },
+      },
+    });
+}
+
+export async function getMaxBetAmount(coupon, singleMatch) {
+  return socket.send('BETS:bets-maxBetAmount',
+    {
+      couponList: [
+        {
+          coefficient: coupon.saveCoefficient,
+          match: {
+            categoryId: singleMatch.categoryId,
+            matchId: coupon.matchId,
+            sportId: singleMatch.sportId,
+            tournamentId: singleMatch.tournamentId,
+          },
+          odd: {
+            coefficient: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].coefficient,
+            outCome: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].outCome,
+            service: coupon.service,
+            specialValue: coupon.specialValue,
+            subTypeId: coupon.subTypeId,
+            typeId: coupon.typeId,
+          },
+        },
+      ],
+    });
+}
+
+export async function getMaxBetAmountOld(coupon, singleMatch) {
+  return socket.send('GET:maxBetAmount',
+    {
+      couponList: [
+        {
+          coefficient: coupon.saveCoefficient,
+          match: {
+            categoryId: singleMatch.categoryId,
+            matchId: coupon.matchId,
+            sportId: singleMatch.sportId,
+            tournamentId: singleMatch.tournamentId,
+          },
+          odd: {
+            coefficient: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].coefficient,
+            outCome: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].outCome,
+            service: coupon.service,
+            specialValue: coupon.specialValue,
+            subTypeId: coupon.subTypeId,
+            typeId: coupon.typeId,
+          },
+        },
+      ],
     });
 }
