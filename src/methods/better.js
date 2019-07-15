@@ -1,6 +1,6 @@
 import Coupon from '../Coupon';
 
-export function generateOrdinaryCoupon(match, currency, amount) {
+export function generateOrdinaryCoupon(match) {
   return new Coupon(match.baseOddsConfig[0].cellList[0].odd);
 }
 
