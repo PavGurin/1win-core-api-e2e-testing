@@ -13,7 +13,7 @@ describe('Change currency', () => {
   });
 
   it('C27441 - should be bad request, user have RUB yet ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'RUB',
     });
