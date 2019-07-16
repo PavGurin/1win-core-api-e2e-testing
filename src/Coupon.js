@@ -25,7 +25,7 @@ export default class Coupon {
     this.subTypeId = subTypeId;
     this.outCome = outCome;
     this.specialValue = specialValue;
-    this.saveCoefficient = +coefficient;
+    this.coefficient = +coefficient;
   }
 
   static genId({
