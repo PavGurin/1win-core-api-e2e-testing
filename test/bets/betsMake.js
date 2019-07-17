@@ -11,11 +11,14 @@ import {
   makeOrdinaryBetOld,
 } from '../../src/methods/better';
 
-import { getSingleMatch, sportTournaments, tournamentMatches } from '../../src/methods/matchStorage';
+import {
+  getMatchHistory, getSingleMatch, sportTournaments, tournamentMatches,
+} from '../../src/methods/matchStorage';
 
 const currency = 'RUB';
 const PREMATCH = 'prematch';
 const LIVE = 'live';
+const ORDINARY = 'ordinary';
 
 beforeEach(async () => {
   await userList.loginWithRealMoney();
@@ -29,9 +32,25 @@ describe('Ordinary bets prematch', () => {
     const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(coupon, currency, 2);
+    const betResponse = await makeOrdinaryBet(coupon, currency, 1);
     // console.log(betResponse);
 
+    expect(betResponse.data[coupon.couponId].error).equal(false);
+    expect(betResponse.status).equal(200);
+  });
+
+  it('C27606 (+) default bet amount 1.99 (should be round to 1', async () => {
+    const [singleMatch] = await getSingleMatch(PREMATCH);
+    // console.log(singleMatch);
+
+    const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
+    // console.log(coupon);
+
+    const betResponse = await makeOrdinaryBet(coupon, currency, 1.99);
+    // console.log(betResponse);
+    const { data: betsMap } = await getMatchHistory(ORDINARY, 1);
+    // console.log(betsMap);
+    expect(Object.values(betsMap.betsMap)[0].amount).equal(1);
     expect(betResponse.data[coupon.couponId].error).equal(false);
     expect(betResponse.status).equal(200);
   });
@@ -185,8 +204,8 @@ describe('Ordinary bets live', () => {
     expect(betResponse.status).equal(200);
   });
 
-  it('C27567 (bug) changed coefficient', async () => {
-    const [singleMatch] = await getSingleMatch(LIVE);
+  it('C27567 (-) changed coefficient', async () => {
+    const [singleMatch] = await getSingleMatch(PREMATCH);
     // console.log(singleMatch);
 
     const coupon = generateOrdinaryCoupon(singleMatch);
@@ -258,10 +277,25 @@ describe('Old bets requests', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(coupon, currency, 1);
+    const betResponse = await makeOrdinaryBetOld(coupon, currency, 1);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].error).equal(false);
+    expect(betResponse.status).equal(200);
+  });
+
+  it('C27607 (+) default bet amount 1.99 (should be round to 1', async () => {
+    const [singleMatch] = await getSingleMatch(PREMATCH);
+    // console.log(singleMatch);
+
+    const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
+    // console.log(coupon);
+
+    const betResponse = await makeOrdinaryBetOld(coupon, currency, 1.99);
+    // console.log(betResponse);
+    const { data: betsMap } = await getMatchHistory(ORDINARY, 1);
+    // console.log(betsMap);
+    expect(Object.values(betsMap.betsMap)[0].amount).equal(1);
     expect(betResponse.status).equal(200);
   });
 
@@ -271,7 +305,7 @@ describe('Old bets requests', () => {
 
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
-    coupon.saveCoefficient = 10;
+    coupon.coefficient = 10;
 
     const betResponse = await makeOrdinaryBetOld(coupon, currency, 1);
     // console.log(betResponse);
@@ -302,7 +336,6 @@ describe('Old bets requests', () => {
   });
 });
 
-
 describe('maxBetAmount', () => {
   it('C27561 (+) MaxBetAmount', async () => {
     const betAmount = 1;
@@ -313,15 +346,15 @@ describe('maxBetAmount', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
-    const data = await getMaxBetAmount(coupon, singleMatch);
-    // console.log(data);
+    const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(coupon, singleMatch);
+    // console.log(maxBetAmount1);
 
     await makeOrdinaryBet(coupon, currency, betAmount);
 
-    const data2 = await getMaxBetAmount(coupon, singleMatch);
-    // console.log(data2);
+    const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
+    // console.log(maxBetAmount2);
 
-    expect(data2.maxBetAmount).equal(data.maxBetAmount - betAmount);
+    expect(maxBetAmount2).equal((maxBetAmount1 - betAmount));
   });
 });
 
