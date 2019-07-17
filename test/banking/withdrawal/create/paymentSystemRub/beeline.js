@@ -12,7 +12,7 @@ describe('Withdrawal create with valid test cases ', () => {
     await userList.loginWithRealMoney();
   });
 
-  it(' (+) With money card_rub + valid wallet', async () => {
+  it('C19328 - (+) With money card_rub + valid wallet', async () => {
     const { data } = await banking.withdrawalCreate(90.99, '+79215598286',
       payment_system, currency);
     // console.log
@@ -30,22 +30,10 @@ describe('Withdrawal create with valid test cases ', () => {
     successWithdrawalCreate(data);
   });
 
-  describe('Withdrawal create with invalid test cases ', () => {
-    before(async () => {
-      await userList.loginWithRealMoney();
-    });
-
-    it('C19325 (+) With money card_rub + valid wallet', async () => {
-      const { data } = await banking.withdrawalCreate(9, '+79215598286',
-        payment_system, currency);
-      // console.log(data);
-      successWithdrawalCreate(data);
-    });
-
-    it('C19324 (-) With money invalid', async () => {
-      const { data } = await banking.withdrawalCreate(10.01, '+79215598286', payment_system, currency);
-      // console.log(data);
-      checkErrMsg(data, 400, 'Bad Request.');
-    });
+  it(' (+) With money card_rub + valid wallet', async () => {
+    const { data } = await banking.withdrawalCreate(9, '+79215598286',
+      payment_system, currency);
+    // console.log(data);
+    checkErrMsg(data, 400, 'Неверная сумма');
   });
 });

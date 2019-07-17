@@ -31,15 +31,36 @@ lint:
    - npm i
    - npm run eslint
 
+banking:
+  stage: tests
+  when: manual
+  script:
+    - npm i
+    - npm run test:banking
+
+bets:
+  stage: tests
+  when: manual
+  script:
+    - npm i
+    - npm run test:bets
+
+user-profile:
+  stage: tests
+  when: manual
+  script:
+    - npm i
+    - npm run test:user-profile
+
 backend_staging:
   variables:
     TEST_URL: https://master.staging.1win-prodlike.tech/
     TEST_FILTER: "@master"
   <<: *api_test
 
-backend_production:
-  when: manual
-  variables:
-    TEST_URL: https://1winufeg.xyz/
-    TEST_FILTER: "@dev"
-  <<: *api_test
+#backend_production:
+#  when: manual
+#  variables:
+#    TEST_URL: https://1winufeg.xyz/
+#    TEST_FILTER: "@dev"
+#  <<: *api_test

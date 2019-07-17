@@ -14,6 +14,9 @@ export default class SocketClient {
     this.userMeta = new Promise((res) => {
       this.resUsermeta = res;
     });
+    this.loginToken = new Promise((res) => {
+      this.resLoginToken = res;
+    });
   }
 
   connect() {
@@ -89,6 +92,9 @@ export default class SocketClient {
       if (msg.type === 'user.meta') {
         this.resUsermeta(msg.data);
         this.userMeta = msg.data;
+      } else if (msg.type === '.login.token') {
+        this.resLoginToken(msg.data);
+        this.loginToken = msg.data;
       }
       return;
     }

@@ -69,7 +69,7 @@ describe('Transfer confirm with receiving code', () => {
     // Error: Timeout of 10000ms exceeded.
 
     // задержка в 5 минут, чтобы код протух
-    await sleep(60000);
+    await sleep(300000);
     const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);
@@ -103,8 +103,8 @@ describe('Transfer confirm with receiving code', () => {
   it('C27218 (-) Active code of other transfer of this user', async () => {
     // console.log(receivedMail);
     await banking.transferCreate(25.1, 'RUB');
-    await sleep(4000);
-    await mail.getMessage(user.data.email);
+    // sleep(4000);
+    // await mail.getMessage(user.data.email);
     const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     expect(confirm.status).to.equal(200);
     // console.log(confirmData);
@@ -117,7 +117,7 @@ describe('Withdrawal before transfer', () => {
     const user = await register.regMailWithConfirmationCodes();
     await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = 120 WHERE id_user = ${user.data.id} ;`);
     await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
-    await sleep(3000);
+    await sleep(4000);
     const withdrawalMail = await mail.getMessage(user.data.email);
 
     await banking.transferCreate(20, 'RUB');

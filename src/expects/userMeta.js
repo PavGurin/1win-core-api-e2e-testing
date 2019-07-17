@@ -12,7 +12,7 @@ const DEFAULT_USER_META = {
   rules_accepted: true,
   ignore_mts: false,
   test_val: true,
-  email_editable: false,
+  email_editable: true,
   password_need_to_be_changed: false,
   user_risk_coefficient: 1,
 };

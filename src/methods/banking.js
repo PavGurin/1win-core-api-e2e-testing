@@ -49,14 +49,6 @@ export const banking = {
     });
   },
 
-  async convertCreate(amount, senderCurrency, receiverCurrency) {
-    return socket.send('BANKING:convert-create', {
-      amount,
-      senderCurrency,
-      receiverCurrency,
-    });
-  },
-
   async balanceCheck() {
     const balanceData = await socket.send('GET:balance', {
       tg_hash: randomStr(5),
@@ -66,6 +58,7 @@ export const banking = {
 };
 
 /**
+ * Пока оставить, вдруг будут изменения
  * Получение стоимости валюты в рублях
  *
  * @param {string} charCode код валюты
