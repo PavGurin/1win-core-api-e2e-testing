@@ -11,11 +11,14 @@ import {
   makeOrdinaryBetOld,
 } from '../../src/methods/better';
 
-import { getSingleMatch, sportTournaments, tournamentMatches } from '../../src/methods/matchStorage';
+import {
+  getMatchHistory, getSingleMatch, sportTournaments, tournamentMatches,
+} from '../../src/methods/matchStorage';
 
 const currency = 'RUB';
 const PREMATCH = 'prematch';
 const LIVE = 'live';
+const ORDINARY = 'ordinary';
 
 beforeEach(async () => {
   await userList.loginWithRealMoney();
@@ -24,14 +27,30 @@ beforeEach(async () => {
 describe('Ordinary bets prematch', () => {
   it('C27551 (+) default bet', async () => {
     const [singleMatch] = await getSingleMatch(PREMATCH);
-    console.log(singleMatch);
+    // console.log(singleMatch);
 
-    const coupon = generateOrdinaryCoupon(singleMatch, currency, 1);
+    const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
     // console.log(coupon);
 
     const betResponse = await makeOrdinaryBet(coupon, currency, 1);
-    console.log(betResponse);
+    // console.log(betResponse);
 
+    expect(betResponse.data[coupon.couponId].error).equal(false);
+    expect(betResponse.status).equal(200);
+  });
+
+  it('C27606 (+) default bet amount 1.99 (should be round to 1', async () => {
+    const [singleMatch] = await getSingleMatch(PREMATCH);
+    // console.log(singleMatch);
+
+    const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
+    // console.log(coupon);
+
+    const betResponse = await makeOrdinaryBet(coupon, currency, 1.99);
+    // console.log(betResponse);
+    const { data: betsMap } = await getMatchHistory(ORDINARY, 1);
+    // console.log(betsMap);
+    expect(Object.values(betsMap.betsMap)[0].amount).equal(1);
     expect(betResponse.data[coupon.couponId].error).equal(false);
     expect(betResponse.status).equal(200);
   });
@@ -43,6 +62,7 @@ describe('Ordinary bets prematch', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.matchId += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 1);
     // console.log(betResponse);
 
@@ -59,6 +79,7 @@ describe('Ordinary bets prematch', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.service = LIVE;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
     // console.log(betResponse);
 
@@ -74,7 +95,8 @@ describe('Ordinary bets prematch', () => {
 
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
-    coupon.saveCoefficient = 2;
+    coupon.coefficient = 999;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 1);
     // console.log(betResponse);
 
@@ -90,6 +112,7 @@ describe('Ordinary bets prematch', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.typeId += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
     // console.log(betResponse);
 
@@ -105,6 +128,7 @@ describe('Ordinary bets prematch', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.outCome += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
     // console.log(betResponse);
 
@@ -120,6 +144,7 @@ describe('Ordinary bets prematch', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.specialValue += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
     // console.log(betResponse);
 
@@ -152,6 +177,7 @@ describe('Ordinary bets live', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.matchId += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 1);
     // console.log(betResponse);
 
@@ -168,6 +194,7 @@ describe('Ordinary bets live', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.service = PREMATCH;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
     // console.log(betResponse);
 
@@ -177,15 +204,16 @@ describe('Ordinary bets live', () => {
     expect(betResponse.status).equal(200);
   });
 
-  it('C27567 (bug) changed coefficient', async () => {
-    const [singleMatch] = await getSingleMatch(LIVE);
+  it('C27567 (-) changed coefficient', async () => {
+    const [singleMatch] = await getSingleMatch(PREMATCH);
     // console.log(singleMatch);
 
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
-    coupon.saveCoefficient = 55;
+    coupon.coefficient = 999;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 1);
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.status).equal(200);
     // expect(betResponse.data[coupon.couponId].error).to.not.equal(false);
@@ -199,8 +227,9 @@ describe('Ordinary bets live', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.typeId += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).equal(400);
     expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Requested odd not found');
@@ -214,8 +243,9 @@ describe('Ordinary bets live', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.outCome += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).equal(400);
     expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Requested odd not found');
@@ -229,8 +259,9 @@ describe('Ordinary bets live', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
     coupon.specialValue += 1;
+
     const betResponse = await makeOrdinaryBet(coupon, currency, 3);
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).equal(400);
     expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Requested odd not found');
@@ -246,10 +277,25 @@ describe('Old bets requests', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(coupon, currency, 1);
+    const betResponse = await makeOrdinaryBetOld(coupon, currency, 1);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].error).equal(false);
+    expect(betResponse.status).equal(200);
+  });
+
+  it('C27607 (+) default bet amount 1.99 (should be round to 1', async () => {
+    const [singleMatch] = await getSingleMatch(PREMATCH);
+    // console.log(singleMatch);
+
+    const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
+    // console.log(coupon);
+
+    const betResponse = await makeOrdinaryBetOld(coupon, currency, 1.99);
+    // console.log(betResponse);
+    const { data: betsMap } = await getMatchHistory(ORDINARY, 1);
+    // console.log(betsMap);
+    expect(Object.values(betsMap.betsMap)[0].amount).equal(1);
     expect(betResponse.status).equal(200);
   });
 
@@ -259,7 +305,8 @@ describe('Old bets requests', () => {
 
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
-    coupon.saveCoefficient = 10;
+    coupon.coefficient = 10;
+
     const betResponse = await makeOrdinaryBetOld(coupon, currency, 1);
     // console.log(betResponse);
 
@@ -280,8 +327,7 @@ describe('Old bets requests', () => {
     const data = await getMaxBetAmountOld(coupon, singleMatch);
     // console.log(data.maxBetAmount);
 
-    const bet = await makeOrdinaryBetOld(coupon, currency, betAmount);
-    // console.log(bet);
+    await makeOrdinaryBetOld(coupon, currency, betAmount);
 
     const data2 = await getMaxBetAmountOld(coupon, singleMatch);
     // console.log(data2.maxBetAmount);
@@ -289,7 +335,6 @@ describe('Old bets requests', () => {
     expect(data2.maxBetAmount).equal(data.maxBetAmount - betAmount);
   });
 });
-
 
 describe('maxBetAmount', () => {
   it('C27561 (+) MaxBetAmount', async () => {
@@ -301,17 +346,15 @@ describe('maxBetAmount', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
-    const data = await getMaxBetAmount(coupon, singleMatch);
-    console.log(data);
+    const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(coupon, singleMatch);
+    // console.log(maxBetAmount1);
 
-    const bet = await makeOrdinaryBet(coupon, currency, betAmount);
-    // console.log(bet);
-    // coupon = generateOrdinaryCoupon(singleMatch);
+    await makeOrdinaryBet(coupon, currency, betAmount);
 
-    const data2 = await getMaxBetAmount(coupon, singleMatch);
-    console.log(data2);
+    const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
+    // console.log(maxBetAmount2);
 
-    expect(data2.maxBetAmount).equal(data.maxBetAmount - betAmount);
+    expect(maxBetAmount2).equal((maxBetAmount1 - betAmount));
   });
 });
 
@@ -324,11 +367,14 @@ describe('Express', () => {
       PREMATCH,
       Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
     );
+    // console.log(matchMap);
 
     const coupon = generateExpressCoupon(matchMap, 2, 1);
+    // console.log(coupon);
 
     const betResponse = await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
+
     expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
     expect(betResponse.status).equal(200);
   });
@@ -346,6 +392,7 @@ describe('Express', () => {
 
     const betResponse = await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
+
     expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
     expect(betResponse.status).equal(200);
   });

@@ -17,7 +17,7 @@ export function generateExpressCoupon(matchMap, count, amount) {
     subTypeId: coupon.subTypeId,
     outCome: coupon.outCome,
     specialValue: coupon.specialValue,
-    coefficient: coupon.saveCoefficient,
+    coefficient: coupon.coefficient,
   }));
   return {
     currency: 'RUB',
@@ -53,7 +53,7 @@ export async function makeOrdinaryBetOld(coupon, currency, amount) {
               subTypeId: coupon.subTypeId,
               outCome: coupon.outCome,
               specialValue: coupon.specialValue,
-              coefficient: coupon.saveCoefficient,
+              coefficient: coupon.coefficient,
             },
           ],
         },
@@ -76,7 +76,7 @@ export async function makeOrdinaryBet(coupon, currency, amount) {
               subTypeId: coupon.subTypeId,
               outCome: coupon.outCome,
               specialValue: coupon.specialValue,
-              coefficient: coupon.saveCoefficient,
+              coefficient: coupon.coefficient,
             },
           ],
         },
@@ -89,7 +89,7 @@ export async function getMaxBetAmount(coupon, singleMatch) {
     {
       couponList: [
         {
-          coefficient: coupon.saveCoefficient,
+          coefficient: coupon.coefficient,
           match: {
             categoryId: singleMatch.categoryId,
             matchId: coupon.matchId,
@@ -114,7 +114,7 @@ export async function getMaxBetAmountOld(coupon, singleMatch) {
     {
       couponList: [
         {
-          coefficient: coupon.saveCoefficient,
+          coefficient: coupon.coefficient,
           match: {
             categoryId: singleMatch.categoryId,
             matchId: coupon.matchId,

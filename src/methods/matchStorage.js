@@ -51,3 +51,21 @@ export async function getSingleMatch(service) {
   );
   return Object.values(matchMap);
 }
+
+export const getMatchHistory = params => socket.send('BETS:bets-history', {
+  language: null,
+  limit: [0, 20],
+  order: ['id', 'DESC'],
+  where: {
+    betType: ['ordinary', 'express'],
+  },
+  ...params,
+});
+
+
+export async function getMatchById(id) {
+  return socket.send('BETS:bets-get', {
+    id,
+    language: null,
+  });
+}

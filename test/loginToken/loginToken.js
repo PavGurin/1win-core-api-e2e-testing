@@ -1,5 +1,4 @@
-import { checkMeta } from '../../src/expects/userMeta';
-import { register } from '../../src/methods/register';
+
 import { userList } from '../../src/methods/userList';
 
 
@@ -8,7 +7,7 @@ describe('login.token', () => {
     const user = await userList.loginWithRealMoney();
     console.log(user);
     const meta = await socket.loginToken;
-		 console.log(meta);
+    console.log(meta);
     // checkMeta(meta);
   });
 });
