@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
+import { userForAutoConfirm } from '../../../src/methods/userForAutoConfirm';
 
 describe('Withdrawal get', () => {
   // TODO изменить тесты - сделать вывод и получить этот id
@@ -13,27 +14,27 @@ describe('Withdrawal get', () => {
   });
 
   it('C19362 (+) Get - 100 RUB money-transfer - @dev ', async () => {
-    await userList.loginWithRub();
-    const { data } = await socket.send('BANKING:withdrawal-get', { id: 163 });
+    await userForAutoConfirm.EmailBk();
+    const { data } = await socket.send('BANKING:withdrawal-get', { id: 1553 });
     // console.log(data);
-    expect(data.id).equal(163);
-    expect(data.time).equal(1559039814000);
+    expect(data.id).equal(1553);
+    expect(data.time).equal(1563460751000);
     expect(data.payment_system).equal('money-transfer');
-    expect(data.amount).equal(100);
+    expect(data.amount).equal(34);
     expect(data.status).equal(1);
-    expect(data.wallet).equal('417');
+    expect(data.wallet).equal('188');
   });
 
   it('C19363 (+) Get - 100 RUB card_rub @dev', async () => {
-    await userList.loginWithRub();
-    const { data } = await socket.send('BANKING:withdrawal-get', { id: 179 });
+    await userForAutoConfirm.EmailBk();
+    const { data } = await socket.send('BANKING:withdrawal-get', { id: 1560 });
     // console.log(data);
-    expect(data.id).equal(179);
-    expect(data.time).equal(1559126426000);
+    expect(data.id).equal(1560);
+    expect(data.time).equal(1563460814000);
     expect(data.payment_system).equal('card_rub');
     expect(data.amount).equal(100);
     expect(data.status).equal(0);
-    expect(data.wallet).equal('5536913759650035');
+    expect(data.wallet).equal('0000111122223333');
   });
 
   it('C19364 (-) Get - Bad request, id is required ', async () => {
