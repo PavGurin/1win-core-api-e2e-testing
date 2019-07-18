@@ -14,6 +14,29 @@ export const register = {
       });
   },
 
+  async oneClickRegUSD() {
+    return socket.send('USER:auth-register',
+      {
+        isShort: true,
+        country: defaultCountry,
+        timezone: 23,
+        currency: 'USD',
+        partner_key,
+      });
+  },
+
+
+  async oneClickRegEUR() {
+    return socket.send('USER:auth-register',
+      {
+        isShort: true,
+        country: defaultCountry,
+        timezone: 23,
+        currency: 'EUR',
+        partner_key,
+      });
+  },
+
   async usualReg(usualRegistration) {
     return socket.send('USER:auth-register',
       {
