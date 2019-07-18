@@ -8,6 +8,7 @@ describe('Change currency', () => {
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'RUB',
     });
+    console.log(data);
 
     checkErrMsg(data, 400, 'Bad Request.');
   });
