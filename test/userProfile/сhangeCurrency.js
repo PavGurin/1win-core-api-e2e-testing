@@ -8,8 +8,7 @@ describe('Change currency', () => {
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'RUB',
     });
-    console.log(data);
-
+    // console.log(data);
     checkErrMsg(data, 400, 'Bad Request.');
   });
 
@@ -23,7 +22,7 @@ describe('Change currency', () => {
   });
 
   it('C27442 - should be bad request, unexist currency (string) ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: '34',
     });
@@ -32,7 +31,7 @@ describe('Change currency', () => {
   });
 
   it('C27443 - should be bad request, unexist currency (number) ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 34,
     });
@@ -41,7 +40,7 @@ describe('Change currency', () => {
   });
 
   it('C27444 - should be bad request, currency = empty ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: '',
     });
@@ -50,7 +49,7 @@ describe('Change currency', () => {
   });
 
   it('C27445 - should be bad request, currency = null ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: null,
     });
@@ -59,7 +58,7 @@ describe('Change currency', () => {
   });
 
   it('C27446 -should be bad request, without param currency ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
     });
 
@@ -67,7 +66,7 @@ describe('Change currency', () => {
   });
 
   it('C27447 - should be success with USD ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'USD',
     });
@@ -76,7 +75,7 @@ describe('Change currency', () => {
   });
 
   it('C27448 - should be success with EUR ', async () => {
-    register.oneClickReg();
+    await register.oneClickReg();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'EUR',
     });
@@ -119,7 +118,7 @@ describe('Change currency', () => {
   });
 
   it('C27451 - should be success with RUB after reg usual with USD', async () => {
-    register.usualReg();
+    await register.usualReg();
     // console.log(data1);
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'EUR',

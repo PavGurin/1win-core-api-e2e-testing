@@ -70,7 +70,7 @@ describe('Deposit creation in database, RUB', async () => {
   });
 });
 
-describe.skip('Deposit creation in database, USD', async () => {
+describe('Deposit creation in database, USD', async () => {
   it('C27495 (+) successful deposit create usd + card', async () => {
     const user = await register.oneClickReg();
     await banking.depositCreateRub(100.01, '1234123412341234', 'card_rub', 'USD');
@@ -136,7 +136,7 @@ describe.skip('Deposit creation in database, USD', async () => {
   });
 });
 
-describe.skip('Deposit creation in database, EUR', async () => {
+describe('Deposit creation in database, EUR', async () => {
   it('C27503 (+) successful deposit create eur + card', async () => {
     const user = await register.oneClickReg();
     await banking.depositCreateRub(100.01, '1234123412341234', 'card_rub', 'EUR');
