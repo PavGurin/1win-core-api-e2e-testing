@@ -2,13 +2,14 @@
 import { expect } from 'chai';
 import { checkErrMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
+import { logOut } from '../../src/methods/user';
 
 describe('Change currency', () => {
   it('C27440 - should be bad request without registration ', async () => {
+    await logOut();
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: 'RUB',
     });
-    // console.log(data);
     checkErrMsg(data, 400, 'Bad Request.');
   });
 
@@ -26,7 +27,6 @@ describe('Change currency', () => {
     const { data } = await socket.send('USER:profile-changeCurrency', {
       currency: '34',
     });
-
     checkErrMsg(data, 400, 'currency is invalid');
   });
 
