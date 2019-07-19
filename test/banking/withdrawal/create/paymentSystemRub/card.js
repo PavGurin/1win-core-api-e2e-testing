@@ -3,6 +3,7 @@ import { userList } from '../../../../../src/methods/userList';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { banking } from '../../../../../src/methods/banking';
 import { successWithdrawalCreate } from '../../../../../src/expects/exBanking';
+import { logOut } from '../../../../../src/methods/user';
 
 const currency = 'RUB';
 const payment_system = 'card_rub';
@@ -29,6 +30,7 @@ describe('Withdrawal create with valid test cases ', () => {
 
 describe('Withdrawal create with invalid test cases ', () => {
   before(async () => {
+    await logOut();
     await register.oneClickReg();
   });
 

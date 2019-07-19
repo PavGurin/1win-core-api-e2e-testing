@@ -2,9 +2,11 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { checkErrMsg } from '../../../src/responseChecker';
+import { logOut } from '../../../src/methods/user';
 
 describe('Transfer with money - RUB', () => {
   before(async () => {
+    await logOut();
     await userList.loginWithRealMoney();
   });
 
@@ -63,7 +65,7 @@ describe('Transfer with money - USD', () => {
     await userList.loginWithRubUsd();
   });
 
-  it.skip('C19373 (+) With money + USD, amount = 2 USD', async () => {
+  it('C19373 (+) With money + USD, amount = 2 USD', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 2,
@@ -84,7 +86,7 @@ describe('Transfer with money - USD', () => {
     checkErrMsg(data, 400, 'Недостаточно средств');
   });
 
-  it.skip('C19368 Without money , not enough amount + USD', async () => {
+  it('C19368 Without money , not enough amount + USD', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 1,

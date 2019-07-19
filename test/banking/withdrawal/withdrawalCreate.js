@@ -1,9 +1,11 @@
 import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
+import { logOut } from '../../../src/methods/user';
 
 
 describe('Withdrawal create with user with money USD ', () => {
   before(async () => {
+    await logOut();
     await userList.loginWithRealMoney();
     // console.log(data1);
   });
