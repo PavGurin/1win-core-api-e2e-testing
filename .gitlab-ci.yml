@@ -11,6 +11,7 @@ services:
 
 stages:
   - lint
+  - health
   - tests
 
 .api_test: &api_test
@@ -30,6 +31,16 @@ lint:
   script:
    - npm i
    - npm run eslint
+
+health:
+  stage: health
+  allow_failure: true
+  script:
+    - npm i
+    - npm run test:health
+  artifacts:
+    reports:
+      junit: artifacts/test-output.xml
 
 banking:
   stage: tests
