@@ -8,6 +8,7 @@
     "test:junit-report": "mocha --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive --reporter mocha-multi-reporters --reporter-options configFile=config.json",
     "eslint": "eslint ./ --ext .js",
     "eslint:fix": "eslint ./ --ext .js --fix",
+    "test:health": "mocha ./test/health/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
     "test:banking": "mocha ./test/banking/**/**/**/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
     "test:bets": "mocha ./test/bets/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
     "test:user-profile": "mocha ./test/userProfile/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive"

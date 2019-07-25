@@ -36,7 +36,7 @@ export default class SocketClient {
     if (this.token) {
       options.query.Authorization = this.token.trim();
     }
-    options.query = queryString.stringify(options.query, {/* fix bug ios 10 */ strict: false });
+    options.query = queryString.stringify(options.query, { /* fix bug ios 10 */ strict: false });
 
     const promise = new Promise((resolve, reject) => {
       this.socket = io(this.path, options);
