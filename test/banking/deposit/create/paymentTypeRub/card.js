@@ -7,7 +7,7 @@ const paymentType = 'card_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for card_rub - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 

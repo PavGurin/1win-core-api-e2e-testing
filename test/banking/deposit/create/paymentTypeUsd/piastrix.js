@@ -11,7 +11,7 @@ const paymentType = 'piastrix_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for piastrix_rub - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

@@ -10,7 +10,7 @@ const payment_system = 'card_rub';
 
 
 describe('Withdrawal create with valid test cases ', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 
@@ -29,7 +29,7 @@ describe('Withdrawal create with valid test cases ', () => {
 });
 
 describe('Withdrawal create with invalid test cases ', () => {
-  before(async () => {
+  beforeAll(async () => {
     await logOut();
     await register.oneClickReg();
   });

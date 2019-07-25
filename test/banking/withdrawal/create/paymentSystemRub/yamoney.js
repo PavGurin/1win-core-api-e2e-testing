@@ -8,7 +8,7 @@ const payment_system = 'yamoney_rub';
 
 
 describe('Withdrawal create with valid test cases ', () => {
-  before(async () => {
+  beforeAll(async () => {
     await logOut();
     await register.oneClickReg();
   });

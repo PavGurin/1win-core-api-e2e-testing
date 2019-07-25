@@ -7,7 +7,7 @@ const paymentType = 'yamoney_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 

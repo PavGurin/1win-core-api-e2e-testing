@@ -11,7 +11,7 @@ const paymentType = 'qiwi_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for qiwi_rub - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

@@ -11,7 +11,7 @@ const paymentType = 'card_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for card_rub - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

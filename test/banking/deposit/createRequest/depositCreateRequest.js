@@ -5,7 +5,7 @@ const currency = 'RUB';
 const paymentType = 'card_rub';
 
 describe('Deposit requests', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 
