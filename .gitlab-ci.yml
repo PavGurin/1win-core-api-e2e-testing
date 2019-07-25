@@ -21,7 +21,7 @@ stages:
   allow_failure: true
   script:
     - npm i
-    - npm run test:junit-report
+    - npm run test
   artifacts:
     reports:
       junit: artifacts/test-output.xml

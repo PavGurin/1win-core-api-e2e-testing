@@ -7,7 +7,7 @@ const paymentType = 'piastrix_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 

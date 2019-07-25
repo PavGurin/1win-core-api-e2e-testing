@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import queryString from 'query-string';
+import 'babel-polyfill';
 
 import config from './config';
 

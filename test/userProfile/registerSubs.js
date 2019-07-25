@@ -2,6 +2,7 @@
 import { expect } from 'chai';
 import { randomNum, randomStr } from '../../src/randomizer';
 import { dbSubIdCheck, emptyDbSubIdCheck } from '../../src/methods/dbSubIdCheck';
+import { sleep } from '../../src/methods/utils';
 
 // TODO для проверки работы тестов нужно добавить проверку api партнерки и сверять изменение данных
 describe('Register with sub id parameter', () => {
@@ -49,6 +50,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: 'sub_1',
       sub2: null,
@@ -74,6 +76,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: null,
       sub2: 'sub_2',
@@ -99,6 +102,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: null,
       sub2: null,
@@ -124,6 +128,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: null,
       sub2: null,
@@ -149,6 +154,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: null,
       sub2: null,
@@ -174,6 +180,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: 'sub_1',
       sub2: 'sub_2',
@@ -199,6 +206,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: 'sub_1',
       sub2: null,
@@ -224,8 +232,9 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
-      sub1: '_=',
+      sub1: '_-',
       sub2: null,
       sub3: null,
       sub4: null,
@@ -249,6 +258,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await emptyDbSubIdCheck(data.id, 'REGISTRATION');
   });
 
@@ -268,6 +278,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
+    await sleep(1000);
     await emptyDbSubIdCheck(data.id, 'REGISTRATION');
   });
 
@@ -289,6 +300,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'USD');
+    await sleep(1000);
     await emptyDbSubIdCheck(data.id, 'REGISTRATION');
   });
 
@@ -310,6 +322,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'EUR');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: 'legal',
       sub2: null,
@@ -337,6 +350,7 @@ describe('Register with sub id parameter', () => {
     });
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'USD');
+    await sleep(1000);
     await dbSubIdCheck(data.id, 'REGISTRATION', {
       sub1: (subId1.slice(0, 128)),
       sub2: null,

@@ -7,7 +7,7 @@ const currency = 'RUB';
 const payment_system = 'webmoney_rub';
 
 describe('Withdrawal create with valid test cases ', () => {
-  before(async () => {
+  beforeAll(async () => {
     await logOut();
     await register.oneClickReg();
   });

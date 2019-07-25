@@ -12,7 +12,7 @@ const paymentType = 'beeline_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for beeline_rub - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

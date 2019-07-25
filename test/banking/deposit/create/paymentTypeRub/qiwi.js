@@ -7,7 +7,7 @@ const paymentType = 'qiwi_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for qiwi_rub - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 

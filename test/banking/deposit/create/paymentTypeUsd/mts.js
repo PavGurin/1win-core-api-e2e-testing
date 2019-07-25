@@ -12,7 +12,7 @@ const paymentType = 'mts_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for mts_rub - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

@@ -7,7 +7,7 @@ describe.skip('Manual control wallets(?)', () => {
   const paymentType = 'beeline_rub';
   const currency = 'RUB';
   const payment_system = 'beeline_rub';
-  before('', async () => {
+  beforeAll('', async () => {
     await userList.loginManualControl();
   });
 
@@ -32,7 +32,7 @@ describe.skip('Manual control wallets(?)', () => {
 });
 
 describe.skip('Blocked wallets deposit', () => {
-  before('', async () => {
+  beforeAll('', async () => {
     await userList.loginPartialBlock();
     // console.log(ddd);
   });

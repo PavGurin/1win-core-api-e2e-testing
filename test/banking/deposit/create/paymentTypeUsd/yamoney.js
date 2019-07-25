@@ -12,7 +12,7 @@ const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for yamoney_ru - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

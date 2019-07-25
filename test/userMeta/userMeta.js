@@ -2,8 +2,8 @@ import { checkMeta } from '../../src/expects/userMeta';
 import { register } from '../../src/methods/register';
 
 
-describe('C26424 - Get data about user from user.meta', () => {
-  it('all expects', async () => {
+describe(' Get data about user from user.meta', () => {
+  it('C26424 - all expects', async () => {
     register.oneClickReg();
     const meta = await socket.userMeta;
     // console.log(meta);

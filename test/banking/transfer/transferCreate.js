@@ -5,7 +5,7 @@ import { checkErrMsg } from '../../../src/responseChecker';
 import { logOut } from '../../../src/methods/user';
 
 describe('Transfer with money - RUB', () => {
-  before(async () => {
+  beforeAll(async () => {
     await logOut();
     await userList.loginWithRealMoney();
   });
@@ -50,7 +50,7 @@ describe('Transfer with money - RUB', () => {
   });
 
 
-  it(' (-) amount < 20 ', async () => {
+  it('C27042 (-) amount < 20 ', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 19,
@@ -61,7 +61,7 @@ describe('Transfer with money - RUB', () => {
 });
 
 describe('Transfer with money - USD', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRubUsd();
   });
 
@@ -109,7 +109,7 @@ describe('Transfer with money - USD', () => {
 });
 
 describe('Transfer without money', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 
