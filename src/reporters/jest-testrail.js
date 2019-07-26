@@ -45,7 +45,6 @@ class TestrailReporter {
   }
 
   onTestResult(testRunConfig, testResults, runResults) {
-    const resultsToTestrail = [];
     testResults.testResults.forEach((result, i, results) => {
       // eslint-disable-next-line no-param-reassign
       if (result.fullName.includes(config.filter)) result.status = 'blocked';

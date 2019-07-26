@@ -10,17 +10,18 @@
     },
     "setupTestFrameworkScriptFile": "./test/global.js",
     "reporters": [
+      "default",
       "./src/reporters/jest-testrail.js"
     ]
   },
   "scripts": {
-    "test": "jest --testTimeout=10000 --colors --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\"",
+    "test": "jest --testTimeout=10000 --colors --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "eslint": "eslint ./ --ext .js",
     "eslint:fix": "eslint ./ --ext .js --fix",
-    "test:banking": "jest --testPathPattern=./test/banking/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\"",
-    "test:bets": "jest --testPathPattern=./test/bets/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\"",
-    "test:health": "jest --testPathPattern=./test/health/.* --testTimeout=10000 --reporters=\"default\"",
-    "test:user-profile": "jest --testPathPattern=./test/userProfile/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\""
+    "test:banking": "jest --testPathPattern=./test/banking/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:bets": "jest --testPathPattern=./test/bets/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:health": "jest --testPathPattern=./test/health/.* --testTimeout=10000 --reporters=\"default\" --maxWorkers=4",
+    "test:user-profile": "jest --testPathPattern=./test/userProfile/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4"
   },
   "keywords": [],
   "author": "",
