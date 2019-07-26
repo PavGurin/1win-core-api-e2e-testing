@@ -12,7 +12,7 @@ const paymentType = 'tele2_rub';
 const currency = 'USD';
 
 describe.skip('Create deposite for tele2 - USD @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 

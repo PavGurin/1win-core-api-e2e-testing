@@ -1,8 +1,9 @@
-import SocketClient from '../src';
+// import jest from 'jest';
+import SocketClient from '../src/index';
 
 let socket;
 
-before(async () => {
+beforeAll(async () => {
   socket = new SocketClient({});
   await socket.connect();
   global.socket = socket;
@@ -10,8 +11,9 @@ before(async () => {
   global.defaultPassword = '123123';
   global.defaultPartnerKey = 'test001';
   global.defaultVisitDomain = '1win.dev';
+  jest.setTimeout(10000);
 });
 
-after(async () => {
+afterAll(async () => {
   socket.disconnect();
 });

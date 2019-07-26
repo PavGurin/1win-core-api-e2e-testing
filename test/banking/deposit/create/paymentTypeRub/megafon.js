@@ -7,7 +7,7 @@ const paymentType = 'megafon_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for megafon_rub - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 

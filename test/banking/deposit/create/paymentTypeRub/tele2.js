@@ -7,7 +7,7 @@ const paymentType = 'tele2_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for tele2 - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 

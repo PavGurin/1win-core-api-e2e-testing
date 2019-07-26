@@ -3,15 +3,25 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "jest": {
+    "testRegex": "./test/.*.[js]?$",
+    "transform": {
+      ".*": "./node_modules/babel-jest"
+    },
+    "setupTestFrameworkScriptFile": "./test/global.js",
+    "reporters": [
+      "default",
+      "./src/reporters/jest-testrail.js"
+    ]
+  },
   "scripts": {
-    "test": "mocha --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
-    "test:junit-report": "mocha --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive --reporter mocha-multi-reporters --reporter-options configFile=config.json",
+    "test": "jest --testTimeout=10000 --colors --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "eslint": "eslint ./ --ext .js",
     "eslint:fix": "eslint ./ --ext .js --fix",
-    "test:health": "mocha ./test/health/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
-    "test:banking": "mocha ./test/banking/**/**/**/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
-    "test:bets": "mocha ./test/bets/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive",
-    "test:user-profile": "mocha ./test/userProfile/**/*.js --require testPolyfill.js --compilers js:@babel/register --timeout 10000  --recursive"
+    "test:banking": "jest --testPathPattern=./test/banking/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:bets": "jest --testPathPattern=./test/bets/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:health": "jest --testPathPattern=./test/health/.* --testTimeout=10000 --reporters=\"default\" --maxWorkers=4",
+    "test:user-profile": "jest --testPathPattern=./test/userProfile/.* --testTimeout=10000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4"
   },
   "keywords": [],
   "author": "",
@@ -20,8 +30,8 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/node": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/register": "^7.5.5",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.0.0",
     "babel-node-modules": "^0.0.1",
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
@@ -30,10 +40,14 @@
     "nodemon": "^1.18.4"
   },
   "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/polyfill": "^7.4.4",
     "axios": "^0.19.0",
+    "babel-jest": "^24.8.0",
     "babel-polyfill": "^6.26.0",
     "chai": "4.2.0",
-    "fast-xml-parser": "^3.12.17",
+    "fast-xml-parser": "^3.12.16",
+    "jest": "^24.8.0",
     "md5": "^2.2.1",
     "mocha-junit-reporter": "^1.23.1",
     "mocha-multi-reporters": "^1.1.7",

@@ -7,7 +7,7 @@ const paymentType = 'beeline_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for beeline_rub - RUB @master', () => {
-  before(async () => {
+  beforeAll(async () => {
     await register.oneClickReg();
   });
 
