@@ -11,6 +11,7 @@ module.exports = {
         defaultPassword: true,
         defaultPartnerKey: true,
         defaultVisitDomain: true,
+        transferExpirationTime: true,
         Atomics: 'readonly',
         SharedArrayBuffer: 'readonly'
     },

@@ -63,17 +63,14 @@ describe('Transfer confirm with receiving code', () => {
     checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
   });
 
-  it.skip('C21437 (-) Expired code with 404 code response', async () => {
-    // пока падает по таймауту
-    // надо ждать 5 минут (300 000 мс), а у нас в настройках задан таймаут 10000 мс
-    // Error: Timeout of 10000ms exceeded.
-
-    // задержка в 5 минут, чтобы код протух
-    await sleep(300000);
+  it('C21437 (-) Expired code with 404 code response', async () => {
+    // на стейдже код протухнет через 30 секунд
+    // на проде этот тест упадет, т.к. таймаут задан для всех тестов 40 секунд
+    await sleep(transferExpirationTime - 4000);
     const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).to.equal(200);
-    // checkErrMsg(confirmData.data, 404, 'Неверный ключ запроса');
+    checkErrMsg(confirmData.data, 404, 'Перевод не найден');
   });
 
   it('C21438 (-) Second confirmation with the same code', async () => {
