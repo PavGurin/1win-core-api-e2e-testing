@@ -6,7 +6,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
 
-describe.skip('Create deposite for beeline_rub - RUB @master', () => {
+describe.skip('Create deposit for beeline_rub - RUB @master', () => {
   beforeAll(async () => {
     await register.oneClickReg();
   });
