@@ -55,10 +55,13 @@ export const mail = {
     message.text = mailData.data.html;
     message.from_address = mailData.data.from.value[0].address;
     message.from_name = mailData.data.from.value[0].name;
+
     // получаем из текста письма 7 цифр подряд, после которых нет
     // точки, символа доллара, рубля или евро
+    const regexpMatch = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|₽|€|@)/);
+    // если кода нет, возвращаем -1 в этом поле
     // eslint-disable-next-line prefer-destructuring
-    message.code = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|₽|€|@)/)[0];
+    if (regexpMatch) { message.code = regexpMatch[0]; } else message.code = -1;
     // console.log(message);
     await mail.deleteMessage(mailbox, mailboxData.data[0].emailId);
     return message;
