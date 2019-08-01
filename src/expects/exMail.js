@@ -5,3 +5,7 @@ export function checkMailRequisites(mail, expectedSubject, expectedName, expecte
   expect(mail.from_name).to.equal(expectedName);
   expect(mail.from_address).to.equal(expectedAddress);
 }
+
+export function checkMailTextLoginPass(mailText, expectedLogin, expectedPassword) {
+  expect(mailText).equal(`Login: ${expectedLogin}<br>Password: ${expectedPassword}\n`);
+}
