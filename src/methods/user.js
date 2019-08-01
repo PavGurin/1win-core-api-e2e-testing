@@ -18,3 +18,11 @@ export async function logOut() {
     tg_hash: randomStr(5),
   });
 }
+
+export async function sendUserDataToEmail(emailToSend, oneClickRegEmail, oneClickRegPassword) {
+  return socket.send('POST:user_info_send_to_email', {
+    email: emailToSend,
+    login: oneClickRegEmail,
+    password: oneClickRegPassword,
+  });
+}
