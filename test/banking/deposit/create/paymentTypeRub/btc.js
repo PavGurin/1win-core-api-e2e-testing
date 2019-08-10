@@ -11,16 +11,16 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
     await register.oneClickReg();
   });
 
-  it('C22485 - (+) amount = 1750 & wallet = (+7)phone', async () => {
+  it('C28655 - (+) amount = 1751 & wallet = empty', async () => {
     const { data } = await banking.depositCreateRub(
-      1751, '+79001234567', paymentType, currency,
+      1751, '', paymentType, currency,
     );
     // console.log(data);
     successDepositCreate(data, currency,
       paymentType, 1751);
   });
 
-  it('C22488 - min amount & wallet = symbols', async () => {
+  it('C28656 - min amount & wallet = symbols', async () => {
     const { data } = await banking.depositCreateRub(1750,
       '+79215598289', paymentType, currency);
 
@@ -29,7 +29,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
       paymentType, 1750);
   });
 
-  it('C22490 - max amount & wallet = numbers', async () => {
+  it('C28660 - max amount & wallet = numbers', async () => {
     const { data } = await banking.depositCreateRub(21000,
       '+79215598226', paymentType, currency);
     // console.log(data);
@@ -37,7 +37,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
       paymentType, 21000);
   });
 
-  it('C22491 - < max amount & wallet = numbers', async () => {
+  it('C28661 - < max amount & wallet = numbers', async () => {
     const { data } = await banking.depositCreateRub(20999, '+79215598236',
       paymentType, currency);
     // console.log(data);
@@ -47,7 +47,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
 });
 
 describe('Create deposite for btc_usd invalid - RUB', () => {
-  it('C22494 - amount = 0', async () => {
+  it('C28659 - amount = 0', async () => {
     const { data } = await banking.depositCreateRub(0, '+79215598256',
       paymentType, currency);
       // console.log(data);
@@ -55,28 +55,28 @@ describe('Create deposite for btc_usd invalid - RUB', () => {
   });
 
 
-  it('C22500 - amount double < min amount', async () => {
+  it('C28662 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(1749.6, '79215598386',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22501 - amount < min amount', async () => {
+  it('C28663 - amount < min amount', async () => {
     const { data } = await banking.depositCreateRub(1749, '79215598486',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22502 - amount > max amount', async () => {
+  it('C28664 - amount > max amount', async () => {
     const { data } = await banking.depositCreateRub(21001, '79215598586',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22503 - amount double > max amount', async () => {
+  it('C28657 - amount double > max amount', async () => {
     const { data } = await banking.depositCreateRub(21000.000001, '79215598686',
       paymentType, currency);
       // console.log(data);
