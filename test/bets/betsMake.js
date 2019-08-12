@@ -96,7 +96,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
 
     const betResponse = await makeOrdinaryBet(coupon, currency, 1);
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).equal(400);
     expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Odds higher than market in Line Service');
@@ -316,7 +316,7 @@ describe('Express', () => {
     const coupon = generateExpressCoupon(matchMap, 100, 1);
 
     const betResponse = await makeExpressBet(Object.values(coupon));
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
     expect(betResponse.status).equal(200);
