@@ -1,6 +1,7 @@
 import axios from 'axios';
 import parser from 'fast-xml-parser';
 import { randomStr } from '../randomizer';
+import { mysqlConnection } from './mysqlConnection';
 
 
 export const banking = {
@@ -54,6 +55,16 @@ export const banking = {
       tg_hash: randomStr(5),
     });
     return balanceData.data.primary.amount;
+  },
+
+  async setBalance(userId, amount = 200) {
+    await mysqlConnection.executeQuery(`UPDATE 1win.ma_balance SET amount = ${amount} WHERE id_user = ${userId}`);
+  },
+
+  async getWithdrawalStatus(userId) {
+    const result = await mysqlConnection.executeQuery(`SELECT status FROM 1win.ma_withdrawal WHERE id_user = ${userId} ORDER BY time DESC;`);
+    // console.log(result);
+    return result[0].status;
   },
 };
 
