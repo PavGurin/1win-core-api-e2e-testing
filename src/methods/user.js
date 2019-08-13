@@ -1,4 +1,5 @@
 import { randomNum, randomStr } from '../randomizer';
+import { mysqlConnection } from './mysqlConnection';
 
 export const updateProfile = newProfile => socket.send('USER:profile-update',
   {
@@ -25,4 +26,32 @@ export async function sendUserDataToEmail(emailToSend, oneClickRegEmail, oneClic
     login: oneClickRegEmail,
     password: oneClickRegPassword,
   });
+}
+
+export async function setUserRiskCoef(userId, coef) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','user_risk_coefficient',${coef});`);
+}
+
+export async function setUserWithdrawalBlock(userId) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','withdrawal_block','true');`);
+}
+
+export async function setUserWithdrawalManualControl(userId) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','withdrawal_manual_control','true');`);
+}
+
+export async function setUserDemoWithdrawal(userId) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','user_demo_withdrawal','true');`);
+}
+
+export async function setUserCasesWinner(userId) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','cases_winner','true');`);
+}
+
+export async function setUserBonusAmount(userId, amount) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','bonus_amount',${amount});`);
+}
+
+export async function setUserFullBlock(userId) {
+  return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','full_block','true');`);
 }

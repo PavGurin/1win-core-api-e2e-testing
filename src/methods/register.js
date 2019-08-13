@@ -68,4 +68,54 @@ export const register = {
         partner_key,
       });
   },
+
+  async oneClickWithVisitDomainRUB(visitDomain) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: true,
+        country: defaultCountry,
+        timezone: 23,
+        partner_key: '',
+        sub_ids: ' ',
+        visit_domain: visitDomain,
+      });
+  },
+  async oneClickWithVisitDomainUSD(visitDomain) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: true,
+        country: defaultCountry,
+        timezone: 23,
+        partner_key,
+        currency: 'USD',
+        visit_domain: visitDomain,
+      });
+  },
+  async oneClickWithVisitDomainEUR(visitDomain) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: true,
+        country: defaultCountry,
+        timezone: 23,
+        partner_key,
+        currency: 'EUR',
+        visit_domain: visitDomain,
+      });
+  },
+  async usualRegWithVisitDomain(visitDomain) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: false,
+        name: randomStr(),
+        email: `${randomStr(5)}_test@new.xyz`,
+        phone: randomNum().toString(),
+        password: defaultPassword,
+        repeat_password: defaultPassword,
+        country: defaultCountry,
+        timezone: 23,
+        birthday: 946587600000,
+        partner_key,
+        visit_domain: visitDomain,
+      });
+  },
 };
