@@ -1,142 +1,81 @@
+import { expect } from 'chai';
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
-import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
+import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
 const paymentType = 'yamoney_rub';
 const currency = 'RUB';
+let user = {};
 
-describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
+describe('Create deposite for yamoney_ru - RUB', () => {
   beforeAll(async () => {
-    await register.oneClickReg();
+    user = await register.oneClickReg();
   });
 
   it('C22646 (+) amount = 100 & wallet = empty', async () => {
-    const { data } = await banking.depositCreateRub(
+    await banking.depositCreateRub(
       100, '', paymentType, currency,
     );
-    // console.log
-    successDepositCreate(data, currency,
-      paymentType, 100);
-  });
-
-  it('C22647 - (+) amount = 100.01 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
-      100.01, '123 autotests', paymentType, currency,
-    );
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 100.01);
-  });
-
-  it('C22648 - amount = 2000 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
-      2000, 'порпорпорпэ', paymentType, currency,
-    );
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 2000);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 100, '',
+      'yamoney_rub', 'RUB');
   });
 
   it('C22649 - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(10,
+    await banking.depositCreateRub(10,
       '123234345456 etryrt', paymentType, currency);
-
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 10);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 10, '123234345456 etryrt',
+      'yamoney_rub', 'RUB');
   });
 
   it('C22650 - > min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(11,
+    await banking.depositCreateRub(11,
       '12№%:№%:45456etryrt', paymentType, currency);
-
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 11);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 11, '12№%:№%:45456etryrt',
+      'yamoney_rub', 'RUB');
   });
 
   it('C22651 - max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(100000, '09090909999',
+    await banking.depositCreateRub(100000, '09090909999',
       paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 100000);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 100000, '09090909999',
+      'yamoney_rub', 'RUB');
   });
 
   it('C22652 - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(99999, '0[[[?<><?999',
+    await banking.depositCreateRub(99999, '0[[[?<><?999',
       paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 99999);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 99999, '0[[[?<><?999',
+      'yamoney_rub', 'RUB');
   });
 
-  // Не знаю, какой должен быть результат
   it('C22654 wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRub(100, undefined,
+    await banking.depositCreateRub(100, undefined,
       paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 100);
-  });
-
-  it('C22653 - without currency', async () => {
-    const { data } = await socket.send('BANKING:deposit-create', {
-      amount: '100',
-      wallet: '00001111222223333',
-      paymentType,
-    });
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 100);
-  });
-
-  it('C22660 - amount =string - number', async () => {
-    const { data } = await banking.depositCreateRub('50', '',
-      paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 50);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
+    // console.log(dbResult);
+    expect(dbResult.length).to.equal(5);
   });
 });
 
 describe('Create deposite for yamoney_ru invalid - RUB', () => {
-  it('C22655 - amount = 0', async () => {
-    const { data } = await banking.depositCreateRub(0, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
-  });
-
-  it('C22656 - amount = null', async () => {
-    const { data } = await banking.depositCreateRub(null, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
-  });
-
-  it('C22657 - amount = empty', async () => {
-    const { data } = await banking.depositCreateRub(' ', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
-  });
-
-  it('C22658 - amount = undefined', async () => {
-    const { data } = await banking.depositCreateRub(undefined, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
-  });
-
-  it('C22659 - amount = string', async () => {
-    const { data } = await banking.depositCreateRub('fjfj', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
-
   it('C22661 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);
@@ -163,14 +102,5 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
-  // Не знаю что тут должно быть
-  it('C22667 - incorrect paymentType = yamoney_ru_test', async () => {
-    const { data } = await banking.depositCreateRub(100,
-      '12312312',
-      'yamoney_ru_test', currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный способ оплаты');
   });
 });

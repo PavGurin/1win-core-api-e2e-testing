@@ -10,7 +10,7 @@ describe('Deposit requests', () => {
   });
 
   // TODO больше проверок на PaymentType
-  it.skip('C19376 (-) create without currency @master', async () => {
+  it.skip('C19376 (-) create without currency', async () => {
     const { data } = await socket.send('BANKING:deposit-create-request', {
       amount: 101,
       wallet: ' ',

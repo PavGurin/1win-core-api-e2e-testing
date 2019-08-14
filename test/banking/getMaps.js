@@ -13,7 +13,6 @@ describe('Get methods map', () => {
     expect(data.payeer_rub.name).equal('payeer_rub');
     expect(data.qiwi_rub.name).equal('qiwi_rub');
     expect(data.tele2_rub.name).equal('tele2_rub');
-    expect(data.webmoney_rub.name).equal('webmoney_rub');
     expect(data.yamoney_rub.name).equal('yamoney_rub');
   });
 

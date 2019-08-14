@@ -30,7 +30,7 @@ describe('Transfer with money - RUB', () => {
     checkErrMsg(data, 400, 'Недостаточно средств');
   });
 
-  it(' (+) amount > 20 ', async () => {
+  it('C28690 - (+) amount > 20 ', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 21,
@@ -40,7 +40,7 @@ describe('Transfer with money - RUB', () => {
     expect(data.email).not.equal(null);
   });
 
-  it(' (-) 19 > amount > 20 ', async () => {
+  it('C28691 - (-) 19 > amount > 20 ', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 19.68,
@@ -54,9 +54,27 @@ describe('Transfer with money - RUB', () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 19,
+      currency: 'RUB',
     });
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
+  });
+
+  it('C27043 - without amount ', async () => {
+    const { data } = await socket.send('BANKING:transfer-create', {
+      targetEmail: 'test_transfer@mailinator.com',
+      currency: 'RUB',
+    });
+    // console.log(data);
+    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
+  });
+
+  it('C27044 - without targetEmail ', async () => {
+    const { data } = await socket.send('BANKING:transfer-create', {
+      currency: 'RUB',
+    });
+    // console.log(data);
+    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 });
 
@@ -100,7 +118,7 @@ describe('Transfer with money - USD', () => {
   it('C19369 (-) Without money , enough amount + USD', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
-      amount: 10000,
+      amount: 1000000,
       currency: 'EUR',
     });
     // console.log(data);
@@ -120,7 +138,7 @@ describe('Transfer without money', () => {
       currency: 'RUB',
     });
     // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
+    checkErrMsg(data, 400, 'Недостаточно средств');
   });
 
   it('C19370 (-) Without money , enough amount + RUB', async () => {

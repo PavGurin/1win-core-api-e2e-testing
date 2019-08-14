@@ -12,7 +12,7 @@ beforeEach(async () => {
   await userList.loginWithRealMoney();
 });
 
-describe('Old bets requests', () => {
+describe.skip('Old bets requests', () => {
   it('C27558 (+) liveOld', async () => {
     const [singleMatch] = await getSingleMatch(LIVE);
     // console.log(singleMatch);

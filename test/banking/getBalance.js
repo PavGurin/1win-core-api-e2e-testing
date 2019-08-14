@@ -21,7 +21,7 @@ describe('Balance get', () => {
     // console.log(data);
     expect(data['0'].balance).not.equal(0);
     expect(data['0'].currency).equal('RUB');
-    expect(data['1'].balance).equal(0);
+    expect(data['1'].balance).not.equal(0);
     expect(data['1'].currency).equal('USD');
     expect(data['2'].balance).equal(0);
     expect(data['2'].currency).equal('EUR');
