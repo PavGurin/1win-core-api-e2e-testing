@@ -1,74 +1,7 @@
-import { mysqlConnection } from '../../src/methods/mysqlConnection';
-import { register } from '../../src/methods/register';
-import { banking } from '../../src/methods/banking';
-import { successDbDeposit } from '../../src/expects/exDatabaseTests';
-
-
-describe('Deposit creation in database, RUB', async () => {
-  it('C27487 (+) successful deposit create rub + card', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '1234123412341234', 'card_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '1234123412341234', 'card_rub', 'RUB');
-  });
-
-  it('C27488 (+) successful deposit create rub + beeline', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '+79211001122', 'beeline_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '9211001122', 'beeline_rub', 'RUB');
-  });
-
-  it('C27489 (+) successful deposit create rub + megafon', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '+79272223344', 'megafon_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '9272223344', 'megafon_rub', 'RUB');
-  });
-
-  it('C27490 (+) successful deposit create rub + mts', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '79119998877', 'mts_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '9119998877', 'mts_rub', 'RUB');
-  });
-
-  it('C27491 (+) successful deposit create rub + piastrix', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, 'qeqqweqwqewqda', 'piastrix_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, 'qeqqweqwqewqda', 'piastrix_rub', 'RUB');
-  });
-
-  it('C27492 (+) successful deposit create rub + qiwi', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '+3739001234567', 'qiwi_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '3739001234567', 'qiwi_rub', 'RUB');
-  });
-
-  it('C27493 (+) successful deposit create rub + tele2', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '+79526667788', 'tele2_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '9526667788', 'tele2_rub', 'RUB');
-  });
-
-  it('C27494 (+) successful deposit create rub + yamoney', async () => {
-    const user = await register.oneClickReg();
-    await banking.depositCreateRub(100.01, '235235235243', 'yamoney_rub', 'RUB');
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100.01, '235235235243', 'yamoney_rub', 'RUB');
-  });
-});
+import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
+import { register } from '../../../../src/methods/register';
+import { banking } from '../../../../src/methods/banking';
+import { successDbDeposit } from '../../../../src/expects/exDatabaseTests';
 
 describe('Deposit creation in database, USD', async () => {
   it('C27495 (+) successful deposit create usd + card', async () => {

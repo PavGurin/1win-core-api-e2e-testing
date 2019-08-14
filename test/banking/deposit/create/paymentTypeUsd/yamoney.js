@@ -3,11 +3,6 @@ import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { userList } from '../../../../../src/methods/userList';
 
-// beforeEach('Регистрация нового пользователя перед началом каждого теста', async () => {
-//     const {user} = await register.oneClickReg();
-//     }
-// );
-
 const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
@@ -99,55 +94,6 @@ describe.skip('Create deposite for yamoney_ru - USD @master', () => {
 });
 
 describe.skip('Create deposite for yamoney_ru invalid - USD', () => {
-  it(' amount = 0', async () => {
-    const { data } = await banking.depositCreateRub(0, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is invalid');
-  });
-
-  it(' amount = null', async () => {
-    const { data } = await banking.depositCreateRub(null, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
-  });
-
-  it(' amount = empty', async () => {
-    const { data } = await banking.depositCreateRub(' ', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
-
-  it(' amount = undefined', async () => {
-    const { data } = await banking.depositCreateRub(undefined, '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
-  });
-
-  it(' amount = latinic', async () => {
-    const { data } = await banking.depositCreateRub('fjfj', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
-
-  it(' amount = symbols', async () => {
-    const { data } = await banking.depositCreateRub('(#&@(@&%', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
-  });
-
-  it(' amount = number', async () => {
-    const { data } = await banking.depositCreateRub('50', '',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
   it(' amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);
@@ -174,31 +120,5 @@ describe.skip('Create deposite for yamoney_ru invalid - USD', () => {
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
-  });
-
-  it(' wallet = null', async () => {
-    const { data } = await banking.depositCreateRub(100, null,
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  it(' wallet = long string', async () => {
-    const { data } = await banking.depositCreateRub(100,
-      // TODO посмотреть количество символов доступных в кошельке
-      '1231231231231231453453345345342312312312312123123123123',
-      paymentType, currency);
-    // console.log(data);
-    checkErrMsg(data, 400, 'Неверный формат кошелька');
-  });
-
-  // Не знаю что тут должно быть
-  it(' incorrect paymentType = yamoney_ru_test', async () => {
-    const { data } = await banking.depositCreateRub(100,
-      // TODO посмотреть количество символов доступных в кошельке
-      '12312312',
-      'yamoney_ru_test', currency);
-    // console.log(data);
-    checkErrMsg(data, 400, '?????');
   });
 });

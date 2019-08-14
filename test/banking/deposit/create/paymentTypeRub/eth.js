@@ -1,83 +1,86 @@
 import { banking } from '../../../../../src/methods/banking';
-import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
+import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
+import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
 const paymentType = 'eth_usd';
 const currency = 'RUB';
+let user = {};
 
-describe.skip('Create deposit for eth_usd - RUB @master', () => {
+describe('Create deposit for eth_usd - RUB', () => {
   beforeAll(async () => {
-    await register.oneClickReg();
+    user = await register.oneClickReg();
   });
 
   it('C28665 - (+) amount = 751 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
-      751, '+79001234567', paymentType, currency,
-    );
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 751);
+    await banking.depositCreateRub(1401, '+79001234567', paymentType, currency);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 1401, '+79001234567',
+      'eth_usd', 'RUB');
   });
 
   it('C28666 - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(750,
-      '+79215598289', paymentType, currency);
-
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 750);
+    await banking.depositCreateRub(1400, '+79215598289', paymentType, currency);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 1400, '+79215598289',
+      'eth_usd', 'RUB');
   });
 
   it('C28667 - max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(21000,
-      '+79215598226', paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 21000);
+    await banking.depositCreateRub(21000, '+79215598226', paymentType, currency);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 21000, '+79215598226',
+      'eth_usd', 'RUB');
   });
 
   it('C28668 - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(20999, '+79215598236',
-      paymentType, currency);
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 20999);
+    await banking.depositCreateRub(20999, '+79215598236', paymentType, currency);
+    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
+ WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
+    // console.log(dbResult);
+    successDbDeposit(dbResult, 20999, '+79215598236',
+      'eth_usd', 'RUB');
   });
 });
 
 describe('Create deposite for eth_usd invalid - RUB', () => {
   it('C28669 - amount = 0', async () => {
-    const { data } = await banking.depositCreateRub(0, '+79215598256',
-      paymentType, currency);
-      // console.log(data);
+    const { data } = await banking.depositCreateRub(0, '+79215598256', paymentType, currency);
+    // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
 
   it('C28670 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRub(750.6, '79215598386',
+    const { data } = await banking.depositCreateRub(1399.6, '79215598386',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C28671 - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(749, '79215598486',
+    const { data } = await banking.depositCreateRub(1399, '79215598486',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C28672 - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(21001, '79215598586',
+    const { data } = await banking.depositCreateRub(210001, '79215598586',
       paymentType, currency);
-      // console.log(data);
+    // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C28673 - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(21000.000001, '79215598686',
+    const { data } = await banking.depositCreateRub(210000.000001, '79215598686',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
