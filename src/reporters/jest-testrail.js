@@ -75,6 +75,7 @@ class TestrailReporter {
         // console.log(e);
       }
     }
+    await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
   }
 }
 
