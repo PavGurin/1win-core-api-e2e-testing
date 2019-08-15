@@ -56,6 +56,10 @@ describe('Create deposite for megafon_rub - RUB', () => {
 });
 
 describe('Create deposite for megafon_rub invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C28675 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79001234567',
       paymentType, currency);

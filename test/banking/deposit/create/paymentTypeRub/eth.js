@@ -51,6 +51,10 @@ describe('Create deposit for eth_usd - RUB', () => {
 });
 
 describe('Create deposite for eth_usd invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C28669 - amount = 0', async () => {
     const { data } = await banking.depositCreateRub(0, '+79215598256', paymentType, currency);
     // console.log(data);
@@ -61,14 +65,14 @@ describe('Create deposite for eth_usd invalid - RUB', () => {
   it('C28670 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(1399.6, '79215598386',
       paymentType, currency);
-      // console.log(data);
+    // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C28671 - amount < min amount', async () => {
     const { data } = await banking.depositCreateRub(1399, '79215598486',
       paymentType, currency);
-      // console.log(data);
+    // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 

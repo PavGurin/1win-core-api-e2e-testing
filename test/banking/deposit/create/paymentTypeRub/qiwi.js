@@ -248,6 +248,10 @@ WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
 });
 
 describe('Create deposite for qiwi_rub invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C22635 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79001234567',
       paymentType, currency);

@@ -64,6 +64,10 @@ describe('Create deposite for card_rub - RUB', () => {
 });
 
 describe('Create deposite for card_rub invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C22516 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(90.6, '',
       paymentType, currency);

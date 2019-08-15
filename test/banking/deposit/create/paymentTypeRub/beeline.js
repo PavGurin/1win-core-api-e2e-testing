@@ -67,6 +67,10 @@ describe('Create deposit for beeline_rub - RUB', () => {
 });
 
 describe('Create deposite for beeline_rub invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C22500 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '79215598386',
       paymentType, currency);

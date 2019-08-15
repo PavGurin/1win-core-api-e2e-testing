@@ -66,6 +66,10 @@ describe('Create deposite for tele2 - RUB', () => {
 });
 
 describe('Create deposite for tele2_rub invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C22687 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79772520000',
       paymentType, currency);

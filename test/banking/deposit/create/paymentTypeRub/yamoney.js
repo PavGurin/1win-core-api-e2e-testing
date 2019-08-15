@@ -76,6 +76,10 @@ describe('Create deposite for yamoney_ru - RUB', () => {
 });
 
 describe('Create deposite for yamoney_ru invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C22661 - amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);

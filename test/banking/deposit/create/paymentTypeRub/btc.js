@@ -56,6 +56,10 @@ describe('Create deposit for btc_usd - RUB', () => {
 });
 
 describe('Create deposite for btc_usd invalid - RUB', () => {
+  beforeAll(async () => {
+    user = await register.oneClickReg();
+  });
+
   it('C28659 - amount = 0', async () => {
     const { data } = await banking.depositCreateRub(0, '+79215598256',
       paymentType, currency);
