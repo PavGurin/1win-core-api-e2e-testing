@@ -46,7 +46,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
   });
 });
 
-describe('Create deposite for btc_usd invalid - RUB', () => {
+describe.skip('Create deposite for btc_usd invalid - RUB', () => {
   it(' - amount = 0', async () => {
     const { data } = await banking.depositCreateRequestRub(0, '+79215598256',
       paymentType, currency);
