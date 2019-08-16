@@ -63,17 +63,13 @@ class TestrailReporter {
   }
 
   async expToTestrail() {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const result of this.res) {
-      // console.log(result);
-      try {
-        if (result.case_id) {
-          // eslint-disable-next-line no-await-in-loop
-          await this.axiosInstance.post(`/add_results_for_cases/${this.testRunId}`, { 'results': [result] });
-        }
-      } catch (e) {
-        // console.log(e);
-      }
+    this.res = this.res.filter(caseResult => caseResult.case_id !== undefined);
+    this.res = this.res.filter(caseResult => caseResult.status_id !== undefined);
+    // console.log(this.res);
+    try {
+      await this.axiosInstance.post(`/add_results_for_cases/${this.testRunId}`, { 'results': this.res });
+    } catch (e) {
+      console.log(e.response.data);
     }
     await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
   }
