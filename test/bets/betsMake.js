@@ -151,7 +151,7 @@ describe('Ordinary bets prematch', () => {
     expect(betResponse.status).equal(200);
   });
 
-  it('C27157 (-) changed specialValue', async () => {
+  it(' (-) changed specialValue', async () => {
     const [singleMatch] = await getSingleMatch(PREMATCH);
     // console.log(singleMatch);
 

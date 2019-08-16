@@ -266,7 +266,7 @@ describe.skip('Create deposite for qiwi_rub invalid - RUB', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it('C22637 - amount > max amount', async () => {
+  it(' - amount > max amount', async () => {
     const { data } = await banking.depositCreateRub(15001, '+79001234567',
       paymentType, currency);
     // console.log(data);
