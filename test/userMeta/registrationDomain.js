@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { randomStr } from '../../src/randomizer';
 import { logOut } from '../../src/methods/user';
 import { checkRegistrationDomain } from '../../src/expects/exDatabaseTests';
 
