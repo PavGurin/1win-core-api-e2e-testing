@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "testRegex": "./test/.*.[js]?$",
+    "testRegex": "./test/(?!global).*.[js]?$",
     "transform": {
       ".*": "./node_modules/babel-jest"
     },
