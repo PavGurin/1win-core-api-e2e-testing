@@ -4,8 +4,7 @@ import { randomNum, randomStr } from '../../src/randomizer';
 import { dbSubIdCheck, emptyDbSubIdCheck } from '../../src/methods/dbSubIdCheck';
 import { sleep } from '../../src/methods/utils';
 
-// TODO для проверки работы тестов нужно добавить проверку api партнерки и сверять изменение данных
-describe('Register with sub id parameter', () => {
+describe.skip('Register with sub id parameter', () => {
   const defaultRequest = params => socket.send('USER:auth-register',
     {
       isShort: false,
