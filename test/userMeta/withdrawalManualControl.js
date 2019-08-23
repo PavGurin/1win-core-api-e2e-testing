@@ -112,7 +112,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28638 (+) withdrawal_manual_control = true, cases', async () => {
-      const { data } = await cases.playCase(1);
+      const { data } = await cases.playCaseWithoutChance(1);
       // console.log(data);
       expect(data.result).above(0);
     });

@@ -55,7 +55,7 @@ describe('Cases winner tests', () => {
       const caseCost = await cases.getCaseCost(1);
       for (let i = 0; i < 5; i++) {
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCase(1);
+        const { data } = await cases.playCaseWithoutChance(1);
         results.push(data.result);
       }
       // проверка, что хотя бы в одном случае выигрыш был меньше цены кейса
@@ -68,7 +68,7 @@ describe('Cases winner tests', () => {
         // eslint-disable-next-line no-await-in-loop
         const caseCost = await cases.getCaseCost(i);
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCase(i);
+        const { data } = await cases.playCaseWithoutChance(i);
         results.push(data.result < caseCost);
       }
       // проверка, что хотя бы в одном случае выигрыш был меньше цены кейса
@@ -134,14 +134,14 @@ describe('Cases winner tests', () => {
 
     it('C28429 (+) cases_winner = true + withdrawal_block = true, case 1  (min cost 10 rub)', async () => {
       const caseCost = await cases.getCaseCost(1);
-      const { data } = await cases.playCase(1);
+      const { data } = await cases.playCaseWithoutChance(1);
       // console.log(data);
       expect(data.result).above(caseCost);
     });
 
     it('C28430 (+) cases_winner = true + withdrawal_block = true, case 8 (max cost 10000 rub)', async () => {
       const caseCost = await cases.getCaseCost(8);
-      const { data } = await cases.playCase(8);
+      const { data } = await cases.playCaseWithoutChance(8);
       // console.log(data);
       expect(data.result).above(caseCost);
     });
@@ -150,7 +150,7 @@ describe('Cases winner tests', () => {
       const caseCost = await cases.getCaseCost(3);
       for (let i = 0; i < 5; i++) {
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCase(3);
+        const { data } = await cases.playCaseWithoutChance(3);
         // console.log(data);
         expect(data.result).above(caseCost);
       }
@@ -161,7 +161,7 @@ describe('Cases winner tests', () => {
         // eslint-disable-next-line no-await-in-loop
         const caseCost = await cases.getCaseCost(i);
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCase(i);
+        const { data } = await cases.playCaseWithoutChance(i);
         // console.log(data);
         expect(data.result).above(caseCost);
       }

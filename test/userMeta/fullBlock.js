@@ -62,7 +62,7 @@ describe('Full block tests', () => {
     });
 
     it('C28643 (+) full_block = true in bd after login, cases blocked', async () => {
-      const { data } = cases.playCase(1);
+      const { data } = cases.playCaseWithoutChance(1);
       await sleep(2000);
       expect(data).undefined;
     });
