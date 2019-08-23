@@ -11,6 +11,7 @@ export const register = {
         country: defaultCountry,
         timezone: 23,
         partner_key,
+        currency: 'RUB',
       });
   },
 

@@ -8,7 +8,9 @@
     "transform": {
       ".*": "./node_modules/babel-jest"
     },
-    "setupFilesAfterEnv": ["./test/global.js"],
+    "setupFilesAfterEnv": [
+      "./test/global.js"
+    ],
     "reporters": [
       "default",
       "./src/reporters/jest-testrail.js"
