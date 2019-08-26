@@ -127,7 +127,8 @@ describe('Cases - totally won ', () => {
       // console.log(data.result);
       const won2 = await cases.getCaseInfo(10);
       // console.log(won2.data.totallyWon);
-      expect(won2.data.totallyWon).to.equal(won1.data.totallyWon + data.result);
+      expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
+        .toFixed(2));
     });
 
     it('C484979 - (+) play cases 11', async () => {
@@ -137,7 +138,8 @@ describe('Cases - totally won ', () => {
       // console.log(data.result);
       const won2 = await cases.getCaseInfo(11);
       // console.log(won2.data.totallyWon);
-      expect(won2.data.totallyWon).to.equal(won1.data.totallyWon + data.result);
+      expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
+        .toFixed(2));
     });
 
     it('C484980 - (+) play cases 12', async () => {
@@ -147,7 +149,8 @@ describe('Cases - totally won ', () => {
       // console.log(data.result);
       const won2 = await cases.getCaseInfo(12);
       // console.log(won2.data.totallyWon);
-      expect(won2.data.totallyWon).to.equal(won1.data.totallyWon + data.result);
+      expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
+        .toFixed(2));
     });
 
     it('C484981 - (+) play cases 13', async () => {
@@ -157,7 +160,8 @@ describe('Cases - totally won ', () => {
       // console.log(data.result);
       const won2 = await cases.getCaseInfo(13);
       // console.log(won2.data.totallyWon);
-      expect(won2.data.totallyWon).to.equal(won1.data.totallyWon + data.result);
+      expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
+        .toFixed(2));
     });
 
     it('C484982 - (+) play cases 14', async () => {
@@ -167,7 +171,8 @@ describe('Cases - totally won ', () => {
       // console.log(data.result);
       const won2 = await cases.getCaseInfo(14);
       // console.log(won2.data.totallyWon);
-      expect(won2.data.totallyWon).to.equal(won1.data.totallyWon + data.result);
+      expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
+        .toFixed(2));
     });
 
     it('C484983 - (+) play cases 15', async () => {
@@ -177,7 +182,8 @@ describe('Cases - totally won ', () => {
       // console.log(data.result);
       const won2 = await cases.getCaseInfo(15);
       // console.log(won2.data.totallyWon);
-      expect(won2.data.totallyWon).to.equal(won1.data.totallyWon + data.result);
+      expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
+        .toFixed(2));
     });
   });
 });
