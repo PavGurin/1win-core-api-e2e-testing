@@ -58,7 +58,7 @@ describe('Bets get', () => {
     // console.log(singleMatch);
     const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
     // console.log(coupon);
-    await makeOrdinaryBet(coupon, currency, 1);
+    await makeOrdinaryBet(coupon, currency, 10);
 
     const { data: betsMap } = await getMatchHistory(
       {
@@ -88,7 +88,7 @@ describe('Bets get', () => {
       Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
     );
     // console.log(matchMap);
-    const coupon = generateExpressCoupon(matchMap, 2, 1);
+    const coupon = generateExpressCoupon(matchMap, 2, 10);
     // console.log(coupon);
     await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
