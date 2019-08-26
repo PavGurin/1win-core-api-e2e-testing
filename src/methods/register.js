@@ -11,6 +11,7 @@ export const register = {
         country: defaultCountry,
         timezone: 23,
         partner_key,
+        currency: 'RUB',
       });
   },
 
@@ -43,6 +44,23 @@ export const register = {
         isShort: false,
         name: randomStr(),
         email: `${randomStr(5)}_test@new.xyz`,
+        phone: randomNum().toString(),
+        password: defaultPassword,
+        repeat_password: defaultPassword,
+        country: defaultCountry,
+        timezone: 23,
+        birthday: 946587600000,
+        partner_key,
+        ...usualRegistration,
+      });
+  },
+
+  async usualRegMailru(usualRegistration) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: false,
+        name: randomStr(),
+        email: `${randomStr(5)}_test@mail.ru`,
         phone: randomNum().toString(),
         password: defaultPassword,
         repeat_password: defaultPassword,

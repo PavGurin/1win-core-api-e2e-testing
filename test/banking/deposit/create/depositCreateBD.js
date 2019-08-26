@@ -3,7 +3,7 @@ import { register } from '../../../../src/methods/register';
 import { banking } from '../../../../src/methods/banking';
 import { successDbDeposit } from '../../../../src/expects/exDatabaseTests';
 
-describe('Deposit creation in database, USD', async () => {
+describe.skip('Deposit creation in database, USD', async () => {
   it('C27495 (+) successful deposit create usd + card', async () => {
     const user = await register.oneClickRegUSD();
     await banking.depositCreateRub(100.01, '1234123412341234', 'card_rub', 'USD');
@@ -69,7 +69,7 @@ describe('Deposit creation in database, USD', async () => {
   });
 });
 
-describe('Deposit creation in database, EUR', async () => {
+describe.skip('Deposit creation in database, EUR', async () => {
   it('C27503 (+) successful deposit create eur + card', async () => {
     const user = await register.oneClickRegEUR();
     await banking.depositCreateRub(100.01, '1234123412341234', 'card_rub', 'EUR');

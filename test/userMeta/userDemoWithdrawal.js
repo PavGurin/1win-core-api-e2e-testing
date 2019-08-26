@@ -74,7 +74,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28426 (+) user_demo_withdrawal = true + withdrawal_block = false, cases', async () => {
-      const { data } = await cases.playCase(1);
+      const { data } = await cases.playCaseWithoutChance(1);
       expect(data.result).above(0);
     });
 
@@ -137,7 +137,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28420 (-) user_demo_withdrawal = true + withdrawal_block = true, cases', async () => {
-      const { data } = await cases.playCase(1);
+      const { data } = await cases.playCaseWithoutChance(1);
       // console.log(data);
       checkErrMsg(data, 400, 'demo are forbidden');
     });

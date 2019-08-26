@@ -8,10 +8,20 @@ export const cases = {
     });
     return caseCost;
   },
-  async playCase(caseId) {
+  async playCaseWithoutChance(caseId) {
     return socket.send('CASES:cases-play', {
       id: caseId,
       chance: null,
+      host: defaultVisitDomain,
+    });
+  },
+  async raitingCase() {
+    return socket.send('CASES:cases-rating', {});
+  },
+  async playCaseWithChance(caseId, chance) {
+    return socket.send('CASES:cases-play', {
+      id: caseId,
+      chance,
       host: defaultVisitDomain,
     });
   },

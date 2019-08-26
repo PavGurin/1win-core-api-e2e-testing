@@ -32,7 +32,7 @@ describe('Withdrawal block tests', () => {
     it('C28413 (+) withdrawal_block = false, cases', async () => {
       const { data: user } = await register.oneClickReg();
       await banking.setBalance(user.id);
-      const { data } = await cases.playCase(1);
+      const { data } = await cases.playCaseWithoutChance(1);
       expect(data.result).above(0);
     });
     it('C28648 (-) withdrawal_block = false, make bet > maxBetAmount', async () => {
@@ -102,7 +102,7 @@ describe('Withdrawal block tests', () => {
     });
 
     it('C28412 (-) withdrawal_block = true, cases', async () => {
-      const { data } = await cases.playCase(1);
+      const { data } = await cases.playCaseWithoutChance(1);
       // console.log(data);
       checkErrMsg(data, 400, 'demo are forbidden');
     });
