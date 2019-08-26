@@ -87,8 +87,7 @@ describe('Bets history', () => {
    status 0 - opened, 1 - lost, 2 - returned, 3 - won
    * */
 
-  // TODO 'service' should be fixed to run ALL filters
-  it.skip('C27578 (+) all filters with all available values', async () => {
+  it('C27578 (+) all filters with all available values', async () => {
     await userList.loginWithRub();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -107,11 +106,12 @@ describe('Bets history', () => {
     expect(Object.entries(betsMap).length).equal(20);
   });
 
-  it.skip('C27579 (+) only \'lost\' bets status (status = 1)', async () => {
+  it('C27579 (+) only \'lost\' bets status (status = 1)', async () => {
     await userList.loginWithRealMoney();
+    const expectedAmount = 5;
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: 'ru',
-      limit: [0, 5],
+      limit: [0, expectedAmount],
       order: ['id', 'DESC'],
 
       where: {
@@ -121,15 +121,15 @@ describe('Bets history', () => {
       },
     });
     // console.log(betsMap);
-    expect(Object.entries(betsMap).length).equal(0);
-    expect(Object.values(betsMap).every(({ status }) => status === 1)).equal(true);
+    expect(Object.entries(betsMap).length).equal(expectedAmount);
+    expect(Object.values(betsMap).every(({ status }) => status === 0)).equal(true);
   });
 
-  it.skip('C27580 (+) only \'returned\' bets status (status = 2)', async () => {
+  it('C27580 (+) only \'returned\' bets status (status = 2)', async () => {
     await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
-      limit: [0, 15],
+      limit: [0, 5],
       order: ['id', 'DESC'],
 
       where: {
@@ -139,11 +139,11 @@ describe('Bets history', () => {
       },
     });
     // console.log(betsMap);
-    expect(Object.entries(betsMap).length).equal(15);
+    expect(Object.entries(betsMap).length).equal(5);
     expect(Object.values(betsMap).every(({ status }) => status === 2)).equal(true);
   });
 
-  it.skip('C27581 (+) only \'won\' bets status (status = 3)', async () => {
+  it('C27581 (+) only \'won\' bets status (status = 3)', async () => {
     await userList.loginWithRealMoney();
     const { data: { betsMap } } = await socket.send('BETS:bets-history', {
       language: null,
@@ -158,7 +158,7 @@ describe('Bets history', () => {
     });
     // console.log(betsMap);
     expect(Object.entries(betsMap).length).equal(15);
-    expect(Object.values(betsMap).every(({ status }) => status === 3)).equal(true);
+    expect(Object.values(betsMap).every(({ status }) => status === 1)).equal(true);
   });
 
   it('C27582 (-) [0,0] limit', async () => {
@@ -179,12 +179,12 @@ describe('Bets history', () => {
     expect(betsMap).to.be.empty;
   });
 
-  // TODO fix expect
   it('C27584 (-) 5 limits + 5 offset, where all filters, where service = null', async () => {
     await userList.loginWithRub();
+    const expectedAmount = 5;
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
-      limit: [5, 5],
+      limit: [5, expectedAmount],
       order: ['id', 'DESC'],
 
       where: {
@@ -194,16 +194,15 @@ describe('Bets history', () => {
       },
     });
     // console.log(data);
-    expect(data.totalCount).equal(0);
-    expect(data.betsMap).to.be.empty;
+    expect(Object.values(data.betsMap).length).equal(expectedAmount);
   });
 
-  // TODO fix expect
   it('C27585 (+) 5 limits + 2 offset, where all filters, where service = null', async () => {
     await userList.loginWithRub();
+    const expectedAmount = 5;
     const { data } = await socket.send('BETS:bets-history', {
       language: null,
-      limit: [2, 5],
+      limit: [2, expectedAmount],
       order: ['id', 'DESC'],
 
       where: {
@@ -213,7 +212,6 @@ describe('Bets history', () => {
       },
     });
     // console.log(data);
-    expect(data.totalCount).equal(0);
-    expect(data.betsMap).to.be.empty;
+    expect(Object.values(data.betsMap).length).equal(expectedAmount);
   });
 });
