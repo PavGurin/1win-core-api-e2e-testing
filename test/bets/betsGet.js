@@ -13,7 +13,6 @@ import {
   tournamentMatches,
 } from '../../src/methods/matchStorage';
 
-const currency = 'RUB';
 const PREMATCH = 'prematch';
 const ORDINARY = 'ordinary';
 const EXPRESS = 'express';
@@ -56,16 +55,11 @@ describe('Bets get', () => {
     const { data: login } = await userList.loginWithRealMoney();
     const [singleMatch] = await getSingleMatch(PREMATCH);
     // console.log(singleMatch);
-    const coupon = await generateOrdinaryCoupon(singleMatch, currency, 1);
+    const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
-    await makeOrdinaryBet(coupon, currency, 10);
+    await makeOrdinaryBet(coupon, 10);
 
-    const { data: betsMap } = await getMatchHistory(
-      {
-        service: PREMATCH,
-        limit: [0, 1],
-      },
-    );
+    const { data: betsMap } = await getMatchHistory(1, ORDINARY);
     // console.log(betsMap);
     const { data: getBet } = await getMatchById(Object.values(betsMap.betsMap)[0].id);
     // console.log(getBet);
@@ -92,12 +86,7 @@ describe('Bets get', () => {
     // console.log(coupon);
     await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory(
-      {
-        service: EXPRESS,
-        limit: [0, 1],
-      },
-    );
+    const { data: betsMap } = await getMatchHistory(1, EXPRESS);
     // console.log(betsMap);
     const { data: getBet } = await getMatchById(Object.values(betsMap.betsMap)[0].id);
     // console.log(getBet);
