@@ -51,18 +51,30 @@ export async function getSingleMatch(service) {
   );
   return Object.values(matchMap);
 }
+export const getMatchHistory = async ({
+  betType = ['ordinary', 'express'],
+  limit = 20,
+  ...params
+} = {}) => {
+  if (!Array.isArray(limit)) {
+    // eslint-disable-next-line no-param-reassign
+    limit = [0, limit];
+  }
+  if (!Array.isArray(betType)) {
+    // eslint-disable-next-line no-param-reassign
+    betType = [betType];
+  }
 
-export async function getMatchHistory(limit, betType) {
   return socket.send('BETS:bets-history', {
     language: null,
-    limit: [0, limit],
+    limit,
     order: ['id', 'DESC'],
     where: {
-      betType: [betType],
+      betType,
     },
+    ...params,
   });
-}
-
+};
 
 export async function getMatchById(id) {
   return socket.send('BETS:bets-get', {

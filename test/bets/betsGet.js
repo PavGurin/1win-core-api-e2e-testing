@@ -59,7 +59,10 @@ describe('Bets get', () => {
     // console.log(coupon);
     await makeOrdinaryBet(coupon, 10);
 
-    const { data: betsMap } = await getMatchHistory(1, ORDINARY);
+    const { data: betsMap } = await getMatchHistory({
+      betType: ORDINARY,
+      limit: 1,
+    });
     // console.log(betsMap);
     const { data: getBet } = await getMatchById(Object.values(betsMap.betsMap)[0].id);
     // console.log(getBet);
@@ -86,7 +89,10 @@ describe('Bets get', () => {
     // console.log(coupon);
     await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory(1, EXPRESS);
+    const { data: betsMap } = await getMatchHistory({
+      betType: EXPRESS,
+      limit: 1,
+    });
     // console.log(betsMap);
     const { data: getBet } = await getMatchById(Object.values(betsMap.betsMap)[0].id);
     // console.log(getBet);
