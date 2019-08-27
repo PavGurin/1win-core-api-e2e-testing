@@ -24,7 +24,7 @@ describe('Transfer with money - RUB', () => {
   it('C19375 (+) With money, currency = null and amount > 1000', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
-      amount: 19990000,
+      amount: 1999000000,
     });
     // console.log(data);
     checkErrMsg(data, 400, 'Недостаточно средств');
