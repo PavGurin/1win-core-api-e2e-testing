@@ -61,10 +61,9 @@ export async function makeOrdinaryBetOld(coupon, currency, amount) {
     });
 }
 
-export async function makeOrdinaryBet(coupon, currency, amount) {
+export async function makeOrdinaryBet(coupon, amount = 10) {
   return socket.send('BETS:bets-make',
     {
-      currency,
       betsMap: {
         [coupon.couponId]: {
           amount,
