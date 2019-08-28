@@ -6,11 +6,11 @@ import { successDbDeposit } from '../../../../src/expects/exDatabaseTests';
 describe('Deposit creation in database, USD', async () => {
   it('C27495 (+) successful deposit create usd + card', async () => {
     const user = await register.oneClickRegUSD();
-    console.log(user);
+    // console.log(user);
 
     await banking.depositCreate(100.01, '1234123412341234', 'card_rub', 'USD');
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${user.data.id} ;`);
-     console.log(dbResult);
+    // console.log(dbResult);
     successDbDeposit(dbResult, 100.01, '1234123412341234', 'card_rub', 'USD');
   });
 
