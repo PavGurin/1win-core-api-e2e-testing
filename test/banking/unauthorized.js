@@ -11,14 +11,14 @@ describe('Unauthorized ', () => {
     await logOut();
   });
   it('C459485 - create deposit', async () => {
-    const { data } = await banking.depositCreateRub(100, '+7123',
+    const { data } = await banking.depositCreate(100, '+7123',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 401, 'Unauthorized');
   });
 
   it('C459486 - create request deposit', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, '+7123',
+    const { data } = await banking.depositCreateRequest(100, '+7123',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 401, 'Unauthorized');

@@ -12,7 +12,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
   });
 
   it(' - (+) amount = 1750 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       1751, '+79001234567', paymentType, currency,
     );
     // console.log(data);
@@ -21,7 +21,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(1750,
+    const { data } = await banking.depositCreateRequest(1750,
       '+79215598289', paymentType, currency);
 
     // console.log(data);
@@ -30,7 +30,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
   });
 
   it(' - max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRequestRub(21000,
+    const { data } = await banking.depositCreateRequest(21000,
       '+79215598226', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -38,7 +38,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
   });
 
   it(' - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRequestRub(20999, '+79215598236',
+    const { data } = await banking.depositCreateRequest(20999, '+79215598236',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -48,7 +48,7 @@ describe.skip('Create deposit for btc_usd - RUB @master', () => {
 
 describe.skip('Create deposite for btc_usd invalid - RUB', () => {
   it(' - amount = 0', async () => {
-    const { data } = await banking.depositCreateRequestRub(0, '+79215598256',
+    const { data } = await banking.depositCreateRequest(0, '+79215598256',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
@@ -56,28 +56,28 @@ describe.skip('Create deposite for btc_usd invalid - RUB', () => {
 
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(1749.6, '79215598386',
+    const { data } = await banking.depositCreateRequest(1749.6, '79215598386',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(1749, '79215598486',
+    const { data } = await banking.depositCreateRequest(1749, '79215598486',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(21001, '79215598586',
+    const { data } = await banking.depositCreateRequest(21001, '79215598586',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(21000.000001, '79215598686',
+    const { data } = await banking.depositCreateRequest(21000.000001, '79215598686',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');

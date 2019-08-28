@@ -14,7 +14,7 @@ describe('Create deposite for tele2 - RUB', () => {
   });
 
   it('C22672 - (+) amount = 100 & wallet = (+7)phone', async () => {
-    await banking.depositCreateRub(
+    await banking.depositCreate(
       100, '+79772520000', paymentType, currency,
     );
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
@@ -25,7 +25,7 @@ describe('Create deposite for tele2 - RUB', () => {
   });
 
   it('C22675 - min amount & wallet = symbols', async () => {
-    await banking.depositCreateRub(10,
+    await banking.depositCreate(10,
       '+79772520000', paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -35,7 +35,7 @@ describe('Create deposite for tele2 - RUB', () => {
   });
 
   it('C22676 - > min amount & wallet = symbols', async () => {
-    await banking.depositCreateRub(11,
+    await banking.depositCreate(11,
       '+79772520000', paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -45,7 +45,7 @@ describe('Create deposite for tele2 - RUB', () => {
   });
 
   it('C22677 - max amount & wallet = numbers', async () => {
-    await banking.depositCreateRub(15000, '+79772520000',
+    await banking.depositCreate(15000, '+79772520000',
       paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -55,7 +55,7 @@ describe('Create deposite for tele2 - RUB', () => {
   });
 
   it('C22678 - < max amount & wallet = numbers', async () => {
-    await banking.depositCreateRub(14999, '+79772520000',
+    await banking.depositCreate(14999, '+79772520000',
       paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -71,28 +71,28 @@ describe('Create deposite for tele2_rub invalid - RUB', () => {
   });
 
   it('C22687 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRub(0.6, '+79772520000',
+    const { data } = await banking.depositCreate(0.6, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22688 - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(9, '+79772520000',
+    const { data } = await banking.depositCreate(9, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22689 - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(15001, '+79772520000',
+    const { data } = await banking.depositCreate(15001, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22690 - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(15000.000001, '+79772520000',
+    const { data } = await banking.depositCreate(15000.000001, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');

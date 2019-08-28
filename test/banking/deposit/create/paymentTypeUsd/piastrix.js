@@ -12,7 +12,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it(' (+) amount = 100 & wallet = empty', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       100, '', paymentType, currency,
     );
     // console.log(data);
@@ -21,7 +21,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it(' (+) amount = 100.01 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       100.01, '123 autotests', paymentType, currency,
     );
     // console.log(data);
@@ -30,7 +30,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it(' amount = 2000 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       2000, 'порпорпорпэ', paymentType, currency,
     );
     // console.log(data);
@@ -39,7 +39,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it(' min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(1,
+    const { data } = await banking.depositCreate(1,
       '123234345456 etryrt', paymentType, currency);
 
     // console.log(data);
@@ -48,7 +48,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it('> min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(2,
+    const { data } = await banking.depositCreate(2,
       '12№%:№%:45456etryrt', paymentType, currency);
 
     // console.log(data);
@@ -57,7 +57,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it(' max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(100000, '09090909999',
+    const { data } = await banking.depositCreate(100000, '09090909999',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -65,7 +65,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
   });
 
   it('< max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(99999, '0[[[?<><?999',
+    const { data } = await banking.depositCreate(99999, '0[[[?<><?999',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -74,7 +74,7 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
 
   // Не знаю, какой должен быть результат
   it(' wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRub(100, undefined,
+    const { data } = await banking.depositCreate(100, undefined,
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -95,21 +95,21 @@ describe('Create deposite for piastrix_rub - USD @master', () => {
 
 describe('Create deposite for piastrix_rub invalid - USD', () => {
   it(' amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(0.6, '',
+    const { data } = await banking.depositCreate(0.6, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it(' amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(100001, '',
+    const { data } = await banking.depositCreate(100001, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(100000.56, '',
+    const { data } = await banking.depositCreate(100000.56, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');

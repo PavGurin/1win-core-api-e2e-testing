@@ -11,7 +11,7 @@ describe('Deposit requests', () => {
   });
 
   it('C19377 (-) with incorrect hash ', async () => {
-    await banking.depositCreateRequestRub(100, '', paymentType, currency);
+    await banking.depositCreateRequest(100, '', paymentType, currency);
     const { data } = await socket.send('BANKING:deposit-request', { h: 'gjhg' });
     // console.log(data);
     checkErrMsg(data, 404, 'Запрос депозита не найден');

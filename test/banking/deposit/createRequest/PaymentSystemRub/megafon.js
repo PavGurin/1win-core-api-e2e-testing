@@ -12,7 +12,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - (+) amount = 100 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       100, '79215598286', paymentType, currency,
     );
     // console.log
@@ -21,7 +21,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - (+) amount = 100.01 & wallet = (7)phone', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       100.01, '79001234567', paymentType, currency,
     );
     // console.log(data);
@@ -30,7 +30,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - amount = 2000 & wallet = (8)phone', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       2000, '89001234567', paymentType, currency,
     );
     // console.log(data);
@@ -39,7 +39,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(10,
+    const { data } = await banking.depositCreateRequest(10,
       '79215598286', paymentType, currency);
 
     // console.log(data);
@@ -48,7 +48,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - > min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(11,
+    const { data } = await banking.depositCreateRequest(11,
       '79215598286', paymentType, currency);
 
     // console.log(data);
@@ -57,7 +57,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRequestRub(15000,
+    const { data } = await banking.depositCreateRequest(15000,
       '+79001234567', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -65,7 +65,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
   });
 
   it(' - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRequestRub(14999, '+79001234567',
+    const { data } = await banking.depositCreateRequest(14999, '+79001234567',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -85,7 +85,7 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
 
   it(' - < max amount & wallet = valid short number', async () => {
     // TODO узнать валидный короткий номер городского телефона
-    const { data } = await banking.depositCreateRequestRub(14999, '+79001234',
+    const { data } = await banking.depositCreateRequest(14999, '+79001234',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -95,105 +95,105 @@ describe.skip('Create deposite for megafon_rub - RUB @master', () => {
 
 describe.skip('Create deposite for megafon_rub invalid - RUB', () => {
   it(' - amount = 0', async () => {
-    const { data } = await banking.depositCreateRequestRub(0, '+79001234567',
+    const { data } = await banking.depositCreateRequest(0, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it(' - amount = null', async () => {
-    const { data } = await banking.depositCreateRequestRub(null, '+79001234567',
+    const { data } = await banking.depositCreateRequest(null, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
   it(' - amount = empty', async () => {
-    const { data } = await banking.depositCreateRequestRub(' ', '+79001234567',
+    const { data } = await banking.depositCreateRequest(' ', '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it(' - amount = undefined', async () => {
-    const { data } = await banking.depositCreateRequestRub(undefined, '+79001234567',
+    const { data } = await banking.depositCreateRequest(undefined, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
   it(' - amount = latanic', async () => {
-    const { data } = await banking.depositCreateRequestRub('fjfj', '+79001234567',
+    const { data } = await banking.depositCreateRequest('fjfj', '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
   it(' - amount = string', async () => {
-    const { data } = await banking.depositCreateRequestRub('50', '+79001234567',
+    const { data } = await banking.depositCreateRequest('50', '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(0.6, '+79001234567',
+    const { data } = await banking.depositCreateRequest(0.6, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(9, '+79001234567',
+    const { data } = await banking.depositCreateRequest(9, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(15001, '+79001234567',
+    const { data } = await banking.depositCreateRequest(15001, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(15000.000001, '+79001234567',
+    const { data } = await banking.depositCreateRequest(15000.000001, '+79001234567',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, undefined,
+    const { data } = await banking.depositCreateRequest(100, undefined,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it(' - wallet = null', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, null,
+    const { data } = await banking.depositCreateRequest(100, null,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it(' - wallet = empty', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, '',
+    const { data } = await banking.depositCreateRequest(100, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it(' - wallet = number', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, 111122223330000,
+    const { data } = await banking.depositCreateRequest(100, 111122223330000,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, wallet should have a type of string, but found number');
   });
 
   it(' wallet = short phone', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, '+7123',
+    const { data } = await banking.depositCreateRequest(100, '+7123',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
@@ -201,7 +201,7 @@ describe.skip('Create deposite for megafon_rub invalid - RUB', () => {
 
   // Не знаю что тут должно быть
   it(' - incorrect paymentType = megafon_rub_test', async () => {
-    const { data } = await banking.depositCreateRequestRub(1,
+    const { data } = await banking.depositCreateRequest(1,
       // TODO посмотреть количество символов доступных в кошельке
       '+79001234567',
       'megafon_rub_test', currency);
@@ -211,7 +211,7 @@ describe.skip('Create deposite for megafon_rub invalid - RUB', () => {
 
   // Не знаю что тут должно быть
   it(' wallet = long phone', async () => {
-    const { data } = await banking.depositCreateRequestRub(100,
+    const { data } = await banking.depositCreateRequest(100,
       // TODO посмотреть количество символов доступных в кошельке
       '+790012345670909',
       paymentType, currency);

@@ -15,7 +15,7 @@ describe('Create deposite for card_rub - RUB', () => {
   });
 
   it('C22538 - min amount', async () => {
-    await banking.depositCreateRub(100, '3333444455556666',
+    await banking.depositCreate(100, '3333444455556666',
       paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -25,7 +25,7 @@ describe('Create deposite for card_rub - RUB', () => {
   });
 
   it('C22539 - > min amount', async () => {
-    await banking.depositCreateRub(101, '9090787856564545', paymentType, currency);
+    await banking.depositCreate(101, '9090787856564545', paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);
@@ -34,7 +34,7 @@ describe('Create deposite for card_rub - RUB', () => {
   });
 
   it('C22540 - max amount', async () => {
-    await banking.depositCreateRub(100000, '0909090999990909',
+    await banking.depositCreate(100000, '0909090999990909',
       paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -44,7 +44,7 @@ describe('Create deposite for card_rub - RUB', () => {
   });
 
   it('C22541 - < max amount', async () => {
-    await banking.depositCreateRub(99999, '5566556644553344',
+    await banking.depositCreate(99999, '5566556644553344',
       paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -54,7 +54,7 @@ describe('Create deposite for card_rub - RUB', () => {
   });
 
   it('C22543 wallet = undefined', async () => {
-    await banking.depositCreateRub(100, undefined,
+    await banking.depositCreate(100, undefined,
       paymentType, currency);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -69,35 +69,35 @@ describe('Create deposite for card_rub invalid - RUB', () => {
   });
 
   it('C22516 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRub(90.6, '',
+    const { data } = await banking.depositCreate(90.6, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22517 - 1 < amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(99, '',
+    const { data } = await banking.depositCreate(99, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22518 - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(100001, '',
+    const { data } = await banking.depositCreate(100001, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22519 - amount doudle > max amount ', async () => {
-    const { data } = await banking.depositCreateRub(100000.56, '',
+    const { data } = await banking.depositCreate(100000.56, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22535 (-) wallet = empty', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       100, '', paymentType, currency,
     );
     // console.log(data);
