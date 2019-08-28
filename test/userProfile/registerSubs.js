@@ -4,7 +4,7 @@ import { randomNum, randomStr } from '../../src/randomizer';
 import { dbSubIdCheck, emptyDbSubIdCheck } from '../../src/methods/dbSubIdCheck';
 import { sleep } from '../../src/methods/utils';
 
-describe.('Register with sub id parameter', () => {
+describe('Register with sub id parameter', () => {
   const defaultRequest = params => socket.send('USER:auth-register',
     {
       isShort: false,
