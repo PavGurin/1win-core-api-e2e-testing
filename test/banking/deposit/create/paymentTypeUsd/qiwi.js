@@ -6,7 +6,7 @@ import { userList } from '../../../../../src/methods/userList';
 const paymentType = 'qiwi_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for qiwi_rub - USD @master', () => {
+describe('Create deposite for qiwi_rub - USD @master', () => {
   beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
@@ -208,7 +208,7 @@ describe.skip('Create deposite for qiwi_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for qiwi_rub invalid - USD', () => {
+describe('Create deposite for qiwi_rub invalid - USD', () => {
   it(' amount double < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '+79001234567',
       paymentType, currency);

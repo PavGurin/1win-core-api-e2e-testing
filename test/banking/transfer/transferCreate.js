@@ -78,7 +78,7 @@ describe('Transfer with money - RUB', () => {
   });
 });
 
-describe.skip('Transfer with money - USD', () => {
+describe('Transfer with money - USD', () => {
   beforeAll(async () => {
     await userList.loginWithRubUsd();
   });

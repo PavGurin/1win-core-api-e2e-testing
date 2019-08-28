@@ -6,7 +6,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'btc_usd';
 const currency = 'USD';
 
-describe.skip('Create deposit for btc_usd - USD @master', () => {
+describe('Create deposit for btc_usd - USD @master', () => {
   beforeAll(async () => {
     await register.oneClickReg();
   });

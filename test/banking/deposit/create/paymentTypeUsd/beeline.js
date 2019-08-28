@@ -7,7 +7,7 @@ import { userList } from '../../../../../src/methods/userList';
 const paymentType = 'beeline_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for beeline_rub - USD @master', () => {
+describe('Create deposite for beeline_rub - USD @master', () => {
   beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
@@ -94,7 +94,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for beeline_rub invalid - USD', () => {
+describe('Create deposite for beeline_rub invalid - USD', () => {
   it('  amount double < min amount', async () => {
     await register.oneClickReg();
     const { data } = await banking.depositCreateRub(0.6, '79215598286',

@@ -6,7 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
 
-describe.skip('Create deposite for beeline_rub - RUB @master', () => {
+describe('Create deposite for beeline_rub - RUB @master', () => {
   beforeAll(async () => {
     await register.oneClickReg();
   });

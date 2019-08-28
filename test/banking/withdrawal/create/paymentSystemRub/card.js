@@ -17,7 +17,7 @@ describe('Withdrawal create with valid test cases ', () => {
   it('C19325 (+) With money card_rub + valid wallet', async () => {
     const { data } = await banking.withdrawalCreate(100, '0000111122223333',
       payment_system, currency);
-    // console.log(data);
+     console.log(data);
     successWithdrawalCreate(data);
   });
 

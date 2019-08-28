@@ -6,7 +6,7 @@ import { userList } from '../../../../../src/methods/userList';
 const paymentType = 'card_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for card_rub - USD @master', () => {
+describe('Create deposite for card_rub - USD @master', () => {
   beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
@@ -89,7 +89,7 @@ describe.skip('Create deposite for card_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for card_rub invalid - USD', () => {
+describe('Create deposite for card_rub invalid - USD', () => {
   it(' amount < min amount', async () => {
     const { data } = await banking.depositCreateRub(0.6, '',
       paymentType, currency);
