@@ -39,13 +39,13 @@ describe('Withdrawal block tests', () => {
       const { data: user } = await register.oneClickReg();
       const [singleMatch] = await getSingleMatch('prematch');
       // console.log(singleMatch);
-      const coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
+      const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
       await banking.setBalance(user.id, maxBetAmount + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, 'RUB', maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).equal('rejected');
@@ -110,10 +110,10 @@ describe('Withdrawal block tests', () => {
     it('C28414 (+) withdrawal_block = true, make bet', async () => {
       const [singleMatch] = await getSingleMatch('prematch');
       // console.log(singleMatch);
-      const coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
+      const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, 'RUB', 10);
+      const { data: betResponse } = await makeOrdinaryBet(coupon, 10);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error).equal(false);
@@ -123,16 +123,16 @@ describe('Withdrawal block tests', () => {
     it('C28647 (+) withdrawal_block = true, make bet > maxBetAmount', async () => {
       const [singleMatch] = await getSingleMatch('prematch');
       // console.log(singleMatch);
-      const coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
+      const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
       await banking.setBalance(currentUser.id, maxBetAmount + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, 'RUB', maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
       // console.log(betResponse);
 
-      expect(betResponse[coupon.couponId].error).equal(false);
+      expect(betResponse[coupon.couponId].error).equal(false); '';
       expect(betResponse[coupon.couponId].status).equal(200);
     });
   });
