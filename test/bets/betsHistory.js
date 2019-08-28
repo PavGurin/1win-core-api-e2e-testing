@@ -3,7 +3,6 @@ import { userList } from '../../src/methods/userList';
 import { register } from '../../src/methods/register';
 import { getMatchHistory } from '../../src/methods/matchStorage';
 
-const PREMATCH = 'prematch';
 const ORDINARY = 'ordinary';
 const EXPRESS = 'express';
 
@@ -141,7 +140,6 @@ describe('Bets history', () => {
     await userList.loginWithRealMoney();
     const expectedAmount = 15;
     const { data: { betsMap } } = await getMatchHistory({
-      language: null,
       limit: expectedAmount,
       order: ['id', 'DESC'],
 
@@ -178,7 +176,6 @@ describe('Bets history', () => {
     await userList.loginWithRub();
     const expectedAmount = 5;
     const { data } = await getMatchHistory({
-      language: null,
       limit: [5, 5],
       order: ['id', 'DESC'],
 

@@ -51,6 +51,7 @@ export async function getSingleMatch(service) {
   );
   return Object.values(matchMap);
 }
+
 export const getMatchHistory = async ({
   betType = ['ordinary', 'express'],
   limit = 20,
@@ -66,7 +67,6 @@ export const getMatchHistory = async ({
   }
 
   return socket.send('BETS:bets-history', {
-    language: null,
     limit,
     order: ['id', 'DESC'],
     where: {
