@@ -7,13 +7,13 @@ import { userList } from '../../../../../src/methods/userList';
 const paymentType = 'beeline_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for beeline_rub - USD @master', () => {
+describe('Create deposite for beeline_rub - USD @master', () => {
   beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       50, '+79215598286', paymentType, currency,
     );
     // console.log
@@ -22,7 +22,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 
   it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       100.01, '79215598286', paymentType, currency,
     );
     // console.log(data);
@@ -31,7 +31,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 
   it(' amount = 2000 & wallet = (8)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       2000, '89215598286', paymentType, currency,
     );
     // console.log(data);
@@ -40,7 +40,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 
   it(' min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(10,
+    const { data } = await banking.depositCreate(10,
       '+79215598286', paymentType, currency);
 
     // console.log(data);
@@ -49,7 +49,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 
   it('> min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(11,
+    const { data } = await banking.depositCreate(11,
       '+79215598286', paymentType, currency);
 
     // console.log(data);
@@ -58,7 +58,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 
   it(' max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(15000,
+    const { data } = await banking.depositCreate(15000,
       '+79215598286', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -66,7 +66,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 
   it('< max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(14999, '+79215598286',
+    const { data } = await banking.depositCreate(14999, '+79215598286',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -86,7 +86,7 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
 
   it('< max amount & wallet = valid short number', async () => {
     // TODO узнать валидный короткий номер городского телефона
-    const { data } = await banking.depositCreateRub(14999, '+79001234',
+    const { data } = await banking.depositCreate(14999, '+79001234',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -94,10 +94,10 @@ describe.skip('Create deposite for beeline_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for beeline_rub invalid - USD', () => {
+describe('Create deposite for beeline_rub invalid - USD', () => {
   it('  amount double < min amount', async () => {
     await register.oneClickReg();
-    const { data } = await banking.depositCreateRub(0.6, '79215598286',
+    const { data } = await banking.depositCreate(0.6, '79215598286',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
@@ -105,7 +105,7 @@ describe.skip('Create deposite for beeline_rub invalid - USD', () => {
 
   it(' amount < min amount', async () => {
     await register.oneClickReg();
-    const { data } = await banking.depositCreateRub(9, '79215598286',
+    const { data } = await banking.depositCreate(9, '79215598286',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
@@ -113,7 +113,7 @@ describe.skip('Create deposite for beeline_rub invalid - USD', () => {
 
   it(' amount > max amount', async () => {
     await register.oneClickReg();
-    const { data } = await banking.depositCreateRub(15001, '79215598286',
+    const { data } = await banking.depositCreate(15001, '79215598286',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
@@ -121,7 +121,7 @@ describe.skip('Create deposite for beeline_rub invalid - USD', () => {
 
   it(' amount double > max amount', async () => {
     await register.oneClickReg();
-    const { data } = await banking.depositCreateRub(15000.000001, '79215598286',
+    const { data } = await banking.depositCreate(15000.000001, '79215598286',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');

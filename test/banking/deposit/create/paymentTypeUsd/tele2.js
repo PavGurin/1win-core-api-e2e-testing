@@ -6,14 +6,14 @@ import { userList } from '../../../../../src/methods/userList';
 const paymentType = 'tele2_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for tele2 - USD @master', () => {
+describe('Create deposite for tele2 - USD @master', () => {
   beforeAll(async () => {
     await userList.loginWithRealMoney();
   });
 
   // TODO нужна тестовая симкарта теле2
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       100, '+79772520000', paymentType, currency,
     );
     // console.log(data);
@@ -22,7 +22,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 
   it(' (+) amount = 100.01 & wallet = (7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       100.01, '79772520000', paymentType, currency,
     );
     // console.log(data);
@@ -31,7 +31,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 
   it(' amount = 2000 & wallet = (8)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       2000, '89772520000', paymentType, currency,
     );
     // console.log(data);
@@ -40,7 +40,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 
   it(' min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(10,
+    const { data } = await banking.depositCreate(10,
       '+79772520000', paymentType, currency);
 
     // console.log(data);
@@ -49,7 +49,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 
   it('> min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(11,
+    const { data } = await banking.depositCreate(11,
       '+79772520000', paymentType, currency);
 
     // console.log(data);
@@ -58,7 +58,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 
   it(' max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(15000, '+79772520000',
+    const { data } = await banking.depositCreate(15000, '+79772520000',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -66,7 +66,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 
   it('< max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(14999, '+79772520000',
+    const { data } = await banking.depositCreate(14999, '+79772520000',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -86,7 +86,7 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
 
   it('< max amount & wallet = valid short number', async () => {
     // TODO узнать валидный короткий номер городского телефона
-    const { data } = await banking.depositCreateRub(14999, '+79772520',
+    const { data } = await banking.depositCreate(14999, '+79772520',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -94,30 +94,30 @@ describe.skip('Create deposite for tele2 - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for tele2_rub invalid - USD', () => {
+describe('Create deposite for tele2_rub invalid - USD', () => {
   it(' amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRub(0.6, '+79772520000',
+    const { data } = await banking.depositCreate(0.6, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it(' amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(9, '+79772520000',
+    const { data } = await banking.depositCreate(9, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(15001, '+79772520000',
+    const { data } = await banking.depositCreate(15001, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(15000.000001, '+79772520000',
+    const { data } = await banking.depositCreate(15000.000001, '+79772520000',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');

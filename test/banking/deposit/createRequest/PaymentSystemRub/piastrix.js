@@ -12,7 +12,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - (+) amount = 100 & wallet = empty', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       100, '', paymentType, currency,
     );
     // console.log
@@ -21,7 +21,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - (+) amount = 100.01 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       100.01, '123 autotests', paymentType, currency,
     );
     // console.log(data);
@@ -30,7 +30,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - amount = 2000 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(
+    const { data } = await banking.depositCreateRequest(
       2000, 'порпорпорпэ', paymentType, currency,
     );
     // console.log(data);
@@ -39,7 +39,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(1,
+    const { data } = await banking.depositCreateRequest(1,
       '123234345456 etryrt', paymentType, currency);
 
     // console.log(data);
@@ -48,7 +48,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - > min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequestRub(2,
+    const { data } = await banking.depositCreateRequest(2,
       '12№%:№%:45456etryrt', paymentType, currency);
 
     // console.log(data);
@@ -57,7 +57,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRequestRub(100000, '09090909999',
+    const { data } = await banking.depositCreateRequest(100000, '09090909999',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -65,7 +65,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRequestRub(99999, '0[[[?<><?999',
+    const { data } = await banking.depositCreateRequest(99999, '0[[[?<><?999',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -74,7 +74,7 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
 
   // Не знаю, какой должен быть результат
   it(' - wallet = undefined', async () => {
-    const { data } = await banking.depositCreateRequestRub(100, undefined,
+    const { data } = await banking.depositCreateRequest(100, undefined,
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -95,77 +95,77 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
 
 describe.skip('Create deposite for piastrix_rub invalid - RUB', () => {
   it(' - amount = 0', async () => {
-    const { data } = await banking.depositCreateRequestRub(0, '',
+    const { data } = await banking.depositCreateRequest(0, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it(' - amount = null', async () => {
-    const { data } = await banking.depositCreateRequestRub(null, '',
+    const { data } = await banking.depositCreateRequest(null, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
   it(' - amount = empty', async () => {
-    const { data } = await banking.depositCreateRequestRub(' ', '',
+    const { data } = await banking.depositCreateRequest(' ', '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
   });
 
   it(' - amount = undefined', async () => {
-    const { data } = await banking.depositCreateRequestRub(undefined, '',
+    const { data } = await banking.depositCreateRequest(undefined, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is required, no default value provided');
   });
 
   it(' - amount = string', async () => {
-    const { data } = await banking.depositCreateRequestRub('fjfj', '',
+    const { data } = await banking.depositCreateRequest('fjfj', '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount should have a type of number, but found string');
   });
 
   it(' - amount = string-number', async () => {
-    const { data } = await banking.depositCreateRequestRub('50', '',
+    const { data } = await banking.depositCreateRequest('50', '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(0.6, '',
+    const { data } = await banking.depositCreateRequest(0.6, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(100001, '',
+    const { data } = await banking.depositCreateRequest(100001, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRequestRub(100000.56, '',
+    const { data } = await banking.depositCreateRequest(100000.56, '',
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - wallet = null', async () => {
-    const { data } = await banking.depositCreateRequestRub(1, null,
+    const { data } = await banking.depositCreateRequest(1, null,
       paymentType, currency);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it(' - wallet = long string', async () => {
-    const { data } = await banking.depositCreateRequestRub(1,
+    const { data } = await banking.depositCreateRequest(1,
       // TODO посмотреть количество символов доступных в кошельке
       '1231231231231231453453345345342312312312312123123123123',
       paymentType, currency);
@@ -175,7 +175,7 @@ describe.skip('Create deposite for piastrix_rub invalid - RUB', () => {
 
   // Не знаю что тут должно быть
   it(' - incorrect paymentType = piastrix_rub_test', async () => {
-    const { data } = await banking.depositCreateRequestRub(1,
+    const { data } = await banking.depositCreateRequest(1,
       // TODO посмотреть количество символов доступных в кошельке
       '12312312312',
       'piastrix_rub_test', currency);

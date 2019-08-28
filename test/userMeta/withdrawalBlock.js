@@ -96,7 +96,7 @@ describe('Withdrawal block tests', () => {
     });
 
     it('C28403 (-) withdrawal_block = true, deposit create', async () => {
-      const { data } = await banking.depositCreateRub(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       checkErrMsg(data, 400, 'Неверный запрос');
     });

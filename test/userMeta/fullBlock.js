@@ -44,7 +44,7 @@ describe('Full block tests', () => {
     });
 
     it('C28642 (+) full_block = true in bd after login, deposit blocked', async () => {
-      const { data: deposit } = banking.depositCreateRequestRub(100, '1234567812345678', 'card_rub', 'RUB');
+      const { data: deposit } = banking.depositCreateRequest(100, '1234567812345678', 'card_rub', 'RUB');
       await sleep(2000);
       expect(deposit).undefined;
     });

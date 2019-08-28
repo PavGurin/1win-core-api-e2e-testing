@@ -92,7 +92,7 @@ describe('Cases winner tests', () => {
     });
 
     it('C28440 (+) cases_winner = true + withdrawal_block = false, deposit create', async () => {
-      const { data } = await banking.depositCreateRub(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
@@ -185,7 +185,7 @@ describe('Cases winner tests', () => {
     });
 
     it('C28435 (-) cases_winner = true + withdrawal_block = true, deposit create', async () => {
-      const { data } = await banking.depositCreateRub(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       checkErrMsg(data, 400, 'Неверный запрос');
     });

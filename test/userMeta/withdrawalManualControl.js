@@ -52,7 +52,7 @@ describe('Withdrawal manual control tests', () => {
       const { data: user } = await register.usualReg();
       // console.log(currentUser.id);
 
-      const { data: deposit } = await banking.depositCreateRub(200, BLOCKED_WALLET, 'card_rub', 'RUB');
+      const { data: deposit } = await banking.depositCreate(200, BLOCKED_WALLET, 'card_rub', 'RUB');
       expect(deposit.status).equal(500);
       expect(deposit.message).equal('Internal Server Error');
       // console.log(deposit);
@@ -105,7 +105,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28637 (+) withdrawal_manual_control = true, deposit create', async () => {
-      const { data } = await banking.depositCreateRub(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');

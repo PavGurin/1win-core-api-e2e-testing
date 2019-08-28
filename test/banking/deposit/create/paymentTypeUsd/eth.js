@@ -6,13 +6,13 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'eth_usd';
 const currency = 'USD';
 
-describe.skip('Create deposit for eth_usd - USD @master', () => {
+describe('Create deposit for eth_usd - USD @master', () => {
   beforeAll(async () => {
     await register.oneClickReg();
   });
 
   it(' - (+) amount = 151 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRub(
+    const { data } = await banking.depositCreate(
       151, '+79001234567', paymentType, currency,
     );
     // console.log(data);
@@ -21,7 +21,7 @@ describe.skip('Create deposit for eth_usd - USD @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(150,
+    const { data } = await banking.depositCreate(150,
       '+79215598289', paymentType, currency);
 
     // console.log(data);
@@ -30,7 +30,7 @@ describe.skip('Create deposit for eth_usd - USD @master', () => {
   });
 
   it(' - max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(21000,
+    const { data } = await banking.depositCreate(21000,
       '+79215598226', paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -38,7 +38,7 @@ describe.skip('Create deposit for eth_usd - USD @master', () => {
   });
 
   it(' - < max amount & wallet = numbers', async () => {
-    const { data } = await banking.depositCreateRub(20999, '+79215598236',
+    const { data } = await banking.depositCreate(20999, '+79215598236',
       paymentType, currency);
     // console.log(data);
     successDepositCreate(data, currency,
@@ -48,7 +48,7 @@ describe.skip('Create deposit for eth_usd - USD @master', () => {
 
 describe('Create deposite for eth_usd invalid - RUB', () => {
   it(' - amount = 0', async () => {
-    const { data } = await banking.depositCreateRub(0, '+79215598256',
+    const { data } = await banking.depositCreate(0, '+79215598256',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Bad request, amount is invalid');
@@ -56,28 +56,28 @@ describe('Create deposite for eth_usd invalid - RUB', () => {
 
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRub(150.6, '79215598386',
+    const { data } = await banking.depositCreate(150.6, '79215598386',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRub(149, '79215598486',
+    const { data } = await banking.depositCreate(149, '79215598486',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount > max amount', async () => {
-    const { data } = await banking.depositCreateRub(21001, '79215598586',
+    const { data } = await banking.depositCreate(21001, '79215598586',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double > max amount', async () => {
-    const { data } = await banking.depositCreateRub(21000.000001, '79215598686',
+    const { data } = await banking.depositCreate(21000.000001, '79215598686',
       paymentType, currency);
       // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
