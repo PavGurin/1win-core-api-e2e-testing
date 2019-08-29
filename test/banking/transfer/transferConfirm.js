@@ -34,7 +34,7 @@ describe('Transfer confirm tests', () => {
 
   describe('Transfer confirm with money', () => {
     it('C19366 (-) Incorrect code with 400 code response', async () => {
-      await userList.loginWithRealMoney();
+      await userList.loginWithRealMoney(socket);
       await banking.transferCreate(100, 'RUB');
       const { data } = await socket.send('BANKING:transfer-confirm', { code: 111 });
       // console.log(data);

@@ -9,7 +9,7 @@ const payment_system = 'beeline_rub';
 
 describe('Withdrawal create with valid test cases ', () => {
   beforeAll(async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   it('C19328 - (+) With money card_rub + valid wallet', async () => {

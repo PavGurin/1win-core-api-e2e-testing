@@ -8,7 +8,7 @@ const currency = 'USD';
 
 describe('Create deposite for yamoney_ru - USD @master', () => {
   beforeAll(async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   it(' (+) amount = 100 & wallet = empty', async () => {

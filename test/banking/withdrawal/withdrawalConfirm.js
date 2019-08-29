@@ -18,19 +18,19 @@ describe('Withdrawal confirm tests', () => {
 
   beforeAll(async () => {
     // формируем пул юзеров
-    users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+    users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
   });
 
   describe('Withdrawal confirm invalid', () => {
     it('C19338 (-) Incorrect code code response 403', async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
       const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 10704 });
       // console.log(data);
       checkErrMsg(data, 403, 'Выплата не найдена');
     });
 
     it('C19339 (-) Incorrect code response 400', async () => {
-      await userList.loginWithRealMoney();
+      await userList.loginWithRealMoney(socket);
       await banking.withdrawalCreate(100, '1111222200003333', 'card_rub', 'RUB');
       const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 99 });
       // console.log(data);
@@ -42,7 +42,7 @@ describe('Withdrawal confirm tests', () => {
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.withdrawalCreate(100, '5469550073662048', 'card_rub', 'RUB');
       // задержка для получения письма
       await sleep(4000);
@@ -132,7 +132,7 @@ describe('Withdrawal confirm tests', () => {
   describe('Transfer before withdrawal', () => {
     it('C27222 (-) Active code of other operation that was obtained before withdrawal code', async () => {
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
 
       await banking.transferCreate(20, 'RUB');
       await sleep(4500);

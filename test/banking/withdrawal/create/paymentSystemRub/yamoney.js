@@ -10,7 +10,7 @@ const payment_system = 'yamoney_rub';
 describe('Withdrawal create with valid test cases ', () => {
   beforeAll(async () => {
     await logOut();
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
   });
 
   it('C19334 - (+) With money card_rub + valid wallet', async () => {

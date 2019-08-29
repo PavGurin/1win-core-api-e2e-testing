@@ -9,7 +9,7 @@ const currency = 'USD';
 
 describe('Create deposite for beeline_rub - USD @master', () => {
   beforeAll(async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {

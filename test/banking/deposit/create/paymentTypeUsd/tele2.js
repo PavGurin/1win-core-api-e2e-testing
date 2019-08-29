@@ -8,7 +8,7 @@ const currency = 'USD';
 
 describe('Create deposite for tele2 - USD @master', () => {
   beforeAll(async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   // TODO нужна тестовая симкарта теле2

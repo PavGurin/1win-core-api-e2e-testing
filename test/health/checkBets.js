@@ -6,7 +6,7 @@ const ORDINARY = 'ordinary';
 
 describe('Get methods map', () => {
   it('C27577 (+) user with bet history, bet type \'ordinary\'', async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
     const { data: { betsMap } } = await getMatchHistory({
       betType: ORDINARY,
     });

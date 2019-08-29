@@ -7,7 +7,7 @@ import { logOut } from '../../../src/methods/user';
 describe('Transfer with money - RUB', () => {
   beforeAll(async () => {
     await logOut();
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   it('C19371 (+) With money', async () => {

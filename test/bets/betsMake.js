@@ -17,7 +17,7 @@ const LIVE = 'live';
 const ORDINARY = 'ordinary';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney();
+  await userList.loginWithRealMoney(socket);
 });
 
 describe('Ordinary bets prematch', () => {

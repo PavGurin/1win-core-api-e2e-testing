@@ -6,7 +6,7 @@ import { logOut } from '../../../src/methods/user';
 describe('Withdrawal create with user with money USD ', () => {
   beforeAll(async () => {
     await logOut();
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
     // console.log(data1);
   });
 

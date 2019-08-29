@@ -31,7 +31,7 @@ export const userList = {
   },
 
   // С реальными деньгами! Использовать аккуратно)
-  async loginWithRealMoney() {
+  async loginWithRealMoney(socket) {
     return socket.send('USER:auth-login', {
       login: 'nogm75@1win.xyz',
       password: 'testerQA',

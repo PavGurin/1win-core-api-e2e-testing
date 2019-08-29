@@ -17,12 +17,12 @@ describe('Withdrawal history', () => {
 
   beforeAll(async () => {
     // формируем пул юзеров
-    users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+    users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
   });
 
   describe('User without money', () => {
     it('C19359 - (+) without withdrawal', async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
       const { data } = await socket.send('BANKING:withdrawal-history');
       // console.log(data);
       expect(data.length).equal(0);
@@ -33,7 +33,7 @@ describe('Withdrawal history', () => {
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C19360 -(+) with withdrawal @dev', async () => {
