@@ -173,9 +173,10 @@ describe('Ordinary bets prematch', () => {
   });
 });
 
+
 describe('Ordinary bets live', () => {
-  // TODO add to getSingleMatch status of returned match
-  it.skip('C27564 (+) default bet', async () => {
+  // TODO add active/not checker + w8ing for live+staging bets fix
+  it.only('C27564 (+) default bet', async () => {
     const [singleMatch] = await getSingleMatch(LIVE);
     console.log(singleMatch);
 
