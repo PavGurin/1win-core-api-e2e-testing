@@ -12,7 +12,7 @@ describe('одновременные запросы на перевод без �
     // формируем пул юзеров
     users = await userPool.usersWithEmailMailru(USERS_NUMBER, BALANCE);
     currentUser = users.pop();
-    const user = await userList.loginWithParams(currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
   });
 
   it(' одновременные запросы без подтверждения перевода', async () => {

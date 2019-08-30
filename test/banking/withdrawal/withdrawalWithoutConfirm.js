@@ -4,7 +4,7 @@ import { banking } from '../../../src/methods/banking';
 
 describe('Withdrawal autoConfirm', () => {
   it('C27477 - (+) correct withdrawal from email = @mail.ru', async () => {
-    await userForAutoConfirm.EmailMail();
+    await userForAutoConfirm.EmailMail(socket);
     const { data } = await banking.withdrawalCreate(100, '0000111122223333',
       'card_rub', 'RUB');
     // console.log(data);
@@ -13,7 +13,7 @@ describe('Withdrawal autoConfirm', () => {
   });
 
   it('C27478 - (+) correct withdrawal from email = @inbox.ru', async () => {
-    await userForAutoConfirm.EmailInbox();
+    await userForAutoConfirm.EmailInbox(socket);
     const { data } = await banking.withdrawalCreate(100, '0000111122223333',
       'card_rub', 'RUB');
     // console.log(data);
@@ -22,7 +22,7 @@ describe('Withdrawal autoConfirm', () => {
   });
 
   it('C27479 - (+) correct withdrawal from email = @bk.ru', async () => {
-    await userForAutoConfirm.EmailBk();
+    await userForAutoConfirm.EmailBk(socket);
     const { data } = await banking.withdrawalCreate(100, '0000111122223333',
       'card_rub', 'RUB');
     // console.log(data);
@@ -31,7 +31,7 @@ describe('Withdrawal autoConfirm', () => {
   });
 
   it('C27480 - (+) correct withdrawal from email = @list.ru', async () => {
-    await userForAutoConfirm.EmailList();
+    await userForAutoConfirm.EmailList(socket);
     const { data } = await banking.withdrawalCreate(100, '0000111122223333',
       'card_rub', 'RUB');
     // console.log(data);

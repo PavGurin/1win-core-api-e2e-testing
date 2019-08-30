@@ -1,7 +1,7 @@
 import { randomNum, randomStr } from '../randomizer';
 import { mysqlConnection } from './mysqlConnection';
 
-export const updateProfile = newProfile => socket.send('USER:profile-update',
+export const updateProfile = (socket, newProfile) => socket.send('USER:profile-update',
   {
     name: randomStr(),
     email: `${randomStr(5)}_test@new.xyz`,
@@ -12,6 +12,12 @@ export const updateProfile = newProfile => socket.send('USER:profile-update',
     timezone: 1,
     ...newProfile,
   });
+
+export async function changeCurrency(currency, socket) {
+  return socket.send('USER:profile-changeCurrency', {
+    currency,
+  });
+}
 
 export async function logOut() {
   // Выход текущего пользователя
@@ -25,6 +31,21 @@ export async function sendUserDataToEmail(emailToSend, oneClickRegEmail, oneClic
     email: emailToSend,
     login: oneClickRegEmail,
     password: oneClickRegPassword,
+  });
+}
+
+export async function forgotRecovery(account) {
+  return socket.send('USER:forgot-recovery', {
+    account,
+  });
+}
+
+export async function forgotConfirm(userId, code, password, repeat_password) {
+  return socket.send('USER:forgot-confirm', {
+    userId,
+    code,
+    password,
+    repeat_password,
   });
 }
 

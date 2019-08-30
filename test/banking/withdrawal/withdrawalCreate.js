@@ -1,14 +1,16 @@
 import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
-import { logOut } from '../../../src/methods/user';
-
+import { getNewSocket } from '../../global';
 
 describe('Withdrawal create with user with money USD ', () => {
-  beforeAll(async () => {
-    await logOut();
-    await userList.loginWithRealMoney();
-    // console.log(data1);
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await userList.loginWithRealMoney(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C19329 (+) With money beeline_rub + valid wallet + USD', async () => {
     const { data } = await socket.send('BANKING:withdrawal-create', {
@@ -17,6 +19,7 @@ describe('Withdrawal create with user with money USD ', () => {
       wallet: '+79215645656',
       currency: 'USD',
     });
+
     // console.log(data);
     expect(data).to.be.an('object');
     expect(data.email).not.equal(null);

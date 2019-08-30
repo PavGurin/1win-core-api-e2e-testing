@@ -2,15 +2,20 @@ import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { userList } from '../../../../../src/methods/userList';
+import { getNewSocket } from '../../../../global';
 
 const paymentType = 'beeline_rub';
 const currency = 'USD';
 
 describe('Create deposite for beeline_rub - USD @master', () => {
-  beforeAll(async () => {
-    await userList.loginWithRealMoney();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickRegUSD(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreate(
@@ -96,7 +101,7 @@ describe('Create deposite for beeline_rub - USD @master', () => {
 
 describe('Create deposite for beeline_rub invalid - USD', () => {
   it('  amount double < min amount', async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
     const { data } = await banking.depositCreate(0.6, '79215598286',
       paymentType, currency);
     // console.log(data);
@@ -104,7 +109,7 @@ describe('Create deposite for beeline_rub invalid - USD', () => {
   });
 
   it(' amount < min amount', async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
     const { data } = await banking.depositCreate(9, '79215598286',
       paymentType, currency);
     // console.log(data);
@@ -112,7 +117,7 @@ describe('Create deposite for beeline_rub invalid - USD', () => {
   });
 
   it(' amount > max amount', async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
     const { data } = await banking.depositCreate(15001, '79215598286',
       paymentType, currency);
     // console.log(data);
@@ -120,7 +125,7 @@ describe('Create deposite for beeline_rub invalid - USD', () => {
   });
 
   it(' amount double > max amount', async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
     const { data } = await banking.depositCreate(15000.000001, '79215598286',
       paymentType, currency);
     // console.log(data);

@@ -1,43 +1,28 @@
 /* eslint camelcase: 'off' */
-import { expect } from 'chai';
 import { randomNum, randomStr } from '../../src/randomizer';
 import { dbSubIdCheck, emptyDbSubIdCheck } from '../../src/methods/dbSubIdCheck';
 import { sleep } from '../../src/methods/utils';
+import { checkRegInfo } from '../../src/expects/exUser';
+import { register } from '../../src/methods/register';
+import { getNewSocket } from '../global';
 
 describe('Register with sub id parameter', () => {
-  const defaultRequest = params => socket.send('USER:auth-register',
-    {
-      isShort: false,
-      country: 'someCountry',
-      timezone: 23,
-      birthday: 946587600000,
-      ...params,
-    });
-
-  // проверка ответа успешной регистрации
-  function checkRegInfo(data, testText, testNumber, currency) {
-    expect(data.email)
-      .to.equal(`${testText}_test@xyz.com`);
-    expect(data.password)
-      .to.equal(defaultPassword);
-    expect(data.phone)
-      .to.equal(`921${testNumber}`);
-    expect(data.name)
-      .to.equal(testText);
-    expect(data.country)
-      .to.equal('someCountry');
-    expect(data.currency).equal(currency);
-  }
-
   const visit_domain = 'some_domain';
   const partner_key = 'test001';
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+  });
+
+  afterEach(() => socket.disconnect());
 
   // (+) for positive tests (-) for negative tests
   it('C20067 (+) Sub id 1', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=sub_1',
       email: `${testStr}_test@xyz.com`,
@@ -63,7 +48,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub2=sub_2',
       email: `${testStr}_test@xyz.com`,
@@ -89,7 +74,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub3=sub_3',
       email: `${testStr}_test@xyz.com`,
@@ -115,7 +100,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub4=sub_4',
       email: `${testStr}_test@xyz.com`,
@@ -141,7 +126,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub5=sub_5',
       email: `${testStr}_test@xyz.com`,
@@ -167,7 +152,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=sub_1&sub2=sub_2&sub3=sub_3&sub4=sub_4&sub5=sub_5',
       email: `${testStr}_test@xyz.com`,
@@ -193,7 +178,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=sub_1&sub3=sub_3&sub5=sub_5',
       email: `${testStr}_test@xyz.com`,
@@ -219,7 +204,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=_-',
       email: `${testStr}_test@xyz.com`,
@@ -245,7 +230,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=кириллица',
       email: `${testStr}_test@xyz.com`,
@@ -265,7 +250,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=/?*= +|`~±§^',
       email: `${testStr}_test@xyz.com`,
@@ -286,7 +271,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=-_=&sub2=?*^',
       email: `${testStr}_test@xyz.com`,
@@ -308,7 +293,7 @@ describe('Register with sub id parameter', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: 'sub1=legal&sub2=?*^&sub3=^mixed^',
       email: `${testStr}_test@xyz.com`,
@@ -336,7 +321,7 @@ describe('Register with sub id parameter', () => {
     const testNum = randomNum();
     const subId1 = randomStr(505);
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       sub_ids: `sub1=${subId1}`,
       email: `${testStr}_test@xyz.com`,

@@ -2,128 +2,110 @@
 import { expect } from 'chai';
 import { checkErrMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
-import { logOut } from '../../src/methods/user';
+import { getNewSocket } from '../global';
+import { changeCurrency } from '../../src/methods/user';
 
 describe('Change currency', () => {
-  it('C27440 - should be bad request without registration ', async () => {
-    await logOut();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'RUB',
+  describe('Change currency when user have currency = rub', () => {
+    let socket;
+
+    beforeEach(async () => {
+      socket = await getNewSocket();
+      await register.oneClickReg(socket);
     });
-    checkErrMsg(data, 400, 'Bad Request.');
+
+    afterEach(() => socket.disconnect());
+
+    it('C27441 - should be bad request, user have RUB yet ', async () => {
+      const { data } = await changeCurrency('RUB', socket);
+      // console.log(data);
+      expect(data.currency).to.equal('RUB');
+    });
+
+    it('C27442 - should be bad request, unexist currency (string) ', async () => {
+      const { data } = await changeCurrency('34', socket);
+
+      checkErrMsg(data, 400, 'currency is invalid');
+    });
+
+    it('C27443 - should be bad request, unexist currency (number) ', async () => {
+      const { data } = await changeCurrency(34, socket);
+
+      checkErrMsg(data, 400, 'Bad request, currency should have a type of string, but found number');
+    });
+
+    it('C27444 - should be bad request, currency = empty ', async () => {
+      const { data } = await changeCurrency('', socket);
+
+      checkErrMsg(data, 400, 'currency is invalid');
+    });
+
+    it('C27445 - should be bad request, currency = null ', async () => {
+      const { data } = await changeCurrency(null, socket);
+
+
+      checkErrMsg(data, 400, 'Bad request, currency is required, no default value provided');
+    });
+
+    it('C27446 -should be bad request, without param currency ', async () => {
+      const { data } = await changeCurrency(undefined, socket);
+
+      checkErrMsg(data, 400, 'Bad request, currency is required, no default value provided');
+    });
+
+    it('C27447 - should be success with USD ', async () => {
+      const { data } = await changeCurrency('USD', socket);
+
+      // console.log(data);
+      expect(data.currency).to.equal('USD');
+    });
+
+    it('C27448 - should be success with EUR ', async () => {
+      const { data } = await changeCurrency('EUR', socket);
+
+
+      expect(data.currency).to.equal('EUR');
+    });
   });
 
-  it('C27441 - should be bad request, user have RUB yet ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'RUB',
+  describe('Change currency when user have currency != rub', () => {
+    let socket;
+
+    beforeEach(async () => {
+      socket = await getNewSocket();
     });
-    // console.log(data);
-    expect(data.currency).to.equal('RUB');
+
+    afterEach(() => socket.disconnect());
+
+    it('C27449 - should be success with RUB after reg one click with EUR', async () => {
+      await register.oneClickRegEUR(socket);
+      const { data } = await changeCurrency('RUB', socket);
+      expect(data.currency).to.equal('RUB');
+    });
+
+    it('C27450 - should be success with EUR after reg one click with USD', async () => {
+      await register.oneClickRegUSD(socket);
+      // console.log(data1);
+      const { data } = await changeCurrency('EUR', socket);
+
+      // console.log(data);
+      expect(data.currency).to.equal('EUR');
+    });
+
+    it('C27451 - should be success with RUB after reg usual with USD', async () => {
+      await register.usualReg(socket);
+      // console.log(data1);
+      const { data } = await changeCurrency('EUR', socket);
+      // console.log(data);
+      expect(data.currency).to.equal('EUR');
+    });
   });
 
-  it('C27442 - should be bad request, unexist currency (string) ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: '34',
+  describe('Unauthorized', () => {
+    it('C27440 - should be bad request without registration ', async () => {
+      const { data } = await changeCurrency('RUB', socket);
+
+      checkErrMsg(data, 400, 'Bad Request.');
     });
-    checkErrMsg(data, 400, 'currency is invalid');
-  });
-
-  it('C27443 - should be bad request, unexist currency (number) ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 34,
-    });
-
-    checkErrMsg(data, 400, 'Bad request, currency should have a type of string, but found number');
-  });
-
-  it('C27444 - should be bad request, currency = empty ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: '',
-    });
-
-    checkErrMsg(data, 400, 'currency is invalid');
-  });
-
-  it('C27445 - should be bad request, currency = null ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: null,
-    });
-
-    checkErrMsg(data, 400, 'Bad request, currency is required, no default value provided');
-  });
-
-  it('C27446 -should be bad request, without param currency ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-    });
-
-    checkErrMsg(data, 400, 'Bad request, currency is required, no default value provided');
-  });
-
-  it('C27447 - should be success with USD ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'USD',
-    });
-    // console.log(data);
-    expect(data.currency).to.equal('USD');
-  });
-
-  it('C27448 - should be success with EUR ', async () => {
-    await register.oneClickReg();
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'EUR',
-    });
-
-    expect(data.currency).to.equal('EUR');
-  });
-
-  it('C27449 - should be success with RUB after reg one click with EUR', async () => {
-    await socket.send('USER:auth-register',
-      {
-        isShort: true,
-        country: defaultCountry,
-        timezone: 23,
-        partner_key: 'autotests111',
-        currency: 'EUR',
-      });
-    // console.log(data1);
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'RUB',
-    });
-    // console.log(data);
-    expect(data.currency).to.equal('RUB');
-  });
-
-  it('C27450 - should be success with EUR after reg one click with USD', async () => {
-    await socket.send('USER:auth-register',
-      {
-        isShort: true,
-        country: defaultCountry,
-        timezone: 23,
-        partner_key: 'autotests111',
-        currency: 'USD',
-      });
-    // console.log(data1);
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'EUR',
-    });
-    // console.log(data);
-    expect(data.currency).to.equal('EUR');
-  });
-
-  it('C27451 - should be success with RUB after reg usual with USD', async () => {
-    await register.usualReg();
-    // console.log(data1);
-    const { data } = await socket.send('USER:profile-changeCurrency', {
-      currency: 'EUR',
-    });
-    // console.log(data);
-    expect(data.currency).to.equal('EUR');
   });
 });

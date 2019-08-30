@@ -14,14 +14,14 @@ describe('Check user balance after play cases', () => {
 
     beforeAll(async () => {
       // формируем пул юзеров
-      users = await userPool.usersWithBalanceRub(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRub(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       // eslint-disable-next-line no-tabs,no-mixed-spaces-and-tabs
     	await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C490980 - play  cases 1', async () => {
@@ -96,14 +96,14 @@ describe('Check user balance after play cases', () => {
 
     beforeAll(async () => {
       // формируем пул юзеров
-      users = await userPool.usersWithBalanceUsd(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceUsd(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       // eslint-disable-next-line no-tabs,no-mixed-spaces-and-tabs
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
     it('C490988 - play  cases 10', async () => {
       const caseCost = await cases.getCaseCost(10);

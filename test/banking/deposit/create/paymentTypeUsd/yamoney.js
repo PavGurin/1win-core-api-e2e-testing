@@ -1,15 +1,21 @@
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { userList } from '../../../../../src/methods/userList';
+import { getNewSocket } from '../../../../global';
+import { register } from '../../../../../src/methods/register';
 
 const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
 describe('Create deposite for yamoney_ru - USD @master', () => {
-  beforeAll(async () => {
-    await userList.loginWithRealMoney();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickRegUSD(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it(' (+) amount = 100 & wallet = empty', async () => {
     const { data } = await banking.depositCreate(

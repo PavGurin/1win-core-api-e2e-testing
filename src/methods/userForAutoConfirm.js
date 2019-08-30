@@ -2,7 +2,7 @@ import { randomStr } from '../randomizer';
 
 export const userForAutoConfirm = {
 
-  async EmailMail() {
+  async EmailMail(socket) {
     return socket.send('USER:auth-login', {
       login: 'lina.solodova.94@mail.ru',
       password: '123123',
@@ -10,7 +10,7 @@ export const userForAutoConfirm = {
     });
   },
 
-  async EmailInbox() {
+  async EmailInbox(socket) {
     return socket.send('USER:auth-login', {
       login: 'lina.solodova.94@inbox.ru',
       password: '123123',
@@ -18,7 +18,7 @@ export const userForAutoConfirm = {
     });
   },
 
-  async EmailBk() {
+  async EmailBk(socket) {
     return socket.send('USER:auth-login', {
       login: 'lina.solodova.94@bk.ru',
       password: '123123',
@@ -26,7 +26,7 @@ export const userForAutoConfirm = {
     });
   },
 
-  async EmailList() {
+  async EmailList(socket) {
     return socket.send('USER:auth-login', {
       login: 'lina.solodova.94@list.ru',
       password: '123123',

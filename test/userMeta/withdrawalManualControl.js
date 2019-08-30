@@ -20,27 +20,27 @@ describe('Withdrawal manual control tests', () => {
     beforeEach(async () => { await logOut(); });
 
     it('C28385 (+) withdrawal_manual_control = false by default', async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
       expect(meta.withdrawal_manual_control).equal(false);
     });
 
     it('C28386 (+) withdrawal_manual_control = false when in db = true', async () => {
-      const { data } = await register.usualReg();
+      const { data } = await register.usualReg(socket);
       await setUserWithdrawalManualControl(data.id);
       await logOut();
-      await userList.loginWithParams(data.email, data.password);
+      await userList.loginWithParams(socket, data.email, data.password);
       const meta = await socket.userMeta;
       // console.log(meta);
       expect(meta.withdrawal_manual_control).equal(false);
     });
 
     it('C28387 (+) withdrawal_manual_control = true in db after withdrawal to blocked wallet', async () => {
-      const { data: user } = await register.usualReg();
+      const { data: user } = await register.usualReg(socket);
       // console.log(currentUser.id);
       await banking.setBalance(user.id);
-      const { data: withdrawal } = await banking.withdrawalCreate(200, BLOCKED_WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(200, BLOCKED_WALLET, 'card_rub', 'RUB');
       // console.log(withdrawal);
 
       const res = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta where id_user= ${user.id} AND ma_users_meta.key = 'withdrawal_manual_control';`);
@@ -49,7 +49,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28388 (+) withdrawal_manual_control = true in db after deposit from blocked wallet', async () => {
-      const { data: user } = await register.usualReg();
+      const { data: user } = await register.usualReg(socket);
       // console.log(currentUser.id);
 
       const { data: deposit } = await banking.depositCreate(200, BLOCKED_WALLET, 'card_rub', 'RUB');
@@ -71,14 +71,14 @@ describe('Withdrawal manual control tests', () => {
     let users = [];
 
     beforeAll(async () => {
-      users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
       await setUserWithdrawalManualControl(currentUser.id);
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C28634 (+) withdrawal_manual_control = true, withdrawal create', async () => {
@@ -88,7 +88,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28635 (-) withdrawal_manual_control = true, withdrawal confirm', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       await sleep(4000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -105,7 +105,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28637 (+) withdrawal_manual_control = true, deposit create', async () => {
-      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
@@ -150,7 +150,7 @@ describe('Withdrawal manual control tests', () => {
 
   describe('withdrawal_manual_control = true + mail with auto confirm', () => {
     it('C28404 (+) withdrawal_manual_control = true + @mail withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
+      const { data } = await usersWithManualControl.userMail(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
@@ -158,7 +158,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28405 (+) withdrawal_manual_control = true + @bk withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
+      const { data } = await usersWithManualControl.userMail(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
@@ -166,8 +166,8 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28406 (+) withdrawal_manual_control = true + @inbox withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
-      await usersWithManualControl.userInbox();
+      const { data } = await usersWithManualControl.userMail(socket);
+      await usersWithManualControl.userInbox(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
@@ -175,7 +175,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28407 (+) withdrawal_manual_control = true + @list withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
+      const { data } = await usersWithManualControl.userMail(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);

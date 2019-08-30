@@ -8,7 +8,7 @@ const currency = 'RUB';
 
 describe.skip('Create deposit for eth_usd - RUB @master', () => {
   beforeAll(async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
   });
 
   it(' - (+) amount = 151 & wallet = (+7)phone', async () => {

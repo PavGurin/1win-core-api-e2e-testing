@@ -9,7 +9,7 @@ const ORDINARY = 'ordinary';
 const LIVE = 'live';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney();
+  await userList.loginWithRealMoney(socket);
 });
 
 describe.skip('Old bets requests', () => {

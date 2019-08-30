@@ -1,6 +1,12 @@
 // import jest from 'jest';
 import SocketClient from '../src/index';
 
+export const getNewSocket = async () => {
+  const socket = new SocketClient({});
+  await socket.connect();
+  return socket;
+};
+
 let socket;
 
 beforeAll(async () => {
