@@ -43,20 +43,27 @@ export async function tournamentMatches(service, tournamentId) {
 
 export async function getSingleMatch(service) {
   const { data: { sportTournamentMap } } = await sportTournaments(service, 'all');
-  console.log(sportTournamentMap);
-
-  // const { data: { matchMap } } = await tournamentMatches(
-  //   service,
-  //   Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
-  // );
-
-  const data = await tournamentMatches(
-    service,
-    Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
-  );
-  console.log(data);
-
-  return Object.values(data.data.matchMap);
+  // console.log(sportTournamentMap);
+  const tournamentsAvailable = Object.values(sportTournamentMap).length;
+  // console.log(tournamentsAvailable);
+  let data;
+  let availableMatchesCount;
+  for (let i = 0; i < tournamentsAvailable; i++) {
+    availableMatchesCount = Object.values(Object.values(sportTournamentMap)[i]).length;
+    for (let m = 0; m < availableMatchesCount; m++) {
+      // eslint-disable-next-line no-await-in-loop
+      data = await tournamentMatches(
+        service,
+        Object.values(Object.values(sportTournamentMap)[i])[m].tournamentId,
+      );
+      const betStatus = Object.values(data.data.matchMap)[m].betstatus;
+      // console.log(betStatus);
+      if (service === 'prematch' || betStatus === ('started')) {
+        return Object.values(data.data.matchMap)[m];
+      }
+    }
+  }
+  return console.log('error in betStatus method or there are no any matches available for bet');
 }
 
 export const getMatchHistory = async ({
@@ -89,3 +96,4 @@ export async function getMatchById(id) {
     language: null,
   });
 }
+19536149;
