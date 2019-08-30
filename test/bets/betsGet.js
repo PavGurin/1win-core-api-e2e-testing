@@ -47,7 +47,7 @@ describe('Bets get', () => {
 
   it('C22024 (+) get ordinary bet by id', async () => {
     const { data: login } = await userList.loginWithRealMoney(socket);
-    const [singleMatch] = await getSingleMatch(PREMATCH);
+    const singleMatch = await getSingleMatch(PREMATCH);
     // console.log(singleMatch);
     const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
