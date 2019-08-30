@@ -2,12 +2,10 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { checkErrMsg } from '../../../src/responseChecker';
-import { logOut } from '../../../src/methods/user';
 
 describe('Transfer with money - RUB', () => {
-  beforeAll(async () => {
-    await logOut();
-    await userList.loginWithRealMoney();
+  beforeEach(async () => {
+    await userList.loginWithRealMoney(socket);
   });
 
   it('C19371 (+) With money', async () => {
@@ -50,7 +48,7 @@ describe('Transfer with money - RUB', () => {
   });
 
 
-  it('C27042 (-) amount < 20 ', async () => {
+  it(' (-) amount < 20 ', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 19,
@@ -79,8 +77,8 @@ describe('Transfer with money - RUB', () => {
 });
 
 describe('Transfer with money - USD', () => {
-  beforeAll(async () => {
-    await userList.loginWithRubUsd();
+  beforeEach(async () => {
+    await userList.loginWithRubUsd(socket);
   });
 
   it('C19373 (+) With money + USD, amount = 0.1 USD', async () => {
@@ -127,8 +125,8 @@ describe('Transfer with money - USD', () => {
 });
 
 describe('Transfer without money', () => {
-  beforeAll(async () => {
-    await register.oneClickReg();
+  beforeEach(async () => {
+    await register.oneClickReg(socket);
   });
 
   it('C19367 (-) Without money , not enough amount + RUB', async () => {

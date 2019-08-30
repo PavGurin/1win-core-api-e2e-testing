@@ -7,7 +7,7 @@ const currency = 'RUB';
 
 describe('Invalid data ', () => {
   beforeAll(async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
   });
   it('C22494 - amount = 0', async () => {
     const { data } = await banking.depositCreate(0, '+79215598256',

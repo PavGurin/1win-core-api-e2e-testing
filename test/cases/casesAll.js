@@ -5,7 +5,7 @@ import { checkInfoCase } from '../../src/expects/exCases';
 describe('Get cases info', () => {
   describe('RUB', () => {
     beforeAll(async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
     });
 
     it('C483524 - all cases', async () => {
@@ -33,7 +33,7 @@ describe('Get cases info', () => {
 
   describe('USD', () => {
     beforeAll(async () => {
-      await register.oneClickRegUSD();
+      await register.oneClickRegUSD(socket);
     });
 
     it('C483525 - all cases', async () => {

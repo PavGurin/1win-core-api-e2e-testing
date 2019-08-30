@@ -20,7 +20,7 @@ describe('Cases winner tests', () => {
 
   describe('cases_winner = false', () => {
     it('C28427 (+) cases_winner = false by default and not present in socket.userMeta', async () => {
-      const { data } = await register.oneClickReg();
+      const { data } = await register.oneClickReg(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
       expect(meta.cases_winner).not.exist;
@@ -34,14 +34,14 @@ describe('Cases winner tests', () => {
     const BALANCE = 1000;
 
     beforeAll(async () => {
-      users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
       await setUserCasesWinner(currentUser.id);
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C28428 (+) cases_winner not present in socket.userMeta when in db = true', async () => {
@@ -76,7 +76,7 @@ describe('Cases winner tests', () => {
     });
 
     it('C28438 (+) cases_winner = true + withdrawal_block = false, withdrawal confirm', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       await sleep(4000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -92,14 +92,14 @@ describe('Cases winner tests', () => {
     });
 
     it('C28440 (+) cases_winner = true + withdrawal_block = false, deposit create', async () => {
-      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
     });
 
     it('C28653 (-) cases_winner = true + withdrawal_block = false, make bet > maxBetAmount', async () => {
-      const { data: user } = await register.oneClickReg();
+      const { data: user } = await register.oneClickReg(socket);
       const [singleMatch] = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
@@ -121,7 +121,7 @@ describe('Cases winner tests', () => {
     const USERS_NUMBER = 9;
     const BALANCE = 10000;
     beforeAll(async () => {
-      users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
@@ -129,7 +129,7 @@ describe('Cases winner tests', () => {
       currentUser = users.pop();
       await setUserWithdrawalBlock(currentUser.id);
       await setUserCasesWinner(currentUser.id);
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C28429 (+) cases_winner = true + withdrawal_block = true, case 1  (min cost 10 rub)', async () => {

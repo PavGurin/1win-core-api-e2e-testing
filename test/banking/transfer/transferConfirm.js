@@ -19,13 +19,13 @@ describe('Transfer confirm tests', () => {
 
   beforeAll(async () => {
     // формируем пул юзеров
-    users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+    users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
   });
 
 
   describe('Transfer confirm invalid', () => {
     it('C19365 (-) Incorrect code with 404 code response', async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
       const { data } = await socket.send('BANKING:transfer-confirm', { code: 5372831 });
       // console.log(data);
       checkErrMsg(data, 404, 'Перевод не найден');
@@ -34,7 +34,7 @@ describe('Transfer confirm tests', () => {
 
   describe('Transfer confirm with money', () => {
     it('C19366 (-) Incorrect code with 400 code response', async () => {
-      await userList.loginWithRealMoney();
+      await userList.loginWithRealMoney(socket);
       await banking.transferCreate(100, 'RUB');
       const { data } = await socket.send('BANKING:transfer-confirm', { code: 111 });
       // console.log(data);
@@ -47,7 +47,7 @@ describe('Transfer confirm tests', () => {
     beforeEach(async () => {
       currentUser = users.pop();
       await logOut();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.transferCreate(20, 'RUB');
       // задержка, чтобы письмо успело придти на почту
       await sleep(4000);
@@ -63,7 +63,7 @@ describe('Transfer confirm tests', () => {
     it('C21436 (-) Active code of other user with 400 code response', async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.transferCreate(20, 'RUB');
 
       const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
@@ -117,7 +117,7 @@ describe('Transfer confirm tests', () => {
     it('C27219 (-) Active code of other operation that was obtained before transfer code', async () => {
       currentUser = users.pop();
       await logOut();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
       await sleep(4000);
       const withdrawalMail = await mail.getMessage(currentUser.email);
@@ -137,12 +137,12 @@ describe('Transfer confirm tests', () => {
     beforeEach(async () => {
       // проверка баланса у пользователя, которому будет перевод, до перевода
       await logOut();
-      await userList.loginTransferToUser();
+      await userList.loginTransferToUser(socket);
       balanceBefore = await banking.balanceCheck();
       await logOut();
 
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.transferCreate(20, 'RUB');
       // задержка, чтобы письмо успело придти на почту
       await sleep(4000);
@@ -160,7 +160,7 @@ describe('Transfer confirm tests', () => {
 
       // проверка баланса у пользователя, которому был перевод, после перевода
       await logOut();
-      await userList.loginTransferToUser();
+      await userList.loginTransferToUser(socket);
       expect(await banking.balanceCheck()).to.equal(balanceBefore + 20);
     });
 
@@ -174,7 +174,7 @@ describe('Transfer confirm tests', () => {
 
       // проверка баланса у пользователя, которому был перевод, после перевода
       await logOut();
-      await userList.loginTransferToUser();
+      await userList.loginTransferToUser(socket);
       expect(await banking.balanceCheck()).to.equal(balanceBefore);
     });
   });

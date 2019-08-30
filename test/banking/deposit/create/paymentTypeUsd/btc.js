@@ -8,7 +8,7 @@ const currency = 'USD';
 
 describe('Create deposit for btc_usd - USD @master', () => {
   beforeAll(async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
   });
 
   it(' - (+) amount = 1750 & wallet = (+7)phone', async () => {

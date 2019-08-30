@@ -17,7 +17,7 @@ stages:
 .api_test: &api_test
   stage: tests
   tags:
-  - docker
+    - docker
   allow_failure: true
   script:
     - npm i

@@ -16,7 +16,7 @@ describe('Withdrawal get', () => {
 
   beforeAll(async () => {
     // формируем пул юзеров
-    users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+    users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
   });
 
   describe('Invalid Id withdrawal', () => {
@@ -37,7 +37,7 @@ describe('Withdrawal get', () => {
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C19363 (+) Get - 100 RUB card_rub ', async () => {

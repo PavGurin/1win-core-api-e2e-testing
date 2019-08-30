@@ -7,7 +7,7 @@ describe('Bets make', () => {
   const LIVE = 'live';
 
   beforeEach(async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   //+

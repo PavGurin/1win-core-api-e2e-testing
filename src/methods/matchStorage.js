@@ -66,7 +66,7 @@ export async function getSingleMatch(service) {
   return console.log('error in betStatus method or there are no any matches available for bet');
 }
 
-export const getMatchHistory = async ({
+export const getMatchHistory = async (socket, {
   betType = ['ordinary', 'express'],
   limit = 20,
   ...params

@@ -8,8 +8,8 @@ const payment_system = 'advcash_rub';
 
 
 describe('Withdrawal create with valid test cases ', () => {
-  beforeAll(async () => {
-    await userList.loginWithRealMoney();
+  beforeEach(async () => {
+    await userList.loginWithRealMoney(socket);
   });
 
   it('C19337 - (+) With money card_rub + valid wallet', async () => {

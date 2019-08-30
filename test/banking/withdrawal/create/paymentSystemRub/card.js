@@ -10,14 +10,14 @@ const payment_system = 'card_rub';
 
 
 describe('Withdrawal create with valid test cases ', () => {
-  beforeAll(async () => {
-    await userList.loginWithRealMoney();
+  beforeEach(async () => {
+    await userList.loginWithRealMoney(socket);
   });
 
   it('C19325 (+) With money card_rub + valid wallet', async () => {
     const { data } = await banking.withdrawalCreate(100, '0000111122223333',
       payment_system, currency);
-    console.log(data);
+    // console.log(data);
     successWithdrawalCreate(data);
   });
 
@@ -29,9 +29,9 @@ describe('Withdrawal create with valid test cases ', () => {
 });
 
 describe('Withdrawal create with invalid test cases ', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await logOut();
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
   });
 
   it('(-) Without money, wallet = string', async () => {

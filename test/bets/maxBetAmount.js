@@ -7,7 +7,7 @@ const currency = 'RUB';
 const PREMATCH = 'prematch';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney();
+  await userList.loginWithRealMoney(socket);
 });
 
 

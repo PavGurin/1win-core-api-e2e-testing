@@ -15,7 +15,7 @@ const LIVE = 'live';
 const ORDINARY = 'ordinary';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney();
+  await userList.loginWithRealMoney(socket);
 });
 
 describe('Ordinary bets prematch', () => {
@@ -45,7 +45,7 @@ describe('Ordinary bets prematch', () => {
 
     const betResponse = await makeOrdinaryBet(coupon, betAmount);
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory({
+    const { data: betsMap } = await getMatchHistory(socket, {
       limit,
       betType,
     });

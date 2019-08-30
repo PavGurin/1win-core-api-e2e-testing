@@ -9,7 +9,7 @@ const payment_system = 'mts_rub';
 
 describe('Withdrawal create with valid test cases ', () => {
   beforeAll(async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
   });
 
   it('C19331 - (+) With money card_rub + valid wallet', async () => {

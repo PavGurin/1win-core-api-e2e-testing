@@ -8,7 +8,7 @@ const currency = 'RUB';
 
 describe.skip('Create deposite for card_rub - RUB @master', () => {
   beforeAll(async () => {
-    await register.oneClickReg();
+    await register.oneClickReg(socket);
   });
 
   it(' - (+) amount = 100 & wallet = empty', async () => {

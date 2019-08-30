@@ -1,39 +1,24 @@
 /* eslint camelcase: 'off' */
-import { expect } from 'chai';
 import { randomNum, randomStr } from '../../src/randomizer';
 import { checkErrorMsg } from '../../src/responseChecker';
+import { checkRegInfo } from '../../src/expects/exUser';
+import { register } from '../../src/methods/register';
+import { getNewSocket } from '../global';
 
 describe('Register -Usual schema', () => {
-  const defaultRequest = params => socket.send('USER:auth-register',
-    {
-      isShort: false,
-      country: 'someCountry',
-      timezone: 23,
-      birthday: 946587600000,
-      ...params,
-    });
+  let socket;
 
-  // проверка ответа успешной регистрации
-  function checkRegInfo(data, testText, testNumber, currency) {
-    expect(data.email)
-      .to.equal(`${testText}_test@xyz.com`);
-    expect(data.password)
-      .to.equal(defaultPassword);
-    expect(data.phone)
-      .to.equal(`921${testNumber}`);
-    expect(data.name)
-      .to.equal(testText);
-    expect(data.country)
-      .to.equal('someCountry');
-    expect(data.currency).equal(currency);
-  }
+  beforeEach(async () => {
+    socket = await getNewSocket();
+  });
 
+  afterEach(() => socket.disconnect());
   // (+) for positive tests (-) for negative tests
   it('C19305 (+) + visit_domain + PartnerKey', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
@@ -42,6 +27,7 @@ describe('Register -Usual schema', () => {
       visit_domain: defaultVisitDomain,
       partner_key: defaultPartnerKey,
     });
+
     // console.log(data);
     checkRegInfo(data, testStr, testNum, 'RUB');
   });
@@ -50,7 +36,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -68,7 +54,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -83,13 +69,16 @@ describe('Register -Usual schema', () => {
   });
 
   it('C19308 (-) - visit_domain - PartnerKey', async () => {
-    const { data } = await defaultRequest({
+    const testNum = randomNum();
+
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: randomStr(),
       email: `${randomStr()}test@xyz.com`,
-      phone: `921${randomNum}`,
+      phone: `922${testNum}`,
       password: defaultPassword,
       repeat_password: defaultPassword,
+      partner_key: undefined,
     });
     // console.log(data);
     checkErrorMsg(data, 'Visit domain is required if partner key does not specified');
@@ -99,7 +88,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(2);
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -116,7 +105,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(17);
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -132,7 +121,7 @@ describe('Register -Usual schema', () => {
   it('C19311 (-) short phone number', async () => {
     const testStr = randomStr();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -148,7 +137,7 @@ describe('Register -Usual schema', () => {
   it('C19312 (-) long phone number', async () => {
     const testStr = randomStr();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -165,7 +154,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -182,7 +171,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(5);
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -199,7 +188,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(19);
     const testNum = randomNum();
 
-    const { data } = await defaultRequest({
+    const { data } = await register.usualReg(socket, {
       isShort: false,
       name: randomStr(),
       email: `${randomStr()}_test@xyz.com`,

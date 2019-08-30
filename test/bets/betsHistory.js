@@ -8,18 +8,16 @@ const EXPRESS = 'express';
 
 describe('Bets history', () => {
   it('C27571 (+) user w/o bet history default filter', async () => {
-    const { data: regReq } = await register.oneClickReg();
-    await userList.loginWithParams(regReq.email, regReq.password);
-    const { data } = await getMatchHistory();
+    await register.oneClickReg(socket);
+    const { data } = await getMatchHistory(socket);
     // console.log(data);
     expect(data.totalCount).equal(0);
     expect(data.betsMap).to.be.empty;
   });
 
   it('C27572 (-) no order value', async () => {
-    const { data: regReq } = await register.oneClickReg();
-    await userList.loginWithParams(regReq.email, regReq.password);
-    const { data } = await getMatchHistory({
+    await register.oneClickReg(socket);
+    const { data } = await getMatchHistory(socket, {
       order: null,
     });
     // console.log(data);
@@ -28,9 +26,8 @@ describe('Bets history', () => {
   });
 
   it('C27573 (-) no limit value', async () => {
-    const { data: regReq } = await register.oneClickReg();
-    await userList.loginWithParams(regReq.email, regReq.password);
-    const { data } = await getMatchHistory({
+    await register.oneClickReg(socket);
+    const { data } = await getMatchHistory(socket, {
       limit: null,
     });
     // console.log(data);
@@ -39,9 +36,8 @@ describe('Bets history', () => {
   });
 
   it('C27574 (+) user w/o bet history asc order', async () => {
-    const { data: regReq } = await register.oneClickReg();
-    await userList.loginWithParams(regReq.email, regReq.password);
-    const { data } = await getMatchHistory({
+    await register.oneClickReg(socket);
+    const { data } = await getMatchHistory(socket, {
       order: ['id', 'ASC'],
     });
     // console.log(data);
@@ -50,9 +46,8 @@ describe('Bets history', () => {
   });
 
   it('C27575 (+) user w/o bet history, bet type \'express\'', async () => {
-    const { data: regReq } = await register.oneClickReg();
-    await userList.loginWithParams(regReq.email, regReq.password);
-    const { data } = await getMatchHistory({
+    await register.oneClickReg(socket);
+    const { data } = await getMatchHistory(socket, {
       betType: EXPRESS,
     });
     // console.log(data);
@@ -61,9 +56,8 @@ describe('Bets history', () => {
   });
 
   it('C27576 (+) user w/o bet history, bet type \'ordinary\'', async () => {
-    const { data: regReq } = await register.oneClickReg();
-    await userList.loginWithParams(regReq.email, regReq.password);
-    const { data } = await getMatchHistory({
+    const { data: regReq } = await register.oneClickReg(socket);
+    const { data } = await getMatchHistory(socket, {
       betType: ORDINARY,
     });
     // console.log(data);
@@ -72,8 +66,8 @@ describe('Bets history', () => {
   });
 
   it('C27577 (+) user with bet history, bet type \'ordinary\'', async () => {
-    await userList.loginWithRealMoney();
-    const { data: { betsMap } } = await getMatchHistory({
+    await userList.loginWithRealMoney(socket);
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       betType: ORDINARY,
     });
     // console.log(betsMap);
@@ -85,8 +79,8 @@ describe('Bets history', () => {
    * */
 
   it('C27578 (+) all filters with all available values', async () => {
-    await userList.loginWithRub();
-    const { data: { betsMap } } = await getMatchHistory({
+    await userList.loginWithRub(socket);
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       order: ['id', 'DESC'],
       // полные настройки фильтра в блоке 'where'
       where: {
@@ -101,9 +95,9 @@ describe('Bets history', () => {
   });
 
   it('C27579 (+) only \'lost\' bets status (status = 1)', async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
     const expectedAmount = 5;
-    const { data: { betsMap } } = await getMatchHistory({
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       limit: expectedAmount,
       order: ['id', 'DESC'],
 
@@ -119,9 +113,9 @@ describe('Bets history', () => {
   });
 
   it('C27580 (+) only \'returned\' bets status (status = 2)', async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
     const expectedAmount = 5;
-    const { data: { betsMap } } = await getMatchHistory({
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       limit: expectedAmount,
       order: ['id', 'DESC'],
 
@@ -137,9 +131,9 @@ describe('Bets history', () => {
   });
 
   it('C27581 (+) only \'won\' bets status (status = 3)', async () => {
-    await userList.loginWithRealMoney();
+    await userList.loginWithRealMoney(socket);
     const expectedAmount = 15;
-    const { data: { betsMap } } = await getMatchHistory({
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       limit: expectedAmount,
       order: ['id', 'DESC'],
 
@@ -155,8 +149,8 @@ describe('Bets history', () => {
   });
 
   it('C27582 (-) [0,0] limit', async () => {
-    await userList.loginWithRub();
-    const { data: { betsMap } } = await getMatchHistory({
+    await userList.loginWithRub(socket);
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       limit: 0,
     });
     // console.log(betsMap);
@@ -164,8 +158,8 @@ describe('Bets history', () => {
   });
 
   it('C27583 (-) limits \'from\' value > than \'to\' value', async () => {
-    await userList.loginWithRub();
-    const { data: { betsMap } } = await getMatchHistory({
+    await userList.loginWithRub(socket);
+    const { data: { betsMap } } = await getMatchHistory(socket, {
       limit: [10, 0],
     });
     // console.log(betsMap);
@@ -173,9 +167,9 @@ describe('Bets history', () => {
   });
 
   it('C27584 (-) 5 limits, where all filters, where service = null', async () => {
-    await userList.loginWithRub();
+    await userList.loginWithRub(socket);
     const expectedAmount = 5;
-    const { data } = await getMatchHistory({
+    const { data } = await getMatchHistory(socket, {
       limit: [5, 5],
       order: ['id', 'DESC'],
 

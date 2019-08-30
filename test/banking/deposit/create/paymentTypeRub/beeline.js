@@ -1,18 +1,23 @@
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
+import { getNewSocket } from '../../../../global';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
+const user = {};
 
-let user = {};
+describe('Create deposite for beeline_rub - RUB @master', () => {
+  let socket;
 
-describe('Create deposit for beeline_rub - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C22485 - (+) amount = 100 & wallet = (+7)phone', async () => {
     await banking.depositCreate(
@@ -67,9 +72,14 @@ describe('Create deposit for beeline_rub - RUB', () => {
 });
 
 describe('Create deposite for beeline_rub invalid - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C22500 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '79215598386',
