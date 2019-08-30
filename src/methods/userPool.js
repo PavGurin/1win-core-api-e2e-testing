@@ -4,13 +4,13 @@ import { mysqlConnection } from './mysqlConnection';
 
 export const userPool = {
 
-  async usersWithBalanceRubAndConfirmCodes(usersNumber, balanceAmount) {
+  async usersWithBalanceRubAndConfirmCodes(socket, usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
-      const newUser = await register.regMailWithConfirmationCodes();
+      const newUser = await register.regMailWithConfirmationCodes(socket);
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -27,13 +27,13 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithBalanceRub(usersNumber, balanceAmount) {
+  async usersWithBalanceRub(socket, usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
-      const newUser = await register.usualReg();
+      const newUser = await register.usualReg(socket);
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -50,13 +50,13 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithBalanceUsd(usersNumber, balanceAmount) {
+  async usersWithBalanceUsd(socket, usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
-      const newUser = await register.oneClickRegUSD();
+      const newUser = await register.oneClickRegUSD(socket);
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -73,13 +73,13 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithEmailMailru(usersNumber, balanceAmount) {
+  async usersWithEmailMailru(socket, usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
-      const newUser = await register.usualRegMailru();
+      const newUser = await register.usualRegMailru(socket);
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,

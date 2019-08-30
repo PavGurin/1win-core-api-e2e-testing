@@ -9,7 +9,7 @@ describe('Create deposit for beeline_rub - RUB', () => {
   let user = {};
 
   beforeAll(async () => {
-    user = await register.oneClickReg();
+    user = await register.oneClickReg(socket);
   });
 
   it('C22492 - without currency', async () => {

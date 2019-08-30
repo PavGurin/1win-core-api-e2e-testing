@@ -13,13 +13,13 @@ describe('Cases play USD', () => {
 
     beforeAll(async () => {
       // формируем пул юзеров
-      users = await userPool.usersWithBalanceUsd(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceUsd(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C491787 - (+) play  cases 10', async () => {

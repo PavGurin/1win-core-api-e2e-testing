@@ -2,14 +2,20 @@ import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { getNewSocket } from '../../../../global';
 
 const paymentType = 'yamoney_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
-  beforeAll(async () => {
-    await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it(' (+) amount = 100 & wallet = empty', async () => {
     const { data } = await banking.depositCreate(

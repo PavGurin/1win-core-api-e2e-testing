@@ -41,7 +41,7 @@ describe('Withdrawal history', () => {
       // задержка для получения письма
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);
-      const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
+      await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
 
       const { data } = await socket.send('BANKING:withdrawal-history');
       // console.log(data);
@@ -61,7 +61,7 @@ describe('Withdrawal history', () => {
 
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);
-      const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
+      await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
 
       const { data } = await socket.send('BANKING:withdrawal-history');
 

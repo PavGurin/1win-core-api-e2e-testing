@@ -8,7 +8,7 @@ const payment_system = 'beeline_rub';
 
 
 describe('Withdrawal create with valid test cases ', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await userList.loginWithRealMoney(socket);
   });
 

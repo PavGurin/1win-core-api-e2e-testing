@@ -9,7 +9,7 @@ describe('Registration domain tests', () => {
   beforeEach(async () => { await logOut(); });
 
   it('C28379 (+) one click reg without visit_domain', async () => {
-    const { data } = await register.oneClickReg();
+    const { data } = await register.oneClickReg(socket);
     // console.log(data);
     const meta = await socket.userMeta;
     expect(meta.registration_domain).not.exist;
@@ -41,7 +41,7 @@ describe('Registration domain tests', () => {
   });
 
   it('C28383 (+) usual reg without visit_domain ', async () => {
-    const { data } = await register.usualReg();
+    const { data } = await register.usualReg(socket);
     // console.log(data);
     const meta = await socket.userMeta;
     expect(meta.registration_domain).not.exist;

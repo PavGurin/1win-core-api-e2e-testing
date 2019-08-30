@@ -14,13 +14,13 @@ describe('Cases play RUB', () => {
 
     beforeAll(async () => {
     // формируем пул юзеров
-      users = await userPool.usersWithBalanceRub(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRub(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C484968 - (+) play  cases 1', async () => {

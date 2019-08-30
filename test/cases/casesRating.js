@@ -5,7 +5,7 @@ import { register } from '../../src/methods/register';
 describe('Get raiting cases', () => {
   describe('RUB', () => {
     beforeAll(async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
     });
 
     it('C483526 - valid request cases rating', async () => {
@@ -19,7 +19,7 @@ describe('Get raiting cases', () => {
 
   describe('USD', () => {
     beforeAll(async () => {
-      await register.oneClickRegUSD();
+      await register.oneClickRegUSD(socket);
     });
 
     it('C483527 -  valid request cases rating', async () => {

@@ -2,6 +2,8 @@ import { expect } from 'chai';
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { getNewSocket } from '../../../../global';
+import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
@@ -10,8 +12,41 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for card_rub - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    user = await register.oneClickReg(socket);
+  });
+
+  afterEach(() => socket.disconnect());
+
+
+  it('C22535 - (+) amount = 100 & wallet = empty', async () => {
+    const { data } = await banking.depositCreateRub(
+      100, '', paymentType, currency,
+    );
+    // console.log(data);
+    successDepositCreate(data, currency,
+      paymentType, 100);
+  });
+
+  // TODO возвращается 500 если передаем amount c 3мя знаками после запятой
+  it(' - (+) amount = 100.01 & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRub(
+      100.013, '123 autotests', paymentType, currency,
+    );
+    // console.log
+    successDepositCreate(data, currency,
+      paymentType, 100.01);
+  });
+  it(' - (+) amount = 100.01 & wallet = symbols', async () => {
+    const { data } = await banking.depositCreateRub(
+      100.013, '123 autotests', paymentType, currency,
+    );
+    // console.log(data);
+    successDepositCreate(data, currency,
+      paymentType, 100.01);
   });
 
   it('C22538 - min amount', async () => {
@@ -64,9 +99,14 @@ describe('Create deposite for card_rub - RUB', () => {
 });
 
 describe('Create deposite for card_rub invalid - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C22516 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(90.6, '',

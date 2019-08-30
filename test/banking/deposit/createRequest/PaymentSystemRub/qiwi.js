@@ -2,14 +2,20 @@ import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { getNewSocket } from '../../../../global';
 
 const paymentType = 'qiwi_rub';
 const currency = 'RUB';
 
 describe.skip('Create deposite for qiwi_rub - RUB @master', () => {
-  beforeAll(async () => {
-    await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it(' - (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreateRequest(

@@ -59,7 +59,7 @@ describe('Withdrawal confirm tests', () => {
     it('C27120 (-) Active code of other user', async () => {
       await logOut();
       currentUser = users.pop();
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.withdrawalCreate(100, '5469550073662048',
         'card_rub', 'RUB');
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });

@@ -2,17 +2,24 @@ import { expect } from 'chai';
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { getNewSocket } from '../../../../global';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
 const paymentType = 'yamoney_rub';
 const currency = 'RUB';
-let user = {};
+const user = {};
 
-describe('Create deposite for yamoney_ru - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
+
 
   it('C22646 (+) amount = 100 & wallet = empty', async () => {
     await banking.depositCreate(
@@ -76,9 +83,14 @@ describe('Create deposite for yamoney_ru - RUB', () => {
 });
 
 describe('Create deposite for yamoney_ru invalid - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C22661 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '',

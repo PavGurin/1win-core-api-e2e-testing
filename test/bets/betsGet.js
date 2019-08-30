@@ -53,7 +53,7 @@ describe('Bets get', () => {
     // console.log(coupon);
     await makeOrdinaryBet(coupon, 10);
 
-    const { data: betsMap } = await getMatchHistory({
+    const { data: betsMap } = await getMatchHistory(socket, {
       betType: ORDINARY,
       limit: 1,
     });
@@ -83,7 +83,7 @@ describe('Bets get', () => {
     // console.log(coupon);
     await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory({
+    const { data: betsMap } = await getMatchHistory(socket, {
       betType: EXPRESS,
       limit: 1,
     });

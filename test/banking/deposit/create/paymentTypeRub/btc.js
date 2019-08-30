@@ -3,6 +3,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
+import { getNewSocket } from '../../../../global';
 
 const paymentType = 'btc_usd';
 const currency = 'RUB';
@@ -10,7 +11,7 @@ let user = {};
 
 describe('Create deposit for btc_usd - RUB', () => {
   beforeAll(async () => {
-    user = await register.oneClickReg();
+    user = await register.oneClickReg(socket);
   });
 
   it('C28655 - (+) amount = 1751 & wallet = empty', async () => {
@@ -56,9 +57,14 @@ describe('Create deposit for btc_usd - RUB', () => {
 });
 
 describe('Create deposite for btc_usd invalid - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C28659 - amount = 0', async () => {
     const { data } = await banking.depositCreate(0, '+79215598256',

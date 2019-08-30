@@ -20,7 +20,7 @@ describe('User demo withdrawal tests', () => {
 
   describe('user_demo_withdrawal = false', () => {
     it('C28415 (+) user_demo_withdrawal = false by default', async () => {
-      const { data } = await register.oneClickReg();
+      const { data } = await register.oneClickReg(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
       expect(meta.user_demo_withdrawal).equal(false);
@@ -34,14 +34,14 @@ describe('User demo withdrawal tests', () => {
     const BALANCE = 100;
 
     beforeAll(async () => {
-      users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
       await logOut();
       currentUser = users.pop();
       await setUserDemoWithdrawal(currentUser.id);
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C28422 (+) user_demo_withdrawal = true +  withdrawal_block = false, withdrawal create', async () => {
@@ -51,7 +51,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28423 (+) user_demo_withdrawal = true + withdrawal_block = false, withdrawal confirm', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       await sleep(4000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -67,7 +67,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28425 (+) user_demo_withdrawal = true + withdrawal_block = false, deposit create', async () => {
-      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
@@ -100,7 +100,7 @@ describe('User demo withdrawal tests', () => {
     const USERS_NUMBER = 7;
     const BALANCE = 100;
     beforeAll(async () => {
-      users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
@@ -108,7 +108,7 @@ describe('User demo withdrawal tests', () => {
       currentUser = users.pop();
       await setUserWithdrawalBlock(currentUser.id);
       await setUserDemoWithdrawal(currentUser.id);
-      await userList.loginWithParams(currentUser.email, currentUser.password);
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
 
     it('C28416 (+) user_demo_withdrawal = false when in db = true', async () => {

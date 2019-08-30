@@ -47,7 +47,7 @@ describe('Ordinary bets prematch', () => {
 
     const betResponse = await makeOrdinaryBet(coupon, betAmount);
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory(limit, betType);
+    const { data: betsMap } = await getMatchHistory(socket, { limit, betType });
     // console.log(betsMap);
     expect(Object.values(betsMap.betsMap)[0].amount).equal(Math.floor(betAmount));
     expect(Object.values(betsMap.betsMap)[0].betType).equal(betType);
@@ -100,7 +100,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
 
     const betResponse = await makeOrdinaryBet(coupon, 10);
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).equal(400);
     expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Odds higher than market in Line Service');

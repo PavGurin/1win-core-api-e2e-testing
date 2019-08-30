@@ -11,7 +11,7 @@ import { generateOrdinaryCoupon, makeOrdinaryBet } from '../../src/methods/bette
 describe('Full block tests', () => {
   describe('no full block', () => {
     it('C28640 (+) full_block = false by default', async () => {
-      await register.oneClickReg();
+      await register.oneClickReg(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
       expect(meta.full_block.initial).equal(false);
@@ -20,11 +20,11 @@ describe('Full block tests', () => {
 
   describe('login with full_block', () => {
     it('C28641 (+) full_block = true in bd, login blocked', async () => {
-      const { data } = await register.oneClickReg();
+      const { data } = await register.oneClickReg(socket);
       await logOut();
       await setUserFullBlock(data.id);
 
-      const { data: login } = userList.loginWithParams(data.email, data.password);
+      const { data: login } = userList.loginWithParams(socket, data.email, data.password);
       await sleep(2000);
       expect(login).undefined;
     });
@@ -36,7 +36,7 @@ describe('Full block tests', () => {
 
     beforeAll(async () => {
       await logOut();
-      user = await register.usualReg();
+      user = await register.usualReg(socket);
       [singleMatch] = await getSingleMatch('prematch');
       coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
       await banking.setBalance(user.data.id);
