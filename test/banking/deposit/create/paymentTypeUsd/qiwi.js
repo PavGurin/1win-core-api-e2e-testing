@@ -1,15 +1,21 @@
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { userList } from '../../../../../src/methods/userList';
+import { getNewSocket } from '../../../../global';
+import { register } from '../../../../../src/methods/register';
 
 const paymentType = 'qiwi_rub';
 const currency = 'USD';
 
-describe('Create deposite for qiwi_rub - USD @master', () => {
-  beforeAll(async () => {
-    await userList.loginWithRealMoney(socket);
+describe.skip('Create deposite for qiwi_rub - USD @master', () => {
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickRegUSD(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {
     const { data } = await banking.depositCreate(

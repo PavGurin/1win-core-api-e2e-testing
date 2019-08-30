@@ -4,7 +4,7 @@ const partner_key = 'test001';
 
 export const register = {
 
-  async oneClickReg() {
+  async oneClickReg(socket, oneClick) {
     return socket.send('USER:auth-register',
       {
         isShort: true,
@@ -12,10 +12,11 @@ export const register = {
         timezone: 23,
         partner_key,
         currency: 'RUB',
+        ...oneClick,
       });
   },
 
-  async oneClickRegUSD() {
+  async oneClickRegUSD(socket) {
     return socket.send('USER:auth-register',
       {
         isShort: true,
@@ -26,8 +27,7 @@ export const register = {
       });
   },
 
-
-  async oneClickRegEUR() {
+  async oneClickRegEUR(socket) {
     return socket.send('USER:auth-register',
       {
         isShort: true,
@@ -38,7 +38,7 @@ export const register = {
       });
   },
 
-  async usualReg(usualRegistration) {
+  async usualReg(socket, usualRegistration) {
     return socket.send('USER:auth-register',
       {
         isShort: false,
@@ -54,8 +54,7 @@ export const register = {
         ...usualRegistration,
       });
   },
-
-  async usualRegMailru(usualRegistration) {
+  async usualRegMailru(socket, usualRegistration) {
     return socket.send('USER:auth-register',
       {
         isShort: false,
@@ -71,7 +70,7 @@ export const register = {
         ...usualRegistration,
       });
   },
-  async regMailWithConfirmationCodes() {
+  async regMailWithConfirmationCodes(socket) {
     return socket.send('USER:auth-register',
       {
         isShort: false,
@@ -87,7 +86,7 @@ export const register = {
       });
   },
 
-  async oneClickWithVisitDomainRUB(visitDomain) {
+  async oneClickWithVisitDomainRUB(socket, visitDomain) {
     return socket.send('USER:auth-register',
       {
         isShort: true,
@@ -98,7 +97,7 @@ export const register = {
         visit_domain: visitDomain,
       });
   },
-  async oneClickWithVisitDomainUSD(visitDomain) {
+  async oneClickWithVisitDomainUSD(socket, visitDomain) {
     return socket.send('USER:auth-register',
       {
         isShort: true,
@@ -109,7 +108,7 @@ export const register = {
         visit_domain: visitDomain,
       });
   },
-  async oneClickWithVisitDomainEUR(visitDomain) {
+  async oneClickWithVisitDomainEUR(socket, visitDomain) {
     return socket.send('USER:auth-register',
       {
         isShort: true,
@@ -120,7 +119,7 @@ export const register = {
         visit_domain: visitDomain,
       });
   },
-  async usualRegWithVisitDomain(visitDomain) {
+  async usualRegWithVisitDomain(socket, visitDomain) {
     return socket.send('USER:auth-register',
       {
         isShort: false,

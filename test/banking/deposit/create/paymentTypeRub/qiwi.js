@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
+import { getNewSocket } from '../../../../global';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
@@ -10,9 +11,14 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for qiwi_rub - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    user = await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C22620 - (+) amount = 100 & wallet = (+7)phone', async () => {
     await banking.depositCreate(
@@ -248,9 +254,14 @@ WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
 });
 
 describe('Create deposite for qiwi_rub invalid - RUB', () => {
-  beforeAll(async () => {
-    user = await register.oneClickReg();
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickReg(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   it('C22635 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '+79001234567',

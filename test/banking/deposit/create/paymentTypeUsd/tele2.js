@@ -1,15 +1,21 @@
 import { banking } from '../../../../../src/methods/banking';
 import { successDepositCreate } from '../../../../../src/expects/exBanking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { userList } from '../../../../../src/methods/userList';
+import { getNewSocket } from '../../../../global';
+import { register } from '../../../../../src/methods/register';
 
 const paymentType = 'tele2_rub';
 const currency = 'USD';
 
 describe('Create deposite for tele2 - USD @master', () => {
-  beforeAll(async () => {
-    await userList.loginWithRealMoney(socket);
+  let socket;
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+    await register.oneClickRegUSD(socket);
   });
+
+  afterEach(() => socket.disconnect());
 
   // TODO нужна тестовая симкарта теле2
   it(' (+) amount = 100 & wallet = (+7)phone', async () => {
