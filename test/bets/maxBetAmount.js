@@ -3,7 +3,6 @@ import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
 import { userList } from '../../src/methods/userList';
 
-const currency = 'RUB';
 const PREMATCH = 'prematch';
 
 beforeEach(async () => {

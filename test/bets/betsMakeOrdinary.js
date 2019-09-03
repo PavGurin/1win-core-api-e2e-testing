@@ -97,7 +97,7 @@ describe('Ordinary bets prematch', () => {
 
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
-    coupon.coefficient += 0.1;
+    coupon.coefficient += 0.2;
     // console.log(coupon);
 
     const betResponse = await makeOrdinaryBet(coupon, 10);

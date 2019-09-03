@@ -30,7 +30,7 @@ describe('Express', () => {
     // console.log(coupon);
 
     const betResponse = await makeExpressBet(Object.values(coupon));
-    console.log(betResponse);
+    // console.log(betResponse);
 
     expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
     expect(betResponse.status).equal(200);
