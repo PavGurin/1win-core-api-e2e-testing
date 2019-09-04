@@ -36,7 +36,7 @@ describe('Express', () => {
     expect(betResponse.status).equal(200);
   });
 
-  it('C27563 Ordinary - express bet 100', async () => {
+  it('C27563 Prematch - express bet 100', async () => {
     const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
     // console.log(sportTournamentMap);
 
@@ -54,7 +54,7 @@ describe('Express', () => {
     expect(betResponse.status).equal(200);
   });
 
-  it('C27563 Prematch - express bet 100', async () => {
+  it('C558186 Live - express bet 100', async () => {
     const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
     // console.log(sportTournamentMap);
 

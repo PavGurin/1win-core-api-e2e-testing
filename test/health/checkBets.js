@@ -13,7 +13,7 @@ describe('Get methods map', () => {
 
   afterEach(() => socket.disconnect());
 
-  it('C27577 (+) user with bet history, bet type \'ordinary\'', async () => {
+  it('C558187 health checker (bet-history, type - ordinary)', async () => {
     await userList.loginWithRealMoney(socket);
     const { data: { betsMap } } = await getMatchHistory(socket, {
       betType: ORDINARY,
