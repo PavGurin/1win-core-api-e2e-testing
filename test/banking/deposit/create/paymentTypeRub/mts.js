@@ -10,7 +10,6 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for mts_rub - RUB', () => {
-  let socket;
 
   beforeEach(async () => {
     socket = await getNewSocket();

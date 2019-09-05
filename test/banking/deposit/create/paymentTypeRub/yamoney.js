@@ -10,8 +10,7 @@ const paymentType = 'yamoney_rub';
 const currency = 'RUB';
 const user = {};
 
-describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
-  let socket;
+describe('Create deposite for yamoney_ru - RUB', () => {
 
   beforeEach(async () => {
     socket = await getNewSocket();

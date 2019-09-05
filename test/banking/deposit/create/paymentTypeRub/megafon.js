@@ -10,8 +10,6 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for megafon_rub - RUB @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     user = await register.oneClickReg(socket);

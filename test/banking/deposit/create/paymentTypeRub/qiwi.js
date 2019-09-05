@@ -11,7 +11,6 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for qiwi_rub - RUB', () => {
-  let socket;
 
   beforeEach(async () => {
     socket = await getNewSocket();

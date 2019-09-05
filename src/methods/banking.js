@@ -32,7 +32,7 @@ export const banking = {
     // console.log(JSON.stringify(result, null, 2));
   },
 
-  async depositCreate(amount, wallet, paymentType, currency) {
+  async depositCreate( amount, wallet, paymentType, currency) {
     return socket.send('BANKING:deposit-create', {
       amount,
       wallet,
@@ -41,7 +41,7 @@ export const banking = {
     });
   },
 
-  async depositCreateRequest(amount, wallet, paymentType, currency) {
+  async depositCreateRequest( amount, wallet, paymentType, currency) {
     return socket.send('BANKING:deposit-create-request', {
       amount,
       wallet,
