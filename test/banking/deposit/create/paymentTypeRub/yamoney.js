@@ -12,12 +12,8 @@ const user = {};
 
 describe('Create deposite for yamoney_ru - RUB', () => {
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
-
 
   it('C22646 (+) amount = 100 & wallet = empty', async () => {
     await banking.depositCreate(
@@ -81,14 +77,9 @@ describe('Create deposite for yamoney_ru - RUB', () => {
 });
 
 describe('Create deposite for yamoney_ru invalid - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22661 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '',

@@ -3,7 +3,6 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
-import { getNewSocket } from '../../../../global';
 
 const paymentType = 'tele2_rub';
 const currency = 'RUB';
@@ -11,11 +10,8 @@ const user = {};
 
 describe('Create deposite for tele2 - RUB @master', () => {
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22672 - (+) amount = 100 & wallet = (+7)phone', async () => {
     await banking.depositCreate(
@@ -70,14 +66,9 @@ describe('Create deposite for tele2 - RUB @master', () => {
 });
 
 describe('Create deposite for tele2_rub invalid - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22687 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '+79772520000',

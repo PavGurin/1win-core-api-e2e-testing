@@ -11,11 +11,8 @@ let user = {};
 
 describe('Create deposite for piastrix_rub - RUB ', () => {
   beforeEach(async () => {
-    socket = await getNewSocket();
     user = await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22594 - (+) amount = 100 & wallet = empty', async () => {
     await banking.depositCreate(
@@ -60,14 +57,9 @@ describe('Create deposite for piastrix_rub - RUB ', () => {
 });
 
 describe('Create deposite for piastrix_rub invalid - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22609 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '',
