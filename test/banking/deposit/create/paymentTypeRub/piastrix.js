@@ -1,7 +1,6 @@
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { getNewSocket } from '../../../../global';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 

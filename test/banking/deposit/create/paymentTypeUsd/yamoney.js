@@ -7,7 +7,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
-describe('Create deposite for yamoney_ru - USD @master', () => {
+describe.skip('Create deposite for yamoney_ru - USD @master', () => {
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);
@@ -97,7 +97,7 @@ describe('Create deposite for yamoney_ru - USD @master', () => {
   });
 });
 
-describe('Create deposite for yamoney_ru invalid - USD', () => {
+describe.skip('Create deposite for yamoney_ru invalid - USD', () => {
   it(' amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '',
       paymentType, currency);

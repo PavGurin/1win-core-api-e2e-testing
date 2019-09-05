@@ -7,7 +7,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'card_rub';
 const currency = 'USD';
 
-describe('Create deposite for card_rub - USD @master', () => {
+describe.skip('Create deposite for card_rub - USD @master', () => {
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);
@@ -94,7 +94,7 @@ describe('Create deposite for card_rub - USD @master', () => {
   });
 });
 
-describe('Create deposite for card_rub invalid - USD', () => {
+describe.skip('Create deposite for card_rub invalid - USD', () => {
   it(' amount < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '',
       paymentType, currency);

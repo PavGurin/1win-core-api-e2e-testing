@@ -6,11 +6,11 @@ import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
 const paymentType = 'beeline_rub';
 const currency = 'RUB';
-const user = {};
+let user = {};
 
-describe('Create deposite for beeline_rub - RUB @master', () => {
+describe('Create deposite for beeline_rub - RUB', () => {
   beforeEach(async () => {
-    await register.oneClickReg(socket);
+    user = await register.oneClickReg(socket);
   });
 
   it('C22485 - (+) amount = 100 & wallet = (+7)phone', async () => {
@@ -19,9 +19,9 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
     );
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    console.log(dbResult);
+    // console.log(dbResult);
     successDbDeposit(dbResult, 100, '9001234567',
-      'beeline_rub', 'USD');
+      'beeline_rub', 'RUB');
   });
 
   it('C22488 - min amount & wallet = symbols', async () => {

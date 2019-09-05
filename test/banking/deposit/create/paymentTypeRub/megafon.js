@@ -8,7 +8,7 @@ const paymentType = 'megafon_rub';
 const currency = 'RUB';
 let user = {};
 
-describe('Create deposite for megafon_rub - RUB @master', () => {
+describe('Create deposite for megafon_rub - RUB', () => {
   beforeEach(async () => {
     user = await register.oneClickReg(socket);
   });

@@ -212,7 +212,7 @@ describe.skip('Create deposite for qiwi_rub - USD', () => {
   });
 });
 
-describe('Create deposite for qiwi_rub invalid - USD', () => {
+describe.skip('Create deposite for qiwi_rub invalid - USD', () => {
   it(' amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '+79001234567',
       paymentType, currency);

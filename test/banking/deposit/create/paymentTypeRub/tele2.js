@@ -6,11 +6,11 @@ import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
 const paymentType = 'tele2_rub';
 const currency = 'RUB';
-const user = {};
+let user = {};
 
-describe('Create deposite for tele2 - RUB @master', () => {
+describe('Create deposite for tele2 - RUB', () => {
   beforeEach(async () => {
-    await register.oneClickReg(socket);
+    user = await register.oneClickReg(socket);
   });
 
   it('C22672 - (+) amount = 100 & wallet = (+7)phone', async () => {
