@@ -37,11 +37,13 @@ class TestrailReporter {
   }
 
   async onRunStart(runResults, runConfig) {
-    const { data: { id } } = await this.axiosInstance.post(`add_run/${config.projectId}`, {
-      name: config.runName,
-      include_all: true,
-    });
-    this.testRunId = id;
+    try {
+      const { data: { id } } = await this.axiosInstance.post(`add_run/${config.projectId}`, {
+        name: config.runName,
+        include_all: true,
+      });
+      this.testRunId = id;
+    } catch (e) { console.log(e.response.data); }
   }
 
   onTestResult(testRunConfig, testResults, runResults) {
@@ -71,7 +73,11 @@ class TestrailReporter {
     } catch (e) {
       console.log(e.response.data);
     }
-    await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
+    try {
+      await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
+    } catch (e) {
+      console.log(e.response.data);
+    }
   }
 }
 
