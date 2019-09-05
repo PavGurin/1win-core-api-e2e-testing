@@ -8,8 +8,6 @@ const paymentType = 'beeline_rub';
 const currency = 'USD';
 
 describe('Create deposite for beeline_rub - USD @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);

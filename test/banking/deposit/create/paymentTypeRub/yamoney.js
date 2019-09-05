@@ -11,7 +11,6 @@ const currency = 'RUB';
 const user = {};
 
 describe('Create deposite for yamoney_ru - RUB', () => {
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickReg(socket);

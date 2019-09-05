@@ -25,7 +25,7 @@ describe('Create deposite for beeline_rub - RUB @master', () => {
     );
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-     console.log(dbResult);
+    console.log(dbResult);
     successDbDeposit(dbResult, 100, '9001234567',
       'beeline_rub', 'USD');
   });

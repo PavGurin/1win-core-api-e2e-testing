@@ -8,8 +8,6 @@ const paymentType = 'tele2_rub';
 const currency = 'USD';
 
 describe('Create deposite for tele2 - USD @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);

@@ -8,8 +8,6 @@ const paymentType = 'yamoney_rub';
 const currency = 'USD';
 
 describe('Create deposite for yamoney_ru - USD @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);

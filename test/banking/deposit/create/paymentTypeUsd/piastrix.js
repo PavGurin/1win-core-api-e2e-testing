@@ -8,8 +8,6 @@ const paymentType = 'piastrix_rub';
 const currency = 'USD';
 
 describe('Create deposite for piastrix_rub - USD @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);

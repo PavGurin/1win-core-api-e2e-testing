@@ -8,8 +8,6 @@ const paymentType = 'card_rub';
 const currency = 'USD';
 
 describe('Create deposite for card_rub - USD @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);

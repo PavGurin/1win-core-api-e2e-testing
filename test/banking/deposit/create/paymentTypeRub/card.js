@@ -12,7 +12,6 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for card_rub - RUB', () => {
-
   beforeEach(async () => {
     socket = await getNewSocket();
     user = await register.oneClickReg(socket);

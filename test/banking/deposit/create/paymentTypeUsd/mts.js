@@ -8,8 +8,6 @@ const paymentType = 'mts_rub';
 const currency = 'USD';
 
 describe('Create deposite for mts_rub - USD @master', () => {
-  let socket;
-
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);

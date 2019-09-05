@@ -7,9 +7,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'qiwi_rub';
 const currency = 'USD';
 
-describe.skip('Create deposite for qiwi_rub - USD @master', () => {
-  let socket;
-
+describe.skip('Create deposite for qiwi_rub - USD', () => {
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);
