@@ -60,6 +60,11 @@ export async function makeOrdinaryBet(coupon, amount = 10) {
     });
 }
 
+export async function generateSeriesCoupon(coupon, amount) {
+  const data = '';
+  console.log(data);
+}
+
 export async function getMaxBetAmount(coupon, singleMatch) {
   return socket.send('BETS:bets-maxBetAmount',
     {
