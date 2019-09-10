@@ -45,7 +45,7 @@ describe('Express', () => {
       Object.values(Object.values(sportTournamentMap)[0])[0].tournamentId,
     );
 
-    const coupon = generateExpressCoupon(matchMap, 8, 10);
+    const coupon = generateExpressCoupon(matchMap, 5, 10);
     // console.log(coupon);
 
     const betResponse = await makeExpressBet(Object.values(coupon));
@@ -56,7 +56,7 @@ describe('Express', () => {
     expect(betResponse.status).equal(200);
   });
 
-  it('C558186 Live - express bet 100', async () => {
+  it.skip('C558186 Live - express bet 100', async () => {
     const { data: { sportTournamentMap } } = await sportTournaments(LIVE, 'all');
     // console.log(sportTournamentMap);
 
@@ -66,7 +66,8 @@ describe('Express', () => {
     );
     // console.log(matchMap);
 
-    const coupon = generateExpressCoupon(matchMap, 8, 10);
+    const coupon = generateExpressCoupon(matchMap, 5, 10);
+    // console.log(coupon);
 
     const betResponse = await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
