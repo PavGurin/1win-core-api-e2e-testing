@@ -79,7 +79,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28650 (-) user_demo_withdrawal = true + withdrawal_block = false, make bet > maxBetAmount', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
@@ -143,7 +143,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28421 (+) user_demo_withdrawal = true + withdrawal_block = true, make bet', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
@@ -156,7 +156,7 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28649 (+) user_demo_withdrawal = true + withdrawal_block = true, make bet > maxBetAmount', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);

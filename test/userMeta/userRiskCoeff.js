@@ -47,7 +47,7 @@ describe('User risk coefficient tests', () => {
     currentUser = users.pop();
 
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-    const [singleMatch] = await getSingleMatch(PREMATCH);
+    const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );
@@ -67,7 +67,7 @@ describe('User risk coefficient tests', () => {
     currentUser = users.pop();
 
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-    const [singleMatch] = await getSingleMatch(PREMATCH);
+    const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );
@@ -87,7 +87,7 @@ describe('User risk coefficient tests', () => {
     currentUser = users.pop();
 
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-    const [singleMatch] = await getSingleMatch(PREMATCH);
+    const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );
@@ -107,7 +107,7 @@ describe('User risk coefficient tests', () => {
     currentUser = users.pop();
 
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-    const [singleMatch] = await getSingleMatch(PREMATCH);
+    const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );
@@ -127,7 +127,7 @@ describe('User risk coefficient tests', () => {
     currentUser = users.pop();
 
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-    const [singleMatch] = await getSingleMatch(PREMATCH);
+    const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );

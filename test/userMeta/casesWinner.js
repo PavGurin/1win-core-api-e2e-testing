@@ -100,9 +100,9 @@ describe('Cases winner tests', () => {
 
     it('C28653 (-) cases_winner = true + withdrawal_block = false, make bet > maxBetAmount', async () => {
       const { data: user } = await register.oneClickReg(socket);
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
-      const coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
+      const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
@@ -191,7 +191,7 @@ describe('Cases winner tests', () => {
     });
 
     it('C28436 (+) cases_winner = true + withdrawal_block = true, make bet', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
@@ -204,7 +204,7 @@ describe('Cases winner tests', () => {
     });
 
     it('C28652 (+) cases_winner = true + withdrawal_block = true, make bet > maxBetAmount', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
