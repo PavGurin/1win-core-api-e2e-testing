@@ -48,7 +48,7 @@ describe('Transfer with money - RUB', () => {
   });
 
 
-  it(' (-) amount < 20 ', async () => {
+  it('C27042 - (-) amount < 20 ', async () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 19,
