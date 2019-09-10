@@ -34,8 +34,10 @@ export const userList = {
     return socket.send('USER:auth-login', {
       login: 'nogm75@1win.xyz',
       password: 'testerQA',
+      tg_hash: randomStr(5),
     });
   },
+
 
   async loginTransferToUser(socket) {
     // Пользователь, которому приходят переводы

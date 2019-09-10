@@ -10,7 +10,6 @@ describe('Bets make', () => {
     await userList.loginWithRealMoney(socket);
   });
 
-
   //+
   it('sportAll prematch', async () => {
     // serviceType live/prematch

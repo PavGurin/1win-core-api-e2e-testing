@@ -37,7 +37,7 @@ describe('Full block tests', () => {
     beforeAll(async () => {
       await logOut();
       user = await register.usualReg(socket);
-      [singleMatch] = await getSingleMatch('prematch');
+      singleMatch = await getSingleMatch('prematch');
       coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
       await banking.setBalance(user.data.id);
       await setUserFullBlock(user.data.id);

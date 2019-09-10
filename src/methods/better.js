@@ -38,29 +38,6 @@ export async function makeExpressBet(coupon) {
     });
 }
 
-export async function makeOrdinaryBetOld(coupon, currency, amount) {
-  return socket.send('POST:makeBet',
-    {
-      currency,
-      betsMap: {
-        [coupon.couponId]: {
-          amount,
-          couponList: [
-            {
-              service: coupon.service,
-              matchId: coupon.matchId,
-              typeId: coupon.typeId,
-              subTypeId: coupon.subTypeId,
-              outCome: coupon.outCome,
-              specialValue: coupon.specialValue,
-              coefficient: coupon.coefficient,
-            },
-          ],
-        },
-      },
-    });
-}
-
 export async function makeOrdinaryBet(coupon, amount = 10) {
   return socket.send('BETS:bets-make',
     {
@@ -83,33 +60,13 @@ export async function makeOrdinaryBet(coupon, amount = 10) {
     });
 }
 
-export async function getMaxBetAmount(coupon, singleMatch) {
-  return socket.send('BETS:bets-maxBetAmount',
-    {
-      couponList: [
-        {
-          coefficient: coupon.coefficient,
-          match: {
-            categoryId: singleMatch.categoryId,
-            matchId: coupon.matchId,
-            sportId: singleMatch.sportId,
-            tournamentId: singleMatch.tournamentId,
-          },
-          odd: {
-            coefficient: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].coefficient,
-            outCome: Object.values(singleMatch.oddsTypeMap)[0].oddsMap[1].outCome,
-            service: coupon.service,
-            specialValue: coupon.specialValue,
-            subTypeId: coupon.subTypeId,
-            typeId: coupon.typeId,
-          },
-        },
-      ],
-    });
+export async function generateSeriesCoupon(coupon, amount) {
+  const data = '';
+  console.log(data);
 }
 
-export async function getMaxBetAmountOld(coupon, singleMatch) {
-  return socket.send('GET:maxBetAmount',
+export async function getMaxBetAmount(coupon, singleMatch) {
+  return socket.send('BETS:bets-maxBetAmount',
     {
       couponList: [
         {

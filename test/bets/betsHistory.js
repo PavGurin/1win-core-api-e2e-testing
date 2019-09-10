@@ -3,7 +3,6 @@ import { userList } from '../../src/methods/userList';
 import { register } from '../../src/methods/register';
 import { getMatchHistory } from '../../src/methods/matchStorage';
 
-const PREMATCH = 'prematch';
 const ORDINARY = 'ordinary';
 const EXPRESS = 'express';
 
@@ -80,7 +79,7 @@ describe('Bets history', () => {
    * */
 
   it('C27578 (+) all filters with all available values', async () => {
-    await userList.loginWithRub(socket);
+    await userList.loginWithRealMoney(socket);
     const { data: { betsMap } } = await getMatchHistory(socket, {
       order: ['id', 'DESC'],
       // полные настройки фильтра в блоке 'where'
@@ -91,6 +90,8 @@ describe('Bets history', () => {
         dateFrom: 0,
       },
     });
+
+
     // console.log(betsMap);
     expect(Object.entries(betsMap).length).equal(20);
   });
@@ -135,7 +136,6 @@ describe('Bets history', () => {
     await userList.loginWithRealMoney(socket);
     const expectedAmount = 15;
     const { data: { betsMap } } = await getMatchHistory(socket, {
-      language: null,
       limit: expectedAmount,
       order: ['id', 'DESC'],
 
@@ -169,10 +169,8 @@ describe('Bets history', () => {
   });
 
   it('C27584 (-) 5 limits, where all filters, where service = null', async () => {
-    await userList.loginWithRub(socket);
-    const expectedAmount = 5;
+    await userList.loginWithRealMoney(socket);
     const { data } = await getMatchHistory(socket, {
-      language: null,
       limit: [5, 5],
       order: ['id', 'DESC'],
 
@@ -183,6 +181,6 @@ describe('Bets history', () => {
       },
     });
     // console.log(data);
-    expect(Object.values(data.betsMap).length).equal(expectedAmount);
+    expect(Object.values(data.betsMap).length).equal(5);
   });
 });

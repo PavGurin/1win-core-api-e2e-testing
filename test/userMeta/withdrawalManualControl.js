@@ -118,7 +118,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28639 (+) withdrawal_manual_control = true, make bet', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
@@ -131,7 +131,7 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28651 (-) withdrawal_manual_control = true, make bet > maxBetAmount', async () => {
-      const [singleMatch] = await getSingleMatch('prematch');
+      const singleMatch = await getSingleMatch('prematch');
       // console.log(singleMatch);
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
