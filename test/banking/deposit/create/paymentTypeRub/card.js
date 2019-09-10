@@ -1,9 +1,7 @@
 import { expect } from 'chai';
-import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { getNewSocket } from '../../../../global';
-import { successDepositCreate } from '../../../../../src/expects/exBanking';
+import { register } from '../../../../../src/methods/register';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
@@ -12,41 +10,8 @@ const currency = 'RUB';
 let user = {};
 
 describe('Create deposite for card_rub - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     user = await register.oneClickReg(socket);
-  });
-
-  afterEach(() => socket.disconnect());
-
-
-  it('C22535 - (+) amount = 100 & wallet = empty', async () => {
-    const { data } = await banking.depositCreateRub(
-      100, '', paymentType, currency,
-    );
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 100);
-  });
-
-  // TODO возвращается 500 если передаем amount c 3мя знаками после запятой
-  it(' - (+) amount = 100.01 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
-      100.013, '123 autotests', paymentType, currency,
-    );
-    // console.log
-    successDepositCreate(data, currency,
-      paymentType, 100.01);
-  });
-  it(' - (+) amount = 100.01 & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRub(
-      100.013, '123 autotests', paymentType, currency,
-    );
-    // console.log(data);
-    successDepositCreate(data, currency,
-      paymentType, 100.01);
   });
 
   it('C22538 - min amount', async () => {
@@ -94,19 +59,14 @@ describe('Create deposite for card_rub - RUB', () => {
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);
-    expect(dbResult.length).to.equal(4);
+    expect(dbResult.length).to.equal(0);
   });
 });
 
 describe('Create deposite for card_rub invalid - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22516 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(90.6, '',

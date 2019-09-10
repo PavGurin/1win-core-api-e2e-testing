@@ -117,7 +117,7 @@ describe('Transfer with money - USD', () => {
     const { data } = await socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@mailinator.com',
       amount: 1000000,
-      currency: 'EUR',
+      currency: 'USD',
     });
     // console.log(data);
     checkErrMsg(data, 400, 'Недостаточно средств');

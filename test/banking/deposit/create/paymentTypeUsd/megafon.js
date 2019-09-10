@@ -7,9 +7,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'megafon_rub';
 const currency = 'USD';
 
-describe('Create deposite for megafon_rub - USD @master', () => {
-  let socket;
-
+describe.skip('Create deposite for megafon_rub - USD @master', () => {
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);
@@ -99,7 +97,7 @@ describe('Create deposite for megafon_rub - USD @master', () => {
   });
 });
 
-describe('Create deposite for megafon_rub invalid - USD', () => {
+describe.skip('Create deposite for megafon_rub invalid - USD', () => {
   it(' amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '+79001234567',
       paymentType, currency);

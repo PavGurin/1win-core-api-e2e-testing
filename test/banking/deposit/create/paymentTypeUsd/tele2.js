@@ -7,9 +7,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'tele2_rub';
 const currency = 'USD';
 
-describe('Create deposite for tele2 - USD @master', () => {
-  let socket;
-
+describe.skip('Create deposite for tele2 - USD @master', () => {
   beforeEach(async () => {
     socket = await getNewSocket();
     await register.oneClickRegUSD(socket);
@@ -100,7 +98,7 @@ describe('Create deposite for tele2 - USD @master', () => {
   });
 });
 
-describe('Create deposite for tele2_rub invalid - USD', () => {
+describe.skip('Create deposite for tele2_rub invalid - USD', () => {
   it(' amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '+79772520000',
       paymentType, currency);

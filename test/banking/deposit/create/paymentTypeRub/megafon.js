@@ -1,7 +1,6 @@
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { getNewSocket } from '../../../../global';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
@@ -9,15 +8,10 @@ const paymentType = 'megafon_rub';
 const currency = 'RUB';
 let user = {};
 
-describe('Create deposite for megafon_rub - RUB @master', () => {
-  let socket;
-
+describe('Create deposite for megafon_rub - RUB', () => {
   beforeEach(async () => {
-    socket = await getNewSocket();
     user = await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C22526 - (+) amount = 100 & wallet = (+7)phone', async () => {
     await banking.depositCreate(
@@ -62,14 +56,9 @@ describe('Create deposite for megafon_rub - RUB @master', () => {
 });
 
 describe('Create deposite for megafon_rub invalid - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C28675 - amount double < min amount', async () => {
     const { data } = await banking.depositCreate(0.6, '+79001234567',

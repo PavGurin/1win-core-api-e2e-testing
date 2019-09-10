@@ -6,7 +6,7 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'eth_usd';
 const currency = 'USD';
 
-describe('Create deposit for eth_usd - USD @master', () => {
+describe.skip('Create deposit for eth_usd - USD @master', () => {
   beforeAll(async () => {
     await register.oneClickReg(socket);
   });
@@ -46,7 +46,7 @@ describe('Create deposit for eth_usd - USD @master', () => {
   });
 });
 
-describe('Create deposite for eth_usd invalid - RUB', () => {
+describe.skip('Create deposite for eth_usd invalid - RUB', () => {
   it(' - amount = 0', async () => {
     const { data } = await banking.depositCreate(0, '+79215598256',
       paymentType, currency);

@@ -3,7 +3,6 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
-import { getNewSocket } from '../../../../global';
 
 const paymentType = 'eth_usd';
 const currency = 'RUB';
@@ -52,14 +51,9 @@ describe('Create deposit for eth_usd - RUB', () => {
 });
 
 describe('Create deposite for eth_usd invalid - RUB', () => {
-  let socket;
-
   beforeEach(async () => {
-    socket = await getNewSocket();
     await register.oneClickReg(socket);
   });
-
-  afterEach(() => socket.disconnect());
 
   it('C28669 - amount = 0', async () => {
     const { data } = await banking.depositCreate(0, '+79215598256', paymentType, currency);
