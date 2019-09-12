@@ -3,10 +3,11 @@ import { userPool } from '../../src/methods/userPool';
 import { logOut } from '../../src/methods/user';
 import { cases } from '../../src/methods/cases';
 import { checkCaseResult } from '../../src/expects/exCases';
+import { checkErrMsg } from '../../src/responseChecker';
 
 describe('Cases play USD', () => {
   describe('Valid', () => {
-    const USERS_NUMBER = 6;
+    const USERS_NUMBER = 7;
     const BALANCE = 1200;
     let currentUser = {};
     let users = [];
@@ -20,6 +21,10 @@ describe('Cases play USD', () => {
       await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    });
+    it('C608899 - (+) play  cases 1', async () => {
+      const data = await cases.playCaseWithoutChance(1);
+      checkErrMsg(data, 400, '123123');
     });
 
     it('C491787 - (+) play  cases 10', async () => {

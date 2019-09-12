@@ -22,6 +22,11 @@ describe('Cases play RUB', () => {
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
+    it('C608898 - (+) play  cases 10', async () => {
+      const data = await cases.playCaseWithoutChance(10);
+
+      checkErrMsg(data, 400, '121212');
+    });
 
     it('C484968 - (+) play  cases 1', async () => {
       const data = await cases.playCaseWithoutChance(1);
