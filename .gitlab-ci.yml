@@ -65,7 +65,7 @@ user-profile:
 
 backend_staging:
   variables:
-    TEST_URL: https://master.staging.1win-prodlike.tech/
+    TEST_URL: https://master_staging.staging.1win-prodlike.tech/
     TEST_FILTER: "@master"
   <<: *api_test
 
