@@ -5,11 +5,17 @@ import { sleep } from '../../src/methods/utils';
 import { checkRegInfo } from '../../src/expects/exUser';
 import { register } from '../../src/methods/register';
 import { getNewSocket } from '../global';
+import { mysqlConnection } from '../../src/methods/mysqlConnection';
 
 describe('Register with sub id parameter', () => {
   const visit_domain = 'some_domain';
   const partner_key = 'test001';
   let socket;
+
+  beforeAll(async () => {
+    const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
+    // console.log(dbResult);
+  });
 
   beforeEach(async () => {
     socket = await getNewSocket();
