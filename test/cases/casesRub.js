@@ -23,9 +23,9 @@ describe('Cases play RUB', () => {
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
     it('C608898 - (+) play  cases 10', async () => {
-      const data = await cases.playCaseWithoutChance(10);
+      const { data } = await cases.playCaseWithoutChance(10);
 
-      checkErrMsg(data, 400, '121212');
+      checkErrMsg(data, 400, 'Bad request');
     });
 
     it('C484968 - (+) play  cases 1', async () => {
