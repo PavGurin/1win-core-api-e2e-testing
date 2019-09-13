@@ -7,7 +7,7 @@ import { checkErrMsg } from '../../src/responseChecker';
 
 describe('Cases play RUB', () => {
   describe('Valid', () => {
-    const USERS_NUMBER = 9;
+    const USERS_NUMBER = 10;
     const BALANCE = 12000;
     let currentUser = {};
     let users = [];
@@ -72,6 +72,7 @@ describe('Cases play RUB', () => {
 
     it('C484976 - (-) invalid id', async () => {
       const { data } = await cases.playCaseWithoutChance(9);
+      console.log(data);
       checkErrMsg(data, 400, 'Bad request');
     });
   });
