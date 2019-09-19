@@ -48,6 +48,7 @@ export async function getSingleMatch(service) {
   // console.log(tournamentsAvailable);
   let data;
   let availableMatchesCount;
+  let betStatus;
   for (let i = 0; i < tournamentsAvailable; i++) {
     availableMatchesCount = Object.values(Object.values(sportTournamentMap)[i]).length;
     for (let m = 0; m < availableMatchesCount; m++) {
@@ -56,10 +57,41 @@ export async function getSingleMatch(service) {
         service,
         Object.values(Object.values(sportTournamentMap)[i])[m].tournamentId,
       );
-      const betStatus = Object.values(data.data.matchMap)[m].betstatus;
+      betStatus = Object.values(data.data.matchMap)[0].betstatus;
       // console.log(betStatus);
       if (service === 'prematch' || betStatus === ('started')) {
         return Object.values(data.data.matchMap)[m];
+      }
+    }
+  }
+  return console.log('error in betStatus method or there are no any matches available for bet');
+}
+
+export async function getInactiveSingleMatch(service) {
+  // берем список всех матчей по параметру 'service'
+  const { data: { sportTournamentMap } } = await sportTournaments(service, 'all');
+  // console.log(sportTournamentMap);
+  const tournamentsAvailable = Object.values(sportTournamentMap).length;
+  // console.log(tournamentsAvailable);
+  let data;
+  let availableMatchesCount;
+  let betStatus;
+  for (let i = 0; i < tournamentsAvailable; i++) {
+    availableMatchesCount = Object.values(Object.values(sportTournamentMap)[i]).length;
+    for (let m = 0; m < availableMatchesCount; m++) {
+      // eslint-disable-next-line no-await-in-loop
+      data = await tournamentMatches(
+        service,
+        Object.values(Object.values(sportTournamentMap)[i])[m].tournamentId,
+      );
+      try {
+        betStatus = Object.values(data.data.matchMap)[0].betstatus;
+        // console.log(betStatus);
+        if (betStatus !== ('started')) {
+          return Object.values(data.data.matchMap)[m];
+        }
+      } catch (e) {
+        console.log('Error in blocked bet search method');
       }
     }
   }

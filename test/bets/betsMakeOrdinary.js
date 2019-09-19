@@ -7,6 +7,7 @@ import {
 } from '../../src/methods/better';
 
 import {
+  getInactiveSingleMatch,
   getMatchHistory, getSingleMatch,
 } from '../../src/methods/matchStorage';
 
@@ -155,27 +156,10 @@ describe('Ordinary bets prematch', () => {
     expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Requested odd not found');
     expect(betResponse.status).equal(200);
   });
-
-  it(' (-) changed specialValue', async () => {
-    const singleMatch = await getSingleMatch(PREMATCH);
-    // console.log(singleMatch);
-
-    const coupon = generateOrdinaryCoupon(singleMatch);
-    // console.log(coupon);
-    coupon.specialValue += 1;
-
-    const betResponse = await makeOrdinaryBet(coupon, 10);
-    // console.log(betResponse);
-
-    expect(betResponse.data[coupon.couponId].status).equal(400);
-    expect(betResponse.data[coupon.couponId].error.errorMessage).equal('Requested odd not found');
-    expect(betResponse.status).equal(200);
-  });
 });
 
 
 describe('Ordinary bets live', () => {
-  // TODO add active/not checker + w8ing for live+staging bets fix
   it.skip('C27564 (+) default bet', async () => {
     const singleMatch = await getSingleMatch(LIVE);
     // console.log(singleMatch);
@@ -188,6 +172,20 @@ describe('Ordinary bets live', () => {
 
     expect(betResponse.data[coupon.couponId].error).equal(false);
     expect(betResponse.status).equal(200);
+  });
+
+  it('C659352 (-) blocked \'live\' bet', async () => {
+    const singleMatch = await getInactiveSingleMatch(LIVE);
+    // console.log(singleMatch);
+
+    const coupon = await generateOrdinaryCoupon(singleMatch, 1);
+    // console.log(coupon);
+
+    const betResponse = await makeOrdinaryBet(coupon, 10);
+    // console.log(betResponse);
+
+    expect(Object.values(betResponse.data)[1].error.errorMessage).equal('Betting on match is closed');
+    expect(Object.values(betResponse.data)[0]).equal(200);
   });
 
   it('C27565 (-) changed matchId', async () => {
