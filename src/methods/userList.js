@@ -33,7 +33,7 @@ export const userList = {
   async loginWithRealMoney(socket) {
     return socket.send('USER:auth-login', {
       login: 'nogm75@1win.xyz',
-      password: 'testerQA',
+      password: 'qatester',
       tg_hash: randomStr(5),
     });
   },
