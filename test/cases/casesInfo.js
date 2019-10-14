@@ -31,7 +31,7 @@ describe('Get cases info', () => {
     });
     it('C1436413 - get case info by TypeId', async () => {
       const { data } = await cases.getCaseInfoByTypeId(1);
-       console.log(data);
+      // console.log(data);
       checkCaseInfoByTypeId(data, 0, 1, 2);
       checkCaseInfoByTypeId(data, 1, 1, 11);
       checkCaseInfoByTypeId(data, 2, 1, 18);
