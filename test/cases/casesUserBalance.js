@@ -141,9 +141,9 @@ describe('Check user balance after play cases', () => {
 
       expect(balance).to.equal(currentUser.balance - caseCost + data.result);
     });
-    it('C490993 - play  cases 15', async () => {
-      const caseCost = await cases.getCaseCost(15);
-      const { data } = await cases.playCaseWithoutChance(15);
+    it('C490993 - play  cases 22', async () => {
+      const caseCost = await cases.getCaseCost(22);
+      const { data } = await cases.playCaseWithoutChance(22);
       const balance = await banking.balanceCheck();
 
       expect(balance).to.equal(currentUser.balance - caseCost + data.result);

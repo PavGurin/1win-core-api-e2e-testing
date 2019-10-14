@@ -176,11 +176,11 @@ describe('Cases - totally won ', () => {
     });
 
     it('C484983 - (+) play cases 15', async () => {
-      const won1 = await cases.getCaseInfo(15);
+      const won1 = await cases.getCaseInfo(22);
       // console.log(won1.data.totallyWon);
-      const { data } = await cases.playCaseWithoutChance(15);
+      const { data } = await cases.playCaseWithoutChance(22);
       // console.log(data.result);
-      const won2 = await cases.getCaseInfo(15);
+      const won2 = await cases.getCaseInfo(22);
       // console.log(won2.data.totallyWon);
       expect((won2.data.totallyWon).toFixed(2)).to.equal((won1.data.totallyWon + data.result)
         .toFixed(2));

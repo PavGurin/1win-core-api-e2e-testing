@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 export function checkInfoCase(data, idCases, cost, currency, id, max, min, name, priceMaxWin,
-  priceMinWin) {
+  priceMinWin, caseTypeId) {
   expect(data).to.be.an('array');
   expect(data[idCases].adjust).to.be.an('object');
   expect(data[idCases].cost).equal(cost);
@@ -12,6 +12,7 @@ export function checkInfoCase(data, idCases, cost, currency, id, max, min, name,
   expect(data[idCases].name).equal(name);
   expect(data[idCases].priceMaxWin).equal(priceMaxWin);
   expect(data[idCases].priceMinWin).equal(priceMinWin);
+  expect(data[idCases].caseTypeId).equal(caseTypeId);
 }
 
 export function checkCaseResult(data, max, min) {

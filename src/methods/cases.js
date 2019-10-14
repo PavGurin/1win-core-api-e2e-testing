@@ -25,4 +25,7 @@ export const cases = {
       host: defaultVisitDomain,
     });
   },
+  async getCaseInfoByTypeId(caseTypeId) {
+    return socket.send('CASES:cases-casesByTypeId', { caseTypeId });
+  },
 };

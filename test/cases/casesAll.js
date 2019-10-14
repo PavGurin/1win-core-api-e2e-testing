@@ -13,21 +13,21 @@ describe('Get cases info', () => {
 
       // console.log(data);
       checkInfoCase(data, 0, 10, 'RUB', 1, 100,
-        2, 'Парни', 100, 2);
+        2, 'Новичок', 100, 2, 0);
       checkInfoCase(data, 1, 20, 'RUB', 2, 200,
-        5, 'Я', 200, 5);
+        5, 'Везунчик', 200, 5, 1);
       checkInfoCase(data, 2, 50, 'RUB', 3, 500,
-        10, 'Вас', 500, 10);
+        10, 'Топовый', 500, 10, 2);
       checkInfoCase(data, 3, 100, 'RUB', 4, 500,
-        50, 'Никогда', 500, 50);
+        50, 'Фартовый', 500, 50, 3);
       checkInfoCase(data, 4, 500, 'RUB', 5, 5000,
-        100, 'Не забуду.', 5000, 100);
+        100, 'Лакшери', 5000, 100, 4);
       checkInfoCase(data, 5, 1000, 'RUB', 6, 10000,
-        500, 'p.s.', 10000, 500);
+        500, 'Олигарх', 10000, 500, 5);
       checkInfoCase(data, 6, 5000, 'RUB', 7, 10000,
-        2500, 'Это мой', 10000, 2500);
+        2500, 'Миллионер', 10000, 2500, 6);
       checkInfoCase(data, 7, 10000, 'RUB', 8, 50000,
-        5000, 'Любимый микросервис', 50000, 5000);
+        5000, 'Хозяин жизни', 50000, 5000, 7);
     });
   });
 
@@ -40,18 +40,22 @@ describe('Get cases info', () => {
       const { data } = await cases.getCaseInfo('all');
 
       // console.log(data);
-      checkInfoCase(data, 0, 10, 'USD', 10, 100,
-        2, 'case 1', 100, 2);
-      checkInfoCase(data, 1, 20, 'USD', 11, 200,
-        5, 'case 2', 200, 5);
-      checkInfoCase(data, 2, 50, 'USD', 12, 500,
-        10, 'case 3', 500, 10);
-      checkInfoCase(data, 3, 100, 'USD', 13, 500,
-        50, 'case 4', 500, 50);
-      checkInfoCase(data, 4, 500, 'USD', 14, 5000,
-        100, 'case 5', 5000, 100);
-      checkInfoCase(data, 5, 1000, 'USD', 15, 10000,
-        500, 'case 6', 10000, 500);
+      checkInfoCase(data, 0, 1, 'USD', 10, 10,
+        0.2, 'Топовый', 10, 0.2, 2);
+      checkInfoCase(data, 1, 0.4, 'USD', 11, 4,
+        0.08, 'Везунчик', 4, 0.08, 1);
+      checkInfoCase(data, 2, 2, 'USD', 12, 10,
+        1, 'Фартовый', 10, 1, 3);
+      checkInfoCase(data, 3, 10, 'USD', 13, 100,
+        2, 'Лакшери', 100, 2, 4);
+      checkInfoCase(data, 4, 0.2, 'USD', 14, 2,
+        0.04, 'Новичок', 2, 0.04, 0);
+      checkInfoCase(data, 5, 20, 'USD', 22, 200,
+        10, 'Олигарх', 200, 10, 5);
+      checkInfoCase(data, 6, 100, 'USD', 24, 200,
+        50, 'Миллионер', 200, 50, 6);
+      checkInfoCase(data, 7, 200, 'USD', 26, 1000,
+        100, 'Хозяин жизни', 1000, 100, 7);
     });
   });
 });
