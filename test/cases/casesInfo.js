@@ -1,6 +1,6 @@
 import { cases } from '../../src/methods/cases';
 import { register } from '../../src/methods/register';
-import { checkInfoCase } from '../../src/expects/exCases';
+import { checkCaseInfoByTypeId, checkInfoCase } from '../../src/expects/exCases';
 
 describe('Get cases info', () => {
   describe('RUB', () => {
@@ -28,6 +28,13 @@ describe('Get cases info', () => {
         2500, 'Миллионер', 10000, 2500, 6);
       checkInfoCase(data, 7, 10000, 'RUB', 8, 50000,
         5000, 'Хозяин жизни', 50000, 5000, 7);
+    });
+    it(' - get case info by TypeId', async () => {
+      const { data } = await cases.getCaseInfoByTypeId(1);
+       console.log(data);
+      checkCaseInfoByTypeId(data, 0, 1, 2);
+      checkCaseInfoByTypeId(data, 1, 1, 11);
+      checkCaseInfoByTypeId(data, 2, 1, 18);
     });
   });
 
