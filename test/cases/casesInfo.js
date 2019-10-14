@@ -29,7 +29,7 @@ describe('Get cases info', () => {
       checkInfoCase(data, 7, 10000, 'RUB', 8, 50000,
         5000, 'Хозяин жизни', 50000, 5000, 7);
     });
-    it(' - get case info by TypeId', async () => {
+    it('C1436413 - get case info by TypeId', async () => {
       const { data } = await cases.getCaseInfoByTypeId(1);
        console.log(data);
       checkCaseInfoByTypeId(data, 0, 1, 2);
