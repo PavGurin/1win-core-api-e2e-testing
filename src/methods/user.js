@@ -27,7 +27,7 @@ export async function logOut() {
 }
 
 export async function sendUserDataToEmail(emailToSend, oneClickRegEmail, oneClickRegPassword) {
-  return socket.send('POST:user_info_send_to_email', {
+  return socket.send('USER:profile-credentialsByEmail', {
     email: emailToSend,
     login: oneClickRegEmail,
     password: oneClickRegPassword,
@@ -59,6 +59,14 @@ export async function setUserWithdrawalBlock(userId) {
 
 export async function setUserWithdrawalManualControl(userId) {
   return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','withdrawal_manual_control','true');`);
+}
+
+export async function getUserWithdrawalManualControl(userId) {
+  const res = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta where id_user= ${userId} AND ma_users_meta.key = 'withdrawal_manual_control';`);
+  if (res[0]) {
+    return res[0].value;
+  }
+  return undefined;
 }
 
 export async function setUserDemoWithdrawal(userId) {

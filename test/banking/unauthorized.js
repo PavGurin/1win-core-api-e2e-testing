@@ -1,25 +1,32 @@
 import { logOut } from '../../src/methods/user';
 import { banking } from '../../src/methods/banking';
 import { checkErrMsg } from '../../src/responseChecker';
+import { getNewSocket } from '../global';
 
 describe('Unauthorized ', () => {
   const currency = 'RUB';
   const paymentType = 'card_rub';
   const payment_system = 'card_rub';
+  let socket;
 
   beforeAll(async () => {
     await logOut();
   });
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+  });
+
+  afterEach(async () => { await socket.disconnect(); });
+
   it('C459485 - create deposit', async () => {
-    const { data } = await banking.depositCreate(100, '+7123',
-      paymentType, currency);
+    const { data } = await banking.depositCreate(socket, '+7123', paymentType, currency, 100);
     // console.log(data);
     checkErrMsg(data, 401, 'Unauthorized');
   });
 
   it('C459486 - create request deposit', async () => {
-    const { data } = await banking.depositCreateRequest(100, '+7123',
-      paymentType, currency);
+    const { data } = await banking.depositCreateRequest(socket, '+7123', paymentType, currency, 100);
     // console.log(data);
     checkErrMsg(data, 401, 'Unauthorized');
   });
@@ -30,7 +37,7 @@ describe('Unauthorized ', () => {
     checkErrMsg(data, 401, 'Unauthorized');
   });
   it('C462813 - transfer create', async () => {
-    const { data } = await banking.transferCreate(100, currency);
+    const { data } = await banking.transferCreate(socket, 100, currency);
 
     // console.log(data);
     checkErrMsg(data, 401, 'Unauthorized');
@@ -42,8 +49,7 @@ describe('Unauthorized ', () => {
     checkErrMsg(data, 401, 'Unauthorized');
   });
   it('C462815 - withdrawal create', async () => {
-    const { data } = await banking.withdrawalCreate(99.99, 'lina.solodova@gmail.com',
-      payment_system, currency);
+    const { data } = await banking.withdrawalCreate(socket, 'lina.solodova@gmail.com', payment_system, currency, 99.99);
     checkErrMsg(data, 401, 'Unauthorized');
   });
   it('C462816 - withdrawal confirm', async () => {

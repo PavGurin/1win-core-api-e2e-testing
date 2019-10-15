@@ -1,6 +1,10 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserWithdrawalManualControl } from '../../src/methods/user';
+import {
+  getUserWithdrawalManualControl,
+  logOut,
+  setUserWithdrawalManualControl,
+} from '../../src/methods/user';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
@@ -12,13 +16,14 @@ import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
 import { successDbDeposit } from '../../src/expects/exDatabaseTests';
 import { cases } from '../../src/methods/cases';
+import { getNewSocket } from '../global';
 
 describe('Withdrawal manual control tests', () => {
   const BLOCKED_WALLET = '9898777766668989';
+  let socket;
+  beforeEach(async () => { socket = await getNewSocket(); });
 
   describe('users with no withdrawal_manual_control', () => {
-    beforeEach(async () => { await logOut(); });
-
     it('C28385 (+) withdrawal_manual_control = false by default', async () => {
       await register.oneClickReg(socket);
       const meta = await socket.userMeta;
@@ -40,26 +45,22 @@ describe('Withdrawal manual control tests', () => {
       const { data: user } = await register.usualReg(socket);
       // console.log(currentUser.id);
       await banking.setBalance(user.id);
-      await banking.withdrawalCreate(200, BLOCKED_WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, BLOCKED_WALLET, 'card_rub', 'RUB', 200);
       // console.log(withdrawal);
 
-      const res = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta where id_user= ${user.id} AND ma_users_meta.key = 'withdrawal_manual_control';`);
-      // console.log(res);
-      expect(res[0].value).equal('true');
+      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
     });
 
     it('C28388 (+) withdrawal_manual_control = true in db after deposit from blocked wallet', async () => {
       const { data: user } = await register.usualReg(socket);
       // console.log(currentUser.id);
 
-      const { data: deposit } = await banking.depositCreate(200, BLOCKED_WALLET, 'card_rub', 'RUB');
+      const { data: deposit } = await banking.depositCreate(socket, BLOCKED_WALLET, 'card_rub', 'RUB', 200);
       expect(deposit.status).equal(500);
       expect(deposit.message).equal('Internal Server Error');
       // console.log(deposit);
 
-      const res = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta where id_user= ${user.id} AND ma_users_meta.key = 'withdrawal_manual_control';`);
-      // console.log(res);
-      expect(res[0].value).equal('true');
+      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
     });
   });
 
@@ -82,13 +83,13 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28634 (+) withdrawal_manual_control = true, withdrawal create', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       expect(data.confirmationRequested).equal(true);
     });
 
     it('C28635 (-) withdrawal_manual_control = true, withdrawal confirm', async () => {
-      await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       await sleep(4000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -99,20 +100,20 @@ describe('Withdrawal manual control tests', () => {
     });
 
     it('C28636 (+) withdrawal_manual_control = true, transfer create', async () => {
-      const { data } = await banking.transferCreate(100, 'RUB');
+      const { data } = await banking.transferCreate(socket, 100, 'RUB');
       // console.log(data);
       expect(data.confirmationRequested).equal(true);
     });
 
     it('C28637 (+) withdrawal_manual_control = true, deposit create', async () => {
-      await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.depositCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
     });
 
     it('C28638 (+) withdrawal_manual_control = true, cases', async () => {
-      const { data } = await cases.playCaseWithoutChance(1);
+      const { data } = await cases.playCaseWithoutChance(socket, 1);
       // console.log(data);
       expect(data.result).above(0);
     });
@@ -151,7 +152,7 @@ describe('Withdrawal manual control tests', () => {
   describe('withdrawal_manual_control = true + mail with auto confirm', () => {
     it('C28404 (+) withdrawal_manual_control = true + @mail withdrawal', async () => {
       const { data } = await usersWithManualControl.userMail(socket);
-      const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
+      const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
       expect(await banking.getWithdrawalStatus(data.id)).equal(0);
@@ -159,7 +160,7 @@ describe('Withdrawal manual control tests', () => {
 
     it('C28405 (+) withdrawal_manual_control = true + @bk withdrawal', async () => {
       const { data } = await usersWithManualControl.userMail(socket);
-      const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
+      const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
       expect(await banking.getWithdrawalStatus(data.id)).equal(0);
@@ -168,7 +169,7 @@ describe('Withdrawal manual control tests', () => {
     it('C28406 (+) withdrawal_manual_control = true + @inbox withdrawal', async () => {
       const { data } = await usersWithManualControl.userMail(socket);
       await usersWithManualControl.userInbox(socket);
-      const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
+      const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
       expect(await banking.getWithdrawalStatus(data.id)).equal(0);
@@ -176,10 +177,140 @@ describe('Withdrawal manual control tests', () => {
 
     it('C28407 (+) withdrawal_manual_control = true + @list withdrawal', async () => {
       const { data } = await usersWithManualControl.userMail(socket);
-      const { data: withdrawal } = await banking.withdrawalCreate(100, '5698548963217458', 'card_rub', 'RUB');
+      const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).equal(false);
       expect(await banking.getWithdrawalStatus(data.id)).equal(0);
+    });
+  });
+
+  describe('Anti - carding', () => {
+    it('C1088636 - (+) withdrawal_manual_control = true after 2 failed deposits, new user', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '6363545498987171', 'card_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
+    });
+
+    it('C1088640 - (-) no withdrawal_manual_control after 1 failed deposit, new user', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '6363545498987171', 'card_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+    });
+
+    it('C1315736 - (-) no withdrawal_manual_control after 2 failed deposits, old user', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+      await banking.createWithdrawalInBD(user.id, 100, new Date(), 'card_rub', '6363454521218989', 1);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '6363545498987171', 'card_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+    });
+
+    it('C1360990 - (-) no withdrawal_manual_control after 2 failed deposits, withdrawal on the same card', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '55005500663311220', 'card_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+    });
+
+    it('C1360991 - (-) no withdrawal_manual_control after 2 failed deposits, withdrawal not on card', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '9112223344', 'mts_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+    });
+
+    it('C1360992 - (-) no withdrawal_manual_control after deposits from different cards, withdrawal on one of them', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '55005500663311220', 'card_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+    });
+
+    it('C1360993 - (+) withdrawal_manual_control = true after deposits from different cards, withdrawal on other card', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '5500220033669988', 'card_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
+    });
+
+    it('C1360994 - (-) no withdrawal_manual_control after deposits from different cards, withdrawal not on card', async () => {
+      const { data: user } = await register.usualRegMailru(socket);
+      // console.log(user.id);
+
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
+      await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
+      await banking.setBalance(user.id, 1000);
+
+      const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
+
+      const { data } = await banking.withdrawalCreate(socket, '79112365498', 'mts_rub', 'RUB', caseResult.result);
+      // console.log(data);
+      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
     });
   });
 });

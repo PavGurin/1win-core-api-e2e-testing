@@ -12,11 +12,15 @@ import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
 import { successDbDeposit } from '../../src/expects/exDatabaseTests';
 import { cases } from '../../src/methods/cases';
+import { getNewSocket } from '../global';
 
 describe('Cases winner tests', () => {
   const WALLET = '1234965822365478';
   let currentUser = {};
   let users = [];
+  let socket;
+
+  beforeEach(async () => { socket = await getNewSocket(); });
 
   describe('cases_winner = false', () => {
     it('C28427 (+) cases_winner = false by default and not present in socket.userMeta', async () => {
@@ -52,10 +56,10 @@ describe('Cases winner tests', () => {
 
     it('C28441 (+) cases_winner = true + withdrawal_block = false, one case several times', async () => {
       const results = [];
-      const caseCost = await cases.getCaseCost(1);
+      const caseCost = await cases.getCaseCost(socket, 1);
       for (let i = 0; i < 5; i++) {
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCaseWithoutChance(1);
+        const { data } = await cases.playCaseWithoutChance(socket, 1);
         results.push(data.result);
       }
       // проверка, что хотя бы в одном случае выигрыш был меньше цены кейса
@@ -66,9 +70,9 @@ describe('Cases winner tests', () => {
       const results = [];
       for (let i = 1; i < 6; i++) {
         // eslint-disable-next-line no-await-in-loop
-        const caseCost = await cases.getCaseCost(i);
+        const caseCost = await cases.getCaseCost(socket, i);
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCaseWithoutChance(i);
+        const { data } = await cases.playCaseWithoutChance(socket, i);
         results.push(data.result < caseCost);
       }
       // проверка, что хотя бы в одном случае выигрыш был меньше цены кейса
@@ -76,7 +80,7 @@ describe('Cases winner tests', () => {
     });
 
     it('C28438 (+) cases_winner = true + withdrawal_block = false, withdrawal confirm', async () => {
-      await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       await sleep(4000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -86,13 +90,13 @@ describe('Cases winner tests', () => {
     });
 
     it('C28439 (+) cases_winner = true + withdrawal_block = false, transfer create', async () => {
-      const { data } = await banking.transferCreate(20, 'RUB');
+      const { data } = await banking.transferCreate(socket, 20, 'RUB');
       // console.log(data);
       expect(data.confirmationRequested).equal(true);
     });
 
     it('C28440 (+) cases_winner = true + withdrawal_block = false, deposit create', async () => {
-      await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.depositCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
@@ -133,24 +137,24 @@ describe('Cases winner tests', () => {
     });
 
     it('C28429 (+) cases_winner = true + withdrawal_block = true, case 1  (min cost 10 rub)', async () => {
-      const caseCost = await cases.getCaseCost(1);
-      const { data } = await cases.playCaseWithoutChance(1);
+      const caseCost = await cases.getCaseCost(socket, 1);
+      const { data } = await cases.playCaseWithoutChance(socket, 1);
       // console.log(data);
       expect(data.result).above(caseCost);
     });
 
     it('C28430 (+) cases_winner = true + withdrawal_block = true, case 8 (max cost 10000 rub)', async () => {
-      const caseCost = await cases.getCaseCost(8);
-      const { data } = await cases.playCaseWithoutChance(8);
+      const caseCost = await cases.getCaseCost(socket, 8);
+      const { data } = await cases.playCaseWithoutChance(socket, 8);
       // console.log(data);
       expect(data.result).above(caseCost);
     });
 
     it('C28431 (+) cases_winner = true + withdrawal_block = true, one case several times', async () => {
-      const caseCost = await cases.getCaseCost(3);
+      const caseCost = await cases.getCaseCost(socket, 3);
       for (let i = 0; i < 5; i++) {
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCaseWithoutChance(3);
+        const { data } = await cases.playCaseWithoutChance(socket, 3);
         // console.log(data);
         expect(data.result).above(caseCost);
       }
@@ -159,16 +163,16 @@ describe('Cases winner tests', () => {
     it('C28432 (+) cases_winner = true + withdrawal_block = true, several cases', async () => {
       for (let i = 1; i < 6; i++) {
         // eslint-disable-next-line no-await-in-loop
-        const caseCost = await cases.getCaseCost(i);
+        const caseCost = await cases.getCaseCost(socket, i);
         // eslint-disable-next-line no-await-in-loop
-        const { data } = await cases.playCaseWithoutChance(i);
+        const { data } = await cases.playCaseWithoutChance(socket, i);
         // console.log(data);
         expect(data.result).above(caseCost);
       }
     });
 
     it('C28433 (-) withdrawal_block = true, withdrawal confirm', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       await sleep(5000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -179,13 +183,13 @@ describe('Cases winner tests', () => {
     });
 
     it('C28434 (-) cases_winner = true + withdrawal_block = true, transfer create', async () => {
-      const { data } = await banking.transferCreate(20, 'RUB');
+      const { data } = await banking.transferCreate(socket, 20, 'RUB');
       // console.log(data);
       expect(data.withdrawalBlocked).equal(true);
     });
 
     it('C28435 (-) cases_winner = true + withdrawal_block = true, deposit create', async () => {
-      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.depositCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       checkErrMsg(data, 400, 'Неверный запрос');
     });

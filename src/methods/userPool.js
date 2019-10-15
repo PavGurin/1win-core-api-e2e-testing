@@ -1,6 +1,7 @@
 import { logOut } from './user';
 import { register } from './register';
 import { mysqlConnection } from './mysqlConnection';
+import { banking } from './banking';
 
 export const userPool = {
 
@@ -94,6 +95,46 @@ export const userPool = {
     // console.log(query);
 
     await mysqlConnection.executeQuery(query);
+    return users;
+  },
+
+  // для генерации юзеров с депозитами в рублях
+  async usersWithDepositRub(socket, usersNumber, depositAmount, depositNumber = 1) {
+    const users = await userPool.usersWithEmailMailru(socket,
+      usersNumber, depositAmount * depositNumber);
+    const date = new Date();
+    users.forEach(async (user) => {
+      for (let i = 1; i <= depositNumber; i++) {
+        await banking.createDepositInBD(user.id, depositAmount, date, 'mts_rub', '9119998877', 1);
+      }
+    });
+    return users;
+  },
+
+  // для генерации юзеров, которым был трасфер в рублях
+  async usersWithTransferRub(socket, usersNumber, depositAmount, depositNumber = 1) {
+    const users = await userPool.usersWithEmailMailru(socket,
+      usersNumber, depositAmount * depositNumber);
+    const date = new Date();
+    users.forEach(async (user) => {
+      for (let i = 1; i <= depositNumber; i++) {
+        await banking.createDepositInBD(user.id, depositAmount, date, 'money-transfer', 'sender: 136', 1);
+      }
+    });
+    return users;
+  },
+
+
+  // для генерации юзеров с депозитами в долларах
+  async usersWithDepositUSD(socket, usersNumber, depositAmount, depositNumber = 1) {
+    const users = await userPool.usersWithBalanceUsd(socket,
+      usersNumber, depositAmount * depositNumber);
+    const date = new Date();
+    users.forEach(async (user) => {
+      for (let i = 1; i <= depositNumber; i++) {
+        await banking.createDepositInBDUSD(user.id, depositAmount, date, 'card', '3636595984847171', 1);
+      }
+    });
     return users;
   },
 };

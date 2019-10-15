@@ -6,7 +6,7 @@ import { mysqlConnection } from './mysqlConnection';
 
 export const banking = {
 
-  async transferCreateAll(targetEmail, amount, currency) {
+  async transferCreateAll(socket, targetEmail, amount, currency) {
     return socket.send('BANKING:transfer-create', {
       targetEmail,
       amount,
@@ -14,7 +14,7 @@ export const banking = {
     });
   },
 
-  async transferCreate(amount, currency) {
+  async transferCreate(socket, amount, currency) {
     return socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@test.xyz',
       amount,
@@ -22,7 +22,7 @@ export const banking = {
     });
   },
 
-  async withdrawalCreate(amount, wallet, payment_system, currency) {
+  async withdrawalCreate(socket, wallet, payment_system, currency, amount) {
     return socket.send('BANKING:withdrawal-create', {
       amount,
       wallet,
@@ -32,7 +32,7 @@ export const banking = {
     // console.log(JSON.stringify(result, null, 2));
   },
 
-  async depositCreate(amount, wallet, paymentType, currency) {
+  async depositCreate(socket, wallet, paymentType, currency, amount) {
     return socket.send('BANKING:deposit-create', {
       amount,
       wallet,
@@ -41,7 +41,7 @@ export const banking = {
     });
   },
 
-  async depositCreateRequest(amount, wallet, paymentType, currency) {
+  async depositCreateRequest(socket, wallet, paymentType, currency, amount) {
     return socket.send('BANKING:deposit-create-request', {
       amount,
       wallet,
@@ -50,7 +50,7 @@ export const banking = {
     });
   },
 
-  async balanceCheck() {
+  async balanceCheck(socket) {
     const balanceData = await socket.send('GET:balance', {
       tg_hash: randomStr(5),
     });
@@ -65,6 +65,62 @@ export const banking = {
     const result = await mysqlConnection.executeQuery(`SELECT status FROM 1win.ma_withdrawal WHERE id_user = ${userId} ORDER BY time DESC;`);
     // console.log(result);
     return result[0].status;
+  },
+
+  async checkWithdrawalPossible(socket, moneyAmount) {
+    return socket.send('BANKING:withdrawal-check', { amount: moneyAmount });
+  },
+
+  async createDepositInBD(userId, balanceAmount, date,
+    paymentSystem, walletId, status, merchantName) {
+    if (merchantName) {
+      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, ps_data, date, merchant_name) 
+                              VALUES (${userId}, ${balanceAmount}, 'RUB',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', '${merchantName}')`);
+    } else {
+      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, ps_data, date) 
+                              VALUES (${userId}, ${balanceAmount}, 'RUB',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+    }
+  },
+
+  async createDepositInBDUSD(userId, balanceAmount, date,
+    paymentSystem, walletId, status, merchantName) {
+    if (merchantName) {
+      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, ps_data, date, merchant_name) 
+                              VALUES (${userId}, ${balanceAmount}, 'USD',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', '${merchantName}')`);
+    } else {
+      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, ps_data, date) 
+                              VALUES (${userId}, ${balanceAmount}, 'USD',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+    }
+  },
+
+  async createWithdrawalInBD(userId, withdrawalAmount, date,
+    paymentSystem, walletId, status, merchantName) {
+    if (merchantName) {
+      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_withdrawal (id_user, amount, currency, time, 
+                               payment_system, wallet, status, merchant_name, device, merchant_is_checked, date, payed_amount)
+                              VALUES (${userId}, ${withdrawalAmount}, 'RUB',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${merchantName}', 'app-android', 0,
+                                      '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', 0)`);
+    } else {
+      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, ps_data, date) 
+                              VALUES (${userId}, ${withdrawalAmount}, 'RUB',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+    }
   },
 };
 
