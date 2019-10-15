@@ -18,7 +18,6 @@ export function checkInfoCase(data, idCases, cost, currency, id, max, min, name,
 export function checkCaseInfoByTypeId(data, idCases, caseTypeId, id) {
   expect(data[idCases].caseTypeId).equal(caseTypeId);
   expect(data[idCases].id).equal(id);
-
 }
 
 export function checkCaseResult(data, max, min) {
