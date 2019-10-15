@@ -2,9 +2,12 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { checkErrMsg } from '../../../src/responseChecker';
+import { getNewSocket } from '../../global';
 
 describe('Transfer with money - RUB', () => {
+  let socket;
   beforeEach(async () => {
+    socket = await getNewSocket();
     await userList.loginWithRealMoney(socket);
   });
 

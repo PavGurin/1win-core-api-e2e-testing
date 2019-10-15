@@ -12,11 +12,15 @@ import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
 import { successDbDeposit } from '../../src/expects/exDatabaseTests';
 import { cases } from '../../src/methods/cases';
+import { getNewSocket } from '../global';
 
 describe('User demo withdrawal tests', () => {
   const WALLET = '1234965822365478';
   let currentUser = {};
   let users = [];
+  let socket;
+
+  beforeEach(async () => { socket = await getNewSocket(); });
 
   describe('user_demo_withdrawal = false', () => {
     it('C28415 (+) user_demo_withdrawal = false by default', async () => {
@@ -45,13 +49,13 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28422 (+) user_demo_withdrawal = true +  withdrawal_block = false, withdrawal create', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       expect(data.confirmationRequested).equal(true);
     });
 
     it('C28423 (+) user_demo_withdrawal = true + withdrawal_block = false, withdrawal confirm', async () => {
-      await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       await sleep(4000);
       const receivedMail = await mail.getMessage(currentUser.email);
@@ -61,20 +65,20 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28424 (+) user_demo_withdrawal = true + withdrawal_block = false, transfer create', async () => {
-      const { data } = await banking.transferCreate(20, 'RUB');
+      const { data } = await banking.transferCreate(socket, 20, 'RUB');
       // console.log(data);
       expect(data.confirmationRequested).equal(true);
     });
 
     it('C28425 (+) user_demo_withdrawal = true + withdrawal_block = false, deposit create', async () => {
-      await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      await banking.depositCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
       successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
     });
 
     it('C28426 (+) user_demo_withdrawal = true + withdrawal_block = false, cases', async () => {
-      const { data } = await cases.playCaseWithoutChance(1);
+      const { data } = await cases.playCaseWithoutChance(socket, 1);
       expect(data.result).above(0);
     });
 
@@ -118,26 +122,26 @@ describe('User demo withdrawal tests', () => {
     });
 
     it('C28417 (+) user_demo_withdrawal = true + withdrawal_block = true, withdrawal create', async () => {
-      const { data } = await banking.withdrawalCreate(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       expect(data.confirmationRequested).equal(false);
       expect(await banking.getWithdrawalStatus(currentUser.id)).equal(1);
     });
 
     it('C28418 (-) user_demo_withdrawal = true + withdrawal_block = true, transfer create', async () => {
-      const { data } = await banking.transferCreate(20, 'RUB');
+      const { data } = await banking.transferCreate(socket, 20, 'RUB');
       // console.log(data);
       expect(data.withdrawalBlocked).equal(true);
     });
 
     it('C28419 (-) user_demo_withdrawal = true + withdrawal_block = true, deposit create', async () => {
-      const { data } = await banking.depositCreate(100, WALLET, 'card_rub', 'RUB');
+      const { data } = await banking.depositCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       checkErrMsg(data, 400, 'Неверный запрос');
     });
 
     it('C28420 (-) user_demo_withdrawal = true + withdrawal_block = true, cases', async () => {
-      const { data } = await cases.playCaseWithoutChance(1);
+      const { data } = await cases.playCaseWithoutChance(socket, 1);
       // console.log(data);
       checkErrMsg(data, 400, 'demo are forbidden');
     });

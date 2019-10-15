@@ -50,6 +50,7 @@ export const register = {
         country: defaultCountry,
         timezone: 23,
         birthday: 946587600000,
+        currency: 'RUB',
         partner_key,
         ...usualRegistration,
       });
@@ -59,13 +60,14 @@ export const register = {
       {
         isShort: false,
         name: randomStr(),
-        email: `${randomStr(5)}_test@mail.ru`,
+        email: `${randomStr(10)}_test@mail.ru`,
         phone: randomNum().toString(),
         password: defaultPassword,
         repeat_password: defaultPassword,
         country: defaultCountry,
         timezone: 23,
         birthday: 946587600000,
+        currency: 'RUB',
         partner_key,
         ...usualRegistration,
       });
@@ -83,6 +85,7 @@ export const register = {
         timezone: 23,
         birthday: 946587600000,
         partner_key,
+        currency: 'RUB',
       });
   },
 
@@ -95,6 +98,7 @@ export const register = {
         partner_key: '',
         sub_ids: ' ',
         visit_domain: visitDomain,
+        currency: 'RUB',
       });
   },
   async oneClickWithVisitDomainUSD(socket, visitDomain) {
@@ -133,6 +137,7 @@ export const register = {
         birthday: 946587600000,
         partner_key,
         visit_domain: visitDomain,
+        currency: 'RUB',
       });
   },
 };

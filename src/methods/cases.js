@@ -1,31 +1,31 @@
 export const cases = {
-  async getCaseInfo(caseId) {
+  async getCaseInfo(socket, caseId) {
     return socket.send(`CASES:cases-${caseId}`, {
     });
   },
-  async getCaseCost(caseId) {
+  async getCaseCost(socket, caseId) {
     const { data: { cost: caseCost } } = await socket.send(`CASES:cases-${caseId}`, {
     });
     return caseCost;
   },
-  async playCaseWithoutChance(caseId) {
+  async playCaseWithoutChance(socket, caseId) {
     return socket.send('CASES:cases-play', {
       id: caseId,
       chance: null,
       host: defaultVisitDomain,
     });
   },
-  async raitingCase() {
+  async raitingCase(socket) {
     return socket.send('CASES:cases-rating', {});
   },
-  async playCaseWithChance(caseId, chance) {
+  async playCaseWithChance(socket, caseId, chance) {
     return socket.send('CASES:cases-play', {
       id: caseId,
       chance,
       host: defaultVisitDomain,
     });
   },
-  async getCaseInfoByTypeId(caseTypeId) {
+  async getCaseInfoByTypeId(socket, caseTypeId) {
     return socket.send('CASES:cases-casesByTypeId', { caseTypeId });
   },
 };

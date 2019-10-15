@@ -8,6 +8,7 @@ import { sleep } from '../../../src/methods/utils';
 import { logOut } from '../../../src/methods/user';
 import { checkMailRequisites } from '../../../src/expects/exMail';
 import { userPool } from '../../../src/methods/userPool';
+import { getNewSocket } from '../../global';
 
 describe('Withdrawal confirm tests', () => {
   const USERS_NUMBER = 13;
@@ -15,11 +16,21 @@ describe('Withdrawal confirm tests', () => {
   let receivedMail = {};
   let currentUser = {};
   let users = [];
+  let socket;
 
   beforeAll(async () => {
+    socket = await getNewSocket();
     // формируем пул юзеров
     users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
+    await socket.disconnect();
   });
+
+  beforeEach(async () => {
+    socket = await getNewSocket();
+  });
+
+  afterEach(async () => { await socket.disconnect(); });
+
 
   describe('Withdrawal confirm invalid', () => {
     it('C19338 (-) Incorrect code code response 403', async () => {
@@ -31,7 +42,7 @@ describe('Withdrawal confirm tests', () => {
 
     it('C19339 (-) Incorrect code response 400', async () => {
       await userList.loginWithRealMoney(socket);
-      await banking.withdrawalCreate(100, '1111222200003333', 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, '1111222200003333', 'card_rub', 'RUB', 100);
       const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 99 });
       // console.log(data);
       checkErrMsg(data, 400, 'Неверный ключ запроса');
@@ -43,7 +54,7 @@ describe('Withdrawal confirm tests', () => {
       await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-      await banking.withdrawalCreate(100, '5469550073662048', 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
       // задержка для получения письма
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);
@@ -60,8 +71,7 @@ describe('Withdrawal confirm tests', () => {
       await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
-      await banking.withdrawalCreate(100, '5469550073662048',
-        'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
       expect(confirm.status).to.equal(200);
@@ -95,7 +105,7 @@ describe('Withdrawal confirm tests', () => {
     });
 
     it('C27220 (-) Active code of other operation that was obtained after withdrawal code', async () => {
-      await banking.transferCreate(20, 'RUB');
+      await banking.transferCreate(socket, 20, 'RUB');
       await sleep(4500);
       const transferMail = await mail.getMessage(currentUser.email);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
@@ -104,7 +114,7 @@ describe('Withdrawal confirm tests', () => {
     });
 
     it('C27221 (-) Active code of other withdrawal of this user', async () => {
-      await banking.withdrawalCreate(100, '5469550073662048', 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       expect(confirm.status).to.equal(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
@@ -116,7 +126,7 @@ describe('Withdrawal confirm tests', () => {
       checkSuccess(confirm);
 
       // проверка баланса после вывода
-      expect(await banking.balanceCheck()).to.equal(currentUser.balance - 100);
+      expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance - 100);
     });
 
     it('C27201 (-) Balance checking after not successful withdrawal', async () => {
@@ -125,7 +135,7 @@ describe('Withdrawal confirm tests', () => {
       expect(confirm.data.status).to.equal(400);
 
       // проверка баланса после вывода
-      expect(await banking.balanceCheck()).to.equal(currentUser.balance);
+      expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance);
     });
   });
 
@@ -134,12 +144,12 @@ describe('Withdrawal confirm tests', () => {
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
 
-      await banking.transferCreate(20, 'RUB');
+      await banking.transferCreate(socket, 20, 'RUB');
       await sleep(4500);
       const transferMail = await mail.getMessage(currentUser.email);
       // console.log(transferMail);
 
-      await banking.withdrawalCreate(100, '1234123412341234', 'card_rub', 'RUB');
+      await banking.withdrawalCreate(socket, '1234123412341234', 'card_rub', 'RUB', 100);
 
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
       // console.log(confirmData);

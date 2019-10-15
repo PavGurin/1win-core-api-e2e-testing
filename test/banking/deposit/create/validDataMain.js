@@ -2,13 +2,16 @@ import { banking } from '../../../../src/methods/banking';
 import { register } from '../../../../src/methods/register';
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../src/expects/exDatabaseTests';
+import { getNewSocket } from '../../../global';
 
 describe('Create deposit for beeline_rub - RUB', () => {
   const paymentType = 'beeline_rub';
   const currency = 'RUB';
   let user = {};
+  let socket;
 
   beforeAll(async () => {
+    socket = await getNewSocket();
     user = await register.oneClickReg(socket);
   });
 
@@ -26,8 +29,7 @@ describe('Create deposit for beeline_rub - RUB', () => {
   });
 
   it('C22499 - amount = string-number', async () => {
-    await banking.depositCreate('50', '79215598186',
-      paymentType, currency);
+    await banking.depositCreate(socket, '79215598186', paymentType, currency, '50');
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);
@@ -36,9 +38,7 @@ describe('Create deposit for beeline_rub - RUB', () => {
   });
 
   it('C22487 - amount = 2000 & wallet = (8)phone', async () => {
-    await banking.depositCreate(
-      2000, '89215598288', paymentType, currency,
-    );
+    await banking.depositCreate(socket, '89215598288', paymentType, currency, 2000);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);
@@ -47,9 +47,7 @@ describe('Create deposit for beeline_rub - RUB', () => {
   });
 
   it('C22486 - (+) amount = 100.01 & wallet = (7)phone', async () => {
-    await banking.depositCreate(
-      100.01, '79215598287', paymentType, currency,
-    );
+    await banking.depositCreate(socket, '79215598287', paymentType, currency, 100.01);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);
@@ -58,9 +56,7 @@ describe('Create deposit for beeline_rub - RUB', () => {
   });
 
   it('C28680 - (+) amount = 100.156 & wallet = (7)phone', async () => {
-    await banking.depositCreate(
-      100.156, '79215598287', paymentType, currency,
-    );
+    await banking.depositCreate(socket, '79215598287', paymentType, currency, 100.156);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);

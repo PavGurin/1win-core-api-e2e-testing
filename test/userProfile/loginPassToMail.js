@@ -16,7 +16,7 @@ describe('Send login and password to email after one click registration', () => 
     expect(sendData.status).to.equal(200);
     await sleep(4000);
     const receivedMail = await mail.getMessage(emailToSend);
-    checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'confirmation@fbet.top');
+    checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'svnmsk@fastmail.com');
     checkMailTextLoginPass(receivedMail.text, data.email, data.password);
   });
   it('C28155 - (+) login and password to email successful after register with USD ', async () => {
@@ -26,7 +26,7 @@ describe('Send login and password to email after one click registration', () => 
     expect(sendData.status).to.equal(200);
     await sleep(4000);
     const receivedMail = await mail.getMessage(emailToSend);
-    checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'confirmation@fbet.top');
+    checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'svnmsk@fastmail.com');
     checkMailTextLoginPass(receivedMail.text, data.email, data.password);
   });
   it('C28156 - (+) login and password to email successful after register with EUR ', async () => {
@@ -36,7 +36,7 @@ describe('Send login and password to email after one click registration', () => 
     expect(sendData.status).to.equal(200);
     await sleep(4000);
     const receivedMail = await mail.getMessage(emailToSend);
-    checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'confirmation@fbet.top');
+    checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'svnmsk@fastmail.com');
     checkMailTextLoginPass(receivedMail.text, data.email, data.password);
   });
 });

@@ -1,15 +1,19 @@
 import { cases } from '../../src/methods/cases';
 import { register } from '../../src/methods/register';
 import { checkCaseInfoByTypeId, checkInfoCase } from '../../src/expects/exCases';
+import { getNewSocket } from '../global';
 
 describe('Get cases info', () => {
   describe('RUB', () => {
+    let socket;
+
     beforeAll(async () => {
+      socket = await getNewSocket();
       await register.oneClickReg(socket);
     });
 
     it('C483524 - all cases', async () => {
-      const { data } = await cases.getCaseInfo('all');
+      const { data } = await cases.getCaseInfo(socket, 'all');
 
       // console.log(data);
       checkInfoCase(data, 0, 10, 'RUB', 1, 100,
@@ -30,7 +34,7 @@ describe('Get cases info', () => {
         5000, 'Хозяин жизни', 50000, 5000, 7);
     });
     it('C1436413 - get case info by TypeId', async () => {
-      const { data } = await cases.getCaseInfoByTypeId(1);
+      const { data } = await cases.getCaseInfoByTypeId(socket, 1);
       // console.log(data);
       checkCaseInfoByTypeId(data, 0, 1, 2);
       checkCaseInfoByTypeId(data, 1, 1, 11);
@@ -40,11 +44,12 @@ describe('Get cases info', () => {
 
   describe('USD', () => {
     beforeAll(async () => {
+      socket = await getNewSocket();
       await register.oneClickRegUSD(socket);
     });
 
     it('C483525 - all cases', async () => {
-      const { data } = await cases.getCaseInfo('all');
+      const { data } = await cases.getCaseInfo(socket, 'all');
 
       // console.log(data);
       checkInfoCase(data, 0, 1, 'USD', 10, 10,

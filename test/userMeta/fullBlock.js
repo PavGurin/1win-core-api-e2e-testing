@@ -44,25 +44,25 @@ describe('Full block tests', () => {
     });
 
     it('C28642 (+) full_block = true in bd after login, deposit blocked', async () => {
-      const { data: deposit } = banking.depositCreateRequest(100, '1234567812345678', 'card_rub', 'RUB');
+      const { data: deposit } = banking.depositCreateRequest(socket, '1234567812345678', 'card_rub', 'RUB', 100);
       await sleep(2000);
       expect(deposit).undefined;
     });
 
     it('C28645 (+) full_block = true in bd after login, transfer blocked', async () => {
-      const { data } = banking.transferCreate(20, 'RUB');
+      const { data } = banking.transferCreate(socket, 20, 'RUB');
       await sleep(2000);
       expect(data).undefined;
     });
 
     it('C28646 (+) full_block = true in bd after login, withdrawal blocked', async () => {
-      const { data } = banking.withdrawalCreate(100, '1234567812345678', 'card_rub', 'RUB');
+      const { data } = banking.withdrawalCreate(socket, '1234567812345678', 'card_rub', 'RUB', 100);
       await sleep(2000);
       expect(data).undefined;
     });
 
     it('C28643 (+) full_block = true in bd after login, cases blocked', async () => {
-      const { data } = cases.playCaseWithoutChance(1);
+      const { data } = cases.playCaseWithoutChance(socket, 1);
       await sleep(2000);
       expect(data).undefined;
     });
