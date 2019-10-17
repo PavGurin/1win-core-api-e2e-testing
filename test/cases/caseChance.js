@@ -75,7 +75,7 @@ describe('Cases play with different chance', () => {
     it('C490205 - (+) play  cases 10 with chance = 10', async () => {
       const data = await cases.playCaseWithChance(socket, 10, 10);
       // console.log(data);
-      checkCaseResult(data, 2, 0.2);
+      checkCaseResult(data, 2, 0.3);
     });
     it('C490206 - (+) play  cases 11 with chance = 20', async () => {
       const data = await cases.playCaseWithChance(socket, 11, 20);

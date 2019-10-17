@@ -60,7 +60,7 @@ describe('User risk coefficient tests', () => {
     );
     // console.log(maxBetAmount2);
 
-    expect((maxBetAmount2 / maxBetAmount1).toFixed(1)).equal((0.5).toFixed(1));
+    expect((maxBetAmount2.RUB / maxBetAmount1.RUB).toFixed(1)).equal((0.5).toFixed(1));
   });
 
   it('C28394 (+) set user_risk_coefficient = 0.75', async () => {
@@ -71,16 +71,16 @@ describe('User risk coefficient tests', () => {
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );
-    // console.log(maxBetAmount1);
+    // console.log(maxBetAmount1.RUB);
 
     await setUserRiskCoef(currentUser.id, 0.75);
 
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
     );
-    // console.log(maxBetAmount2);
+    // console.log(maxBetAmount2.RUB);
 
-    expect((maxBetAmount2 / maxBetAmount1).toFixed(2)).equal((0.75).toFixed(2));
+    expect((maxBetAmount2.RUB / maxBetAmount1.RUB).toFixed(2)).equal((0.75).toFixed(2));
   });
 
   it('C28395 (+) set user_risk_coefficient = 10', async () => {
@@ -100,7 +100,7 @@ describe('User risk coefficient tests', () => {
     );
     // console.log(maxBetAmount2);
 
-    expect((maxBetAmount2 / maxBetAmount1).toFixed(1)).equal((10).toFixed(1));
+    expect((maxBetAmount2.RUB / maxBetAmount1.RUB).toFixed(1)).equal((10).toFixed(1));
   });
 
   it('C28396 (+) set user_risk_coefficient = 0.123456', async () => {
@@ -120,7 +120,7 @@ describe('User risk coefficient tests', () => {
     );
     // console.log(maxBetAmount2);
 
-    expect((maxBetAmount2 / maxBetAmount1).toFixed(6)).equal((0.123456).toFixed(6));
+    expect((maxBetAmount2.RUB / maxBetAmount1.RUB).toFixed(6)).equal((0.123456).toFixed(6));
   });
 
   it('C28397 (+) set user_risk_coefficient = 0.000005 (minimum value)', async () => {
@@ -140,6 +140,6 @@ describe('User risk coefficient tests', () => {
     );
     // console.log(maxBetAmount2);
 
-    expect((maxBetAmount2 / maxBetAmount1).toFixed(6)).equal((0.000005).toFixed(6));
+    expect((maxBetAmount2.RUB / maxBetAmount1.RUB).toFixed(6)).equal((0.000005).toFixed(6));
   });
 });
