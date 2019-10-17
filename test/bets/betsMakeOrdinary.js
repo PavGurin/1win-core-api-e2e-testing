@@ -159,7 +159,7 @@ describe('Ordinary bets prematch', () => {
 });
 
 
-describe('Ordinary bets live', () => {
+describe('Ordinary bets live @master', () => {
   it.skip('C27564 (+) default bet', async () => {
     const singleMatch = await getSingleMatch(LIVE);
     // console.log(singleMatch);

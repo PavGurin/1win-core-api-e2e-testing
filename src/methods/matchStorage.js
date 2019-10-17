@@ -51,7 +51,7 @@ export async function getSingleMatch(service) {
   let betStatus;
   for (let i = 0; i < tournamentsAvailable; i++) {
     availableMatchesCount = Object.values(Object.values(sportTournamentMap)[i]).length;
-    for (let m = 0; m < availableMatchesCount; m++) {
+    for (let m = availableMatchesCount - 1; m >= 0; m--) {
       // eslint-disable-next-line no-await-in-loop
       data = await tournamentMatches(
         service,
