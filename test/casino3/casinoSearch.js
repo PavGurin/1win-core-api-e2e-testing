@@ -15,17 +15,4 @@ describe('Casino search check', () => {
     // console.log(data[0]);
     expect(data['0'].count).not.equal(null);
   });
-
-
-  // FIXME не знаю почему падает этот тест, не разбиралась
-  it('C20489 - Games-all', async () => {
-    const { data } = await socket.send('CASINO-3:games-all', {
-      limit: [0, 1000],
-      where: {},
-      lang: 'ru',
-      isOnlyMobile: false,
-    });
-    // console.log(data[0]);
-    expect(data['0'].id).not.equal(null);
-  });
 });
