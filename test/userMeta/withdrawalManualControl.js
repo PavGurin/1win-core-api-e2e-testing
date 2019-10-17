@@ -22,6 +22,7 @@ describe('Withdrawal manual control tests', () => {
   const BLOCKED_WALLET = '9898777766668989';
   let socket;
   beforeEach(async () => { socket = await getNewSocket(); });
+  afterAll(async () => socket.disconnect());
 
   describe('users with no withdrawal_manual_control', () => {
     it('C28385 (+) withdrawal_manual_control = false by default', async () => {
