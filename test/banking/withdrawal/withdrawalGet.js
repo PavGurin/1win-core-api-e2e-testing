@@ -27,13 +27,13 @@ describe('Withdrawal get', () => {
   describe('Invalid Id withdrawal', () => {
     it('C19364 (-) Get - Bad request, id is required ', async () => {
       const { data } = await socket.send('BANKING:withdrawal-get', { id: null });
-       // console.log(data);
+      // console.log(data);
       checkErrMsg(data, 400, 'Bad request, id is required');
     });
 
     it('C19361 (-) Get - withdrawal not found', async () => {
       const { data } = await socket.send('BANKING:withdrawal-get', { id: 0 });
-       // console.log(data);
+      // console.log(data);
       checkErrMsg(data, 404, 'Выплата не найдена');
     });
   });
