@@ -35,12 +35,6 @@ describe('Withdrawal get', () => {
       // console.log(data);
       checkErrMsg(data, 400, 'Bad request, id is required');
     });
-
-    it('C19361 (-) Get - withdrawal not found - auth', async () => {
-      const { data } = await socket.send('BANKING:withdrawal-get', { id: 0 });
-      // console.log(data);
-      checkErrMsg(data, 404, 'Выплата не найдена');
-    });
   });
 
   describe('Withdrawal get card_rub', () => {
@@ -48,6 +42,12 @@ describe('Withdrawal get', () => {
       await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    });
+
+    it('C19361 (-) Get - withdrawal not found - auth', async () => {
+      const { data } = await socket.send('BANKING:withdrawal-get', { id: 0 });
+      console.log(data);
+      checkErrMsg(data, 404, 'Выплата не найдена');
     });
 
     it('C19363 (+) Get - 100 RUB card_rub ', async () => {
