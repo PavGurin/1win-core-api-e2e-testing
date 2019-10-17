@@ -21,9 +21,10 @@ describe('Auth recovery confirm', () => {
 
     await sleep(4000);
     const receivedMail = await mail.getMessage(user.data.email);
-    checkMailRequisites(receivedMail, '1Win - Password recovery', 'Forgot Password - 1Win', 'confirmation@fbet.top');
+    checkMailRequisites(receivedMail, '1Win - Password recovery', 'Info - 1Win', 'confirmation@fbet.top');
     const confirmReq = await forgotConfirm(sentReq.data.userId, receivedMail.code,
       defaultPassword, defaultPassword);
+    // console.log(confirmReq);
     checkSuccess(confirmReq);
   });
 
