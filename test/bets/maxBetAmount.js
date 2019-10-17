@@ -10,6 +10,7 @@ beforeEach(async () => {
 });
 
 
+
 describe('maxBetAmount', () => {
   it('C27561 (+) MaxBetAmount', async () => {
     const betAmount = 10;
