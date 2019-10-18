@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserRiskCoef } from '../../src/methods/user';
+import { setUserRiskCoef } from '../../src/methods/user';
 import { userPool } from '../../src/methods/userPool';
 import { userList } from '../../src/methods/userList';
 import { getSingleMatch } from '../../src/methods/matchStorage';
@@ -12,12 +12,13 @@ describe('User risk coefficient tests', () => {
   const BALANCE = 100;
   let currentUser = {};
   let users = [];
+  let socket;
   const PREMATCH = 'prematch';
 
   beforeAll(async () => {
     users = await userPool.usersWithBalanceRub(socket, USERS_NUMBER, BALANCE);
   });
-  beforeEach(async () => { await logOut(); });
+  afterEach(() => socket.disconnect());
 
   it('C28390 (+) default = 1, one click reg', async () => {
     const { data } = await register.oneClickRegUSD(socket);

@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import {
   getUserWithdrawalManualControl,
-  logOut,
   setUserWithdrawalManualControl,
 } from '../../src/methods/user';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
@@ -37,7 +36,6 @@ describe('Withdrawal manual control tests', () => {
     it('C28386 (+) withdrawal_manual_control = false when in db = true', async () => {
       const { data } = await register.usualReg(socket);
       await setUserWithdrawalManualControl(data.id);
-      await logOut();
       await userList.loginWithParams(socket, data.email, data.password);
       const meta = await socket.userMeta;
       // console.log(meta);
@@ -210,7 +208,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
 
-      const { data } = await banking.withdrawalCreate(socket, '5500220033669988', 'card_rub', 'RUB', caseResult.result);
+      await banking.withdrawalCreate(socket, '5500220033669988', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
       expect(await getUserWithdrawalManualControl(user.id)).equal('true');
     });
@@ -226,7 +224,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data: caseResult } = await cases.playCaseWithoutChance(socket, 6);
 
-      const { data } = await banking.withdrawalCreate(socket, '79112365498', 'mts_rub', 'RUB', caseResult.result);
+      await banking.withdrawalCreate(socket, '79112365498', 'mts_rub', 'RUB', caseResult.result);
       // console.log(data);
       expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
     });
@@ -252,6 +250,7 @@ describe('users with withdrawal_manual_control = true', () => {
     await setUserWithdrawalManualControl(currentUser.id);
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
   });
+
   afterAll(async () => socket.disconnect());
 
 

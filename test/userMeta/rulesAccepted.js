@@ -1,10 +1,7 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut } from '../../src/methods/user';
 
 describe('Rules accepted tests', () => {
-  beforeEach(async () => { await logOut(); });
-
   it('C28375 (+) rules_accepted = true after one click reg with rub', async () => {
     await register.oneClickReg(socket);
     const meta = await socket.userMeta;

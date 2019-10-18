@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
 import { userPool } from '../../../src/methods/userPool';
-import { logOut } from '../../../src/methods/user';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
@@ -40,7 +39,6 @@ describe('Withdrawal get', () => {
 
   describe('Withdrawal get card_rub', () => {
     beforeEach(async () => {
-      await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });

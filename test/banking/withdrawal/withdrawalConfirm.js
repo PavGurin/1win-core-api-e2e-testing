@@ -5,7 +5,6 @@ import { banking } from '../../../src/methods/banking';
 import { checkErrMsg, checkSuccess } from '../../../src/responseChecker';
 import { mail } from '../../../src/methods/mail';
 import { sleep } from '../../../src/methods/utils';
-import { logOut } from '../../../src/methods/user';
 import { checkMailRequisites } from '../../../src/expects/exMail';
 import { userPool } from '../../../src/methods/userPool';
 import { getNewSocket } from '../../global';
@@ -51,7 +50,6 @@ describe('Withdrawal confirm tests', () => {
 
   describe('Withdrawal with confirmation codes', () => {
     beforeEach(async () => {
-      await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
@@ -68,7 +66,6 @@ describe('Withdrawal confirm tests', () => {
     });
 
     it('C27120 (-) Active code of other user', async () => {
-      await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);

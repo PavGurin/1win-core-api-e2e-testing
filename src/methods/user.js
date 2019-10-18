@@ -19,7 +19,7 @@ export async function changeCurrency(currency, socket) {
   });
 }
 
-export async function logOut() {
+export async function logOut(socket) {
   // Выход текущего пользователя
   return socket.send('USER:auth-logout', {
     tg_hash: randomStr(5),

@@ -1,12 +1,10 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import { randomStr } from '../../src/randomizer';
-import { logOut, updateProfile } from '../../src/methods/user';
+import { updateProfile } from '../../src/methods/user';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
 
 describe('Email editable tests', () => {
-  beforeEach(async () => { await logOut(); });
-
   it('C28369 (+) email_editable = true after one click reg with rub', async () => {
     await register.oneClickReg(socket);
     const meta = await socket.userMeta;

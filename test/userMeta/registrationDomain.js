@@ -1,12 +1,9 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut } from '../../src/methods/user';
 import { checkRegistrationDomain } from '../../src/expects/exDatabaseTests';
 
 describe('Registration domain tests', () => {
   // Домен не выводится в socket.user_meta, надо проверять в бд
-
-  beforeEach(async () => { await logOut(); });
 
   it('C28379 (+) one click reg without visit_domain', async () => {
     const { data } = await register.oneClickReg(socket);

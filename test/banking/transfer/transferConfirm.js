@@ -5,7 +5,6 @@ import { banking } from '../../../src/methods/banking';
 import { checkErrMsg, checkSuccess } from '../../../src/responseChecker';
 import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
-import { logOut } from '../../../src/methods/user';
 import { checkMailRequisites } from '../../../src/expects/exMail';
 import { userPool } from '../../../src/methods/userPool';
 import { getNewSocket } from '../../global';
@@ -55,7 +54,6 @@ describe('Transfer confirm tests', () => {
     // перед каждым тестом просиходит логин, ссздание перевода, получение письма с почты
     beforeEach(async () => {
       currentUser = users.pop();
-      await logOut();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.transferCreate(socket, 20, 'RUB');
       // задержка, чтобы письмо успело придти на почту
@@ -70,16 +68,12 @@ describe('Transfer confirm tests', () => {
     });
 
     it('C21436 (-) Active code of other user with 400 code response', async () => {
-      await logOut();
-      currentUser = users.pop();
-      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.transferCreate(socket, 20, 'RUB');
 
       const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
       // console.log(confirmData);
       expect(confirm.status).to.equal(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
-      await logOut();
     });
 
     it('C21437 (-) Expired code with 404 code response', async () => {
@@ -125,7 +119,6 @@ describe('Transfer confirm tests', () => {
   describe('Withdrawal before transfer', () => {
     it('C27219 (-) Active code of other operation that was obtained before transfer code', async () => {
       currentUser = users.pop();
-      await logOut();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
       await banking.withdrawalCreate(socket, '1234123412341234', 'card_rub', 'RUB', 100);
       await sleep(4000);
@@ -145,10 +138,8 @@ describe('Transfer confirm tests', () => {
 
     beforeEach(async () => {
       // проверка баланса у пользователя, которому будет перевод, до перевода
-      await logOut();
       await userList.loginTransferToUser(socket);
       balanceBefore = await banking.balanceCheck(socket);
-      await logOut();
 
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
@@ -168,7 +159,6 @@ describe('Transfer confirm tests', () => {
       expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance - 20);
 
       // проверка баланса у пользователя, которому был перевод, после перевода
-      await logOut();
       await userList.loginTransferToUser(socket);
       expect(await banking.balanceCheck(socket)).to.equal(balanceBefore + 20);
     });
@@ -182,7 +172,6 @@ describe('Transfer confirm tests', () => {
       expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance);
 
       // проверка баланса у пользователя, которому был перевод, после перевода
-      await logOut();
       await userList.loginTransferToUser(socket);
       expect(await banking.balanceCheck(socket)).to.equal(balanceBefore);
     });

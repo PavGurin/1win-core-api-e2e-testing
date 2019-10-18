@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserFullBlock } from '../../src/methods/user';
+import { setUserFullBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { sleep } from '../../src/methods/utils';
 import { banking } from '../../src/methods/banking';
@@ -21,7 +21,6 @@ describe('Full block tests', () => {
   describe('login with full_block', () => {
     it('C28641 (+) full_block = true in bd, login blocked', async () => {
       const { data } = await register.oneClickReg(socket);
-      await logOut();
       await setUserFullBlock(data.id);
 
       const { data: login } = userList.loginWithParams(socket, data.email, data.password);
@@ -35,7 +34,6 @@ describe('Full block tests', () => {
     let coupon = {};
 
     beforeAll(async () => {
-      await logOut();
       user = await register.usualReg(socket);
       singleMatch = await getSingleMatch('prematch');
       coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
