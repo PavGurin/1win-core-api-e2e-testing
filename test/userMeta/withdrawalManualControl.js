@@ -257,7 +257,7 @@ describe('users with withdrawal_manual_control = true', () => {
 
   it('C28634 (+) withdrawal_manual_control = true, withdrawal create', async () => {
     const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
-     console.log(data);
+    // console.log(data);
     expect(data.confirmationRequested).equal(true);
   });
 
