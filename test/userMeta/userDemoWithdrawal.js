@@ -89,9 +89,9 @@ describe('User demo withdrawal tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).equal('rejected');
@@ -166,9 +166,9 @@ describe('User demo withdrawal tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error).equal(false);
