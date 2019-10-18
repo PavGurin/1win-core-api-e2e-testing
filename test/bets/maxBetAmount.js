@@ -21,13 +21,13 @@ describe('maxBetAmount', () => {
     // console.log(coupon);
 
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(coupon, singleMatch);
-    // console.log(maxBetAmount1);
+    // console.log(maxBetAmount1.RUB);
 
     await makeOrdinaryBet(coupon, betAmount);
 
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
-    // console.log(maxBetAmount2);
+    // console.log(maxBetAmount2.RUB);
 
-    expect(maxBetAmount2).equal((maxBetAmount1 - betAmount));
+    expect(maxBetAmount2.RUB).equal((maxBetAmount1.RUB - betAmount));
   });
 });
