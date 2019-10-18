@@ -26,7 +26,8 @@ export async function logOut() {
   });
 }
 
-export async function sendUserDataToEmail(emailToSend, oneClickRegEmail, oneClickRegPassword) {
+export async function sendUserDataToEmail(socket, emailToSend,
+  oneClickRegEmail, oneClickRegPassword) {
   return socket.send('USER:profile-credentialsByEmail', {
     email: emailToSend,
     login: oneClickRegEmail,
@@ -34,13 +35,13 @@ export async function sendUserDataToEmail(emailToSend, oneClickRegEmail, oneClic
   });
 }
 
-export async function forgotRecovery(account) {
+export async function forgotRecovery(socket, account) {
   return socket.send('USER:forgot-recovery', {
     account,
   });
 }
 
-export async function forgotConfirm(userId, code, password, repeat_password) {
+export async function forgotConfirm(socket, userId, code, password, repeat_password) {
   return socket.send('USER:forgot-confirm', {
     userId,
     code,

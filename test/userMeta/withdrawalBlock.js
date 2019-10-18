@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserWithdrawalBlock } from '../../src/methods/user';
+import { setUserWithdrawalBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
 import { userPool } from '../../src/methods/userPool';
@@ -64,7 +64,6 @@ describe('Withdrawal block tests', () => {
     });
 
     beforeEach(async () => {
-      await logOut();
       currentUser = users.pop();
       await setUserWithdrawalBlock(currentUser.id);
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
