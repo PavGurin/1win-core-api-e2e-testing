@@ -68,7 +68,7 @@ describe('Full block tests', () => {
     });
 
     it('C28644 (+) full_block = true in bd after login, bets blocked', async () => {
-      const { data } = makeOrdinaryBet(coupon, 'RUB', 10);
+      const { data } = makeOrdinaryBet(socket, coupon, 'RUB', 10);
       await sleep(2000);
       expect(data).undefined;
     });

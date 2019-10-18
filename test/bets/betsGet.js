@@ -51,7 +51,7 @@ describe('Bets get', () => {
     // console.log(singleMatch);
     const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
-    await makeOrdinaryBet(coupon, 10);
+    await makeOrdinaryBet(socket, coupon, 10);
 
     const { data: betsMap } = await getMatchHistory(socket, {
       betType: ORDINARY,
