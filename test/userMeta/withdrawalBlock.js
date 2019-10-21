@@ -23,6 +23,7 @@ describe('Withdrawal block tests', () => {
   let socket;
 
   beforeEach(async () => { socket = await getNewSocket(); });
+  afterEach(() => socket.disconnect());
 
   describe('users with withdrawal_block = false', () => {
     it('C28398 (+) withdrawal_block = false by default', async () => {
@@ -60,14 +61,17 @@ describe('Withdrawal block tests', () => {
 
   describe('users with withdrawal_block = true', () => {
     beforeAll(async () => {
+      socket = await getNewSocket();
       users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
+      socket = await getNewSocket();
       currentUser = users.pop();
       await setUserWithdrawalBlock(currentUser.id);
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
+    afterEach(() => socket.disconnect());
 
     it('C28399 (+) withdrawal_block = false when in db = true', async () => {
       const meta = await socket.userMeta;

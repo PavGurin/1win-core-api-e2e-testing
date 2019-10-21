@@ -21,6 +21,7 @@ describe('Cases winner tests', () => {
   let socket;
 
   beforeEach(async () => { socket = await getNewSocket(); });
+  afterEach(() => socket.disconnect());
 
   describe('cases_winner = false', () => {
     it('C28427 (+) cases_winner = false by default and not present in socket.userMeta', async () => {

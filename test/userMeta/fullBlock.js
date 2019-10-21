@@ -7,6 +7,7 @@ import { banking } from '../../src/methods/banking';
 import { cases } from '../../src/methods/cases';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, makeOrdinaryBet } from '../../src/methods/better';
+import { getNewSocket } from '../global';
 
 describe('Full block tests', () => {
   describe('no full block', () => {
@@ -32,14 +33,18 @@ describe('Full block tests', () => {
     let user = {};
     let singleMatch = {};
     let coupon = {};
+    let socket;
 
     beforeAll(async () => {
+      socket = await getNewSocket();
       user = await register.usualReg(socket);
       singleMatch = await getSingleMatch('prematch');
       coupon = await generateOrdinaryCoupon(singleMatch, 'RUB', 10);
       await banking.setBalance(user.data.id);
       await setUserFullBlock(user.data.id);
     });
+
+    afterAll(() => socket.disconnect());
 
     it('C28642 (+) full_block = true in bd after login, deposit blocked', async () => {
       const { data: deposit } = banking.depositCreateRequest(socket, '1234567812345678', 'card_rub', 'RUB', 100);
