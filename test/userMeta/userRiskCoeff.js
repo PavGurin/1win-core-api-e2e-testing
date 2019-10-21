@@ -6,6 +6,7 @@ import { userList } from '../../src/methods/userList';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount } from '../../src/methods/better';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
+import { getNewSocket } from '../global';
 
 describe('User risk coefficient tests', () => {
   const USERS_NUMBER = 6;
@@ -16,8 +17,11 @@ describe('User risk coefficient tests', () => {
   const PREMATCH = 'prematch';
 
   beforeAll(async () => {
+    socket = await getNewSocket();
     users = await userPool.usersWithBalanceRub(socket, USERS_NUMBER, BALANCE);
   });
+
+  beforeEach(async () => { socket = await getNewSocket(); });
   afterEach(() => socket.disconnect());
 
   it('C28390 (+) default = 1, one click reg', async () => {

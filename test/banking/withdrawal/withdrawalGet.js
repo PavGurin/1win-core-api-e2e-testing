@@ -21,8 +21,7 @@ describe('Withdrawal get', () => {
     users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
   });
 
-  afterAll(async () => { await socket.disconnect(); });
-
+  afterAll(async () => { socket.disconnect(); });
   describe('Invalid Id withdrawal', () => {
     it('C19364 (-) Get - Bad request, id is required ', async () => {
       const { data } = await socket.send('BANKING:withdrawal-get', { id: null });

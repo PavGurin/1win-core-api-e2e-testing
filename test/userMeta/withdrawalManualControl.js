@@ -23,7 +23,7 @@ describe('Withdrawal manual control tests', () => {
   beforeEach(async () => {
     socket = await getNewSocket();
   });
-  afterAll(async () => socket.disconnect());
+  afterEach(async () => socket.disconnect());
 
   describe('users with no withdrawal_manual_control', () => {
     it('C28385 (+) withdrawal_manual_control = false by default', async () => {
@@ -251,7 +251,7 @@ describe('users with withdrawal_manual_control = true', () => {
     await userList.loginWithParams(socket, currentUser.email, currentUser.password);
   });
 
-  afterAll(async () => socket.disconnect());
+  afterEach(async () => { socket.disconnect(); });
 
 
   it('C28634 (+) withdrawal_manual_control = true, withdrawal create', async () => {
