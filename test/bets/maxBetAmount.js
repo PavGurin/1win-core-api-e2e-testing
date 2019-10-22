@@ -23,7 +23,7 @@ describe('maxBetAmount', () => {
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount1);
 
-    await makeOrdinaryBet(coupon, betAmount);
+    await makeOrdinaryBet(socket, coupon, betAmount);
 
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount2);
