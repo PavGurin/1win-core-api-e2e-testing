@@ -16,7 +16,7 @@ describe('Auth recovery forgot', () => {
   it('C19318 (+) recovery by email', async () => {
     const { data: regData } = await register.oneClickReg(socket);
     // console.log(regData);
-    const { data: recoveryReq } = await forgotRecovery(regData.email);
+    const { data: recoveryReq } = await forgotRecovery(socket, regData.email);
     // console.log(recoveryReq);
     checkSuccessRecovery(regData, recoveryReq);
   });
@@ -24,21 +24,21 @@ describe('Auth recovery forgot', () => {
   it('C19319 (+) recovery by phone', async () => {
     const { data: regData } = await register.oneClickReg(socket);
     // console.log(regData);
-    const { data: recoveryReq } = await forgotRecovery(regData.phone);
+    const { data: recoveryReq } = await forgotRecovery(socket, regData.phone);
     // console.log(recoveryReq);
     checkSuccessRecovery(regData, recoveryReq);
   });
 
   // maybe error message will be changed
   it('C19320 (-) nonexistent user', async () => {
-    const { data } = await forgotRecovery('nonexistent_user');
+    const { data } = await forgotRecovery(socket, 'nonexistent_user');
 
     // console.log(data);
     checkErrorMsg(data, 'Пользователь не существует');
   });
 
   it('C19321 (-) empty account field', async () => {
-    const { data } = await forgotRecovery('');
+    const { data } = await forgotRecovery(socket, '');
 
     // console.log(data);
     checkErrorMsg(data, 'Bad request, account is invalid');

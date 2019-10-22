@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
 import { userPool } from '../../../src/methods/userPool';
-import { logOut } from '../../../src/methods/user';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
@@ -22,8 +21,7 @@ describe('Withdrawal get', () => {
     users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
   });
 
-  afterAll(async () => { await socket.disconnect(); });
-
+  afterAll(async () => { socket.disconnect(); });
   describe('Invalid Id withdrawal', () => {
     it('C19364 (-) Get - Bad request, id is required ', async () => {
       const { data } = await socket.send('BANKING:withdrawal-get', { id: null });
@@ -40,7 +38,6 @@ describe('Withdrawal get', () => {
 
   describe('Withdrawal get card_rub', () => {
     beforeEach(async () => {
-      await logOut();
       currentUser = users.pop();
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });

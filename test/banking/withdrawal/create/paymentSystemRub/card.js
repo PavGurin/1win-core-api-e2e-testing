@@ -3,7 +3,6 @@ import { userList } from '../../../../../src/methods/userList';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { banking } from '../../../../../src/methods/banking';
 import { successWithdrawalCreate } from '../../../../../src/expects/exBanking';
-import { logOut } from '../../../../../src/methods/user';
 import { getNewSocket } from '../../../../global';
 
 const currency = 'RUB';
@@ -32,7 +31,6 @@ describe('Withdrawal create with valid test cases ', () => {
 
 describe('Withdrawal create with invalid test cases ', () => {
   beforeEach(async () => {
-    await logOut();
     await register.oneClickReg(socket);
   });
 

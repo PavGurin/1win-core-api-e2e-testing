@@ -17,7 +17,7 @@
     ]
   },
   "scripts": {
-    "test": "jest --testTimeout=10000 --colors --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test": "jest --testTimeout=10000 --colors --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=1",
     "eslint": "eslint ./ --ext .js",
     "eslint:fix": "eslint ./ --ext .js --fix",
     "test:banking": "jest --testPathPattern=./test/banking/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",

@@ -1,23 +1,28 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserRiskCoef } from '../../src/methods/user';
+import { setUserRiskCoef } from '../../src/methods/user';
 import { userPool } from '../../src/methods/userPool';
 import { userList } from '../../src/methods/userList';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount } from '../../src/methods/better';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
+import { getNewSocket } from '../global';
 
 describe('User risk coefficient tests', () => {
   const USERS_NUMBER = 6;
   const BALANCE = 100;
   let currentUser = {};
   let users = [];
+  let socket;
   const PREMATCH = 'prematch';
 
   beforeAll(async () => {
+    socket = await getNewSocket();
     users = await userPool.usersWithBalanceRub(socket, USERS_NUMBER, BALANCE);
   });
-  beforeEach(async () => { await logOut(); });
+
+  beforeEach(async () => { socket = await getNewSocket(); });
+  afterEach(() => socket.disconnect());
 
   it('C28390 (+) default = 1, one click reg', async () => {
     const { data } = await register.oneClickRegUSD(socket);

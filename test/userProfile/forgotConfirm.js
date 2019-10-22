@@ -17,12 +17,12 @@ describe('Auth recovery confirm', () => {
 
   it('C19316 (+) with correct code', async () => {
     const user = await register.regMailWithConfirmationCodes(socket);
-    const sentReq = await forgotRecovery(user.data.email);
+    const sentReq = await forgotRecovery(socket, user.data.email);
 
     await sleep(4000);
     const receivedMail = await mail.getMessage(user.data.email);
-    checkMailRequisites(receivedMail, '1Win - Password recovery', 'Info - 1Win', 'svnmsk@fastmail.com');
-    const confirmReq = await forgotConfirm(sentReq.data.userId, receivedMail.code,
+    checkMailRequisites(receivedMail, '1Win - Password recovery', 'Forgot Password - 1Win', 'svnmsk@fastmail.com');
+    const confirmReq = await forgotConfirm(socket, sentReq.data.userId, receivedMail.code,
       defaultPassword, defaultPassword);
     // console.log(confirmReq);
     checkSuccess(confirmReq);
@@ -32,8 +32,8 @@ describe('Auth recovery confirm', () => {
   it('C19317 (-) with incorrect code', async () => {
     const { data: regData } = await register.oneClickReg(socket);
     // console.log(regData);
-    await forgotRecovery(regData.email);
-    const { data: confirmReq } = await forgotConfirm(regData.id, 1234567,
+    await forgotRecovery(socket, regData.email);
+    const { data: confirmReq } = await forgotConfirm(socket, regData.id, 1234567,
       defaultPassword, defaultPassword);
     // console.log(confirmReq);
     checkErrorMsg(confirmReq, 'Неверный ключ запроса');

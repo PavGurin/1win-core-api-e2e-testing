@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserWithdrawalBlock } from '../../src/methods/user';
+import { setUserWithdrawalBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
 import { userPool } from '../../src/methods/userPool';
@@ -23,6 +23,7 @@ describe('Withdrawal block tests', () => {
   let socket;
 
   beforeEach(async () => { socket = await getNewSocket(); });
+  afterEach(() => socket.disconnect());
 
   describe('users with withdrawal_block = false', () => {
     it('C28398 (+) withdrawal_block = false by default', async () => {
@@ -47,9 +48,9 @@ describe('Withdrawal block tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(user.id, maxBetAmount + 1);
+      await banking.setBalance(user.id, maxBetAmount.RUB + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).equal('rejected');
@@ -60,15 +61,17 @@ describe('Withdrawal block tests', () => {
 
   describe('users with withdrawal_block = true', () => {
     beforeAll(async () => {
+      socket = await getNewSocket();
       users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
     });
 
     beforeEach(async () => {
-      await logOut();
+      socket = await getNewSocket();
       currentUser = users.pop();
       await setUserWithdrawalBlock(currentUser.id);
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
     });
+    afterEach(() => socket.disconnect());
 
     it('C28399 (+) withdrawal_block = false when in db = true', async () => {
       const meta = await socket.userMeta;
@@ -117,7 +120,7 @@ describe('Withdrawal block tests', () => {
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, 10);
+      const { data: betResponse } = await makeOrdinaryBet(socket, coupon, 10);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error).equal(false);
@@ -131,9 +134,9 @@ describe('Withdrawal block tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error).equal(false); '';

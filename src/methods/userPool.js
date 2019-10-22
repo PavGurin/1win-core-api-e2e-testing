@@ -10,7 +10,7 @@ export const userPool = {
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut();
+      await logOut(socket);
       const newUser = await register.regMailWithConfirmationCodes(socket);
       users.push({
         email: newUser.data.email,
@@ -33,7 +33,7 @@ export const userPool = {
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut();
+      await logOut(socket);
       const newUser = await register.usualReg(socket);
       users.push({
         email: newUser.data.email,
@@ -56,7 +56,7 @@ export const userPool = {
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut();
+      await logOut(socket);
       const newUser = await register.oneClickRegUSD(socket);
       users.push({
         email: newUser.data.email,
@@ -79,7 +79,7 @@ export const userPool = {
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut();
+      await logOut(socket);
       const newUser = await register.usualRegMailru(socket);
       users.push({
         email: newUser.data.email,

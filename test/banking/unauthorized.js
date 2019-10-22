@@ -1,4 +1,3 @@
-import { logOut } from '../../src/methods/user';
 import { banking } from '../../src/methods/banking';
 import { checkErrMsg } from '../../src/responseChecker';
 import { getNewSocket } from '../global';
@@ -8,10 +7,6 @@ describe('Unauthorized ', () => {
   const paymentType = 'card_rub';
   const payment_system = 'card_rub';
   let socket;
-
-  beforeAll(async () => {
-    await logOut();
-  });
 
   beforeEach(async () => {
     socket = await getNewSocket();

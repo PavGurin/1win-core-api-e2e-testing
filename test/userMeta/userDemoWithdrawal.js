@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { register } from '../../src/methods/register';
-import { logOut, setUserDemoWithdrawal, setUserWithdrawalBlock } from '../../src/methods/user';
+import { setUserDemoWithdrawal, setUserWithdrawalBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
 import { userPool } from '../../src/methods/userPool';
@@ -42,7 +42,6 @@ describe('User demo withdrawal tests', () => {
     });
 
     beforeEach(async () => {
-      await logOut();
       currentUser = users.pop();
       await setUserDemoWithdrawal(currentUser.id);
       await userList.loginWithParams(socket, currentUser.email, currentUser.password);
@@ -89,9 +88,9 @@ describe('User demo withdrawal tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).equal('rejected');
@@ -108,7 +107,6 @@ describe('User demo withdrawal tests', () => {
     });
 
     beforeEach(async () => {
-      await logOut();
       currentUser = users.pop();
       await setUserWithdrawalBlock(currentUser.id);
       await setUserDemoWithdrawal(currentUser.id);
@@ -152,7 +150,7 @@ describe('User demo withdrawal tests', () => {
       const coupon = await generateOrdinaryCoupon(singleMatch, 10);
       // console.log(coupon);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, 10);
+      const { data: betResponse } = await makeOrdinaryBet(socket, coupon, 10);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error).equal(false);
@@ -166,9 +164,9 @@ describe('User demo withdrawal tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
 
-      const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount + 1);
+      const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error).equal(false);
