@@ -27,7 +27,7 @@ describe('maxBetAmount', () => {
 
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount2);
-    // test
+
     expect(Object.values(maxBetAmount2)[0]).equal((Object.values(maxBetAmount1)[0] - betAmount));
   });
 });
