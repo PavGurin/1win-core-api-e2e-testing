@@ -94,4 +94,49 @@ describe('Cases play with different chance', () => {
       checkCaseResult(data, 100, 2);
     });
   });
+
+  describe('EUR', () => {
+    const USERS_NUMBER = 4;
+    const BALANCE = 1200;
+    let currentUser = {};
+    let users = [];
+    let socket;
+
+    beforeAll(async () => {
+      // формируем пул юзеров
+      socket = await getNewSocket();
+      users = await userPool.usersWithBalanceEur(socket, USERS_NUMBER, BALANCE);
+      await socket.disconnect();
+    });
+
+    beforeEach(async () => {
+      socket = await getNewSocket();
+      currentUser = users.pop();
+      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    });
+
+    afterEach(async () => { await socket.disconnect(); });
+
+    it('C1508935 - (+) play  cases 19 with chance = 10', async () => {
+      const data = await cases.playCaseWithChance(socket, 19, 10);
+
+      checkCaseResult(data, 10, 0.2);
+    });
+    it('C1508936 - (+) play  cases 18 with chance = 20', async () => {
+      const data = await cases.playCaseWithChance(socket, 18, 20);
+
+      checkCaseResult(data, 4, 0.08);
+    });
+
+    it('C1508937 - (+) play  cases 20 with chance = 30', async () => {
+      const data = await cases.playCaseWithChance(socket, 20, 30);
+
+      checkCaseResult(data, 10, 1);
+    });
+    it('C1508938 - (+) play  cases 21 with chance = 2', async () => {
+      const data = await cases.playCaseWithChance(socket, 21, 2);
+
+      checkCaseResult(data, 100, 2);
+    });
+  });
 });

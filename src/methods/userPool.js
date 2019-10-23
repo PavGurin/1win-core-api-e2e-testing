@@ -74,6 +74,29 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
+  async usersWithBalanceEur(socket, usersNumber, balanceAmount) {
+    const users = [];
+    let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
+    for (let i = 0; i < usersNumber; i++) {
+      /* eslint no-await-in-loop: 'off' */
+      await logOut(socket);
+      const newUser = await register.oneClickRegEUR(socket);
+      users.push({
+        email: newUser.data.email,
+        password: newUser.data.password,
+        id: newUser.data.user_id,
+        balance: balanceAmount,
+      });
+      query += `${newUser.data.user_id}`;
+      if (i !== (usersNumber - 1)) query += ', ';
+    }
+    query += ');';
+    // console.log(users);
+    // console.log(query);
+
+    await mysqlConnection.executeQuery(query);
+    return users;
+  },
   async usersWithEmailMailru(socket, usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
