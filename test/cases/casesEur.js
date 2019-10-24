@@ -5,7 +5,7 @@ import { checkCaseResult } from '../../src/expects/exCases';
 import { checkErrMsg } from '../../src/responseChecker';
 import { getNewSocket } from '../global';
 
-describe('Cases play USD', () => {
+describe('Cases play EUR', () => {
   describe('Valid', () => {
     const USERS_NUMBER = 7;
     const BALANCE = 1200;
@@ -16,7 +16,7 @@ describe('Cases play USD', () => {
     beforeAll(async () => {
       // формируем пул юзеров
       socket = await getNewSocket();
-      users = await userPool.usersWithBalanceUsd(socket, USERS_NUMBER, BALANCE);
+      users = await userPool.usersWithBalanceEur(socket, USERS_NUMBER, BALANCE);
       await socket.disconnect();
     });
 
@@ -28,43 +28,43 @@ describe('Cases play USD', () => {
 
     afterEach(async () => { await socket.disconnect(); });
 
-    it('C608899 - (+) play  cases 1', async () => {
+    it('C1516040 - (+) play  cases 1', async () => {
       const { data } = await cases.playCaseWithoutChance(socket, 1);
       checkErrMsg(data, 400, 'Bad request');
     });
 
-    it('C491787 - (+) play  cases 19', async () => {
+    it('C1516041 - (+) play  cases 19', async () => {
       const data = await cases.playCaseWithoutChance(socket, 19);
       // console.log(data);
       checkCaseResult(data, 2, 0.2);
     });
 
-    it('C491788 - (+) play  cases 11', async () => {
-      const data = await cases.playCaseWithoutChance(socket, 11);
+    it('C1516042 - (+) play  cases 18', async () => {
+      const data = await cases.playCaseWithoutChance(socket, 18);
 
       checkCaseResult(data, 4, 0.08);
     });
 
-    it('C491789 - (+) play  cases 12', async () => {
-      const data = await cases.playCaseWithoutChance(socket, 12);
+    it('C1516043 - (+) play  cases 20', async () => {
+      const data = await cases.playCaseWithoutChance(socket, 20);
 
       checkCaseResult(data, 10, 1);
     });
 
-    it('C491790 - (+) play  cases 13', async () => {
-      const data = await cases.playCaseWithoutChance(socket, 13);
+    it('C1516044 - (+) play  cases 21', async () => {
+      const data = await cases.playCaseWithoutChance(socket, 21);
 
       checkCaseResult(data, 100, 2);
     });
 
-    it('C491791 - (+) play  cases 14', async () => {
-      const data = await cases.playCaseWithoutChance(socket, 14);
+    it('C1516045 - (+) play  cases 17', async () => {
+      const data = await cases.playCaseWithoutChance(socket, 17);
 
       checkCaseResult(data, 2, 0.04);
     });
 
-    it('C491792 - (+) play  cases 22', async () => {
-      const data = await cases.playCaseWithoutChance(socket, 22);
+    it('C1516046 - (+) play  cases 23', async () => {
+      const data = await cases.playCaseWithoutChance(socket, 23);
 
       checkCaseResult(data, 200, 10);
     });

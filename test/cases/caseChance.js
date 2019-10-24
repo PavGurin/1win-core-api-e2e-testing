@@ -32,6 +32,7 @@ describe('Cases play with different chance', () => {
 
       checkCaseResult(data, 100, 2);
     });
+
     it('C490202 - (+) play  cases 2 with chance = 20', async () => {
       const data = await cases.playCaseWithChance(socket, 2, 20);
 
@@ -43,6 +44,7 @@ describe('Cases play with different chance', () => {
 
       checkCaseResult(data, 500, 10);
     });
+
     it('C490204 - (+) play  cases 4 with chance = 2', async () => {
       const data = await cases.playCaseWithChance(socket, 4, 2);
 
@@ -77,6 +79,7 @@ describe('Cases play with different chance', () => {
       // console.log(data);
       checkCaseResult(data, 10, 0.2);
     });
+
     it('C490206 - (+) play  cases 11 with chance = 20', async () => {
       const data = await cases.playCaseWithChance(socket, 11, 20);
 
@@ -88,6 +91,7 @@ describe('Cases play with different chance', () => {
 
       checkCaseResult(data, 10, 1);
     });
+
     it('C490208 - (+) play  cases 13 with chance = 2', async () => {
       const data = await cases.playCaseWithChance(socket, 13, 2);
 
@@ -122,6 +126,7 @@ describe('Cases play with different chance', () => {
 
       checkCaseResult(data, 10, 0.2);
     });
+
     it('C1508936 - (+) play  cases 18 with chance = 20', async () => {
       const data = await cases.playCaseWithChance(socket, 18, 20);
 
@@ -133,6 +138,7 @@ describe('Cases play with different chance', () => {
 
       checkCaseResult(data, 10, 1);
     });
+
     it('C1508938 - (+) play  cases 21 with chance = 2', async () => {
       const data = await cases.playCaseWithChance(socket, 21, 2);
 
