@@ -36,7 +36,7 @@ describe('Cases play EUR', () => {
     it('C1516041 - (+) play  cases 19', async () => {
       const data = await cases.playCaseWithoutChance(socket, 19);
       // console.log(data);
-      checkCaseResult(data, 2, 0.2);
+      checkCaseResult(data, 10, 0.2);
     });
 
     it('C1516042 - (+) play  cases 18', async () => {

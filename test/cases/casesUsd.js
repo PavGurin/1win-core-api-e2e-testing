@@ -33,10 +33,10 @@ describe('Cases play USD', () => {
       checkErrMsg(data, 400, 'Bad request');
     });
 
-    it('C491787 - (+) play  cases 19', async () => {
-      const data = await cases.playCaseWithoutChance(socket, 19);
-      // console.log(data);
-      checkCaseResult(data, 2, 0.2);
+    it('C491787 - (+) play  cases 10', async () => {
+      const data = await cases.playCaseWithoutChance(socket, 10);
+      console.log(data);
+      checkCaseResult(data, 10, 0.2);
     });
 
     it('C491788 - (+) play  cases 11', async () => {
