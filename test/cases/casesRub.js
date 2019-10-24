@@ -37,43 +37,43 @@ describe('Cases play RUB', () => {
     it('C484968 - (+) play  cases 1', async () => {
       const data = await cases.playCaseWithoutChance(socket, 1);
 
-      checkCaseResult(data, 101, 1);
+      checkCaseResult(data, 100, 2);
     });
     it('C484969 - (+) play  cases 2', async () => {
       const data = await cases.playCaseWithoutChance(socket, 2);
 
-      checkCaseResult(data, 201, 4);
+      checkCaseResult(data, 200, 5);
     });
 
     it('C484970 - (+) play  cases 3', async () => {
       const data = await cases.playCaseWithoutChance(socket, 3);
 
-      checkCaseResult(data, 501, 9);
+      checkCaseResult(data, 500, 10);
     });
     it('C484971 - (+) play  cases 4', async () => {
       const data = await cases.playCaseWithoutChance(socket, 4);
 
-      checkCaseResult(data, 501, 49);
+      checkCaseResult(data, 500, 50);
     });
     it('C484972 - (+) play  cases 5', async () => {
       const data = await cases.playCaseWithoutChance(socket, 5);
 
-      checkCaseResult(data, 5001, 99);
+      checkCaseResult(data, 5000, 100);
     });
     it('C484973 - (+) play  cases 6', async () => {
       const data = await cases.playCaseWithoutChance(socket, 6);
 
-      checkCaseResult(data, 10001, 499);
+      checkCaseResult(data, 10000, 500);
     });
     it('C484974 - (+) play  cases 7', async () => {
       const data = await cases.playCaseWithoutChance(socket, 7);
 
-      checkCaseResult(data, 10001, 2499);
+      checkCaseResult(data, 10000, 2500);
     });
     it('C484975 - (+) play  cases 8', async () => {
       const data = await cases.playCaseWithoutChance(socket, 8);
 
-      checkCaseResult(data, 50001, 4999);
+      checkCaseResult(data, 50000, 5000);
     });
 
     it('C484976 - (-) invalid id', async () => {
