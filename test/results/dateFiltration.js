@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getDateDaysAgo } from '../../src/methods/utils';
 import { checkResultsByDate } from '../../src/expects/exResults';
 import { checkErrMsg } from '../../src/responseChecker';
@@ -9,7 +8,6 @@ describe('Results with date filtration', () => {
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
         date: date.formatted,
-        hoursToStart: false,
       },
     });
     // console.log(data);
@@ -22,7 +20,6 @@ describe('Results with date filtration', () => {
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
         date: date.formatted,
-        hoursToStart: false,
       },
     });
     // console.log(data);
@@ -35,7 +32,6 @@ describe('Results with date filtration', () => {
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
         date: date.formatted,
-        hoursToStart: false,
       },
     });
     // console.log(data);
@@ -49,7 +45,6 @@ describe('Results with date filtration', () => {
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
         date: date.formatted,
-        hoursToStart: false,
       },
     });
     // console.log(data);
@@ -62,7 +57,6 @@ describe('Results with date filtration', () => {
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
         date: date.formatted,
-        hoursToStart: false,
       },
     });
     // console.log(data);
@@ -71,15 +65,13 @@ describe('Results with date filtration', () => {
   });
 
   it('C615229 - (-) invalid date', async () => {
-    // будет фейлиться, см. https://fbet-gitlab.ex2b.co/backend/tasks/issues/188
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
         date: 'aaaaa',
-        hoursToStart: false,
       },
     });
     // console.log(data);
 
-    checkErrMsg(data, 400, 'Invalid date');
+    checkErrMsg(data, 400, 'Bad request, timeFilter[date] is invalid');
   });
 });

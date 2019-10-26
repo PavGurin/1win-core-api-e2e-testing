@@ -98,7 +98,7 @@ export function matchDateCheck(match, dateTimestamp) {
 export function matchDateAndTimeCheck(match, startHourTimestamp) {
   // проверка, что время матча попадает в диапазон
   const dayOfMatch = new Date(match.dateOfMatch);
-  expect(dayOfMatch.getHours() >= startHourTimestamp.getHours(),
+  expect(dayOfMatch >= startHourTimestamp,
     `match start hour not fits requested interval:\nexpected minimum time=${startHourTimestamp
       .getDate()}.${startHourTimestamp.getMonth()} ${startHourTimestamp
       .getHours()}:${startHourTimestamp.getMinutes()}\nactual time=${dayOfMatch
