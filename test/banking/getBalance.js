@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
 import { register } from '../../src/methods/register';
 
@@ -7,12 +6,7 @@ describe('Balance get', () => {
     await register.oneClickReg(socket);
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
-    expect(data['0'].balance).equal(0);
-    expect(data['0'].currency).equal('RUB');
-    expect(data['1'].balance).equal(0);
-    expect(data['1'].currency).equal('USD');
-    expect(data['2'].balance).equal(0);
-    expect(data['2'].currency).equal('EUR');
+    expect(data).toMatchSnapshot();
   });
 
   it('C19354 (+) With money rub ', async () => {
@@ -31,11 +25,6 @@ describe('Balance get', () => {
     await userList.loginWithRealMoney(socket);
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
-    expect(data['0'].balance).not.equal(0);
-    expect(data['0'].currency).equal('RUB');
-    expect(data['1'].balance).not.equal(0);
-    expect(data['1'].currency).equal('USD');
-    expect(data['2'].balance).not.equal(0);
-    expect(data['2'].currency).equal('EUR');
+    expect(data).toMatchSnapshot();
   });
 });

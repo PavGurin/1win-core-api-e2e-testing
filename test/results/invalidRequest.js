@@ -10,7 +10,6 @@ describe('Results with date filtration', () => {
         hoursToStart: false,
       },
     });
-    // console.log(data);
 
     checkErrMsg(data, 400, 'Bad request, timeFilter[date] is invalid');
   });
