@@ -1,0 +1,576 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Get methods map C19356 Withdrawal methods map without login 1`] = `
+Object {
+  "advcash_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 191967,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "advcash_rub",
+    "placeholder_text": Object {
+      "en": "AdvCash E-Mail",
+      "ru": "AdvCash Е-Мейл",
+    },
+    "regex": "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$",
+    "regex_text": Object {
+      "en": "Enter email address: mail@example.com",
+      "ru": "Введите е-мейл адрес: mail@example.com",
+    },
+    "text": Object {
+      "en": "AdvCash",
+      "ru": "AdvCash",
+    },
+    "wallet": "account",
+  },
+  "beeline_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "beeline_rub",
+    "placeholder_text": Object {
+      "en": "Beeline mobile phone number",
+      "ru": "Номер мобильного телефона Билайн",
+    },
+    "regex": "^(79)[0-9]{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "To mobile phone Beeline",
+      "ru": "На мобильный Билайн",
+    },
+    "wallet": "account",
+  },
+  "card": Object {
+    "amount_rules": Object {
+      "EUR": Object {
+        "max": 1000,
+        "min": 10,
+      },
+      "USD": Object {
+        "max": 1000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "USD",
+      "EUR",
+    ],
+    "name": "card",
+    "placeholder_text": Object {
+      "en": "Bank card number",
+      "ru": "Номер банковской карты",
+    },
+    "regex": "^\\\\d{16,18}$",
+    "regex_text": Object {
+      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
+      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Bank card",
+      "ru": "Банковская карта",
+    },
+    "wallet": "account",
+  },
+  "card_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 75000,
+        "min": 100,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "card_rub",
+    "placeholder_text": Object {
+      "en": "Bank card number",
+      "ru": "Номер банковской карты",
+    },
+    "regex": "^\\\\d{16,18}$",
+    "regex_text": Object {
+      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
+      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Bank card",
+      "ru": "Банковская карта",
+    },
+    "wallet": "account",
+  },
+  "megafon_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 5000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "megafon_rub",
+    "placeholder_text": Object {
+      "en": "Megafon mobile phone number",
+      "ru": "Номер мобильного телефона Мегафон",
+    },
+    "regex": "^(79)[0-9]{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "To mobile phone Megafon",
+      "ru": "На мобильный Мегафон",
+    },
+    "wallet": "account",
+  },
+  "mts_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "mts_rub",
+    "placeholder_text": Object {
+      "en": "MTS mobile phone number",
+      "ru": "Номер мобильного телефона МТС",
+    },
+    "regex": "^(79)[0-9]{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "To mobile phone MTS",
+      "ru": "На мобильный МТС",
+    },
+    "wallet": "account",
+  },
+  "payeer_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 1000000,
+        "min": 1,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "payeer_rub",
+    "placeholder_text": Object {
+      "en": "Payeer wallet",
+      "ru": "Номер счета Payeer",
+    },
+    "regex": "^P[0-9]+$",
+    "regex_text": Object {
+      "en": "Enter your Payer wallet at format: P0000000000",
+      "ru": "Введите номер Вашего счета в Payeer в формате: P000000000",
+    },
+    "text": Object {
+      "en": "Payeer",
+      "ru": "Payeer",
+    },
+    "wallet": "account",
+  },
+  "qiwi_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 1,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "qiwi_rub",
+    "placeholder_text": Object {
+      "en": "QIWI account phone number",
+      "ru": "Номер телефона QIWI аккаунта",
+    },
+    "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567<br/>Допустимые страны: +91 +994 +82 +372 +375 +374 +44 +998 +972 +66 +90 +81 +1 +507 +7 +77 +380 +371 +370 +996 +9955 +992 +373 +84",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "QIWI-wallet",
+      "ru": "QIWI-кошелек",
+    },
+    "wallet": "account",
+  },
+  "tele2_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 14999,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "tele2_rub",
+    "placeholder_text": Object {
+      "en": "Tele2 mobile phone number",
+      "ru": "Номер мобильного телефона Теле2",
+    },
+    "regex": "^(79)[0-9]{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "To mobile phone Tele2",
+      "ru": "На мобильный Теле2",
+    },
+    "wallet": "account",
+  },
+  "yamoney_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 1,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "yamoney_rub",
+    "placeholder_text": Object {
+      "en": "Yandex.Money wallet",
+      "ru": "Номер счета Яндекс.Деньги",
+    },
+    "regex": "^41001\\\\d*$",
+    "regex_text": Object {
+      "en": "Enter your yandex money wallet at format: 4100100000000",
+      "ru": "Введите Ваш номер счета Яндекс.Деньги в формате: 4100100000000",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Yandex.Money",
+      "ru": "Яндекс.Деньги",
+    },
+    "wallet": "account",
+  },
+}
+`;
+
+exports[`Get methods map C19358 Payment methods map without login 1`] = `
+Object {
+  "beeline_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "beeline_rub",
+    "placeholder_text": Object {
+      "en": "Beeline mobile phone number",
+      "ru": "Номер мобильного телефона Билайн",
+    },
+    "regex": "^(9)\\\\d{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "^[^9]+",
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Mobile phone Beeline",
+      "ru": "С мобильного Билайн",
+    },
+    "wallet": "phone",
+  },
+  "btc_usd": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 210000,
+        "min": 1750,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "btc_usd",
+    "text": Object {
+      "en": "BitCoin",
+      "ru": "BitCoin",
+    },
+  },
+  "card": Object {
+    "amount_rules": Object {
+      "EUR": Object {
+        "max": 1000,
+        "min": 10,
+      },
+      "USD": Object {
+        "max": 1000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "USD",
+      "EUR",
+    ],
+    "name": "card",
+    "placeholder_text": Object {
+      "en": "Bank card number",
+      "ru": "Номер банковской карты",
+    },
+    "regex": "^\\\\d{16,18}$",
+    "regex_text": Object {
+      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
+      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Bank card",
+      "ru": "Банковская карта",
+    },
+    "wallet": "account",
+  },
+  "card_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 100000,
+        "min": 100,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "card_rub",
+    "placeholder_text": Object {
+      "en": "Bank card number",
+      "ru": "Номер банковской карты",
+    },
+    "regex": "^\\\\d{16,18}$",
+    "regex_text": Object {
+      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
+      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Bank card",
+      "ru": "Банковская карта",
+    },
+    "wallet": "account",
+  },
+  "eth_usd": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 210000,
+        "min": 1400,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "eth_usd",
+    "text": Object {
+      "en": "Ethereum",
+      "ru": "Ethereum",
+    },
+  },
+  "megafon_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "megafon_rub",
+    "placeholder_text": Object {
+      "en": "Megafon mobile phone number",
+      "ru": "Номер мобильного телефона Мегафон",
+    },
+    "regex": "^(9)\\\\d{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "^[^9]+",
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Mobile phone Megafon",
+      "ru": "С мобильного Мегафон",
+    },
+    "wallet": "phone",
+  },
+  "mts_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 14999,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "mts_rub",
+    "placeholder_text": Object {
+      "en": "MTS mobile phone number",
+      "ru": "Номер мобильного телефона МТС",
+    },
+    "regex": "^(9)\\\\d{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "^[^9]+",
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Mobile phone MTS",
+      "ru": "С мобильного МТС",
+    },
+    "wallet": "phone",
+  },
+  "piastrix_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 100000,
+        "min": 1,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "piastrix_rub",
+    "text": Object {
+      "en": "Piastrix Wallet",
+      "ru": "Кошелек Piastrix",
+    },
+  },
+  "qiwi_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "qiwi_rub",
+    "placeholder_text": Object {
+      "en": "QIWI account phone number",
+      "ru": "Номер телефона QIWI аккаунта",
+    },
+    "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567<br/>Допустимые страны: +91 +994 +82 +372 +375 +374 +44 +998 +972 +66 +90 +81 +1 +507 +7 +77 +380 +371 +370 +996 +9955 +992 +373 +84",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "QIWI-wallet",
+      "ru": "QIWI-кошелек",
+    },
+    "wallet": "phone",
+  },
+  "tele2_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 15000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "tele2_rub",
+    "placeholder_text": Object {
+      "en": "Tele2 mobile phone number",
+      "ru": "Номер мобильного телефона Теле2",
+    },
+    "regex": "^(9)\\\\d{9}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567",
+    },
+    "replace": Array [
+      "^[^9]+",
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "Mobile phone Tele2",
+      "ru": "С мобильного Теле2",
+    },
+    "wallet": "phone",
+  },
+  "yamoney_rub": Object {
+    "amount_rules": Object {
+      "RUB": Object {
+        "max": 100000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+    ],
+    "name": "yamoney_rub",
+    "text": Object {
+      "en": "Yandex.Money",
+      "ru": "Яндекс.Деньги",
+    },
+  },
+}
+`;
