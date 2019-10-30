@@ -13,12 +13,12 @@ describe('Balance get', () => {
     await userList.loginWithRub(socket);
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
-    expect(data['0'].balance).not.equal(0);
-    expect(data['0'].currency).equal('RUB');
-    expect(data['1'].balance).not.equal(0);
-    expect(data['1'].currency).equal('USD');
-    expect(data['2'].balance).equal(0);
-    expect(data['2'].currency).equal('EUR');
+    expect(data['0'].balance).not.toEqual(0);
+    expect(data['0'].currency).toEqual('RUB');
+    expect(data['1'].balance).not.toEqual(0);
+    expect(data['1'].currency).toEqual('USD');
+    expect(data['2'].balance).toEqual(0);
+    expect(data['2'].currency).toEqual('EUR');
   });
 
   it('C21429 (+) Balance USD, RUB, EUR > 0', async () => {
