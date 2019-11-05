@@ -15,6 +15,8 @@ const DEFAULT_USER_META = {
   email_editable: true,
   password_need_to_be_changed: false,
   user_risk_coefficient: 1,
+  is_vip_domain: false,
+  verification_status: 0,
 };
 
 export const checkMeta = (meta, fields) => {
