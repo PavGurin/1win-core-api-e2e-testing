@@ -49,7 +49,7 @@
     "chai": "4.2.0",
     "chai-arrays": "^2.0.0",
     "fast-xml-parser": "^3.12.16",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "md5": "^2.2.1",
     "mysql2": "^1.6.5",
     "query-string": "^6.8.1",

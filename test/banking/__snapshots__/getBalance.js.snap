@@ -16,3 +16,20 @@ Array [
   },
 ]
 `;
+
+exports[`Balance get C21429 (+) Balance USD, RUB, EUR > 0 1`] = `
+Array [
+  Object {
+    "balance": 364410016,
+    "currency": "RUB",
+  },
+  Object {
+    "balance": 9435.9,
+    "currency": "USD",
+  },
+  Object {
+    "balance": 8203.26,
+    "currency": "EUR",
+  },
+]
+`;

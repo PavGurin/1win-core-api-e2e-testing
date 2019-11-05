@@ -204,11 +204,40 @@ Object {
     },
     "wallet": "account",
   },
+  "qiwi_eur": Object {
+    "amount_rules": Object {
+      "EUR": Object {
+        "max": 200,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "EUR",
+    ],
+    "name": "qiwi_eur",
+    "placeholder_text": Object {
+      "en": "QIWI wallet number",
+      "ru": "Номер телефона QIWI аккаунта",
+    },
+    "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567<br/>Допустимые страны: +91 +994 +82 +372 +375 +374 +44 +998 +972 +66 +90 +81 +1 +507 +7 +77 +380 +371 +370 +996 +9955 +992 +373 +84",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "QIWI-wallet",
+      "ru": "QIWI-кошелек",
+    },
+    "wallet": "account",
+  },
   "qiwi_rub": Object {
     "amount_rules": Object {
       "RUB": Object {
         "max": 15000,
-        "min": 1,
+        "min": 10,
       },
     },
     "currency": Array [
@@ -216,7 +245,36 @@ Object {
     ],
     "name": "qiwi_rub",
     "placeholder_text": Object {
-      "en": "QIWI account phone number",
+      "en": "QIWI wallet number",
+      "ru": "Номер телефона QIWI аккаунта",
+    },
+    "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567<br/>Допустимые страны: +91 +994 +82 +372 +375 +374 +44 +998 +972 +66 +90 +81 +1 +507 +7 +77 +380 +371 +370 +996 +9955 +992 +373 +84",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "QIWI-wallet",
+      "ru": "QIWI-кошелек",
+    },
+    "wallet": "account",
+  },
+  "qiwi_usd": Object {
+    "amount_rules": Object {
+      "USD": Object {
+        "max": 200,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "USD",
+    ],
+    "name": "qiwi_usd",
+    "placeholder_text": Object {
+      "en": "QIWI wallet number",
       "ru": "Номер телефона QIWI аккаунта",
     },
     "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
@@ -259,6 +317,41 @@ Object {
     "text": Object {
       "en": "To mobile phone Tele2",
       "ru": "На мобильный Теле2",
+    },
+    "wallet": "account",
+  },
+  "webmoney_usd": Object {
+    "amount_rules": Object {
+      "EUR": Object {
+        "max": 5000,
+        "min": 10,
+      },
+      "RUB": Object {
+        "max": 100000,
+        "min": 10,
+      },
+      "USD": Object {
+        "max": 5000,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "RUB",
+      "USD",
+    ],
+    "name": "webmoney_usd",
+    "placeholder_text": Object {
+      "en": "WMZ wallet",
+      "ru": "WMZ кошелек",
+    },
+    "regex": "^Z\\\\\\\\d{12}$",
+    "regex_text": Object {
+      "en": "Enter WMZ wallet at format: Z111222333444",
+      "ru": "Укажите WMZ кошелек в формате: Z111222333444",
+    },
+    "text": Object {
+      "en": "WebMoney WMZ",
+      "ru": "WebMoney WMZ",
     },
     "wallet": "account",
   },
@@ -311,6 +404,7 @@ Object {
       "en": "Beeline mobile phone number",
       "ru": "Номер мобильного телефона Билайн",
     },
+    "position": 2,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -359,13 +453,13 @@ Object {
     ],
     "name": "card",
     "placeholder_text": Object {
-      "en": "Bank card number",
-      "ru": "Номер банковской карты",
+      "en": "First 6 digit of card number",
+      "ru": "Первые 6 цифр номера карты",
     },
-    "regex": "^\\\\d{16,18}$",
+    "regex": "^\\\\d{6,18}$",
     "regex_text": Object {
-      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
-      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
+      "en": "Enter your first 6 digits of bank card number at format: 0000-11",
+      "ru": "Введите первые 6 цифр номера Вашей банковской карты в формате: 0000-11",
     },
     "replace": Array [
       "[^\\\\d]",
@@ -388,13 +482,14 @@ Object {
     ],
     "name": "card_rub",
     "placeholder_text": Object {
-      "en": "Bank card number",
-      "ru": "Номер банковской карты",
+      "en": "First 6 digit of card number",
+      "ru": "Первые 6 цифр номера карты",
     },
-    "regex": "^\\\\d{16,18}$",
+    "position": 1,
+    "regex": "^\\\\d{6,18}$",
     "regex_text": Object {
-      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
-      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
+      "en": "Enter your first 6 digits of bank card number at format: 0000-11",
+      "ru": "Введите первые 6 цифр номера Вашей банковской карты в формате: 0000-11",
     },
     "replace": Array [
       "[^\\\\d]",
@@ -436,6 +531,7 @@ Object {
       "en": "Megafon mobile phone number",
       "ru": "Номер мобильного телефона Мегафон",
     },
+    "position": 4,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -466,6 +562,7 @@ Object {
       "en": "MTS mobile phone number",
       "ru": "Номер мобильного телефона МТС",
     },
+    "position": 3,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -497,6 +594,35 @@ Object {
       "ru": "Кошелек Piastrix",
     },
   },
+  "qiwi_eur": Object {
+    "amount_rules": Object {
+      "EUR": Object {
+        "max": 3400,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "EUR",
+    ],
+    "name": "qiwi_eur",
+    "placeholder_text": Object {
+      "en": "QIWI-wallet number",
+      "ru": "Номер телефона QIWI аккаунта",
+    },
+    "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567<br/>Допустимые страны: +91 +994 +82 +372 +375 +374 +44 +998 +972 +66 +90 +81 +1 +507 +7 +77 +380 +371 +370 +996 +9955 +992 +373 +84",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "QIWI-wallet",
+      "ru": "QIWI-кошелек",
+    },
+    "wallet": "phone",
+  },
   "qiwi_rub": Object {
     "amount_rules": Object {
       "RUB": Object {
@@ -509,7 +635,37 @@ Object {
     ],
     "name": "qiwi_rub",
     "placeholder_text": Object {
-      "en": "QIWI account phone number",
+      "en": "QIWI-wallet number",
+      "ru": "Номер телефона QIWI аккаунта",
+    },
+    "position": 1,
+    "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
+    "regex_text": Object {
+      "en": "Enter phone number at format: +79001234567",
+      "ru": "Укажите номер телефона в формате: +79001234567<br/>Допустимые страны: +91 +994 +82 +372 +375 +374 +44 +998 +972 +66 +90 +81 +1 +507 +7 +77 +380 +371 +370 +996 +9955 +992 +373 +84",
+    },
+    "replace": Array [
+      "[^\\\\d]",
+    ],
+    "text": Object {
+      "en": "QIWI-wallet",
+      "ru": "QIWI-кошелек",
+    },
+    "wallet": "phone",
+  },
+  "qiwi_usd": Object {
+    "amount_rules": Object {
+      "USD": Object {
+        "max": 3900,
+        "min": 10,
+      },
+    },
+    "currency": Array [
+      "USD",
+    ],
+    "name": "qiwi_usd",
+    "placeholder_text": Object {
+      "en": "QIWI-wallet number",
       "ru": "Номер телефона QIWI аккаунта",
     },
     "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
@@ -541,6 +697,7 @@ Object {
       "en": "Tele2 mobile phone number",
       "ru": "Номер мобильного телефона Теле2",
     },
+    "position": 5,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
