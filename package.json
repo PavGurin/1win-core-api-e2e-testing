@@ -9,7 +9,8 @@
       ".*": "./node_modules/babel-jest"
     },
     "setupFilesAfterEnv": [
-      "./test/global.js"
+      "./test/global.js",
+      "jest-extended"
     ],
     "reporters": [
       "default",
@@ -38,6 +39,7 @@
     "eslint": "^6.0.1",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.1",
+    "jest-extended": "^0.11.2",
     "nodemon": "^1.18.4"
   },
   "dependencies": {

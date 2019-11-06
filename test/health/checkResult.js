@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getDateDaysAgo } from '../../src/methods/utils';
 
 describe('Results', () => {
@@ -13,6 +12,6 @@ describe('Results', () => {
       },
     });
     // console.log(data);
-    expect(data).to.be.an('object');
+    expect(data).toBeObject();
   });
 });
