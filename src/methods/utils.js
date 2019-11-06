@@ -9,8 +9,7 @@ export function getDateDaysAgo(daysAgo) {
   const date = new Date();
   date.setDate(date.getDate() - daysAgo);
   result.timestamp = date;
-  const month = date.getMonth() >= 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
-  result.formatted = `${date.getDate()}/${month}`;
+  result.formatted = `${date.getDate()}/${date.getMonth() + 1}`;
   return result;
 }
 
