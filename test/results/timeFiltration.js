@@ -1,13 +1,15 @@
+import { expect } from 'chai';
 import { getDateHoursAgo } from '../../src/methods/utils';
 import { checkResultsByTime } from '../../src/expects/exResults';
-import { checkErrMsg } from '../../src/responseChecker';
 
 describe('Results with time filtration', () => {
+  // !!! тесты могут фейлиться из-за бага https://fbet-gitlab.ex2b.co/backend/tasks/issues/191
   it('C617603 - (+) 4 hours ago', async () => {
     const date = getDateHoursAgo(4);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
+        date: false,
         hoursToStart: 4,
       },
     });
@@ -21,12 +23,13 @@ describe('Results with time filtration', () => {
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
+        date: false,
         hoursToStart: 1,
       },
     });
     // console.log(data);
 
-    checkErrMsg(data, 400, 'Bad request, timeFilter[hoursToStart] is invalid');
+    checkResultsByTime(data, date);
   });
 
   it('C617605 - (+) 24 hours ago', async () => {
@@ -34,6 +37,7 @@ describe('Results with time filtration', () => {
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
+        date: false,
         hoursToStart: 24,
       },
     });
@@ -47,12 +51,13 @@ describe('Results with time filtration', () => {
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
+        date: false,
         hoursToStart: 50,
       },
     });
     // console.log(data);
 
-    checkErrMsg(data, 400, 'Bad request, timeFilter[hoursToStart] is invalid');
+    checkResultsByTime(data, date);
   });
 
   it('C617607 - (-) future time', async () => {
@@ -60,12 +65,13 @@ describe('Results with time filtration', () => {
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
+        date: false,
         hoursToStart: -10,
       },
     });
     // console.log(data);
 
-    checkErrMsg(data, 400, 'Bad request, timeFilter[hoursToStart] is invalid');
+    expect(JSON.stringify(data)).equal('{}');
   });
 
   it('C648112 - (-) invalid time', async () => {
@@ -73,11 +79,12 @@ describe('Results with time filtration', () => {
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
       timeFilter: {
+        date: false,
         hoursToStart: 'aaaa',
       },
     });
-    // console.log(data);
+    console.log(data);
 
-    checkErrMsg(data, 400, 'Bad request, timeFilter[hoursToStart] is invalid');
+    expect(JSON.stringify(data)).equal('{}');
   });
 });
