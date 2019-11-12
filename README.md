@@ -1,3 +1,6 @@
+ [![TestRail badge](https://img.shields.io/badge/TestRail-Link-brightgreen)](https://1win.testrail.io/index.php?/runs/overview/6) 
+
+
 **Команды для запуска локальных тестов:**
 
  - `npm run test` - запуск всех тестов
