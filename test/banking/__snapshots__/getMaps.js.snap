@@ -404,7 +404,6 @@ Object {
       "en": "Beeline mobile phone number",
       "ru": "Номер мобильного телефона Билайн",
     },
-    "position": 2,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -456,6 +455,7 @@ Object {
       "en": "First 6 digit of card number",
       "ru": "Первые 6 цифр номера карты",
     },
+    "position": 1,
     "regex": "^\\\\d{6,18}$",
     "regex_text": Object {
       "en": "Enter your first 6 digits of bank card number at format: 0000-11",
@@ -485,7 +485,6 @@ Object {
       "en": "First 6 digit of card number",
       "ru": "Первые 6 цифр номера карты",
     },
-    "position": 1,
     "regex": "^\\\\d{6,18}$",
     "regex_text": Object {
       "en": "Enter your first 6 digits of bank card number at format: 0000-11",
@@ -531,7 +530,6 @@ Object {
       "en": "Megafon mobile phone number",
       "ru": "Номер мобильного телефона Мегафон",
     },
-    "position": 4,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -562,7 +560,6 @@ Object {
       "en": "MTS mobile phone number",
       "ru": "Номер мобильного телефона МТС",
     },
-    "position": 3,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -638,7 +635,6 @@ Object {
       "en": "QIWI-wallet number",
       "ru": "Номер телефона QIWI аккаунта",
     },
-    "position": 1,
     "regex": "^(91|994|82|372|375|374|44|998|972|66|90|81|1|507|7|77|380|371|370|996|9955|992|373|84)[0-9]{6,14}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
@@ -697,7 +693,6 @@ Object {
       "en": "Tele2 mobile phone number",
       "ru": "Номер мобильного телефона Теле2",
     },
-    "position": 5,
     "regex": "^(9)\\\\d{9}$",
     "regex_text": Object {
       "en": "Enter phone number at format: +79001234567",
