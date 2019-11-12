@@ -1,4 +1,4 @@
- [![TestRail badge](https://img.shields.io/badge/TestRail-Link-brightgreen)](https://1win.testrail.io/index.php?/runs/overview/6) 
+ [![TestRail badge](https://img.shields.io/badge/TestRail-link-brightgreen)](https://1win.testrail.io/index.php?/projects/overview/6) 
 
 
 **Команды для запуска локальных тестов:**
