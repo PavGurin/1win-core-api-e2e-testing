@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { cases } from '../../src/methods/cases';
 import { register } from '../../src/methods/register';
 import { getNewSocket } from '../global';
@@ -16,8 +15,12 @@ describe('Get raiting cases', () => {
       const data = await cases.raitingCase(socket);
 
       // console.log(data);
-      expect(data.status).equal(200);
-      expect(data).to.be.an('object');
+      expect(data.status).toEqual(200);
+      for (let i = 0; i < Object.values(data)[1].length; i++) {
+        const { caseTypeId } = Object.values(data)[1][0];
+        expect(caseTypeId).toBeNumber();
+      }
+      expect(data).toBeObject();
     });
   });
 
@@ -33,8 +36,12 @@ describe('Get raiting cases', () => {
       const data = await cases.raitingCase(socket);
 
       // console.log(data);
-      expect(data.status).equal(200);
-      expect(data).to.be.an('object');
+      expect(data.status).toEqual(200);
+      for (let i = 0; i < Object.values(data)[1].length; i++) {
+        const { caseTypeId } = Object.values(data)[1][0];
+        expect(caseTypeId).toBeNumber();
+      }
+      expect(data).toBeObject();
     });
   });
 });
