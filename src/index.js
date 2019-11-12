@@ -93,21 +93,24 @@ export default class SocketClient {
       }
       return;
     }
-    const { resolve, reject } = this.requestMap[msg.msgid];
 
-    delete this.requestMap[msg.msgid];
-    if (msg.needParse) {
-      // eslint-disable-next-line no-param-reassign
-      msg.data = JSON.parse(msg.data);
-    }
-
-    // use resolve callback when response have success status
-    if (msg.data.status && msg.data.status >= 200 && msg.data.status < 300) {
-      resolve(msg.data);
+    if (this.requestMap[msg.msgid] === undefined) {
+      delete this.requestMap[msg.msgid];
     } else {
-      reject(msg.data);
-    }
+      const { resolve, reject } = this.requestMap[msg.msgid];
+      delete this.requestMap[msg.msgid];
+      if (msg.needParse) {
+        // eslint-disable-next-line no-param-reassign
+        msg.data = JSON.parse(msg.data);
+      }
 
+      // use resolve callback when response have success status
+      if (msg.data.status && msg.data.status >= 200 && msg.data.status < 300) {
+        resolve(msg.data);
+      } else {
+        reject(msg.data);
+      }
+    }
     // remove request from request map
     delete this.requestMap[msg.msgid];
   }
