@@ -1,21 +1,18 @@
 import { userPool } from '../../src/methods/userPool';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
-import { getNewSocket } from '../global';
 
 describe('одновременные запросы на перевод без подтверждения', () => {
   const USERS_NUMBER = 1;
   const BALANCE = 100;
   let currentUser = {};
   let users = [];
-  let socket;
 
-  beforeAll(async () => {
-    socket = await getNewSocket();
+  beforeEach(async () => {
     // формируем пул юзеров
-    users = await userPool.usersWithEmailMailru(socket, USERS_NUMBER, BALANCE);
+    users = await userPool.usersWithEmailMailru(USERS_NUMBER, BALANCE);
     currentUser = users.pop();
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
   });
 
   it(' одновременные запросы без подтверждения перевода', async () => {
