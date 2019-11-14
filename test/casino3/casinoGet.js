@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe('Casino get', () => {
   it('C1454840 - (+) valid request', async () => {
     const { data } = await socket.send('CASINO-3:games-get', {
@@ -7,6 +5,6 @@ describe('Casino get', () => {
       onlyMobile: false,
     });
     // console.log(data);
-    expect(data['0'].hasDemo).not.equal(null);
+    expect(data['0'].hasDemo).not.toBeNull();
   });
 });

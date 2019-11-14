@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import {
   getUserWithdrawalManualControl,
@@ -30,7 +29,7 @@ describe('Withdrawal manual control tests', () => {
       await register.oneClickReg(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
-      expect(meta.withdrawal_manual_control).equal(false);
+      expect(meta.withdrawal_manual_control).toEqual(false);
     });
 
     it('C28386 (+) withdrawal_manual_control = false when in db = true', async () => {
@@ -39,7 +38,7 @@ describe('Withdrawal manual control tests', () => {
       await userList.loginWithParams(socket, data.email, data.password);
       const meta = await socket.userMeta;
       // console.log(meta);
-      expect(meta.withdrawal_manual_control).equal(false);
+      expect(meta.withdrawal_manual_control).toEqual(false);
     });
 
     it('C28387 (+) withdrawal_manual_control = true in db after withdrawal to blocked wallet', async () => {
@@ -49,7 +48,7 @@ describe('Withdrawal manual control tests', () => {
       await banking.withdrawalCreate(socket, BLOCKED_WALLET, 'card_rub', 'RUB', 200);
       // console.log(withdrawal);
 
-      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
+      expect(await getUserWithdrawalManualControl(user.id)).toEqual('true');
     });
 
     it('C28388 (+) withdrawal_manual_control = true in db after deposit from blocked wallet', async () => {
@@ -57,11 +56,11 @@ describe('Withdrawal manual control tests', () => {
       // console.log(currentUser.id);
 
       const { data: deposit } = await banking.depositCreate(socket, BLOCKED_WALLET, 'card_rub', 'RUB', 200);
-      expect(deposit.status).equal(500);
-      expect(deposit.message).equal('Internal Server Error');
+      expect(deposit.status).toEqual(500);
+      expect(deposit.message).toEqual('Internal Server Error');
       // console.log(deposit);
 
-      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
+      expect(await getUserWithdrawalManualControl(user.id)).toEqual('true');
     });
   });
 
@@ -70,16 +69,16 @@ describe('Withdrawal manual control tests', () => {
       const { data } = await usersWithManualControl.userMail(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
-      expect(withdrawal.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(data.id)).equal(0);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28405 (+) withdrawal_manual_control = true + @bk withdrawal', async () => {
       const { data } = await usersWithManualControl.userMail(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
-      expect(withdrawal.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(data.id)).equal(0);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28406 (+) withdrawal_manual_control = true + @inbox withdrawal', async () => {
@@ -87,16 +86,16 @@ describe('Withdrawal manual control tests', () => {
       await usersWithManualControl.userInbox(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
-      expect(withdrawal.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(data.id)).equal(0);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28407 (+) withdrawal_manual_control = true + @list withdrawal', async () => {
       const { data } = await usersWithManualControl.userMail(socket);
       const { data: withdrawal } = await banking.withdrawalCreate(socket, '5698548963217458', 'card_rub', 'RUB', 100);
       // console.log(withdrawal);
-      expect(withdrawal.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(data.id)).equal(0);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
   });
 
@@ -114,7 +113,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data } = await banking.withdrawalCreate(socket, '6363545498987171', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
+      expect(await getUserWithdrawalManualControl(user.id)).toEqual('true');
     });
 
     it('C1088640 - (-) no withdrawal_manual_control after 1 failed deposit, new user', async () => {
@@ -129,7 +128,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data } = await banking.withdrawalCreate(socket, '6363545498987171', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+      expect(await getUserWithdrawalManualControl(user.id)).toBeUndefined();
     });
 
     it('C1315736 - (-) no withdrawal_manual_control after 2 failed deposits, old user', async () => {
@@ -146,7 +145,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data } = await banking.withdrawalCreate(socket, '6363545498987171', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+      expect(await getUserWithdrawalManualControl(user.id)).toBeUndefined();
     });
 
     it('C1360990 - (-) no withdrawal_manual_control after 2 failed deposits, withdrawal on the same card', async () => {
@@ -162,7 +161,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data } = await banking.withdrawalCreate(socket, '55005500663311220', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+      expect(await getUserWithdrawalManualControl(user.id)).toBeUndefined();
     });
 
     it('C1360991 - (-) no withdrawal_manual_control after 2 failed deposits, withdrawal not on card', async () => {
@@ -178,7 +177,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data } = await banking.withdrawalCreate(socket, '9112223344', 'mts_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+      expect(await getUserWithdrawalManualControl(user.id)).toBeUndefined();
     });
 
     it('C1360992 - (-) no withdrawal_manual_control after deposits from different cards, withdrawal on one of them', async () => {
@@ -194,7 +193,7 @@ describe('Withdrawal manual control tests', () => {
 
       const { data } = await banking.withdrawalCreate(socket, '55005500663311220', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+      expect(await getUserWithdrawalManualControl(user.id)).toBeUndefined();
     });
 
     it('C1360993 - (+) withdrawal_manual_control = true after deposits from different cards, withdrawal on other card', async () => {
@@ -210,7 +209,7 @@ describe('Withdrawal manual control tests', () => {
 
       await banking.withdrawalCreate(socket, '5500220033669988', 'card_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal('true');
+      expect(await getUserWithdrawalManualControl(user.id)).toEqual('true');
     });
 
     it('C1360994 - (-) no withdrawal_manual_control after deposits from different cards, withdrawal not on card', async () => {
@@ -226,7 +225,7 @@ describe('Withdrawal manual control tests', () => {
 
       await banking.withdrawalCreate(socket, '79112365498', 'mts_rub', 'RUB', caseResult.result);
       // console.log(data);
-      expect(await getUserWithdrawalManualControl(user.id)).equal(undefined);
+      expect(await getUserWithdrawalManualControl(user.id)).toBeUndefined();
     });
   });
 });
@@ -257,7 +256,7 @@ describe('users with withdrawal_manual_control = true', () => {
   it('C28634 (+) withdrawal_manual_control = true, withdrawal create', async () => {
     const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
     // console.log(data);
-    expect(data.confirmationRequested).equal(true);
+    expect(data.confirmationRequested).toEqual(true);
   });
 
   it('C28635 (-) withdrawal_manual_control = true, withdrawal confirm', async () => {
@@ -267,14 +266,14 @@ describe('users with withdrawal_manual_control = true', () => {
     const receivedMail = await mail.getMessage(currentUser.email);
     const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirm);
-    expect(confirm.error).not.exist;
-    expect(await banking.getWithdrawalStatus(currentUser.id)).equal(0);
+    expect(confirm.error).toBeUndefined();
+    expect(await banking.getWithdrawalStatus(currentUser.id)).toEqual(0);
   });
 
   it('C28636 (+) withdrawal_manual_control = true, transfer create', async () => {
     const { data } = await banking.transferCreate(socket, 100, 'RUB');
     // console.log(data);
-    expect(data.confirmationRequested).equal(true);
+    expect(data.confirmationRequested).toEqual(true);
   });
 
   it('C28637 (+) withdrawal_manual_control = true, deposit create', async () => {
@@ -287,7 +286,7 @@ describe('users with withdrawal_manual_control = true', () => {
   it('C28638 (+) withdrawal_manual_control = true, cases', async () => {
     const { data } = await cases.playCaseWithoutChance(socket, 1);
     // console.log(data);
-    expect(data.result).above(0);
+    expect(data.result).toBeGreaterThanOrEqual(0);
   });
 
   it('C28639 (+) withdrawal_manual_control = true, make bet', async () => {
@@ -299,8 +298,8 @@ describe('users with withdrawal_manual_control = true', () => {
     const { data: betResponse } = await makeOrdinaryBet(socket, coupon, 10);
     // console.log(betResponse);
 
-    expect(betResponse[coupon.couponId].error).equal(false);
-    expect(betResponse[coupon.couponId].status).equal(200);
+    expect(betResponse[coupon.couponId].error).toEqual(false);
+    expect(betResponse[coupon.couponId].status).toEqual(200);
   });
 
   it('C28651 (-) withdrawal_manual_control = true, make bet > maxBetAmount', async () => {
@@ -315,8 +314,8 @@ describe('users with withdrawal_manual_control = true', () => {
     const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
     // console.log(betResponse);
 
-    expect(betResponse[coupon.couponId].error.result).equal('rejected');
-    expect(betResponse[coupon.couponId].error.messageLangKey).equal('riskmanagement.error.market_limit');
-    expect(betResponse[coupon.couponId].status).equal(400);
+    expect(betResponse[coupon.couponId].error.result).toEqual('rejected');
+    expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit');
+    expect(betResponse[coupon.couponId].status).toEqual(400);
   });
 });

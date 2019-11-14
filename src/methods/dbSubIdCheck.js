@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { mysqlConnection } from './mysqlConnection';
 
 // проверка наличия subId в таблицах 1win.ma_users_meta и 1win_partner.stats_v2
@@ -20,15 +19,15 @@ export async function dbSubIdCheck(userId, eventName, expectedSubIds) {
     // если значение этого subid не null
     if (subIdPair[1] !== null) {
       // в таблице ma_users_meta в столбце value должно быть "subid":"значение"
-      expect(userMeta[0].value.includes(`"${subIdPair[0]}":"${subIdPair[1]}"`)).to.equal(true);
+      expect(userMeta[0].value.includes(`"${subIdPair[0]}":"${subIdPair[1]}"`)).toEqual(true);
       // если null
     } else {
       // в таблице ma_users_meta в столбце value этого subid не должно быть
-      expect(userMeta[0].value.includes(`"${subIdPair[0]}"`)).to.equal(false);
+      expect(userMeta[0].value.includes(`"${subIdPair[0]}"`)).toEqual(false);
     }
 
     // в таблице stats_v2 значение соответствующего subid должно быть равно переданному
-    expect((stats[0])[(subIdPair[0])]).to.equal(subIdPair[1]);
+    expect((stats[0])[(subIdPair[0])]).toEqual(subIdPair[1]);
     // console.log(`${subIdPair[0]}: ${subIdPair[1]}`);
   });
 }
@@ -37,10 +36,10 @@ export async function dbSubIdCheck(userId, eventName, expectedSubIds) {
 export async function emptyDbSubIdCheck(userId, eventName) {
   const userMeta = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta WHERE id_user = ${userId} AND ma_users_meta.key = 'SUB_IDS';`);
   const stats = await mysqlConnection.executeQuery(`SELECT * FROM 1win_partner.stats_v2 WHERE user_id = ${userId} AND event = '${eventName}';`);
-  expect(userMeta[0].value).to.equal('{}');
-  expect(stats[0].sub1).to.equal(null);
-  expect(stats[0].sub2).to.equal(null);
-  expect(stats[0].sub3).to.equal(null);
-  expect(stats[0].sub4).to.equal(null);
-  expect(stats[0].sub5).to.equal(null);
+  expect(userMeta[0].value).toEqual('{}');
+  expect(stats[0].sub1).toEqual(null);
+  expect(stats[0].sub2).toEqual(null);
+  expect(stats[0].sub3).toEqual(null);
+  expect(stats[0].sub4).toEqual(null);
+  expect(stats[0].sub5).toEqual(null);
 }

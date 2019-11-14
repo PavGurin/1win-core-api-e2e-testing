@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe('Match hot', () => {
   it('C21145 - Match hot', async () => {
     const { data } = await socket.send('MATCH-STORAGE-2:match-hot', {
@@ -11,6 +9,6 @@ describe('Match hot', () => {
     });
 
     // console.log(data);
-    expect(data.service).equal('prematch');
+    expect(data.service).toEqual('prematch');
   });
 });

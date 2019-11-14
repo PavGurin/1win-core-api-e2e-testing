@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
 import { userPool } from '../../src/methods/userPool';
 import { cases } from '../../src/methods/cases';
@@ -33,7 +32,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 1);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490981 - play  cases 2', async () => {
@@ -41,7 +40,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 2);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490982 - play  cases 3', async () => {
@@ -49,7 +48,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 3);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490983 - play  cases 4', async () => {
@@ -57,7 +56,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 4);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490984 - play  cases 5', async () => {
@@ -65,7 +64,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 5);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490985 - play  cases 6', async () => {
@@ -73,7 +72,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 6);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490986 - play  cases 7', async () => {
@@ -81,7 +80,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 7);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
 
     it('C490987 - play  cases 8', async () => {
@@ -89,7 +88,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 8);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance).to.equal(currentUser.balance - caseCost + data.result);
+      expect(balance).toEqual(currentUser.balance - caseCost + data.result);
     });
   });
 
@@ -121,7 +120,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 10);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance.toFixed(2)).to.equal((currentUser.balance
+      expect(balance.toFixed(2)).toEqual((currentUser.balance
         - caseCost + data.result).toFixed(2));
     });
     it('C490989 - play  cases 11', async () => {
@@ -129,7 +128,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 11);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance.toFixed(2)).to.equal((currentUser.balance
+      expect(balance.toFixed(2)).toEqual((currentUser.balance
         - caseCost + data.result).toFixed(2));
     });
 
@@ -138,7 +137,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 12);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance.toFixed(2)).to.equal((currentUser.balance
+      expect(balance.toFixed(2)).toEqual((currentUser.balance
         - caseCost + data.result).toFixed(2));
     });
     it('C490991 - play  cases 13', async () => {
@@ -146,7 +145,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 13);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance.toFixed(2)).to.equal((currentUser.balance
+      expect(balance.toFixed(2)).toEqual((currentUser.balance
         - caseCost + data.result).toFixed(2));
     });
     it('C490992 - play  cases 14', async () => {
@@ -154,7 +153,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 14);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance.toFixed(2)).to.equal((currentUser.balance
+      expect(balance.toFixed(2)).toEqual((currentUser.balance
         - caseCost + data.result).toFixed(2));
     });
     it('C490993 - play  cases 22', async () => {
@@ -162,7 +161,7 @@ describe('Check user balance after play cases', () => {
       const { data } = await cases.playCaseWithoutChance(socket, 22);
       const balance = await banking.balanceCheck(socket);
 
-      expect(balance.toFixed(2)).to.equal((currentUser.balance
+      expect(balance.toFixed(2)).toEqual((currentUser.balance
         - caseCost + data.result).toFixed(2));
     });
   });

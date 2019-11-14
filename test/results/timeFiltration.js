@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getDateHoursAgo } from '../../src/methods/utils';
 import { checkResultsByTime } from '../../src/expects/exResults';
 
@@ -71,7 +70,7 @@ describe('Results with time filtration', () => {
     });
     // console.log(data);
 
-    expect(JSON.stringify(data)).equal('{}');
+    expect(JSON.stringify(data)).toEqual('{}');
   });
 
   it('C648112 - (-) invalid time', async () => {
@@ -83,8 +82,8 @@ describe('Results with time filtration', () => {
         hoursToStart: 'aaaa',
       },
     });
-    console.log(data);
+    // console.log(data);
 
-    expect(JSON.stringify(data)).equal('{}');
+    expect(JSON.stringify(data)).toEqual('{}');
   });
 });

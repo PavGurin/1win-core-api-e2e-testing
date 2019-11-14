@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe('Widgets 1', () => {
   it('C21143 - (+) valid request', async () => {
     const { data } = await socket.send('COMMON:widgets-1', {
@@ -8,8 +6,8 @@ describe('Widgets 1', () => {
     });
 
     // console.log(data);
-    expect(data.status).equal(404);
-    expect(data.message).equal('Widget with ID 1 not found');
+    expect(data.status).toEqual(404);
+    expect(data.message).toEqual('Widget with ID 1 not found');
   });
 
   it('C1453967 - (+) valid request', async () => {
@@ -20,6 +18,6 @@ describe('Widgets 1', () => {
     });
 
     // console.log(data);
-    expect(data['0'].hasDemo).not.equal(null);
+    expect(data['0'].hasDemo).not.toBeNull();
   });
 });

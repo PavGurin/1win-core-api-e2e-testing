@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
 import { getSingleMatch, sportAll } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon } from '../../src/methods/better';
@@ -23,11 +22,11 @@ describe('Bets make', () => {
         lang: 'ru',
       });
     for (let i = 0; i < Object.values(data.oddsTypeMap).length; i++) {
-      expect(Object.values(data.oddsTypeMap)[i].render.renderKey).equal('outComeDescription');
+      expect(Object.values(data.oddsTypeMap)[i].render.renderKey).toEqual('outComeDescription');
       // console.log(Object.values(data.oddsTypeMap)[i].render.renderKey);
-      expect(Object.values(data.oddsTypeMap)[i].render.renderType).equal('table');
+      expect(Object.values(data.oddsTypeMap)[i].render.renderType).toEqual('table');
       // console.log(Object.values(data.oddsTypeMap)[i].render.renderType);
-      expect(Object.values(data.oddsTypeMap)[i].render.renderValue).equal('specialValueDescription');
+      expect(Object.values(data.oddsTypeMap)[i].render.renderValue).toEqual('specialValueDescription');
       // console.log(Object.values(data.oddsTypeMap)[i].render.renderValue);
     }
     // console.log(data);
@@ -44,11 +43,11 @@ describe('Bets make', () => {
         lang: 'ru',
       });
     for (let i = 0; i < Object.values(data.oddsTypeMap).length; i++) {
-      expect(Object.values(data.oddsTypeMap)[i].render.renderKey).equal('outComeDescription');
+      expect(Object.values(data.oddsTypeMap)[i].render.renderKey).toEqual('outComeDescription');
       // console.log(Object.values(data.oddsTypeMap)[i].render.renderKey);
-      expect(Object.values(data.oddsTypeMap)[i].render.renderType).equal('table');
+      expect(Object.values(data.oddsTypeMap)[i].render.renderType).toEqual('table');
       // console.log(Object.values(data.oddsTypeMap)[i].render.renderType);
-      expect(Object.values(data.oddsTypeMap)[i].render.renderValue).equal('specialValueDescription');
+      expect(Object.values(data.oddsTypeMap)[i].render.renderValue).toEqual('specialValueDescription');
       // console.log(Object.values(data.oddsTypeMap)[i].render.renderValue);
     }
     // console.log(data);

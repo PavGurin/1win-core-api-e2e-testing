@@ -1,5 +1,4 @@
 /* eslint camelcase: 'off' */
-import { expect } from 'chai';
 import { checkErrMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
 import { getNewSocket } from '../global';
@@ -19,7 +18,7 @@ describe('Change currency', () => {
     it('C27441 - should be bad request, user have RUB yet ', async () => {
       const { data } = await changeCurrency('RUB', socket);
       // console.log(data);
-      expect(data.currency).to.equal('RUB');
+      expect(data.currency).toEqual('RUB');
     });
 
     it('C27442 - should be bad request, unexist currency (string) ', async () => {
@@ -57,14 +56,14 @@ describe('Change currency', () => {
       const { data } = await changeCurrency('USD', socket);
 
       // console.log(data);
-      expect(data.currency).to.equal('USD');
+      expect(data.currency).toEqual('USD');
     });
 
     it('C27448 - should be success with EUR ', async () => {
       const { data } = await changeCurrency('EUR', socket);
 
-
-      expect(data.currency).to.equal('EUR');
+      // console.log(data);
+      expect(data.currency).toEqual('EUR');
     });
   });
 
@@ -80,7 +79,8 @@ describe('Change currency', () => {
     it('C27449 - should be success with RUB after reg one click with EUR', async () => {
       await register.oneClickRegEUR(socket);
       const { data } = await changeCurrency('RUB', socket);
-      expect(data.currency).to.equal('RUB');
+      // console.log(data);
+      expect(data.currency).toEqual('RUB');
     });
 
     it('C27450 - should be success with EUR after reg one click with USD', async () => {
@@ -89,7 +89,7 @@ describe('Change currency', () => {
       const { data } = await changeCurrency('EUR', socket);
 
       // console.log(data);
-      expect(data.currency).to.equal('EUR');
+      expect(data.currency).toEqual('EUR');
     });
 
     it('C27451 - should be success with RUB after reg usual with USD', async () => {
@@ -97,7 +97,7 @@ describe('Change currency', () => {
       // console.log(data1);
       const { data } = await changeCurrency('EUR', socket);
       // console.log(data);
-      expect(data.currency).to.equal('EUR');
+      expect(data.currency).toEqual('EUR');
     });
   });
 

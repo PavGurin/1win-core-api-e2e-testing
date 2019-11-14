@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
@@ -33,7 +32,7 @@ describe('Withdrawal history', () => {
       await register.oneClickReg(socket);
       const { data } = await socket.send('BANKING:withdrawal-history');
       // console.log(data);
-      expect(data.length).equal(0);
+      expect(data.length).toEqual(0);
     });
   });
 
@@ -52,9 +51,9 @@ describe('Withdrawal history', () => {
 
       const { data } = await socket.send('BANKING:withdrawal-history');
       // console.log(data);
-      expect(data[0].payment_system).equal('card_rub');
-      expect(data[0].amount).equal(100);
-      expect(data[0].status).equal(0);
+      expect(data[0].payment_system).toEqual('card_rub');
+      expect(data[0].amount).toEqual(100);
+      expect(data[0].status).toEqual(0);
     });
 
 
@@ -74,12 +73,12 @@ describe('Withdrawal history', () => {
 
       // console.log(data);
 
-      expect(data[0].payment_system).equal('card_rub');
-      expect(data[0].amount).equal(100);
-      expect(data[0].status).equal(0);
-      expect(data[1].payment_system).equal('money-transfer');
-      expect(data[1].amount).equal(20);
-      expect(data[1].status).equal(1);
+      expect(data[0].payment_system).toEqual('card_rub');
+      expect(data[0].amount).toEqual(100);
+      expect(data[0].status).toEqual(0);
+      expect(data[1].payment_system).toEqual('money-transfer');
+      expect(data[1].amount).toEqual(20);
+      expect(data[1].status).toEqual(1);
     });
   });
 });

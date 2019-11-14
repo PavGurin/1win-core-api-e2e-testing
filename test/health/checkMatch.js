@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe('Tournament hot filter: prematch', () => {
   it(' - tournament-matches prematch 1 hour', async () => {
     const { data } = await socket.send('MATCH-STORAGE-2:tournament-matches', {
@@ -11,6 +9,6 @@ describe('Tournament hot filter: prematch', () => {
       tournamentId: 'all',
     });
     // console.log(data);
-    expect(data.service).equal('prematch');
+    expect(data.service).toEqual('prematch');
   });
 });

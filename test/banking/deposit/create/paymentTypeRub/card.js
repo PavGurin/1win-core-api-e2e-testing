@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
@@ -58,7 +57,7 @@ describe('Create deposite for card_rub - RUB', () => {
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
     // console.log(dbResult);
-    expect(dbResult.length).to.equal(0);
+    expect(dbResult.length).toEqual(0);
   });
 });
 

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getNewSocket } from '../../../global';
 import { userPool } from '../../../../src/methods/userPool';
 import { userList } from '../../../../src/methods/userList';
@@ -37,11 +36,11 @@ describe('Recoupument tests USD', () => {
     it('C1086849 - (-) nothing spent, withdraw money', async () => {
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '1212363645457878', 'card', 'USD', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     // пока отыгрыши с валютой не работают
@@ -52,11 +51,11 @@ describe('Recoupument tests USD', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '1212363645457878', 'card', 'USD', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1086857 - (+) spent all money, withdraw amount < balance', async () => {
@@ -65,11 +64,11 @@ describe('Recoupument tests USD', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '1212363645457878', 'card', 'USD', data.result);
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(true);
+      expect(withdrawalCreate.confirmationRequested).toEqual(true);
     });
 
     it('C1086858 - (+) spent all money, withdraw amount > balance', async () => {
@@ -78,7 +77,7 @@ describe('Recoupument tests USD', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 100500);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '1212363645457878', 'card', 'USD', '500');
       // console.log(withdrawalCreate);

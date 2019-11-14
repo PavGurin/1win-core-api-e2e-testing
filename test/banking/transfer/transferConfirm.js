@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
@@ -72,7 +71,7 @@ describe('Transfer confirm tests', () => {
 
       const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
       // console.log(confirmData);
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
 
@@ -82,7 +81,7 @@ describe('Transfer confirm tests', () => {
       await sleep(transferExpirationTime - 4000);
       const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
       // console.log(confirmData);
-      expect(confirmData.status).to.equal(200);
+      expect(confirmData.status).toEqual(200);
       checkErrMsg(confirmData.data, 404, 'Перевод не найден');
     });
 
@@ -93,7 +92,7 @@ describe('Transfer confirm tests', () => {
 
       // второе подтверждение
       const confirm2 = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
-      expect(confirm2.status).to.equal(200);
+      expect(confirm2.status).toEqual(200);
       checkErrMsg(confirm2.data, 400, 'Неверный ключ запроса');
     });
 
@@ -103,7 +102,7 @@ describe('Transfer confirm tests', () => {
       const withdrawalMail = await mail.getMessage(currentUser.email);
       // console.log(withdrawalMail);
       const confirm = await socket.send('BANKING:transfer-confirm', { code: withdrawalMail.code });
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
 
@@ -111,7 +110,7 @@ describe('Transfer confirm tests', () => {
       // console.log(receivedMail);
       await banking.transferCreate(socket, 25.1, 'RUB');
       const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
   });
@@ -127,7 +126,7 @@ describe('Transfer confirm tests', () => {
       await banking.transferCreate(socket, 20, 'RUB');
 
       const confirm = await socket.send('BANKING:transfer-confirm', { code: withdrawalMail.code });
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       // console.log(confirmData);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
@@ -156,24 +155,24 @@ describe('Transfer confirm tests', () => {
       checkSuccess(confirm);
 
       // проверка баланса у пользователя, который делал перевод, после перевода
-      expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance - 20);
+      expect(await banking.balanceCheck(socket)).toEqual(currentUser.balance - 20);
 
       // проверка баланса у пользователя, которому был перевод, после перевода
       await userList.loginTransferToUser(socket);
-      expect(await banking.balanceCheck(socket)).to.equal(balanceBefore + 20);
+      expect(await banking.balanceCheck(socket)).toEqual(balanceBefore + 20);
     });
 
     it('C27200 (-) after not successful transfer', async () => {
       const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code + 1 });
-      expect(confirm.status).to.equal(200);
-      expect(confirm.data.status).to.equal(400);
+      expect(confirm.status).toEqual(200);
+      expect(confirm.data.status).toEqual(400);
 
       // проверка баланса у пользователя, который делал перевод, после перевода
-      expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance);
+      expect(await banking.balanceCheck(socket)).toEqual(currentUser.balance);
 
       // проверка баланса у пользователя, которому был перевод, после перевода
       await userList.loginTransferToUser(socket);
-      expect(await banking.balanceCheck(socket)).to.equal(balanceBefore);
+      expect(await banking.balanceCheck(socket)).toEqual(balanceBefore);
     });
   });
 });

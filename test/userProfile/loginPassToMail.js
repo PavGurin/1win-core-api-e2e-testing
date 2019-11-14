@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import { sleep } from '../../src/methods/utils';
 import { mail } from '../../src/methods/mail';
@@ -19,7 +18,7 @@ describe('Send login and password to email after one click registration', () => 
     const { data } = await register.oneClickReg(socket);
     const emailToSend = `${randomStr(10)}@ahem.email`;
     const sendData = await sendUserDataToEmail(socket, emailToSend, data.email, data.password);
-    expect(sendData.status).to.equal(200);
+    expect(sendData.status).toEqual(200);
     await sleep(4000);
     const receivedMail = await mail.getMessage(emailToSend);
     checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'svnmsk@fastmail.com');
@@ -29,7 +28,7 @@ describe('Send login and password to email after one click registration', () => 
     const { data } = await register.oneClickRegUSD(socket);
     const emailToSend = `${randomStr(10)}@ahem.email`;
     const sendData = await sendUserDataToEmail(socket, emailToSend, data.email, data.password);
-    expect(sendData.status).to.equal(200);
+    expect(sendData.status).toEqual(200);
     await sleep(4000);
     const receivedMail = await mail.getMessage(emailToSend);
     checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'svnmsk@fastmail.com');
@@ -39,7 +38,7 @@ describe('Send login and password to email after one click registration', () => 
     const { data } = await register.oneClickRegEUR(socket);
     const emailToSend = `${randomStr(10)}@ahem.email`;
     const sendData = await sendUserDataToEmail(socket, emailToSend, data.email, data.password);
-    expect(sendData.status).to.equal(200);
+    expect(sendData.status).toEqual(200);
     await sleep(4000);
     const receivedMail = await mail.getMessage(emailToSend);
     checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'svnmsk@fastmail.com');

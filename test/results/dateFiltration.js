@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getDateDaysAgo } from '../../src/methods/utils';
 import { checkResultsByDate } from '../../src/expects/exResults';
 import { checkErrMsg } from '../../src/responseChecker';

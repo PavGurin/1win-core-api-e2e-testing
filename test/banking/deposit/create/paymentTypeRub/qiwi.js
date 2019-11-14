@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
@@ -270,7 +269,7 @@ describe('Create deposite for qiwi_rub invalid - RUB', () => {
   it('C22622  wallet = (8)phone', async () => {
     const data = await banking.depositCreate(socket, '89001234567', paymentType, currency, 2000);
     // console.log(data);
-    expect(data.data.status).equal(400);
-    expect(data.data.message).equal('Неверный формат кошелька');
+    expect(data.data.status).toEqual(400);
+    expect(data.data.message).toEqual('Неверный формат кошелька');
   });
 });
