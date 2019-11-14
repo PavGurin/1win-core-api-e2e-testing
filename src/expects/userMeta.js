@@ -1,5 +1,4 @@
 /* eslint camelcase: 'off' */
-import { expect } from 'chai';
 
 const DEFAULT_USER_META = {
   withdrawal_block: false,
@@ -24,8 +23,8 @@ export const checkMeta = (meta, fields) => {
     ...DEFAULT_USER_META,
     ...fields,
   };
-  expect(Object.keys(meta).length).equal(Object.keys(expected).length);
+  expect(Object.keys(meta).length).toEqual(Object.keys(expected).length);
   Object.keys(meta).forEach((key) => {
-    expect(meta[key]).to.deep.equal(expected[key]);
+    expect(meta[key]).toEqual(expected[key]);
   });
 };

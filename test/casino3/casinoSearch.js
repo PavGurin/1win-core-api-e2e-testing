@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { checkErrMsg } from '../../src/responseChecker';
 
 describe('Casino search check', () => {
@@ -13,6 +12,6 @@ describe('Casino search check', () => {
   it('C20488 - Categories-all', async () => {
     const { data } = await socket.send('CASINO-3:categories-all', {});
     // console.log(data[0]);
-    expect(data['0'].count).not.equal(null);
+    expect(data['0'].count).not.toBeNull();
   });
 });

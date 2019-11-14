@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe('Sport categories', () => {
   it('C21148 - (+) valid request prematch', async () => {
     const { data } = await socket.send('MATCH-STORAGE-2:sport-categories', {
@@ -11,14 +9,14 @@ describe('Sport categories', () => {
       },
     });
     // console.log(data);
-    expect(data.service).equal('prematch');
+    expect(data.service).toEqual('prematch');
     // expect(data.sportCategoriesMap["0"].categoryIconFileId).not.equal(null);
-    expect(data.sportCategoriesMap['0'].categoryId).not.equal(null);
-    expect(data.sportCategoriesMap['0'].categoryName.en).not.equal(null);
-    expect(data.sportCategoriesMap['0'].categoryName.ru).not.equal(null);
-    expect(data.sportCategoriesMap['0'].sportId).not.equal(null);
-    expect(data.sportCategoriesMap['0'].sportName.en).not.equal(null);
-    expect(data.sportCategoriesMap['0'].sportName.ru).not.equal(null);
+    expect(data.sportCategoriesMap['0'].categoryId).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].categoryName.en).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].categoryName.ru).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].sportId).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].sportName.en).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].sportName.ru).not.toBeNull();
   });
 
   it.skip('C21149 - (+) valid request live @master', async () => {
@@ -31,13 +29,13 @@ describe('Sport categories', () => {
       },
     });
     // console.log(data);
-    expect(data.service).equal('live');
-    expect(data.sportCategoriesMap['0'].categoryIconFileId).not.equal(null);
-    expect(data.sportCategoriesMap['0'].categoryId).not.equal(null);
-    expect(data.sportCategoriesMap['0'].categoryName.en).not.equal(null);
-    expect(data.sportCategoriesMap['0'].categoryName.ru).not.equal(null);
-    expect(data.sportCategoriesMap['0'].sportId).not.equal(null);
-    expect(data.sportCategoriesMap['0'].sportName.en).not.equal(null);
-    expect(data.sportCategoriesMap['0'].sportName.ru).not.equal(null);
+    expect(data.service).toEqual('live');
+    expect(data.sportCategoriesMap['0'].categoryIconFileId).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].categoryId).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].categoryName.en).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].categoryName.ru).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].sportId).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].sportName.en).not.toBeNull();
+    expect(data.sportCategoriesMap['0'].sportName.ru).not.toBeNull();
   });
 });

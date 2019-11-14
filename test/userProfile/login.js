@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { randomStr } from '../../src/randomizer';
 import { checkErrorMsg } from '../../src/responseChecker';
 import { userList } from '../../src/methods/userList';
@@ -20,14 +19,14 @@ describe('Login', () => {
     const { data } = await register.oneClickReg(socket);
     const { status } = await userList.loginWithParams(socket, data.email, data.password);
     // console.log(status);
-    expect(status).equal(200);
+    expect(status).toEqual(200);
   });
 
   it('C19294 (+) login by phone', async () => {
     const { data } = await register.oneClickReg(socket);
     const { status } = await userList.loginWithParams(socket, data.phone, data.password);
     // console.log(status);
-    expect(status).equal(200);
+    expect(status).toEqual(200);
   });
 
   it('C19295 (-) nonexistent user', async () => {
@@ -75,7 +74,7 @@ describe('Login', () => {
     const { status } = await userList.loginWithParams(socket, regResult.email, randomStr(19),
       randomStr(4));
     // console.log(data);
-    expect(status).equal(200);
+    expect(status).toEqual(200);
   });
 
   it('C19927 (+) long tg_hash (6 symbols)', async () => {
@@ -84,7 +83,7 @@ describe('Login', () => {
       randomStr(6));
     // console.log(data);
     // console.log(data);
-    expect(status).equal(200);
+    expect(status).toEqual(200);
   });
 
   it('C19928 (+) empty tg_hash', async () => {
@@ -92,7 +91,7 @@ describe('Login', () => {
     const { status } = await userList.loginWithParams(socket, regResult.email, randomStr(19), null);
     // console.log(data);
     // console.log(data);
-    expect(status).equal(200);
+    expect(status).toEqual(200);
   });
 
   it('C19929 (+) w/o tg_hash', async () => {
@@ -100,6 +99,6 @@ describe('Login', () => {
     const { status } = await userList.loginWithParams(socket, regResult.email, randomStr(19));
     // console.log(data);
     // console.log(data);
-    expect(status).equal(200);
+    expect(status).toEqual(200);
   });
 });

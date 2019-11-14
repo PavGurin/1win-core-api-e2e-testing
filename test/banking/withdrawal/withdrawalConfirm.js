@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
@@ -71,7 +70,7 @@ describe('Withdrawal confirm tests', () => {
       await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
 
@@ -84,7 +83,7 @@ describe('Withdrawal confirm tests', () => {
       await sleep(300000);
       const confirmData = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirmData);
-      expect(confirmData.status).to.equal(200);
+      expect(confirmData.status).toEqual(200);
       // checkErrMsg(confirmData.data, 404, 'Выплата не найдена');
     });
 
@@ -97,7 +96,7 @@ describe('Withdrawal confirm tests', () => {
       // второе подтверждение
       const confirm2 = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirmData2);
-      expect(confirm2.status).to.equal(200);
+      expect(confirm2.status).toEqual(200);
       checkErrMsg(confirm2.data, 403, 'Выплата не найдена');
     });
 
@@ -106,14 +105,14 @@ describe('Withdrawal confirm tests', () => {
       await sleep(4500);
       const transferMail = await mail.getMessage(currentUser.email);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
 
     it('C27221 (-) Active code of other withdrawal of this user', async () => {
       await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
 
@@ -123,16 +122,16 @@ describe('Withdrawal confirm tests', () => {
       checkSuccess(confirm);
 
       // проверка баланса после вывода
-      expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance - 100);
+      expect(await banking.balanceCheck(socket)).toEqual(currentUser.balance - 100);
     });
 
     it('C27201 (-) Balance checking after not successful withdrawal', async () => {
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code + 1 });
       // console.log(confirmData);
-      expect(confirm.data.status).to.equal(400);
+      expect(confirm.data.status).toEqual(400);
 
       // проверка баланса после вывода
-      expect(await banking.balanceCheck(socket)).to.equal(currentUser.balance);
+      expect(await banking.balanceCheck(socket)).toEqual(currentUser.balance);
     });
   });
 
@@ -150,7 +149,7 @@ describe('Withdrawal confirm tests', () => {
 
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
       // console.log(confirmData);
-      expect(confirm.status).to.equal(200);
+      expect(confirm.status).toEqual(200);
       checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');
     });
   });

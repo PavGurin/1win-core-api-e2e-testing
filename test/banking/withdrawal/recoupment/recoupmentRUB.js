@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getNewSocket } from '../../../global';
 import { userPool } from '../../../../src/methods/userPool';
 import { userList } from '../../../../src/methods/userList';
@@ -43,11 +42,11 @@ describe('Recoupument tests RUB', () => {
     it('C1021290 - (-) nothing spent, withdraw money', async () => {
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021291 - (-) spent part of deposit, withdraw money', async () => {
@@ -56,11 +55,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021292 - (+) spent all money, withdraw amount < balance', async () => {
@@ -69,11 +68,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', data.result);
       // console.log(create);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1021293 - (-) spent all money, withdraw amount > balance', async () => {
@@ -82,7 +81,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10000);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10000');
       // console.log(withdrawalCreate);
@@ -95,11 +94,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10000);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1086873 - (+) deposit + case + withdrawal, withdraw again', async () => {
@@ -107,11 +106,11 @@ describe('Recoupument tests RUB', () => {
       await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', data.result / 2);
 
       const { data: check } = await banking.checkWithdrawalPossible(socket, data.result / 2);
-      expect(check.result).equal(true);
+      expect(check.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', data.result / 2);
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1090487 - (-) deposit + case + withdrawal + new deposit, withdraw again', async () => {
@@ -119,11 +118,11 @@ describe('Recoupument tests RUB', () => {
       await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', data.result / 2);
       await banking.createDepositInBD(currentUser.id, 100, new Date(), 'mts_rub', '79111223366', 1);
       const { data: check } = await banking.checkWithdrawalPossible(socket, data.result / 2);
-      expect(check.result).equal(false);
+      expect(check.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', data.result / 2);
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
   });
 
@@ -158,11 +157,11 @@ describe('Recoupument tests RUB', () => {
     it('C1021294 - (-) nothing spent, withdraw money', async () => {
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021295 - (-) spent part of one deposit, withdraw money', async () => {
@@ -171,11 +170,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021296 - (-) spent one deposit, withdraw earned money', async () => {
@@ -184,11 +183,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021297 - (-) spent one deposit and part of other, withdraw money', async () => {
@@ -197,11 +196,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021298 - (+) spent all money, withdraw amount < balance', async () => {
@@ -210,11 +209,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 100500);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1091384 - (-) spent all money, withdraw amount > balance', async () => {
@@ -223,7 +222,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 100500);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10000');
       // console.log(withdrawalCreate);
@@ -260,11 +259,11 @@ describe('Recoupument tests RUB', () => {
     it('C1021299 - (-) nothing spent, withdraw money', async () => {
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021300 - (-) spent part of transfer, withdraw money', async () => {
@@ -273,11 +272,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021301 - (+) spent all money, withdraw amount < balance', async () => {
@@ -286,11 +285,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', data.result / 2);
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1021302 - (-) spent all money, withdraw amount > balance', async () => {
@@ -299,7 +298,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 100500);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10000');
       // console.log(withdrawalCreate);
@@ -336,11 +335,11 @@ describe('Recoupument tests RUB', () => {
     it('C1021303 - (-) nothing spent, withdraw money', async () => {
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021304 - (-) spent part of one transfer, withdraw money', async () => {
@@ -349,11 +348,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021305 - (-) spent one transfer, withdraw earned money', async () => {
@@ -362,11 +361,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, data.result);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021306 - (-) spent one transfer and part of other, withdraw money', async () => {
@@ -375,11 +374,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 10);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021307 - (+) spent all money, withdraw amount < balance ', async () => {
@@ -388,11 +387,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 100500);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1091385 - (-) spent all money, withdraw amount > balance', async () => {
@@ -401,7 +400,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket, 100500);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10000');
       // console.log(withdrawalCreate);
@@ -438,46 +437,46 @@ describe('Recoupument tests RUB', () => {
     it('C1021308 - (+) transfer all deposit, can withdraw any amount', async () => {
       await banking.transferCreate(socket, DEPOSIT_AMOUNT, 'RUB');
       const { data } = await banking.checkWithdrawalPossible(socket, 10);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
     });
 
     it('C1021309 - (-) transfer part of deposit, withdraw money', async () => {
       await banking.transferCreate(socket, 100, 'RUB');
       const { data } = await banking.checkWithdrawalPossible(socket, 10);
-      expect(data.result).equal(false);
+      expect(data.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021310 - (-) transfer part of deposit, spent part of remaining money, withdraw money', async () => {
       await banking.transferCreate(socket, 100, 'RUB');
       await cases.playCaseWithoutChance(socket, 1);
       const { data } = await banking.checkWithdrawalPossible(socket, 10);
-      expect(data.result).equal(false);
+      expect(data.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1021311 - (+) transfer part of deposit, spent remained money, withdraw amount <= balance', async () => {
       await banking.transferCreate(socket, 100, 'RUB');
       await cases.playCaseWithoutChance(socket, 4);
       const { data } = await banking.checkWithdrawalPossible(socket, 100500);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1091386 - (-) transfer part of deposit, spent remained money, withdraw amount > balance', async () => {
       await banking.transferCreate(socket, 100, 'RUB');
       await cases.playCaseWithoutChance(socket, 4);
       const { data } = await banking.checkWithdrawalPossible(socket, 100500);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10000');
       // console.log(withdrawalCreate);
@@ -509,11 +508,11 @@ describe('Recoupument tests RUB', () => {
       await setUserWithdrawalBlock(currentUser.id);
       const { data } = await banking.checkWithdrawalPossible(socket, 100);
       // console.log(data);
-      expect(data.result).equal(false);
+      expect(data.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1086846 - (+) withdrawal block, spent all deposit', async () => {
@@ -521,22 +520,22 @@ describe('Recoupument tests RUB', () => {
       await setUserWithdrawalBlock(currentUser.id);
       const { data } = await banking.checkWithdrawalPossible(socket, 100);
       // console.log(data);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1086847 - (-) withdrawal manual control, nothing spent', async () => {
       await setUserWithdrawalManualControl(currentUser.id);
       const { data } = await banking.checkWithdrawalPossible(socket, 100);
       // console.log(data);
-      expect(data.result).equal(false);
+      expect(data.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
       // console.log(create);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1086848 - (+) withdrawal manual control, spent all deposit', async () => {
@@ -544,11 +543,11 @@ describe('Recoupument tests RUB', () => {
       await setUserWithdrawalManualControl(currentUser.id);
       const { data } = await banking.checkWithdrawalPossible(socket, 100);
       // console.log(data);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     // непонятно что должно быть, сейчас вывести нельзя
@@ -557,7 +556,7 @@ describe('Recoupument tests RUB', () => {
       await setUserWithdrawalBlock(currentUser.id);
       const { data } = await banking.checkWithdrawalPossible(socket, 100);
       // console.log(data);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
     });
 
     it('C1086872 - (+) user demo withdrawal, spent all deposit', async () => {
@@ -566,11 +565,11 @@ describe('Recoupument tests RUB', () => {
       await setUserWithdrawalBlock(currentUser.id);
       const { data } = await banking.checkWithdrawalPossible(socket, 100);
       // console.log(data);
-      expect(data.result).equal(true);
+      expect(data.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', '10');
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
   });
 
@@ -606,10 +605,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff).toFixed(2));
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1139209 - (-), bet with coeff > 1.1 (win), withdraw amount > balance', async () => {
@@ -620,7 +619,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff + 1);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff + 1).toFixed(2));
       checkErrMsg(withdrawalCreate, 403, 'Недостаточно средств');
@@ -635,11 +634,11 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff).toFixed(2));
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1139232 - (-), bet with coeff < 1.1 (win)', async () => {
@@ -650,10 +649,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff).toFixed(2));
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1140136 - (-), bet with coeff < 1.1 (win) + cases', async () => {
@@ -666,10 +665,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         casesResult.result);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', casesResult.result);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1143819 - (+), bet with coeff > 1.1 (lose), withdrawal check = true', async () => {
@@ -680,7 +679,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
     });
 
     it('C1143820 - (-), bet with coeff > 1.1 (lose), withdraw amount > balance', async () => {
@@ -691,7 +690,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff + 1);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff + 1).toFixed(2));
       checkErrMsg(withdrawalCreate, 403, 'Недостаточно средств');
@@ -706,7 +705,7 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff).toFixed(2));
       // console.log(withdrawalCreate);
@@ -721,10 +720,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * betCoeff);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', (betAmount * betCoeff).toFixed(2));
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1143823 - (-), bet with coeff < 1.1 (win) + cases', async () => {
@@ -738,10 +737,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         casesResult.result);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', casesResult.result);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1146557 - (+), several bets with coeff > 1.1', async () => {
@@ -755,10 +754,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * coef1);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', betAmount * coef1);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1146558 - (-), several bets with coeff < 1.1 ', async () => {
@@ -772,10 +771,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * coef1);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', betAmount * coef1);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
 
     it('C1146559 - (-), bet with coeff > 1.1 + bet with coeff < 1.1', async () => {
@@ -789,10 +788,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * coef1);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', betAmount * coef1);
-      expect(withdrawalCreate.withdrawalBlocked).equal(true);
+      expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
     });
   });
 
@@ -823,10 +822,10 @@ describe('Recoupument tests RUB', () => {
 
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         depositAmount - betAmount);
-      expect(withdrawalCheck.result).equal(true);
+      expect(withdrawalCheck.result).toEqual(true);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', depositAmount - betAmount);
-      expect(withdrawalCreate.confirmationRequested).equal(false);
+      expect(withdrawalCreate.confirmationRequested).toEqual(false);
     });
 
     it('C1147472 - (-), lostMoney = 0 (bet on coeff < 1.1 - win)', async () => {
@@ -843,11 +842,11 @@ describe('Recoupument tests RUB', () => {
       const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(socket,
         betAmount * coeff);
       // console.log(withdrawalCheck);
-      expect(withdrawalCheck.result).equal(false);
+      expect(withdrawalCheck.result).toEqual(false);
 
       const { data: withdrawalCreate } = await banking.withdrawalCreate(socket, '79116665544', 'mts_rub', 'RUB', betAmount * coeff);
       // console.log(withdrawalCreate);
-      expect(withdrawalCreate.confirmationRequested).equal(true);
+      expect(withdrawalCreate.confirmationRequested).toEqual(true);
     });
   });
 });

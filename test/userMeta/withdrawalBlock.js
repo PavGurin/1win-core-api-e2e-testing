@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import { setUserWithdrawalBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
@@ -30,15 +29,15 @@ describe('Withdrawal block tests', () => {
       const { data } = await register.oneClickRegEUR(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
-      expect(meta.withdrawal_block).equal(false);
+      expect(meta.withdrawal_block).toEqual(false);
       const res = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta where id_user= ${data.id} AND ma_users_meta.key = 'withdrawal_block';`);
-      expect(res[0]).not.exist;
+      expect(res[0]).toBeUndefined();
     });
     it('C28413 (+) withdrawal_block = false, cases', async () => {
       const { data: user } = await register.oneClickReg(socket);
       await banking.setBalance(user.id);
       const { data } = await cases.playCaseWithoutChance(socket, 1);
-      expect(data.result).above(0);
+      expect(data.result).toBeGreaterThanOrEqual(0);
     });
     it('C28648 (-) withdrawal_block = false, make bet > maxBetAmount', async () => {
       const { data: user } = await register.oneClickReg(socket);
@@ -53,9 +52,9 @@ describe('Withdrawal block tests', () => {
       const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
-      expect(betResponse[coupon.couponId].error.result).equal('rejected');
-      expect(betResponse[coupon.couponId].error.messageLangKey).equal('riskmanagement.error.market_limit');
-      expect(betResponse[coupon.couponId].status).equal(400);
+      expect(betResponse[coupon.couponId].error.result).toEqual('rejected');
+      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit');
+      expect(betResponse[coupon.couponId].status).toEqual(400);
     });
   });
 
@@ -76,13 +75,13 @@ describe('Withdrawal block tests', () => {
     it('C28399 (+) withdrawal_block = false when in db = true', async () => {
       const meta = await socket.userMeta;
       // console.log(meta);
-      expect(meta.withdrawal_manual_control).equal(false);
+      expect(meta.withdrawal_manual_control).toEqual(false);
     });
 
     it('C28400 (+) withdrawal_block = true, withdrawal create', async () => {
       const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      expect(data.confirmationRequested).equal(true);
+      expect(data.confirmationRequested).toEqual(true);
     });
 
     it('C28401 (-) withdrawal_block = true, withdrawal confirm', async () => {
@@ -92,14 +91,14 @@ describe('Withdrawal block tests', () => {
       const receivedMail = await mail.getMessage(currentUser.email);
       const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
-      expect(confirm.error).not.exist;
-      expect(await banking.getWithdrawalStatus(currentUser.id)).equal(0);
+      expect(confirm.error).toBeUndefined();
+      expect(await banking.getWithdrawalStatus(currentUser.id)).toEqual(0);
     });
 
     it('C28402 (-) withdrawal_block = true, transfer create', async () => {
       const { data } = await banking.transferCreate(socket, 100, 'RUB');
       // console.log(data);
-      expect(data.withdrawalBlocked).equal(true);
+      expect(data.withdrawalBlocked).toEqual(true);
     });
 
     it('C28403 (-) withdrawal_block = true, deposit create', async () => {
@@ -123,8 +122,8 @@ describe('Withdrawal block tests', () => {
       const { data: betResponse } = await makeOrdinaryBet(socket, coupon, 10);
       // console.log(betResponse);
 
-      expect(betResponse[coupon.couponId].error).equal(false);
-      expect(betResponse[coupon.couponId].status).equal(200);
+      expect(betResponse[coupon.couponId].error).toEqual(false);
+      expect(betResponse[coupon.couponId].status).toEqual(200);
     });
 
     it('C28647 (+) withdrawal_block = true, make bet > maxBetAmount', async () => {
@@ -139,8 +138,8 @@ describe('Withdrawal block tests', () => {
       const { data: betResponse } = await makeOrdinaryBet(socket, coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
-      expect(betResponse[coupon.couponId].error).equal(false); '';
-      expect(betResponse[coupon.couponId].status).equal(200);
+      expect(betResponse[coupon.couponId].error).toEqual(false);
+      expect(betResponse[coupon.couponId].status).toEqual(200);
     });
   });
 
@@ -149,32 +148,32 @@ describe('Withdrawal block tests', () => {
       const { data: user } = await usersWithBlock.userMail(socket);
       const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      expect(data.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(user.id)).equal(0);
+      expect(data.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
     });
 
     it('C28409 (-) withdrawal_block = true + @bk withdrawal', async () => {
       const { data: user } = await usersWithBlock.userBk(socket);
       const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      expect(data.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(user.id)).equal(0);
+      expect(data.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
     });
 
     it('C28410 (-) withdrawal_block = true + @inbox withdrawal', async () => {
       const { data: user } = await usersWithBlock.userInbox(socket);
       const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      expect(data.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(user.id)).equal(0);
+      expect(data.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
     });
 
     it('C28411 (-) withdrawal_block = true + @list withdrawal', async () => {
       const { data: user } = await usersWithBlock.userList(socket);
       const { data } = await banking.withdrawalCreate(socket, WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      expect(data.confirmationRequested).equal(false);
-      expect(await banking.getWithdrawalStatus(user.id)).equal(0);
+      expect(data.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
     });
   });
 });

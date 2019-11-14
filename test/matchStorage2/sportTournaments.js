@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 describe('Sport-tournaments', () => {
   it('C21150 - Sport-tournaments prematch', async () => {
     const { data } = await socket.send('MATCH-STORAGE-2:sport-tournaments', {
@@ -12,7 +10,7 @@ describe('Sport-tournaments', () => {
     });
 
     // console.log(data);
-    expect(data.service).equal('prematch');
+    expect(data.service).toEqual('prematch');
   });
 
   it('C21151 - Sport-tournaments live', async () => {
@@ -26,6 +24,6 @@ describe('Sport-tournaments', () => {
     });
 
     // console.log(data);
-    expect(data.service).equal('live');
+    expect(data.service).toEqual('live');
   });
 });

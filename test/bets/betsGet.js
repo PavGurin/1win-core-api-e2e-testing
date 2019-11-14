@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
 import { checkError404, checkErrorMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
@@ -60,12 +59,12 @@ describe('Bets get', () => {
     // console.log(betsMap);
     const { data: getBet } = await getMatchById(Object.values(betsMap.betsMap)[0].id);
     // console.log(getBet);
-    expect(login.id).equal(getBet.id_user);
-    expect(getBet.betType).equal('ordinary');
-    expect(getBet.currency).equal('RUB');
-    expect(getBet.id).equal(Object.values(betsMap.betsMap)[0].id);
+    expect(login.id).toEqual(getBet.id_user);
+    expect(getBet.betType).toEqual('ordinary');
+    expect(getBet.currency).toEqual('RUB');
+    expect(getBet.id).toEqual(Object.values(betsMap.betsMap)[0].id);
     for (let i = 0; i < getBet.selectionList.length; i++) {
-      expect(getBet.selectionList[i].bet_id).equal(Object.values(betsMap.betsMap)[0].id);
+      expect(getBet.selectionList[i].bet_id).toEqual(Object.values(betsMap.betsMap)[0].id);
     }
   });
 
@@ -90,14 +89,14 @@ describe('Bets get', () => {
     // console.log(betsMap);
     const { data: getBet } = await getMatchById(Object.values(betsMap.betsMap)[0].id);
     // console.log(getBet);
-    expect(login.id).equal(getBet.id_user);
-    expect(getBet.betType).equal('express');
-    expect(getBet.currency).equal('RUB');
-    expect(getBet.id).equal(getBet.id);
-    expect(getBet.selectionList.length).equal(2);
+    expect(login.id).toEqual(getBet.id_user);
+    expect(getBet.betType).toEqual('express');
+    expect(getBet.currency).toEqual('RUB');
+    expect(getBet.id).toEqual(getBet.id);
+    expect(getBet.selectionList.length).toEqual(2);
     // проверяет 'bet_id' каждой ставки экспресса (должно совпадать
     for (let i = 0; i < getBet.selectionList.length; i++) {
-      expect(getBet.selectionList[i].bet_id).equal(getBet.id);
+      expect(getBet.selectionList[i].bet_id).toEqual(getBet.id);
     }
   });
 });

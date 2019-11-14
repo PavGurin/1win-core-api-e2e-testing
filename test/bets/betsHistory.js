@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../src/methods/userList';
 import { register } from '../../src/methods/register';
 import { getMatchHistory } from '../../src/methods/matchStorage';
@@ -11,8 +10,8 @@ describe('Bets history', () => {
     await register.oneClickReg(socket);
     const { data } = await getMatchHistory(socket);
     // console.log(data);
-    expect(data.totalCount).equal(0);
-    expect(data.betsMap).to.be.empty;
+    expect(data.totalCount).toEqual(0);
+    expect(data.betsMap).toEqual({});
   });
 
   it('C27572 (-) no order value', async () => {
@@ -21,8 +20,8 @@ describe('Bets history', () => {
       order: null,
     });
     // console.log(data);
-    expect(data.status).equal(400);
-    expect(data.message).equal('Bad request, order is required, no default value provided');
+    expect(data.status).toEqual(400);
+    expect(data.message).toEqual('Bad request, order is required, no default value provided');
   });
 
   it('C27573 (-) no limit value', async () => {
@@ -31,8 +30,8 @@ describe('Bets history', () => {
       limit: null,
     });
     // console.log(data);
-    expect(data.status).equal(400);
-    expect(data.message).equal('Bad request, limit[1] is required, no default value provided');
+    expect(data.status).toEqual(400);
+    expect(data.message).toEqual('Bad request, limit[1] is required, no default value provided');
   });
 
   it('C27574 (+) user w/o bet history asc order', async () => {
@@ -41,8 +40,8 @@ describe('Bets history', () => {
       order: ['id', 'ASC'],
     });
     // console.log(data);
-    expect(data.totalCount).equal(0);
-    expect(data.betsMap).to.be.empty;
+    expect(data.totalCount).toEqual(0);
+    expect(data.betsMap).toEqual({});
   });
 
   it('C27575 (+) user w/o bet history, bet type \'express\'', async () => {
@@ -51,8 +50,8 @@ describe('Bets history', () => {
       betType: EXPRESS,
     });
     // console.log(data);
-    expect(data.totalCount).equal(0);
-    expect(data.betsMap).to.be.empty;
+    expect(data.totalCount).toEqual(0);
+    expect(data.betsMap).toEqual({});
   });
 
   it('C27576 (+) user w/o bet history, bet type \'ordinary\'', async () => {
@@ -61,8 +60,8 @@ describe('Bets history', () => {
       betType: ORDINARY,
     });
     // console.log(data);
-    expect(data.totalCount).equal(0);
-    expect(data.betsMap).to.be.empty;
+    expect(data.totalCount).toEqual(0);
+    expect(data.betsMap).toEqual({});
   });
 
   it('C27577 (+) user with bet history, bet type \'ordinary\'', async () => {
@@ -71,7 +70,7 @@ describe('Bets history', () => {
       betType: ORDINARY,
     });
     // console.log(betsMap);
-    expect(Object.values(betsMap).every(({ betType }) => betType === 'ordinary')).equal(true);
+    expect(Object.values(betsMap).every(({ betType }) => betType === 'ordinary')).toEqual(true);
   });
 
   /** Bets statuses:
@@ -90,10 +89,8 @@ describe('Bets history', () => {
         dateFrom: 0,
       },
     });
-
-
     // console.log(betsMap);
-    expect(Object.entries(betsMap).length).equal(20);
+    expect(Object.entries(betsMap).length).toEqual(20);
   });
 
   it('C27579 (+) only \'lost\' bets status (status = 1)', async () => {
@@ -110,8 +107,8 @@ describe('Bets history', () => {
       },
     });
     // console.log(betsMap);
-    expect(Object.entries(betsMap).length).equal(expectedAmount);
-    expect(Object.values(betsMap).every(({ status }) => status === 0)).equal(true);
+    expect(Object.entries(betsMap).length).toEqual(expectedAmount);
+    expect(Object.values(betsMap).every(({ status }) => status === 0)).toEqual(true);
   });
 
   it('C27580 (+) only \'returned\' bets status (status = 2)', async () => {
@@ -128,8 +125,8 @@ describe('Bets history', () => {
       },
     });
     // console.log(betsMap);
-    expect(Object.entries(betsMap).length).equal(expectedAmount);
-    expect(Object.values(betsMap).every(({ status }) => status === 2)).equal(true);
+    expect(Object.entries(betsMap).length).toEqual(expectedAmount);
+    expect(Object.values(betsMap).every(({ status }) => status === 2)).toEqual(true);
   });
 
   it('C27581 (+) only \'won\' bets status (status = 3)', async () => {
@@ -146,8 +143,8 @@ describe('Bets history', () => {
       },
     });
     // console.log(betsMap);
-    expect(Object.entries(betsMap).length).equal(expectedAmount);
-    expect(Object.values(betsMap).every(({ status }) => status === 1)).equal(true);
+    expect(Object.entries(betsMap).length).toEqual(expectedAmount);
+    expect(Object.values(betsMap).every(({ status }) => status === 1)).toEqual(true);
   });
 
   it('C27582 (-) [0,0] limit', async () => {
@@ -156,7 +153,7 @@ describe('Bets history', () => {
       limit: 0,
     });
     // console.log(betsMap);
-    expect(betsMap).to.be.empty;
+    expect(betsMap).toEqual({});
   });
 
   it('C27583 (-) limits \'from\' value > than \'to\' value', async () => {
@@ -165,7 +162,7 @@ describe('Bets history', () => {
       limit: [10, 0],
     });
     // console.log(betsMap);
-    expect(betsMap).to.be.empty;
+    expect(betsMap).toEqual({});
   });
 
   it('C27584 (-) 5 limits, where all filters, where service = null', async () => {
@@ -181,6 +178,6 @@ describe('Bets history', () => {
       },
     });
     // console.log(data);
-    expect(Object.values(data.betsMap).length).equal(5);
+    expect(Object.values(data.betsMap).length).toEqual(5);
   });
 });

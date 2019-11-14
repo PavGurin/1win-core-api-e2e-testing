@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { userList } from '../../src/methods/userList';
 import {
   generateExpressCoupon,
@@ -32,8 +30,8 @@ describe('Express', () => {
     const betResponse = await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
 
-    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
-    expect(betResponse.status).equal(200);
+    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).toEqual(false);
+    expect(betResponse.status).toEqual(200);
   });
 
   it('C27563 Prematch - express bet 10', async () => {
@@ -52,8 +50,8 @@ describe('Express', () => {
     // console.log(betResponse);
     // console.log(betResponse.data[Object.keys(coupon.betsMap)[0]].error);
 
-    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
-    expect(betResponse.status).equal(200);
+    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).toEqual(false);
+    expect(betResponse.status).toEqual(200);
   });
 
   it.skip('C558186 Live - express bet 100', async () => {
@@ -72,7 +70,7 @@ describe('Express', () => {
     const betResponse = await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
 
-    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
-    expect(betResponse.status).equal(200);
+    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).toEqual(false);
+    expect(betResponse.status).toEqual(200);
   });
 });

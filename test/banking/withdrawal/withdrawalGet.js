@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
 import { userPool } from '../../../src/methods/userPool';
@@ -53,12 +52,12 @@ describe('Withdrawal get', () => {
       const { data } = await socket.send('BANKING:withdrawal-get', { id: confirm.data.id });
       // console.log(data);
 
-      expect(data.id).equal(confirm.data.id);
-      expect(data.time).to.be.below(new Date().getTime());
-      expect(data.payment_system).equal('card_rub');
-      expect(data.amount).equal(100);
-      expect(data.status).equal(0);
-      expect(data.wallet).equal('5469550073662048');
+      expect(data.id).toEqual(confirm.data.id);
+      expect(data.time).toBeLessThanOrEqual(new Date().getTime());
+      expect(data.payment_system).toEqual('card_rub');
+      expect(data.amount).toEqual(100);
+      expect(data.status).toEqual(0);
+      expect(data.wallet).toEqual('5469550073662048');
     });
 
 
@@ -73,12 +72,12 @@ describe('Withdrawal get', () => {
 
       const { data } = await socket.send('BANKING:withdrawal-get', { id: data1.data[0].id });
 
-      expect(data.id).equal(data1.data[0].id);
-      expect(data.time).to.be.below(new Date().getTime());
-      expect(data.payment_system).equal('money-transfer');
-      expect(data.amount).equal(20);
-      expect(data.status).equal(1);
-      expect(data.wallet).equal('192');
+      expect(data.id).toEqual(data1.data[0].id);
+      expect(data.time).toBeLessThanOrEqual(new Date().getTime());
+      expect(data.payment_system).toEqual('money-transfer');
+      expect(data.amount).toEqual(20);
+      expect(data.status).toEqual(1);
+      expect(data.wallet).toEqual('192');
     });
   });
 });

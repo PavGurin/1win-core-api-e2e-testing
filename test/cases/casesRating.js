@@ -16,10 +16,6 @@ describe('Get raiting cases', () => {
 
       // console.log(data);
       expect(data.status).toEqual(200);
-      for (let i = 0; i < Object.values(data)[1].length; i++) {
-        const { caseTypeId } = Object.values(data)[1][0];
-        expect(caseTypeId).toBeNumber();
-      }
       expect(data).toBeObject();
     });
   });
@@ -37,10 +33,6 @@ describe('Get raiting cases', () => {
 
       // console.log(data);
       expect(data.status).toEqual(200);
-      for (let i = 0; i < Object.values(data)[1].length; i++) {
-        const { caseTypeId } = Object.values(data)[1][0];
-        expect(caseTypeId).toBeNumber();
-      }
       expect(data).toBeObject();
     });
   });

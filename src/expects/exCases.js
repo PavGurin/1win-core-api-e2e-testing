@@ -1,27 +1,25 @@
-import { expect } from 'chai';
-
 export function checkInfoCase(data, idCases, cost, currency, id, max, min, name, priceMaxWin,
   priceMinWin, caseTypeId) {
-  expect(data).to.be.an('array');
-  expect(data[idCases].adjust).to.be.an('object');
-  expect(data[idCases].cost).equal(cost);
-  expect(data[idCases].currency).equal(currency);
-  expect(data[idCases].id).equal(id);
-  expect(data[idCases].max).equal(max);
-  expect(data[idCases].min).equal(min);
-  expect(data[idCases].name).equal(name);
-  expect(data[idCases].priceMaxWin).equal(priceMaxWin);
-  expect(data[idCases].priceMinWin).equal(priceMinWin);
-  expect(data[idCases].caseTypeId).equal(caseTypeId);
+  expect(data).toBeArray();
+  expect(data[idCases].adjust).toBeObject();
+  expect(data[idCases].cost).toEqual(cost);
+  expect(data[idCases].currency).toEqual(currency);
+  expect(data[idCases].id).toEqual(id);
+  expect(data[idCases].max).toEqual(max);
+  expect(data[idCases].min).toEqual(min);
+  expect(data[idCases].name).toEqual(name);
+  expect(data[idCases].priceMaxWin).toEqual(priceMaxWin);
+  expect(data[idCases].priceMinWin).toEqual(priceMinWin);
+  expect(data[idCases].caseTypeId).toEqual(caseTypeId);
 }
 
 export function checkCaseInfoByTypeId(data, idCases, caseTypeId, id) {
-  expect(data[idCases].caseTypeId).equal(caseTypeId);
-  expect(data[idCases].id).equal(id);
+  expect(data[idCases].caseTypeId).toEqual(caseTypeId);
+  expect(data[idCases].id).toEqual(id);
 }
 
 export function checkCaseResult(data, max, min) {
-  expect(data.status).equal(200);
-  expect(data.data.result).to.be.at.most(max);
-  expect(data.data.result).to.be.at.least(min);
+  expect(data.status).toEqual(200);
+  expect(data.data.result).toBeGreaterThanOrEqual(max);
+  expect(data.data.result).toBeLessThanOrEqual(min);
 }

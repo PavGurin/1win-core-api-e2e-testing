@@ -13,7 +13,7 @@ describe('Create deposite for beeline_rub', () => {
 
   describe('Create deposite for beeline_rub - RUB', () => {
     let socket;
-    beforeEach(async () => {
+    beforeAll(async () => {
       socket = await getNewSocket();
       user = await register.oneClickReg(socket);
     });

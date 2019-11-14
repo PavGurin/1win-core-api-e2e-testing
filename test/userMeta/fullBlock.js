@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import { setUserFullBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
@@ -15,7 +14,7 @@ describe('Full block tests', () => {
       await register.oneClickReg(socket);
       const meta = await socket.userMeta;
       // console.log(meta);
-      expect(meta.full_block.initial).equal(false);
+      expect(meta.full_block.initial).toEqual(false);
     });
   });
 
@@ -26,7 +25,7 @@ describe('Full block tests', () => {
 
       const { data: login } = userList.loginWithParams(socket, data.email, data.password);
       await sleep(2000);
-      expect(login).undefined;
+      expect(login).toBeUndefined();
     });
   });
   describe('banking, bets, cases with full block', () => {
@@ -49,31 +48,31 @@ describe('Full block tests', () => {
     it('C28642 (+) full_block = true in bd after login, deposit blocked', async () => {
       const { data: deposit } = banking.depositCreateRequest(socket, '1234567812345678', 'card_rub', 'RUB', 100);
       await sleep(2000);
-      expect(deposit).undefined;
+      expect(deposit).toBeUndefined();
     });
 
     it('C28645 (+) full_block = true in bd after login, transfer blocked', async () => {
       const { data } = banking.transferCreate(socket, 20, 'RUB');
       await sleep(2000);
-      expect(data).undefined;
+      expect(data).toBeUndefined();
     });
 
     it('C28646 (+) full_block = true in bd after login, withdrawal blocked', async () => {
       const { data } = banking.withdrawalCreate(socket, '1234567812345678', 'card_rub', 'RUB', 100);
       await sleep(2000);
-      expect(data).undefined;
+      expect(data).toBeUndefined();
     });
 
     it('C28643 (+) full_block = true in bd after login, cases blocked', async () => {
       const { data } = cases.playCaseWithoutChance(socket, 1);
       await sleep(2000);
-      expect(data).undefined;
+      expect(data).toBeUndefined();
     });
 
     it('C28644 (+) full_block = true in bd after login, bets blocked', async () => {
       const { data } = makeOrdinaryBet(socket, coupon, 'RUB', 10);
       await sleep(2000);
-      expect(data).undefined;
+      expect(data).toBeUndefined();
     });
   });
 });

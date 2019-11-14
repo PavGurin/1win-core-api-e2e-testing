@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { cases } from '../../src/methods/cases';
 
 describe('Health checker', () => {
@@ -6,6 +5,6 @@ describe('Health checker', () => {
     const data = await cases.getCaseInfo(socket, 'all');
 
     // console.log(data);
-    expect(data.status).equal(200);
+    expect(data.status).toEqual(200);
   });
 });

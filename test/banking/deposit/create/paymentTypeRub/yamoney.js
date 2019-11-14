@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
@@ -67,7 +66,7 @@ describe('Create deposite for yamoney_ru - RUB', () => {
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id}  ORDER BY id DESC;`);
     // console.log(dbResult);
-    expect(dbResult.length).to.equal(1);
+    expect(dbResult.length).toEqual(1);
   });
 });
 

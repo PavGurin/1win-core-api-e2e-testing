@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import { checkRegistrationDomain } from '../../src/expects/exDatabaseTests';
 
@@ -9,7 +8,7 @@ describe('Registration domain tests', () => {
     const { data } = await register.oneClickReg(socket);
     // console.log(data);
     const meta = await socket.userMeta;
-    expect(meta.registration_domain).not.exist;
+    expect(meta.registration_domain).toBeUndefined();
     checkRegistrationDomain(data.id, 'mobile_app');
   });
 
@@ -17,7 +16,7 @@ describe('Registration domain tests', () => {
     const { data } = await register.oneClickWithVisitDomainRUB(defaultVisitDomain);
     // console.log(data);
     const meta = await socket.userMeta;
-    expect(meta.registration_domain).not.exist;
+    expect(meta.registration_domain).toBeUndefined();
     checkRegistrationDomain(data.id, defaultVisitDomain);
   });
 
@@ -25,7 +24,7 @@ describe('Registration domain tests', () => {
     const { data } = await register.oneClickWithVisitDomainUSD(defaultVisitDomain);
     // console.log(data);
     const meta = await socket.userMeta;
-    expect(meta.registration_domain).not.exist;
+    expect(meta.registration_domain).toBeUndefined();
     checkRegistrationDomain(data.id, defaultVisitDomain);
   });
 
@@ -33,7 +32,7 @@ describe('Registration domain tests', () => {
     const { data } = await register.oneClickWithVisitDomainEUR(defaultVisitDomain);
     // console.log(data);
     const meta = await socket.userMeta;
-    expect(meta.registration_domain).not.exist;
+    expect(meta.registration_domain).toBeUndefined();
     checkRegistrationDomain(data.id, defaultVisitDomain);
   });
 
@@ -41,7 +40,7 @@ describe('Registration domain tests', () => {
     const { data } = await register.usualReg(socket);
     // console.log(data);
     const meta = await socket.userMeta;
-    expect(meta.registration_domain).not.exist;
+    expect(meta.registration_domain).toBeUndefined();
     checkRegistrationDomain(data.id, 'mobile_app');
   });
 
@@ -49,7 +48,7 @@ describe('Registration domain tests', () => {
     const { data } = await register.usualRegWithVisitDomain(defaultVisitDomain);
     // console.log(data);
     const meta = await socket.userMeta;
-    expect(meta.registration_domain).not.exist;
+    expect(meta.registration_domain).toBeUndefined();
     checkRegistrationDomain(data.id, defaultVisitDomain);
   });
 });

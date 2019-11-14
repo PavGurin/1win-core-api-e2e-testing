@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { checkErrMsg } from '../../../src/responseChecker';
@@ -18,8 +17,8 @@ describe('Transfer with money - RUB', () => {
       currency: 'RUB',
     });
     // console.log(data);
-    expect(data.confirmationRequested).equal(true);
-    expect(data.email).not.equal(null);
+    expect(data.confirmationRequested).toEqual(true);
+    expect(data.email).not.toBeNull();
   });
 
   it('C19375 (+) With money, currency = null and amount > 1000', async () => {
@@ -37,8 +36,8 @@ describe('Transfer with money - RUB', () => {
       amount: 21,
     });
     // console.log(data);
-    expect(data.confirmationRequested).equal(true);
-    expect(data.email).not.equal(null);
+    expect(data.confirmationRequested).toEqual(true);
+    expect(data.email).not.toBeNull();
   });
 
   it('C28691 - (-) 19 > amount > 20 ', async () => {
@@ -92,8 +91,8 @@ describe('Transfer with money - USD', () => {
     });
     // console.log(data);
 
-    expect(data.confirmationRequested).equal(true);
-    expect(data.email).not.equal(null);
+    expect(data.confirmationRequested).toEqual(true);
+    expect(data.email).not.toBeNull();
   });
 
   it('C19372 (+) With money + USD, amount = 1 USD', async () => {

@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 import { userList } from '../../src/methods/userList';
 import {
   generateExpressCoupon,
@@ -37,7 +35,7 @@ describe('Series', () => {
     const betResponse = await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
 
-    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).equal(false);
-    expect(betResponse.status).equal(200);
+    expect(betResponse.data[Object.keys(coupon.betsMap)[0]].error).toEqual(false);
+    expect(betResponse.status).toEqual(200);
   });
 });

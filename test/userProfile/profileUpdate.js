@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { register } from '../../src/methods/register';
 import { updateProfile } from '../../src/methods/user';
 import { randomNum, randomStr } from '../../src/randomizer';
@@ -36,8 +35,8 @@ describe('Profile update after oneClick registration', () => {
       name: newName,
     });
     // console.log(updatedUser);
-    expect(updatedUser.id).to.equal(data.id);
-    expect(updatedUser.name).to.equal(newName);
+    expect(updatedUser.id).toEqual(data.id);
+    expect(updatedUser.name).toEqual(newName);
   });
 
   it('C21394 (-) change to short name', async () => {
@@ -79,8 +78,8 @@ describe('Profile update after oneClick registration', () => {
       email: newEmail,
     });
     // console.log(updatedUser);
-    expect(updatedUser.id).to.equal(data.id);
-    expect(updatedUser.email).to.equal(newEmail);
+    expect(updatedUser.id).toEqual(data.id);
+    expect(updatedUser.email).toEqual(newEmail);
   });
 
   it('C21397 (-) change eMail twice', async () => {
@@ -94,7 +93,7 @@ describe('Profile update after oneClick registration', () => {
       email: firstEmailChange,
     });
     // console.log(updatedUser.email);
-    expect(updatedUser.email).to.equal(firstEmailChange);
+    expect(updatedUser.email).toEqual(firstEmailChange);
 
     const secondEmailChange = `${randomStr()}@second.change`;
     const { data: { updatedUser: updatedUser2 } } = await updateProfile(socket, {
@@ -102,7 +101,7 @@ describe('Profile update after oneClick registration', () => {
       email: secondEmailChange,
     });
     // console.log(updatedUser2.email);
-    expect(updatedUser2.email).to.equal(firstEmailChange);
+    expect(updatedUser2.email).toEqual(firstEmailChange);
   });
 
   it('C21398 (-) change country', async () => {
@@ -115,8 +114,8 @@ describe('Profile update after oneClick registration', () => {
       country: 'countryWasChanged',
     });
     // console.log(updatedUser);
-    expect(updatedUser.id).to.equal(data.id);
-    expect(updatedUser.country).to.equal(defaultCountry);
+    expect(updatedUser.id).toEqual(data.id);
+    expect(updatedUser.country).toEqual(defaultCountry);
   });
 
   it('C21399 (+) change phone', async () => {
@@ -130,8 +129,8 @@ describe('Profile update after oneClick registration', () => {
       phone: newPhone,
     });
     // console.log(updatedUser);
-    expect(updatedUser.id).to.equal(data.id);
-    expect(updatedUser.phone).to.equal(newPhone);
+    expect(updatedUser.id).toEqual(data.id);
+    expect(updatedUser.phone).toEqual(newPhone);
   });
 
   it('C21400 (-) change to short phone', async () => {
@@ -173,7 +172,7 @@ describe('Profile update after oneClick registration', () => {
       phone: newPhone,
     });
     // console.log(updatedUser);
-    expect(updatedUser.phone).to.equal(newPhone);
+    expect(updatedUser.phone).toEqual(newPhone);
 
     await socket.send('USER:auth-logout', {});
 
@@ -186,7 +185,7 @@ describe('Profile update after oneClick registration', () => {
       phone: newPhone,
     });
     // console.log(updatedUser2);
-    expect(updatedUser.id).to.equal(data.id);
+    expect(updatedUser.id).toEqual(data.id);
     checkErrorMsg(updatedUser2, 'Пользователь с таким номером телефона уже существует');
   });
 
@@ -209,7 +208,7 @@ describe('Profile update after oneClick registration', () => {
       password: newPassword,
     });
     // console.log(loginResult);
-    expect(loginResult.email).to.equal(updatedUser.email);
+    expect(loginResult.email).toEqual(updatedUser.email);
   });
 
   it('C21404 (-) change to different passwords', async () => {
@@ -400,11 +399,11 @@ describe('Profile update after oneClick registration', () => {
       birthday: newBirthDay,
     });
     // console.log(updatedUser);
-    expect(updatedUser.id).to.equal(data.id);
-    expect(updatedUser.name).to.equal(newName);
-    expect(updatedUser.phone).to.equal(newPhone);
-    expect(updatedUser.email).to.equal(`${newName}@new.xyz`);
-    expect(updatedUser.birthday).to.equal(newBirthDay);
+    expect(updatedUser.id).toEqual(data.id);
+    expect(updatedUser.name).toEqual(newName);
+    expect(updatedUser.phone).toEqual(newPhone);
+    expect(updatedUser.email).toEqual(`${newName}@new.xyz`);
+    expect(updatedUser.birthday).toEqual(newBirthDay);
   });
 
   it('C21415 (-) change email after usual reg', async () => {
@@ -417,7 +416,7 @@ describe('Profile update after oneClick registration', () => {
       email: `${randomStr()}@new.ru`,
     });
     // console.log(updatedUser);
-    expect(data.email).to.equal(updatedUser.email);
+    expect(data.email).toEqual(updatedUser.email);
   });
 
   it('C21416 (+) change birthday', async () => {
@@ -431,8 +430,8 @@ describe('Profile update after oneClick registration', () => {
       birthday: newBirthday,
     });
     // console.log(updatedUser);
-    expect(data.birthday).to.not.equal(updatedUser.birthday);
-    expect(updatedUser.birthday).to.equal(newBirthday);
+    expect(data.birthday).not.toEqual(updatedUser.birthday);
+    expect(updatedUser.birthday).toEqual(newBirthday);
   });
 
   it('C21419 (-) null birthday', async () => {

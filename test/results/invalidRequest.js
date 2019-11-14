@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getDateDaysAgo, getDateHoursAgo } from '../../src/methods/utils';
 import { checkResultsByDate, checkResultsByTime } from '../../src/expects/exResults';
 
@@ -11,7 +10,7 @@ describe('Results with date filtration', () => {
       },
     });
 
-    expect(JSON.stringify(data)).equal('{}');
+    expect(JSON.stringify(data)).toEqual('{}');
   });
 
   it('C650508 - (-) date and time filtration', async () => {

@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
 import { userList } from '../../src/methods/userList';
@@ -28,6 +27,6 @@ describe('maxBetAmount', () => {
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount2);
 
-    expect(Object.values(maxBetAmount2)[0]).equal((Object.values(maxBetAmount1)[0] - betAmount));
+    expect(Object.values(maxBetAmount2)[0]).toEqual((Object.values(maxBetAmount1)[0] - betAmount));
   });
 });
