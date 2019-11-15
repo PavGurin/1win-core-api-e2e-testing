@@ -1,5 +1,6 @@
 /* eslint camelcase: 'off' */
 
+// Метод был заменен на toMatchSnapshot
 const DEFAULT_USER_META = {
   withdrawal_block: false,
   user_demo_withdrawal: false,

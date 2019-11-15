@@ -5,26 +5,21 @@ import { userList } from '../../src/methods/userList';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount } from '../../src/methods/better';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
-import { getNewSocket } from '../global';
 
 describe('User risk coefficient tests', () => {
-  const USERS_NUMBER = 6;
+  const USERS_NUMBER = 1;
   const BALANCE = 100;
   let currentUser = {};
   let users = [];
-  let socket;
   const PREMATCH = 'prematch';
 
-  beforeAll(async () => {
-    socket = await getNewSocket();
-    users = await userPool.usersWithBalanceRub(socket, USERS_NUMBER, BALANCE);
+  beforeEach(async () => {
+    users = await userPool.usersWithBalanceRub(USERS_NUMBER, BALANCE);
   });
 
-  beforeEach(async () => { socket = await getNewSocket(); });
-  afterEach(() => socket.disconnect());
 
   it('C28390 (+) default = 1, one click reg', async () => {
-    const { data } = await register.oneClickRegUSD(socket);
+    const { data } = await register.oneClickRegUSD();
     const meta = await socket.userMeta;
     expect(meta.user_risk_coefficient).toEqual(1);
     const result = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta WHERE id_user = ${data.id} AND ma_users_meta.key = 'user_risk_coefficient'`);
@@ -32,7 +27,7 @@ describe('User risk coefficient tests', () => {
   });
 
   it('C28391 (+) default = 1, usual reg', async () => {
-    const { data } = await register.usualReg(socket);
+    const { data } = await register.usualReg();
     const meta = await socket.userMeta;
     expect(meta.user_risk_coefficient).toEqual(1);
     const result = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta WHERE id_user = ${data.id} AND ma_users_meta.key = 'user_risk_coefficient'`);
@@ -42,7 +37,7 @@ describe('User risk coefficient tests', () => {
   it('C28392 (+) user_risk_coefficient = 1 when in db != 1', async () => {
     currentUser = users.pop();
     await setUserRiskCoef(currentUser.id, 0.25);
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
     const meta = await socket.userMeta;
     expect(meta.user_risk_coefficient).toEqual(1);
   });
@@ -50,7 +45,7 @@ describe('User risk coefficient tests', () => {
   it('C28393 (+) set user_risk_coefficient = 0.5', async () => {
     currentUser = users.pop();
 
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
     const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
@@ -70,7 +65,7 @@ describe('User risk coefficient tests', () => {
   it('C28394 (+) set user_risk_coefficient = 0.75', async () => {
     currentUser = users.pop();
 
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
     const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
@@ -90,7 +85,7 @@ describe('User risk coefficient tests', () => {
   it('C28395 (+) set user_risk_coefficient = 10', async () => {
     currentUser = users.pop();
 
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
     const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
@@ -110,7 +105,7 @@ describe('User risk coefficient tests', () => {
   it('C28396 (+) set user_risk_coefficient = 0.123456', async () => {
     currentUser = users.pop();
 
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
     const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,
@@ -130,7 +125,7 @@ describe('User risk coefficient tests', () => {
   it('C28397 (+) set user_risk_coefficient = 0.000005 (minimum value)', async () => {
     currentUser = users.pop();
 
-    await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+    await userList.loginWithParams(currentUser.email, currentUser.password);
     const singleMatch = await getSingleMatch(PREMATCH);
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(
       (await generateOrdinaryCoupon(singleMatch)), singleMatch,

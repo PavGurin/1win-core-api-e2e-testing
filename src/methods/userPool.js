@@ -5,13 +5,13 @@ import { banking } from './banking';
 
 export const userPool = {
 
-  async usersWithBalanceRubAndConfirmCodes(socket, usersNumber, balanceAmount) {
+  async usersWithBalanceRubAndConfirmCodes(usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut(socket);
-      const newUser = await register.regMailWithConfirmationCodes(socket);
+      await logOut();
+      const newUser = await register.regMailWithConfirmationCodes();
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -28,13 +28,13 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithBalanceRub(socket, usersNumber, balanceAmount) {
+  async usersWithBalanceRub(usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut(socket);
-      const newUser = await register.usualReg(socket);
+      await logOut();
+      const newUser = await register.usualReg();
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -51,13 +51,13 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithBalanceUsd(socket, usersNumber, balanceAmount) {
+  async usersWithBalanceUsd(usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut(socket);
-      const newUser = await register.oneClickRegUSD(socket);
+      await logOut();
+      const newUser = await register.oneClickRegUSD();
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -74,7 +74,7 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithBalanceEur(socket, usersNumber, balanceAmount) {
+  async usersWithBalanceEur(usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
@@ -97,13 +97,13 @@ export const userPool = {
     await mysqlConnection.executeQuery(query);
     return users;
   },
-  async usersWithEmailMailru(socket, usersNumber, balanceAmount) {
+  async usersWithEmailMailru(usersNumber, balanceAmount) {
     const users = [];
     let query = `UPDATE 1win.ma_balance SET amount = ${balanceAmount} WHERE id_user in(`;
     for (let i = 0; i < usersNumber; i++) {
       /* eslint no-await-in-loop: 'off' */
-      await logOut(socket);
-      const newUser = await register.usualRegMailru(socket);
+      await logOut();
+      const newUser = await register.usualRegMailru();
       users.push({
         email: newUser.data.email,
         password: newUser.data.password,
@@ -122,9 +122,10 @@ export const userPool = {
   },
 
   // для генерации юзеров с депозитами в рублях
-  async usersWithDepositRub(socket, usersNumber, depositAmount, depositNumber = 1) {
-    const users = await userPool.usersWithEmailMailru(socket,
-      usersNumber, depositAmount * depositNumber);
+  async usersWithDepositRub(usersNumber, depositAmount, depositNumber = 1) {
+    const users = await userPool.usersWithEmailMailru(
+      usersNumber, depositAmount * depositNumber,
+    );
     const date = new Date();
     users.forEach(async (user) => {
       for (let i = 1; i <= depositNumber; i++) {
@@ -135,9 +136,10 @@ export const userPool = {
   },
 
   // для генерации юзеров, которым был трасфер в рублях
-  async usersWithTransferRub(socket, usersNumber, depositAmount, depositNumber = 1) {
-    const users = await userPool.usersWithEmailMailru(socket,
-      usersNumber, depositAmount * depositNumber);
+  async usersWithTransferRub(usersNumber, depositAmount, depositNumber = 1) {
+    const users = await userPool.usersWithEmailMailru(
+      usersNumber, depositAmount * depositNumber,
+    );
     const date = new Date();
     users.forEach(async (user) => {
       for (let i = 1; i <= depositNumber; i++) {
@@ -149,9 +151,10 @@ export const userPool = {
 
 
   // для генерации юзеров с депозитами в долларах
-  async usersWithDepositUSD(socket, usersNumber, depositAmount, depositNumber = 1) {
-    const users = await userPool.usersWithBalanceUsd(socket,
-      usersNumber, depositAmount * depositNumber);
+  async usersWithDepositUSD(usersNumber, depositAmount, depositNumber = 1) {
+    const users = await userPool.usersWithBalanceUsd(
+      usersNumber, depositAmount * depositNumber,
+    );
     const date = new Date();
     users.forEach(async (user) => {
       for (let i = 1; i <= depositNumber; i++) {

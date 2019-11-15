@@ -5,7 +5,7 @@ import { userList } from '../../src/methods/userList';
 const PREMATCH = 'prematch';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney(socket);
+  await userList.loginWithRealMoney();
 });
 
 
@@ -22,7 +22,7 @@ describe('maxBetAmount', () => {
     const { data: { maxBetAmount: maxBetAmount1 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount1);
 
-    await makeOrdinaryBet(socket, coupon, betAmount);
+    await makeOrdinaryBet(coupon, betAmount);
 
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount2);

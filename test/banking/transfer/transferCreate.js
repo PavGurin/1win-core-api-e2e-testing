@@ -1,13 +1,10 @@
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { checkErrMsg } from '../../../src/responseChecker';
-import { getNewSocket } from '../../global';
 
 describe('Transfer with money - RUB', () => {
-  let socket;
   beforeEach(async () => {
-    socket = await getNewSocket();
-    await userList.loginWithRealMoney(socket);
+    await userList.loginWithRealMoney();
   });
 
   it('C19371 (+) With money', async () => {
@@ -80,7 +77,7 @@ describe('Transfer with money - RUB', () => {
 
 describe('Transfer with money - USD', () => {
   beforeEach(async () => {
-    await userList.loginWithRubUsd(socket);
+    await userList.loginWithRubUsd();
   });
 
   it('C19373 (+) With money + USD, amount = 0.1 USD', async () => {
@@ -128,7 +125,7 @@ describe('Transfer with money - USD', () => {
 
 describe('Transfer without money', () => {
   beforeEach(async () => {
-    await register.oneClickReg(socket);
+    await register.oneClickReg();
   });
 
   it('C19367 (-) Without money , not enough amount + RUB', async () => {

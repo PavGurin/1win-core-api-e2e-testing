@@ -5,7 +5,7 @@ describe('Registration domain tests', () => {
   // Домен не выводится в socket.user_meta, надо проверять в бд
 
   it('C28379 (+) one click reg without visit_domain', async () => {
-    const { data } = await register.oneClickReg(socket);
+    const { data } = await register.oneClickReg();
     // console.log(data);
     const meta = await socket.userMeta;
     expect(meta.registration_domain).toBeUndefined();
@@ -37,7 +37,7 @@ describe('Registration domain tests', () => {
   });
 
   it('C28383 (+) usual reg without visit_domain ', async () => {
-    const { data } = await register.usualReg(socket);
+    const { data } = await register.usualReg();
     // console.log(data);
     const meta = await socket.userMeta;
     expect(meta.registration_domain).toBeUndefined();

@@ -20,6 +20,6 @@ export function checkCaseInfoByTypeId(data, idCases, caseTypeId, id) {
 
 export function checkCaseResult(data, max, min) {
   expect(data.status).toEqual(200);
-  expect(data.data.result).toBeGreaterThanOrEqual(max);
-  expect(data.data.result).toBeLessThanOrEqual(min);
+  expect(data.data.result).toBeLessThanOrEqual(max);
+  expect(data.data.result).toBeGreaterThanOrEqual(min);
 }

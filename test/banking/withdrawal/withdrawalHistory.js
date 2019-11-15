@@ -4,32 +4,23 @@ import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
 import { userPool } from '../../../src/methods/userPool';
 import { userList } from '../../../src/methods/userList';
-import { getNewSocket } from '../../global';
 
 // returns withdrawals sorted by time
 describe('Withdrawal history', () => {
-  const USERS_NUMBER = 2;
+  const USERS_NUMBER = 1;
   const BALANCE = 120;
   let receivedMail = {};
   let currentUser = {};
   let users = [];
-  let socket;
-
-  beforeAll(async () => {
-    socket = await getNewSocket();
-    // формируем пул юзеров
-    users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
-  });
 
   beforeEach(async () => {
-    socket = await getNewSocket();
+    // формируем пул юзеров
+    users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
   });
-
-  afterEach(async () => { await socket.disconnect(); });
 
   describe('User without money', () => {
     it('C19359 - (+) without withdrawal', async () => {
-      await register.oneClickReg(socket);
+      await register.oneClickReg();
       const { data } = await socket.send('BANKING:withdrawal-history');
       // console.log(data);
       expect(data.length).toEqual(0);
@@ -39,11 +30,11 @@ describe('Withdrawal history', () => {
   describe('User with money', () => {
     beforeEach(async () => {
       currentUser = users.pop();
-      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+      await userList.loginWithParams(currentUser.email, currentUser.password);
     });
 
     it('C19360 -(+) with withdrawal @dev', async () => {
-      await banking.withdrawalCreate(socket, '1111222233334444', 'card_rub', 'RUB', 100);
+      await banking.withdrawalCreate('1111222233334444', 'card_rub', 'RUB', 100);
       // задержка для получения письма
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);
@@ -58,12 +49,12 @@ describe('Withdrawal history', () => {
 
 
     it('C396397 (+) - Sort list, first must be last withdrawal ', async () => {
-      await banking.transferCreate(socket, 20, 'RUB');
+      await banking.transferCreate(20, 'RUB');
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);
       await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
 
-      await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
+      await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
 
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);

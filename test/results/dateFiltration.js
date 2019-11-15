@@ -2,7 +2,8 @@ import { getDateDaysAgo } from '../../src/methods/utils';
 import { checkResultsByDate } from '../../src/expects/exResults';
 import { checkErrMsg } from '../../src/responseChecker';
 
-describe('Results with date filtration', () => {
+// TODO пока нет результатов на стейдже
+describe.skip('Results with date filtration', () => {
   it('C22707 - (+) today', async () => {
     const date = getDateDaysAgo(0);
     const { data } = await socket.send('RESULT:results-all', {

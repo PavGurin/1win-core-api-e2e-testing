@@ -3,7 +3,7 @@ import { randomStr } from '../randomizer';
 
 export const userList = {
 
-  async loginWithParams(socket, login, password, tg_hash, loginParams) {
+  async loginWithParams(login, password, tg_hash, loginParams) {
     return socket.send('USER:auth-login', {
       login,
       password,
@@ -12,7 +12,7 @@ export const userList = {
     });
   },
 
-  async loginWithRub(socket) {
+  async loginWithRub() {
     return socket.send('USER:auth-login', {
       login: 'test_withdrawal@mailinator.com',
       password: '123123',
@@ -20,7 +20,7 @@ export const userList = {
     });
   },
 
-  async loginWithRubUsd(socket) {
+  async loginWithRubUsd() {
     // Должен быть баланс в валюте отличной от рублей
     return socket.send('USER:auth-login', {
       login: 'test_withdrawal2@mailinator.com',
@@ -29,8 +29,17 @@ export const userList = {
     });
   },
 
+  async loginWithRubUsdCase() {
+    // Должен быть баланс в валюте отличной от рублей
+    return socket.send('USER:auth-login', {
+      login: 'hedj72@1win.xyz',
+      password: '123123',
+      tg_hash: randomStr(5),
+    });
+  },
+
   // С реальными деньгами! Использовать аккуратно)
-  async loginWithRealMoney(socket) {
+  async loginWithRealMoney() {
     return socket.send('USER:auth-login', {
       login: 'nogm75@1win.xyz',
       password: 'qatester',
@@ -39,7 +48,7 @@ export const userList = {
   },
 
 
-  async loginTransferToUser(socket) {
+  async loginTransferToUser() {
     // Пользователь, которому приходят переводы
     return socket.send('USER:auth-login', {
       login: 'test_transfer@test.xyz',

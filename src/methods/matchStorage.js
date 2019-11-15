@@ -64,6 +64,7 @@ export async function getSingleMatch(service) {
       }
     }
   }
+  // eslint-disable-next-line no-console
   return console.log('error in betStatus method or there are no any matches available for bet');
 }
 
@@ -91,14 +92,16 @@ export async function getInactiveSingleMatch(service) {
           return Object.values(data.data.matchMap)[m];
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.log('Error in blocked bet search method');
       }
     }
   }
+  // eslint-disable-next-line no-console
   return console.log('error in betStatus method or there are no any matches available for bet');
 }
 
-export const getMatchHistory = async (socket, {
+export const getMatchHistory = async ({
   betType = ['ordinary', 'express'],
   limit = 20,
   ...params

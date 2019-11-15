@@ -421,13 +421,23 @@ Object {
   },
   "btc_usd": Object {
     "amount_rules": Object {
+      "EUR": Object {
+        "max": 3300,
+        "min": 25,
+      },
       "RUB": Object {
         "max": 210000,
         "min": 1750,
       },
+      "USD": Object {
+        "max": 3500,
+        "min": 25,
+      },
     },
     "currency": Array [
       "RUB",
+      "USD",
+      "EUR",
     ],
     "name": "btc_usd",
     "text": Object {
@@ -452,14 +462,13 @@ Object {
     ],
     "name": "card",
     "placeholder_text": Object {
-      "en": "First 6 digit of card number",
-      "ru": "Первые 6 цифр номера карты",
+      "en": "Bank card number",
+      "ru": "Номер банковской карты",
     },
-    "position": 1,
-    "regex": "^\\\\d{6,18}$",
+    "regex": "^\\\\d{16,18}$",
     "regex_text": Object {
-      "en": "Enter your first 6 digits of bank card number at format: 0000-11",
-      "ru": "Введите первые 6 цифр номера Вашей банковской карты в формате: 0000-11",
+      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
+      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
     },
     "replace": Array [
       "[^\\\\d]",
@@ -482,13 +491,13 @@ Object {
     ],
     "name": "card_rub",
     "placeholder_text": Object {
-      "en": "First 6 digit of card number",
-      "ru": "Первые 6 цифр номера карты",
+      "en": "Bank card number",
+      "ru": "Номер банковской карты",
     },
-    "regex": "^\\\\d{6,18}$",
+    "regex": "^\\\\d{16,18}$",
     "regex_text": Object {
-      "en": "Enter your first 6 digits of bank card number at format: 0000-11",
-      "ru": "Введите первые 6 цифр номера Вашей банковской карты в формате: 0000-11",
+      "en": "Enter your bank card number at format: 0000-1111-2222-3333",
+      "ru": "Введите номер Вашей банковской карты в формате: 0000-1111-2222-3333",
     },
     "replace": Array [
       "[^\\\\d]",
@@ -501,13 +510,23 @@ Object {
   },
   "eth_usd": Object {
     "amount_rules": Object {
+      "EUR": Object {
+        "max": 3300,
+        "min": 25,
+      },
       "RUB": Object {
         "max": 210000,
         "min": 1400,
       },
+      "USD": Object {
+        "max": 3500,
+        "min": 25,
+      },
     },
     "currency": Array [
       "RUB",
+      "USD",
+      "EUR",
     ],
     "name": "eth_usd",
     "text": Object {

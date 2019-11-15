@@ -3,22 +3,14 @@ import { randomNum, randomStr } from '../../src/randomizer';
 import { checkErrorMsg } from '../../src/responseChecker';
 import { checkRegInfo } from '../../src/expects/exUser';
 import { register } from '../../src/methods/register';
-import { getNewSocket } from '../global';
 
 describe('Register -Usual schema', () => {
-  let socket;
-
-  beforeEach(async () => {
-    socket = await getNewSocket();
-  });
-
-  afterEach(() => socket.disconnect());
   // (+) for positive tests (-) for negative tests
   it('C19305 (+) + visit_domain + PartnerKey', async () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       name: testStr,
       email: `${testStr}_test@xyz.com`,
       phone: `921${testNum}`,
@@ -36,7 +28,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -54,7 +46,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -71,7 +63,7 @@ describe('Register -Usual schema', () => {
   it('C19308 (-) - visit_domain - PartnerKey', async () => {
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: randomStr(),
       email: `${randomStr()}test@xyz.com`,
@@ -88,7 +80,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(2);
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -105,7 +97,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(17);
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -121,7 +113,7 @@ describe('Register -Usual schema', () => {
   it('C19311 (-) short phone number', async () => {
     const testStr = randomStr();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -137,7 +129,7 @@ describe('Register -Usual schema', () => {
   it('C19312 (-) long phone number', async () => {
     const testStr = randomStr();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -154,7 +146,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr();
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -171,7 +163,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(5);
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: testStr,
       email: `${testStr}_test@xyz.com`,
@@ -188,7 +180,7 @@ describe('Register -Usual schema', () => {
     const testStr = randomStr(19);
     const testNum = randomNum();
 
-    const { data } = await register.usualReg(socket, {
+    const { data } = await register.usualReg({
       isShort: false,
       name: randomStr(),
       email: `${randomStr()}_test@xyz.com`,

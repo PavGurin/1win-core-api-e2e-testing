@@ -23,7 +23,7 @@ module.exports = {
         'no-plusplus': 'off',
         camelcase: 'off',
         'import/prefer-default-export': 'off',
-        'no-unused-vars': 'warn',
-        'no-unused-expressions': 'warn'
+        'no-unused-vars': 'off',
+        'no-unused-expressions': 'off',
     }
 };
