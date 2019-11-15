@@ -1,15 +1,9 @@
 // import jest from 'jest';
 import SocketClient from '../src/index';
 
-export const getNewSocket = async () => {
-  const socket = new SocketClient({});
-  await socket.connect();
-  return socket;
-};
-
 let socket;
 
-beforeAll(async () => {
+beforeEach(async () => {
   socket = new SocketClient({});
   await socket.connect();
   global.socket = socket;
@@ -21,6 +15,6 @@ beforeAll(async () => {
   jest.setTimeout(40000);
 });
 
-afterAll(async () => {
+afterEach(async () => {
   socket.disconnect();
 });

@@ -18,41 +18,35 @@ const EXPRESS = 'express';
 
 describe('Bets get', () => {
   it('C22020 (-) user without bet history', async () => {
-    await register.oneClickReg(socket);
+    await register.oneClickReg();
     const { data } = await getMatchById(25);
     // console.log(data);
     checkError404(data, 'Ставка не найдена');
   });
 
   it('C22021 (-) without ID field', async () => {
-    await register.oneClickReg(socket);
+    await register.oneClickReg();
     const { data } = await getMatchById();
     // console.log(data);
     checkErrorMsg(data, 'Bad request, id is required');
   });
 
   it('C22022 (-) empty ID field', async () => {
-    await register.oneClickReg(socket);
+    await register.oneClickReg();
     const { data } = await getMatchById('');
     // console.log(data);
     checkError404(data, 'Ставка не найдена');
   });
 
-  it('C22023 (-) non authorized user get bet', async () => {
-    const { data } = await getMatchById(25);
-    // console.log(data);
-    checkError404(data, 'Ставка не найдена');
-  });
-
   it('C22024 (+) get ordinary bet by id', async () => {
-    const { data: login } = await userList.loginWithRealMoney(socket);
+    const { data: login } = await userList.loginWithRealMoney();
     const singleMatch = await getSingleMatch(PREMATCH);
     // console.log(singleMatch);
     const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
-    await makeOrdinaryBet(socket, coupon, 10);
+    await makeOrdinaryBet(coupon, 10);
 
-    const { data: betsMap } = await getMatchHistory(socket, {
+    const { data: betsMap } = await getMatchHistory({
       betType: ORDINARY,
       limit: 1,
     });
@@ -69,7 +63,7 @@ describe('Bets get', () => {
   });
 
   it('C22025 (+) get express bet by id', async () => {
-    const { data: login } = await userList.loginWithRealMoney(socket);
+    const { data: login } = await userList.loginWithRealMoney();
     const { data: { sportTournamentMap } } = await sportTournaments(PREMATCH, 'all');
     // console.log(sportTournamentMap);
 
@@ -82,7 +76,7 @@ describe('Bets get', () => {
     // console.log(coupon);
     await makeExpressBet(Object.values(coupon));
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory(socket, {
+    const { data: betsMap } = await getMatchHistory({
       betType: EXPRESS,
       limit: 1,
     });

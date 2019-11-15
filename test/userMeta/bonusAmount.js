@@ -4,46 +4,46 @@ import { userList } from '../../src/methods/userList';
 
 describe('Bonus amount tests', () => {
   it('C28628 (+) one click register rub, bonus_amount = 0 ', async () => {
-    await register.oneClickReg(socket);
+    await register.oneClickReg();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
   it('C28629 (+) one click register usd, bonus_amount = 0 ', async () => {
-    await register.oneClickRegUSD(socket);
+    await register.oneClickRegUSD();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
   it('C28630 (+) one click register eur, bonus_amount = 0 ', async () => {
-    await register.oneClickRegEUR(socket);
+    await register.oneClickRegEUR();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
   it('C28631 (+) usual register, bonus_amount = 0', async () => {
-    await register.usualReg(socket);
+    await register.usualReg();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
   it('C28632 (+) set bonus_amount 200 in db', async () => {
-    const { data } = await register.oneClickReg(socket);
+    const { data } = await register.oneClickReg();
     await setUserBonusAmount(data.id, 200);
-    await userList.loginWithParams(socket, data.email, data.password);
+    await userList.loginWithParams(data.email, data.password);
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(200);
   });
 
   it('C28633 (+) set bonus_amount 12345.67 in db', async () => {
-    const { data } = await register.oneClickReg(socket);
+    const { data } = await register.oneClickReg();
     await setUserBonusAmount(data.id, 12345.67);
-    await userList.loginWithParams(socket, data.email, data.password);
+    await userList.loginWithParams(data.email, data.password);
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(12345.67);

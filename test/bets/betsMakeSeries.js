@@ -15,7 +15,7 @@ const LIVE = 'live';
 const ORDINARY = 'ordinary';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney(socket);
+  await userList.loginWithRealMoney();
 });
 
 describe('Series', () => {

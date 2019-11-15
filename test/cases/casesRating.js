@@ -1,18 +1,14 @@
 import { cases } from '../../src/methods/cases';
 import { register } from '../../src/methods/register';
-import { getNewSocket } from '../global';
 
 describe('Get raiting cases', () => {
   describe('RUB', () => {
-    let socket;
-
-    beforeAll(async () => {
-      socket = await getNewSocket();
-      await register.oneClickReg(socket);
+    beforeEach(async () => {
+      await register.oneClickReg();
     });
 
     it('C483526 - valid request cases rating', async () => {
-      const data = await cases.raitingCase(socket);
+      const data = await cases.raitingCase();
 
       // console.log(data);
       expect(data.status).toEqual(200);
@@ -21,15 +17,12 @@ describe('Get raiting cases', () => {
   });
 
   describe('USD', () => {
-    let socket;
-
-    beforeAll(async () => {
-      socket = await getNewSocket();
-      await register.oneClickRegUSD(socket);
+    beforeEach(async () => {
+      await register.oneClickRegUSD();
     });
 
     it('C483527 -  valid request cases rating', async () => {
-      const data = await cases.raitingCase(socket);
+      const data = await cases.raitingCase();
 
       // console.log(data);
       expect(data.status).toEqual(200);

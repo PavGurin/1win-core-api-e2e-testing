@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[` Get data about user from user.meta C26424 - all expects 1`] = `
+Object {
+  "1win_tester": false,
+  "bonus_amount": 0,
+  "email_editable": true,
+  "full_block": Object {
+    "initial": false,
+  },
+  "games": Object {
+    "initial": true,
+  },
+  "ignore_mts": false,
+  "password_need_to_be_changed": false,
+  "personal_domain_id": "",
+  "rules_accepted": true,
+  "test_val": true,
+  "user_demo_withdrawal": false,
+  "user_risk_coefficient": 1,
+  "verification_status": 0,
+  "withdrawal_block": false,
+  "withdrawal_manual_control": false,
+}
+`;

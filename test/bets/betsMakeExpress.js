@@ -10,7 +10,7 @@ const PREMATCH = 'prematch';
 const LIVE = 'live';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney(socket);
+  await userList.loginWithRealMoney();
 });
 
 describe('Express', () => {

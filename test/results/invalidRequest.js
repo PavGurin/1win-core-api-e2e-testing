@@ -13,7 +13,7 @@ describe('Results with date filtration', () => {
     expect(JSON.stringify(data)).toEqual('{}');
   });
 
-  it('C650508 - (-) date and time filtration', async () => {
+  it.skip('C650508 - (-) date and time filtration', async () => {
     const date = getDateDaysAgo(2);
     const hours = getDateHoursAgo(24 * 2 + 4);
     const { data } = await socket.send('RESULT:results-all', {

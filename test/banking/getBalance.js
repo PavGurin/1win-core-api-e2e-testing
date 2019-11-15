@@ -3,14 +3,14 @@ import { register } from '../../src/methods/register';
 
 describe('Balance get', () => {
   it('C19353 (+) Without money', async () => {
-    await register.oneClickReg(socket);
+    await register.oneClickReg();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
     expect(data).toMatchSnapshot();
   });
 
   it('C19354 (+) With money rub ', async () => {
-    await userList.loginWithRub(socket);
+    await userList.loginWithRub();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
     expect(data['0'].balance).not.toEqual(0);
@@ -22,7 +22,7 @@ describe('Balance get', () => {
   });
 
   it('C21429 (+) Balance USD, RUB, EUR > 0', async () => {
-    await userList.loginWithRealMoney(socket);
+    await userList.loginWithRealMoney();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
     expect(data).toMatchSnapshot();

@@ -1,7 +1,7 @@
 import { randomNum, randomStr } from '../randomizer';
 import { mysqlConnection } from './mysqlConnection';
 
-export const updateProfile = (socket, newProfile) => socket.send('USER:profile-update',
+export const updateProfile = newProfile => socket.send('USER:profile-update',
   {
     name: randomStr(),
     email: `${randomStr(5)}_test@new.xyz`,
@@ -13,20 +13,20 @@ export const updateProfile = (socket, newProfile) => socket.send('USER:profile-u
     ...newProfile,
   });
 
-export async function changeCurrency(currency, socket) {
+export async function changeCurrency(currency) {
   return socket.send('USER:profile-changeCurrency', {
     currency,
   });
 }
 
-export async function logOut(socket) {
+export async function logOut() {
   // Выход текущего пользователя
   return socket.send('USER:auth-logout', {
     tg_hash: randomStr(5),
   });
 }
 
-export async function sendUserDataToEmail(socket, emailToSend,
+export async function sendUserDataToEmail(emailToSend,
   oneClickRegEmail, oneClickRegPassword) {
   return socket.send('USER:profile-credentialsByEmail', {
     email: emailToSend,
@@ -35,13 +35,13 @@ export async function sendUserDataToEmail(socket, emailToSend,
   });
 }
 
-export async function forgotRecovery(socket, account) {
+export async function forgotRecovery(account) {
   return socket.send('USER:forgot-recovery', {
     account,
   });
 }
 
-export async function forgotConfirm(socket, userId, code, password, repeat_password) {
+export async function forgotConfirm(userId, code, password, repeat_password) {
   return socket.send('USER:forgot-confirm', {
     userId,
     code,

@@ -6,7 +6,7 @@ import { mysqlConnection } from './mysqlConnection';
 
 export const banking = {
 
-  async transferCreateAll(socket, targetEmail, amount, currency) {
+  async transferCreateAll(targetEmail, amount, currency) {
     return socket.send('BANKING:transfer-create', {
       targetEmail,
       amount,
@@ -14,15 +14,22 @@ export const banking = {
     });
   },
 
-  async transferCreate(socket, amount, currency) {
+  async transferCreate(amount, currency) {
     return socket.send('BANKING:transfer-create', {
       targetEmail: 'test_transfer@test.xyz',
       amount,
       currency,
     });
   },
+  async transferCreateAccount(amount, currency) {
+    return socket.send('BANKING:transfer-create', {
+      account: 'test_transfer@test.xyz',
+      amount,
+      currency,
+    });
+  },
 
-  async withdrawalCreate(socket, wallet, payment_system, currency, amount) {
+  async withdrawalCreate(wallet, payment_system, currency, amount) {
     return socket.send('BANKING:withdrawal-create', {
       amount,
       wallet,
@@ -32,7 +39,7 @@ export const banking = {
     // console.log(JSON.stringify(result, null, 2));
   },
 
-  async depositCreate(socket, wallet, paymentType, currency, amount) {
+  async depositCreate(wallet, paymentType, currency, amount) {
     return socket.send('BANKING:deposit-create', {
       amount,
       wallet,
@@ -41,7 +48,7 @@ export const banking = {
     });
   },
 
-  async depositCreateRequest(socket, wallet, paymentType, currency, amount) {
+  async depositCreateRequest(wallet, paymentType, currency, amount) {
     return socket.send('BANKING:deposit-create-request', {
       amount,
       wallet,
@@ -50,7 +57,7 @@ export const banking = {
     });
   },
 
-  async balanceCheck(socket) {
+  async balanceCheck() {
     const balanceData = await socket.send('GET:balance', {
       tg_hash: randomStr(5),
     });
@@ -67,7 +74,7 @@ export const banking = {
     return result[0].status;
   },
 
-  async checkWithdrawalPossible(socket, moneyAmount) {
+  async checkWithdrawalPossible(moneyAmount) {
     return socket.send('BANKING:withdrawal-check', { amount: moneyAmount });
   },
 

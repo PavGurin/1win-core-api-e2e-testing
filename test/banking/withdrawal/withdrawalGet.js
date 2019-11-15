@@ -4,23 +4,19 @@ import { userPool } from '../../../src/methods/userPool';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
 import { mail } from '../../../src/methods/mail';
-import { getNewSocket } from '../../global';
 
 describe('Withdrawal get', () => {
-  const USERS_NUMBER = 2;
+  const USERS_NUMBER = 1;
   const BALANCE = 220;
   let receivedMail = {};
   let currentUser = {};
   let users = [];
-  let socket;
 
-  beforeAll(async () => {
-    socket = await getNewSocket();
+  beforeEach(async () => {
     // формируем пул юзеров
-    users = await userPool.usersWithBalanceRubAndConfirmCodes(socket, USERS_NUMBER, BALANCE);
+    users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
   });
 
-  afterAll(async () => { socket.disconnect(); });
   describe('Invalid Id withdrawal', () => {
     it('C19364 (-) Get - Bad request, id is required ', async () => {
       const { data } = await socket.send('BANKING:withdrawal-get', { id: null });
@@ -38,11 +34,11 @@ describe('Withdrawal get', () => {
   describe('Withdrawal get card_rub', () => {
     beforeEach(async () => {
       currentUser = users.pop();
-      await userList.loginWithParams(socket, currentUser.email, currentUser.password);
+      await userList.loginWithParams(currentUser.email, currentUser.password);
     });
 
     it('C19363 (+) Get - 100 RUB card_rub ', async () => {
-      await banking.withdrawalCreate(socket, '5469550073662048', 'card_rub', 'RUB', 100);
+      await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
 
       // задержка для получения письма
       await sleep(4000);
@@ -62,7 +58,7 @@ describe('Withdrawal get', () => {
 
 
     it('C19362 (+) Get - 100 RUB money-transfer ', async () => {
-      await banking.transferCreate(socket, 20, 'RUB');
+      await banking.transferCreate(20, 'RUB');
       // задержка, чтобы письмо успело придти на почту
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);

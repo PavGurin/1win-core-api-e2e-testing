@@ -38,7 +38,7 @@ export async function makeExpressBet(coupon) {
     });
 }
 
-export async function makeOrdinaryBet(socket, coupon, amount = 10) {
+export async function makeOrdinaryBet(coupon, amount = 10) {
   return socket.send('BETS:bets-make',
     {
       betsMap: {
@@ -62,6 +62,7 @@ export async function makeOrdinaryBet(socket, coupon, amount = 10) {
 
 export async function generateSeriesCoupon(coupon, amount) {
   const data = '';
+  // eslint-disable-next-line no-console
   console.log(data);
 }
 

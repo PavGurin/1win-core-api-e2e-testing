@@ -14,7 +14,7 @@ const LIVE = 'live';
 const ORDINARY = 'ordinary';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney(socket);
+  await userList.loginWithRealMoney();
 });
 
 describe('Ordinary bets prematch', () => {
@@ -25,7 +25,7 @@ describe('Ordinary bets prematch', () => {
     const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].error).toEqual(false);
@@ -42,9 +42,9 @@ describe('Ordinary bets prematch', () => {
     const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, betAmount);
+    const betResponse = await makeOrdinaryBet(coupon, betAmount);
     // console.log(betResponse);
-    const { data: betsMap } = await getMatchHistory(socket, {
+    const { data: betsMap } = await getMatchHistory({
       limit,
       betType,
     });
@@ -64,7 +64,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
     coupon.matchId += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -81,7 +81,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
     coupon.service = LIVE;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -99,7 +99,7 @@ describe('Ordinary bets prematch', () => {
     coupon.coefficient += 0.2;
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -115,7 +115,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
     coupon.typeId += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -131,7 +131,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
     coupon.outCome += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -147,7 +147,7 @@ describe('Ordinary bets prematch', () => {
     // console.log(coupon);
     coupon.specialValue += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -165,7 +165,7 @@ describe('Ordinary bets live @master', () => {
     const coupon = generateOrdinaryCoupon(singleMatch);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].error).toEqual(false);
@@ -179,7 +179,7 @@ describe('Ordinary bets live @master', () => {
     const coupon = await generateOrdinaryCoupon(singleMatch, 1);
     // console.log(coupon);
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(Object.values(betResponse.data)[1].error.errorMessage).toEqual('Betting on match is closed');
@@ -194,7 +194,7 @@ describe('Ordinary bets live @master', () => {
     // console.log(coupon);
     coupon.matchId += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -211,7 +211,7 @@ describe('Ordinary bets live @master', () => {
     // console.log(coupon);
     coupon.service = PREMATCH;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -228,7 +228,7 @@ describe('Ordinary bets live @master', () => {
     // console.log(coupon);
     coupon.coefficient = 999;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.status).toEqual(200);
@@ -244,7 +244,7 @@ describe('Ordinary bets live @master', () => {
     // console.log(coupon);
     coupon.typeId += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -260,7 +260,7 @@ describe('Ordinary bets live @master', () => {
     // console.log(coupon);
     coupon.outCome += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
@@ -276,7 +276,7 @@ describe('Ordinary bets live @master', () => {
     // console.log(coupon);
     coupon.specialValue += 1;
 
-    const betResponse = await makeOrdinaryBet(socket, coupon, 10);
+    const betResponse = await makeOrdinaryBet(coupon, 10);
     // console.log(betResponse);
 
     expect(betResponse.data[coupon.couponId].status).toEqual(400);
