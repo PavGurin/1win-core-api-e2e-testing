@@ -121,6 +121,7 @@ describe('Cases winner tests', () => {
       await setUserWithdrawalBlock(currentUser.id);
       await setUserCasesWinner(currentUser.id);
       await userList.loginWithParams(currentUser.email, currentUser.password);
+      sleep(5);
     });
 
     it('C28429 (+) cases_winner = true + withdrawal_block = true, case 1  (min cost 10 rub)', async () => {

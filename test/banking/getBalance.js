@@ -25,6 +25,11 @@ describe('Balance get', () => {
     await userList.loginWithRealMoney();
     const { data } = await socket.send('BANKING:balance-get');
     // console.log(data);
-    expect(data).toMatchSnapshot();
+    expect(data['0'].balance).not.toEqual(0);
+    expect(data['0'].currency).toEqual('RUB');
+    expect(data['1'].balance).not.toEqual(0);
+    expect(data['1'].currency).toEqual('USD');
+    expect(data['2'].balance).not.toEqual(0);
+    expect(data['2'].currency).toEqual('EUR');
   });
 });
