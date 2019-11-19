@@ -30,6 +30,4 @@ export function checkRegShortInfo(data, currency) {
 export function checkSuccessRecovery(regData, recoveryReq) {
   expect(recoveryReq).toBeObject('object');
   expect(recoveryReq.userId).toEqual(regData.id);
-  expect(recoveryReq.email).satisfies(email => email.startsWith(regData.email.substr(0, 2)))
-    .and.satisfies(email => email.endsWith(regData.email.substr(5)));
 }
