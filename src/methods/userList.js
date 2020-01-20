@@ -56,4 +56,11 @@ export const userList = {
       tg_hash: randomStr(5),
     });
   },
+
+  async userWithCasinoFavourites() {
+    return socket.send('USER:auth-login', {
+      login: 'mexj60@1win.xyz',
+      password: 'emf1ak',
+    });
+  },
 };
