@@ -1,5 +1,5 @@
 image:
-  name: node:8.16.0-alpine
+  name: node:12-alpine
 
 
 variables:
