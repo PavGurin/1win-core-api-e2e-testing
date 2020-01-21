@@ -5,4 +5,3 @@ coverage/
 artifacts/
 .idea/
 package-lock.json
-src/config.js
