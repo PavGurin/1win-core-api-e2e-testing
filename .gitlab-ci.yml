@@ -28,6 +28,9 @@ lint:
 health:
   stage: health
   allow_failure: true
+  tags:
+    - docker
+    - tests
   script:
     - npm i
     - npm run test:health
