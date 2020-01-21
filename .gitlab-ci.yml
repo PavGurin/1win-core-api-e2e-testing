@@ -19,8 +19,6 @@ stages:
   tags:
     - docker
   allow_failure: true
-  before_script:
-    - printf '@1win:registry=http://fbet-gitlab.ex2b.co:4873/\n//fbet-gitlab.ex2b.co:4873/:_authToken="LNQ2AYp7C5OLh7H0kO0VLg=="\n' > .npmrc
   script:
     - npm i
     - npm run test
