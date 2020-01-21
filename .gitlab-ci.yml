@@ -10,6 +10,7 @@ stages:
   stage: tests
   tags:
     - docker
+    - tests
   allow_failure: true
   script:
     - npm i
