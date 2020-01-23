@@ -73,6 +73,7 @@ class TestrailReporter {
       await this.axiosInstance.post(`/add_results_for_cases/${this.testRunId}`, { 'results': this.res });
     } catch (e) {
       // eslint-disable-next-line no-console
+      await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
       console.log(e.response.data);
     }
     try {
