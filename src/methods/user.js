@@ -48,6 +48,12 @@ export async function forgotConfirm(userId, code, password, repeat_password) {
   });
 }
 
+export async function getPWA(platform) {
+  return socket.send('USER:profile-pwa-download', {
+    platform,
+  });
+}
+
 export async function setUserRiskCoef(userId, coef) {
   return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','user_risk_coefficient',${coef});`);
 }
