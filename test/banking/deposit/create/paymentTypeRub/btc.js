@@ -8,7 +8,7 @@ const paymentType = 'btc_usd';
 const currency = 'RUB';
 let user = {};
 
-describe('Create deposit for btc_usd - RUB', () => {
+describe('Creating deposit for btc_usd - RUB', () => {
   beforeEach(async () => {
     user = await register.oneClickReg();
   });

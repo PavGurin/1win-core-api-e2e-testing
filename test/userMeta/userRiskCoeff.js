@@ -18,7 +18,7 @@ describe('User risk coefficient tests', () => {
   });
 
 
-  it('C28390 (+) default = 1, one click reg', async () => {
+  it('C28390 (+) default = 1, one click registration', async () => {
     const { data } = await register.oneClickRegUSD();
     const meta = await socket.userMeta;
     expect(meta.user_risk_coefficient).toEqual(1);
@@ -26,7 +26,7 @@ describe('User risk coefficient tests', () => {
     expect(result[0]).toBeUndefined();
   });
 
-  it('C28391 (+) default = 1, usual reg', async () => {
+  it('C28391 (+) default = 1, email registration', async () => {
     const { data } = await register.usualReg();
     const meta = await socket.userMeta;
     expect(meta.user_risk_coefficient).toEqual(1);

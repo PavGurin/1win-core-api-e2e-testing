@@ -5,8 +5,8 @@ import { randomStr } from '../../src/randomizer';
 import { sendUserDataToEmail } from '../../src/methods/user';
 import { checkMailRequisites, checkMailTextLoginPass } from '../../src/expects/exMail';
 
-describe('Send login and password to email after one click registration', () => {
-  it('C28154 - (+) login and password to email successful after register with RUB ', async () => {
+describe('Sending login and password to email after one click registration', () => {
+  it('C28154 - (+) Registration(RUB)', async () => {
     const { data } = await register.oneClickReg();
     const emailToSend = `${randomStr(10)}@ahem.email`;
     const sendData = await sendUserDataToEmail(emailToSend, data.email, data.password);
@@ -16,7 +16,7 @@ describe('Send login and password to email after one click registration', () => 
     checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'staging@fastmail.com');
     checkMailTextLoginPass(receivedMail.text, data.email, data.password);
   });
-  it('C28155 - (+) login and password to email successful after register with USD ', async () => {
+  it('C28155 - (+) Registration(USD) ', async () => {
     const { data } = await register.oneClickRegUSD();
     const emailToSend = `${randomStr(10)}@ahem.email`;
     const sendData = await sendUserDataToEmail(emailToSend, data.email, data.password);
@@ -26,7 +26,7 @@ describe('Send login and password to email after one click registration', () => 
     checkMailRequisites(receivedMail, '1Win - Ваш аккаунт 1win', 'Info - 1Win', 'staging@fastmail.com');
     checkMailTextLoginPass(receivedMail.text, data.email, data.password);
   });
-  it('C28156 - (+) login and password to email successful after register with EUR ', async () => {
+  it('C28156 - (+) Registration(EUR)', async () => {
     const { data } = await register.oneClickRegEUR();
     const emailToSend = `${randomStr(10)}@ahem.email`;
     const sendData = await sendUserDataToEmail(emailToSend, data.email, data.password);

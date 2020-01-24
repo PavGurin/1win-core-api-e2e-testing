@@ -21,9 +21,7 @@ export async function changeCurrency(currency) {
 
 export async function logOut() {
   // Выход текущего пользователя
-  return socket.send('USER:auth-logout', {
-    tg_hash: randomStr(5),
-  });
+  return socket.send('USER:auth-logout', {});
 }
 
 export async function sendUserDataToEmail(emailToSend,

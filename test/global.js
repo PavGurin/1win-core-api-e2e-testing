@@ -1,4 +1,3 @@
-// import jest from 'jest';
 import SocketClient from '../src/index';
 
 let socket;

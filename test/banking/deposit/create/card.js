@@ -6,7 +6,7 @@ import { register } from '../../../../src/methods/register';
 const paymentType = 'card';
 const currency = 'USD';
 
-describe.skip('Create deposite for card_rub - USD @master', () => {
+describe.skip('Creating deposit for card_rub(USD @master)', () => {
   beforeEach(async () => {
     await register.oneClickRegUSD();
   });
@@ -80,7 +80,7 @@ describe.skip('Create deposite for card_rub - USD @master', () => {
   });
 });
 
-describe.skip('Create deposite for card_rub invalid - USD', () => {
+describe.skip('Creating deposit for card_rub invalid(USD)', () => {
   it(' amount < min amount', async () => {
     const { data } = await banking.depositCreate('', paymentType, currency, 0.6);
     // console.log(data);
@@ -99,7 +99,7 @@ describe.skip('Create deposite for card_rub invalid - USD', () => {
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
-  it(' amount doudle > max amount ', async () => {
+  it('amount type is "double" > max amount ', async () => {
     const { data } = await banking.depositCreate('', paymentType, currency, 100000.56);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');

@@ -1,7 +1,7 @@
 import { banking } from '../../src/methods/banking';
 import { checkErrMsg } from '../../src/responseChecker';
 
-describe('Unauthorized ', () => {
+describe('Unauthorized requests to banking service', () => {
   const currency = 'RUB';
   const paymentType = 'card_rub';
   const payment_system = 'card_rub';

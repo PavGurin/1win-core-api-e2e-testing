@@ -3,7 +3,7 @@ import { register } from '../../src/methods/register';
 import { forgotRecovery } from '../../src/methods/user';
 import { checkSuccessRecovery } from '../../src/expects/exUser';
 
-describe('Auth recovery forgot', () => {
+describe('Recovery user data by different methods', () => {
   it('C19318 (+) recovery by email', async () => {
     const { data: regData } = await register.oneClickReg();
     // console.log(regData);

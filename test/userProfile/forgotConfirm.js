@@ -5,7 +5,7 @@ import { sleep } from '../../src/methods/utils';
 import { checkMailRequisites } from '../../src/expects/exMail';
 import { forgotConfirm, forgotRecovery } from '../../src/methods/user';
 
-describe('Auth recovery confirm', () => {
+describe('Conformation methods for user data recovery', () => {
   it('C19316 (+) with correct code', async () => {
     const user = await register.regMailWithConfirmationCodes();
     const sentReq = await forgotRecovery(user.data.email);

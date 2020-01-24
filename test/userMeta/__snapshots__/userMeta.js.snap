@@ -23,3 +23,28 @@ Object {
   "withdrawal_manual_control": false,
 }
 `;
+
+exports[` Get user data from from user.meta C26424 - all expects 1`] = `
+Object {
+  "1win_tester": false,
+  "bonus_amount": 0,
+  "email_editable": true,
+  "full_block": Object {
+    "initial": false,
+  },
+  "games": Object {
+    "initial": true,
+  },
+  "ignore_mts": false,
+  "is_vip_domain": false,
+  "match_provider_id": 0,
+  "password_need_to_be_changed": false,
+  "rules_accepted": true,
+  "test_val": true,
+  "user_demo_withdrawal": false,
+  "user_risk_coefficient": 1,
+  "verification_status": 0,
+  "withdrawal_block": false,
+  "withdrawal_manual_control": false,
+}
+`;
