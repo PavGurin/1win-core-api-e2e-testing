@@ -4,35 +4,35 @@ import { updateProfile } from '../../src/methods/user';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
 
 describe('Email editable tests', () => {
-  it('C28369 (+) email_editable = true after one click reg with rub', async () => {
+  it('C28369 (+) email_editable = true after one click registration with rub', async () => {
     await register.oneClickReg();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.email_editable).toEqual(true);
   });
 
-  it('C28370 (+) email_editable = true after one click reg with usd', async () => {
+  it('C28370 (+) email_editable = true after one click registration with usd', async () => {
     await register.oneClickRegUSD();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.email_editable).toEqual(true);
   });
 
-  it('C28371 (+) email_editable = true after one click reg with eur', async () => {
+  it('C28371 (+) email_editable = true after one click registration with eur', async () => {
     await register.oneClickRegEUR();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.email_editable).toEqual(true);
   });
 
-  it('C28372 (+) email_editable = false after usual registration', async () => {
+  it('C28372 (+) email_editable = false after email registration', async () => {
     await register.usualReg();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.email_editable).toEqual(false);
   });
 
-  it('C28373 (+) email_editable = false after one click reg and change email', async () => {
+  it('C28373 (+) email_editable = false after one click registration and change email', async () => {
     const { data } = await register.oneClickReg();
     await updateProfile({
       email: `${randomStr(10)}@test.ru`,
@@ -47,7 +47,7 @@ describe('Email editable tests', () => {
     expect(res[0].value).toEqual('0');
   });
 
-  it('C28374 (-) email_editable = true after one click reg and not successful change email', async () => {
+  it('C28374 (-) email_editable = true after one click registration and not successful change email', async () => {
     const { data } = await register.oneClickReg();
     await socket.send('USER:profile-update', {
       email: `${randomStr(10)}_@test.ru`,

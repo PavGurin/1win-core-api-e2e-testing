@@ -7,7 +7,7 @@ import {
 } from '../../src/methods/better';
 import { logOut } from '../../src/methods/user';
 
-describe('Unauthorized ', () => {
+describe('Unauthorized requests to bet services', () => {
   const PREMATCH = 'prematch';
 
   it('C22023 (-) non authorized user get bet', async () => {

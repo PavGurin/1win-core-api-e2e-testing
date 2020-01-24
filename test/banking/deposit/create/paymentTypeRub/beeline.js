@@ -4,17 +4,17 @@ import { register } from '../../../../../src/methods/register';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
 
-describe('Create deposite for beeline_rub', () => {
+describe('Creating deposit for beeline_rub', () => {
   const paymentType = 'beeline_rub';
   const currency = 'RUB';
   let user = {};
 
-  describe('Create deposite for beeline_rub - RUB', () => {
+  describe('Creating deposit for beeline_rub - RUB', () => {
     beforeEach(async () => {
       user = await register.oneClickReg();
     });
 
-    it('C22485 - (+) amount = 100 & wallet = (+7)phone', async () => {
+    it('C22485 - (+) amount = 100 && wallet = (+7)phone', async () => {
       await banking.depositCreate('+79001234567', paymentType, currency, 100);
       const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
@@ -23,7 +23,7 @@ describe('Create deposite for beeline_rub', () => {
         'beeline_rub', 'RUB');
     });
 
-    it('C22488 - min amount & wallet = symbols', async () => {
+    it('C22488 - min amount && wallet = symbols', async () => {
       await banking.depositCreate('+79215598289', paymentType, currency, 10);
       const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id}  ORDER BY id DESC ;`);
@@ -32,7 +32,7 @@ describe('Create deposite for beeline_rub', () => {
         'beeline_rub', 'RUB');
     });
 
-    it('C22489 - > min amount & wallet = symbols', async () => {
+    it('C22489 - > min amount && wallet = symbols', async () => {
       await banking.depositCreate('+79215598216', paymentType, currency, 11);
       const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC ;`);
@@ -41,7 +41,7 @@ describe('Create deposite for beeline_rub', () => {
         'beeline_rub', 'RUB');
     });
 
-    it('C22490 - max amount & wallet = numbers', async () => {
+    it('C22490 - max amount && wallet = numbers', async () => {
       await banking.depositCreate('+79215598226', paymentType, currency, 15000);
       const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC ;`);
@@ -50,7 +50,7 @@ describe('Create deposite for beeline_rub', () => {
         'beeline_rub', 'RUB');
     });
 
-    it('C22491 - < max amount & wallet = numbers', async () => {
+    it('C22491 - < max amount && wallet = numbers', async () => {
       await banking.depositCreate('+79215598236', paymentType, currency, 14999);
       const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id}  ORDER BY id DESC ;`);
@@ -60,7 +60,7 @@ describe('Create deposite for beeline_rub', () => {
     });
   });
 
-  describe('Create deposite for beeline_rub invalid - RUB', () => {
+  describe('Creating deposit for beeline_rub invalid - RUB', () => {
     beforeEach(async () => {
       await register.oneClickReg();
     });

@@ -58,9 +58,7 @@ export const banking = {
   },
 
   async balanceCheck() {
-    const balanceData = await socket.send('GET:balance', {
-      tg_hash: randomStr(5),
-    });
+    const balanceData = await socket.send('GET:balance', {});
     return balanceData.data.primary.amount;
   },
 

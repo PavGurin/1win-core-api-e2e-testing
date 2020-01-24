@@ -1,6 +1,6 @@
 import { checkErrMsg } from '../../src/responseChecker';
 
-describe('Casino search check', () => {
+describe('Casino games search', () => {
   it('C20487 - Search a game with empty text field', async () => {
     const { data } = await socket.send('CASINO-3:games-search', {});
 

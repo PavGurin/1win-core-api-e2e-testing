@@ -3,28 +3,28 @@ import { setUserBonusAmount } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 
 describe('Bonus amount tests', () => {
-  it('C28628 (+) one click register rub, bonus_amount = 0 ', async () => {
+  it('C28628 (+) one click registration RUB, bonus_amount = 0 ', async () => {
     await register.oneClickReg();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
-  it('C28629 (+) one click register usd, bonus_amount = 0 ', async () => {
+  it('C28629 (+) one click registration USD, bonus_amount = 0 ', async () => {
     await register.oneClickRegUSD();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
-  it('C28630 (+) one click register eur, bonus_amount = 0 ', async () => {
+  it('C28630 (+) one click registration EUR, bonus_amount = 0 ', async () => {
     await register.oneClickRegEUR();
     const meta = await socket.userMeta;
     // console.log(meta);
     expect(meta.bonus_amount).toEqual(0);
   });
 
-  it('C28631 (+) usual register, bonus_amount = 0', async () => {
+  it('C28631 (+) email registration, bonus_amount = 0', async () => {
     await register.usualReg();
     const meta = await socket.userMeta;
     // console.log(meta);

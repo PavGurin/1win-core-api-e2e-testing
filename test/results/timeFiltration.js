@@ -3,7 +3,7 @@ import { checkResultsByTime } from '../../src/expects/exResults';
 
 describe('Results with time filtration', () => {
   // !!! тесты могут фейлиться из-за бага https://fbet-gitlab.ex2b.co/backend/tasks/issues/191
-  it.skip('C617603 - (+) 4 hours ago', async () => {
+  it.skip('C617603 - (+) filter: 4 hours ago', async () => {
     const date = getDateHoursAgo(4);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
@@ -17,7 +17,7 @@ describe('Results with time filtration', () => {
     checkResultsByTime(data, date);
   });
 
-  it.skip('C617604 - (+) 1 hour ago', async () => {
+  it.skip('C617604 - (+) filter: 1 hour ago', async () => {
     const date = getDateHoursAgo(1);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
@@ -31,7 +31,7 @@ describe('Results with time filtration', () => {
     checkResultsByTime(data, date);
   });
 
-  it.skip('C617605 - (+) 24 hours ago', async () => {
+  it.skip('C617605 - (+) filter: 24 hours ago', async () => {
     const date = getDateHoursAgo(24);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
@@ -45,7 +45,7 @@ describe('Results with time filtration', () => {
     checkResultsByTime(data, date);
   });
 
-  it.skip('C617606 - (+) 50 hours ago', async () => {
+  it.skip('C617606 - (+) filter: 50 hours ago', async () => {
     const date = getDateHoursAgo(50);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
@@ -59,7 +59,7 @@ describe('Results with time filtration', () => {
     checkResultsByTime(data, date);
   });
 
-  it('C617607 - (-) future time', async () => {
+  it('C617607 - (-) filter: future time', async () => {
     getDateHoursAgo(-10);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {
@@ -73,7 +73,7 @@ describe('Results with time filtration', () => {
     expect(JSON.stringify(data)).toEqual('{}');
   });
 
-  it('C648112 - (-) invalid time', async () => {
+  it('C648112 - (-) filter: invalid time', async () => {
     getDateHoursAgo(-10);
     // console.log(date);
     const { data } = await socket.send('RESULT:results-all', {

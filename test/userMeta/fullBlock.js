@@ -3,8 +3,8 @@ import { setUserFullBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { sleep } from '../../src/methods/utils';
 
-describe('Full block tests', () => {
-  describe('no full block', () => {
+describe('full_block users', () => {
+  describe('without full block', () => {
     it('C28640 (+) full_block = false by default', async () => {
       await register.oneClickReg();
       const meta = await socket.userMeta;

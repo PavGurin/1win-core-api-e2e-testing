@@ -6,7 +6,7 @@ import { checkRegInfo } from '../../src/expects/exUser';
 import { register } from '../../src/methods/register';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
 
-describe('Register with sub id parameter', () => {
+describe('Registration with sub id parameter', () => {
   const visit_domain = 'some_domain';
   const partner_key = 'test001';
 

@@ -4,7 +4,7 @@ import { checkErrorMsg } from '../../src/responseChecker';
 import { checkRegInfo } from '../../src/expects/exUser';
 import { register } from '../../src/methods/register';
 
-describe('Register -Usual schema', () => {
+describe('Register - Usual schema', () => {
   // (+) for positive tests (-) for negative tests
   it('C19305 (+) + visit_domain + PartnerKey', async () => {
     const testStr = randomStr();

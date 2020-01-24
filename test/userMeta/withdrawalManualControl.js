@@ -11,7 +11,7 @@ import { usersWithManualControl } from '../../src/methods/usersWithBlockAndManua
 describe('Withdrawal manual control tests', () => {
   const BLOCKED_WALLET = '9898777766668989';
 
-  describe('users with no withdrawal_manual_control', () => {
+  describe('users without withdrawal_manual_control', () => {
     it('C28385 (+) withdrawal_manual_control = false by default', async () => {
       await register.oneClickReg();
       const meta = await socket.userMeta;

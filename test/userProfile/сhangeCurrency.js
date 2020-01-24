@@ -3,7 +3,7 @@ import { checkErrMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
 import { changeCurrency } from '../../src/methods/user';
 
-describe('Change currency when user have currency = rub', () => {
+describe('Changing currency when user have currency = rub', () => {
   beforeEach(async () => {
     await register.oneClickReg();
   });
@@ -39,7 +39,7 @@ describe('Change currency when user have currency = rub', () => {
     checkErrMsg(data, 400, 'Bad request, currency is required, no default value provided');
   });
 
-  it('C27446 -should be bad request, without param currency ', async () => {
+  it('C27446 - should be bad request, without param currency ', async () => {
     const { data } = await changeCurrency(undefined);
 
     checkErrMsg(data, 400, 'Bad request, currency is required, no default value provided');
@@ -60,14 +60,14 @@ describe('Change currency when user have currency = rub', () => {
   });
 });
 
-describe('Change currency when user have currency != rub', () => {
+describe('Changing currency when user have currency != rub', () => {
   it('C27449 - should be success with RUB after reg one click with EUR', async () => {
     await register.oneClickRegEUR();
     const { data } = await changeCurrency('RUB');
     expect(data.currency).toEqual('RUB');
   });
 
-  it('C27450 - should be success with EUR after reg one click with USD', async () => {
+  it('C27450 - should be success with EUR after oneClickReg with USD', async () => {
     await register.oneClickRegUSD();
     // console.log(data1);
     const { data } = await changeCurrency('EUR');
@@ -76,7 +76,7 @@ describe('Change currency when user have currency != rub', () => {
     expect(data.currency).toEqual('EUR');
   });
 
-  it('C27451 - should be success with RUB after reg usual with USD', async () => {
+  it('C27451 - should be success with RUB after email registration with USD', async () => {
     await register.usualReg();
     // console.log(data1);
     const { data } = await changeCurrency('EUR');

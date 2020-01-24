@@ -2,7 +2,7 @@ import { checkErrMsg } from '../../src/responseChecker';
 import { checkRegShortInfo } from '../../src/expects/exUser';
 import { register } from '../../src/methods/register';
 
-describe('Register', () => {
+describe('Registration', () => {
   const currency = 'RUB';
 
   describe('Short schema w/o currency', () => {
