@@ -60,7 +60,7 @@ bets:
     - npm run test:bets
   artifacts:
     reports:
-      junit: artifacts/test-output.xml
+      junit: artifacts/bets-output.xml
 
 user-profile:
   stage: tests
