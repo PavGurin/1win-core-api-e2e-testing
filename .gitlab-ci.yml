@@ -47,8 +47,9 @@ banking:
   script:
     - npm i
     - npm run test:banking
-  variables:
-    $CYPRESS_TESTRAIL_PROJECT_ID: "4"
+  only:
+    variables:
+      - $CYPRESS_TESTRAIL_PROJECT_ID == 4
 
 bets:
   stage: tests
