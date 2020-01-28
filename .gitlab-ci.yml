@@ -46,6 +46,9 @@ banking:
   script:
     - npm i
     - npm run test:banking
+  artifacts:
+    reports:
+      junit: artifacts/test-output.xml
 
 bets:
   stage: tests
@@ -55,6 +58,9 @@ bets:
   script:
     - npm i
     - npm run test:bets
+  artifacts:
+    reports:
+      junit: artifacts/test-output.xml
 
 user-profile:
   stage: tests
