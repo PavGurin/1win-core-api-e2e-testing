@@ -1,9 +1,6 @@
 image:
   name: node:12-alpine
 
-variables:
-  CYPRESS_TESTRAIL_PROJECT_ID: 6
-
 stages:
   - lint
   - health
@@ -50,9 +47,10 @@ banking:
     - npm i
     - npm run test:banking
 
-
 bets:
   stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
@@ -60,6 +58,8 @@ bets:
 
 user-profile:
   stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
