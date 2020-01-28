@@ -69,6 +69,7 @@ backend_staging:
   variables:
     TEST_URL: https://1win.dev/
     TEST_FILTER: "@master"
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
   <<: *api_test
 
 #backend_production:
