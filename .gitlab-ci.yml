@@ -48,7 +48,7 @@ banking:
     - npm i
     - npm run test:banking
   variables:
-    $JEST_TESTRAIL_PROJECT_ID: 4
+    $CYPRESS_TESTRAIL_PROJECT_ID: 4
 
 bets:
   stage: tests
