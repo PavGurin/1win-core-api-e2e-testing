@@ -44,6 +44,9 @@ banking:
   script:
     - npm i
     - npm run test:banking
+  only:
+    variables:
+      - $JEST_TESTRAIL_PROJECT_ID
 
 bets:
   stage: tests
