@@ -5,7 +5,7 @@ const config = {
   runName: `${process.env.CI_COMMIT_REF_NAME}:${process.env.TEST_URL}#${process.env.CI_PIPELINE_ID}`,
   username: process.env.CYPRESS_TESTRAIL_USER,
   password: process.env.CYPRESS_TESTRAIL_PASSWORD,
-  projectId: process.env.CYPRESS_TESTRAIL_PROJECT_ID,
+  projectId: process.env.CYPRESS_TESTRAIL_PROJECT_ID || process.env.JEST_TESTRAIL_PROJECT_ID,
   filter: process.env.TEST_FILTER,
 };
 
