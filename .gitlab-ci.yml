@@ -40,20 +40,32 @@ health:
 
 banking:
   stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
     - npm run test:banking
+  artifacts:
+    reports:
+      junit: artifacts/test-output.xml
 
 bets:
   stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
     - npm run test:bets
+  artifacts:
+    reports:
+      junit: artifacts/bets-output.xml
 
 user-profile:
   stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
@@ -63,6 +75,7 @@ backend_staging:
   variables:
     TEST_URL: https://1win.dev/
     TEST_FILTER: "@master"
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
   <<: *api_test
 
 #backend_production:
