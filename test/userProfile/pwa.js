@@ -22,7 +22,7 @@ describe('Downloading pwa by user for different devices', () => {
     const pwa = await getPWA('pwa-desktop');
     checkSuccess(pwa);
   });
-  it('C1743057 (-) sending integer into platform name', async () => {
+  it('C1745257 (-) sending integer into platform name', async () => {
     const pwa = await getPWA(11);
     checkErrMsg(pwa.data, 400, 'Bad request, platform should have a type of string, but found number');
   });

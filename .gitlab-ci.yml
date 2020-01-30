@@ -14,7 +14,7 @@ stages:
   allow_failure: true
   script:
     - npm i
-    - npm run test
+    - npm run test-backend-auto
   artifacts:
     reports:
       junit: artifacts/test-output.xml
@@ -71,14 +71,68 @@ user-profile:
     - npm i
     - npm run test:user-profile
 
-semi-auto:
+common:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
-    - npm run test
+    - npm run test:common
+
+general:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:general
+
+matchStorage:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:matchStorage
+
+matchStorage2:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:matchStorage2
+
+matchTranslations:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:matchtranslations
+
+recoupment:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:recoupment
+
+results:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:results
 
 backend_staging:
   variables:
