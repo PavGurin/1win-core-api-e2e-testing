@@ -71,11 +71,20 @@ user-profile:
     - npm i
     - npm run test:user-profile
 
+semi-auto:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test
+
 backend_staging:
   variables:
     TEST_URL: https://1win.dev/
     TEST_FILTER: "@master"
-    CYPRESS_TESTRAIL_PROJECT_ID: 4
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
   <<: *api_test
 
 #backend_production:

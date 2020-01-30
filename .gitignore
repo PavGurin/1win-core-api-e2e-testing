@@ -5,3 +5,4 @@ coverage/
 artifacts/
 .idea/
 package-lock.json
+junit.xml
