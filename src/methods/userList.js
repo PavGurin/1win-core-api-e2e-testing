@@ -56,4 +56,12 @@ export const userList = {
       password: 'emf1ak',
     });
   },
+
+  async userWithSeveralDeposits() {
+    // пользователь, у которого 20 депозитов
+    return socket.send('USER:auth-login', {
+      login: 'rizg54@1win.xyz',
+      password: '8cs3bh',
+    });
+  },
 };

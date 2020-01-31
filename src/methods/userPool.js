@@ -139,7 +139,7 @@ export const userPool = {
     const date = new Date();
     users.forEach(async (user) => {
       for (let i = 1; i <= depositNumber; i++) {
-        await banking.createDepositInBD(user.id, depositAmount, date, 'mts_rub', '9119998877', 1);
+        await banking.createDepositInBD(user.id, 'RUB', depositAmount, date, 'mts_rub', '9119998877', 1);
       }
     });
     return users;
@@ -153,7 +153,7 @@ export const userPool = {
     const date = new Date();
     users.forEach(async (user) => {
       for (let i = 1; i <= depositNumber; i++) {
-        await banking.createDepositInBD(user.id, depositAmount, date, 'money-transfer', 'sender: 136', 1);
+        await banking.createDepositInBD(user.id, 'RUB', depositAmount, date, 'money-transfer', 'sender: 136', 1);
       }
     });
     return users;
@@ -168,7 +168,7 @@ export const userPool = {
     const date = new Date();
     users.forEach(async (user) => {
       for (let i = 1; i <= depositNumber; i++) {
-        await banking.createDepositInBDUSD(user.id, depositAmount, date, 'card', '3636595984847171', 1);
+        await banking.createDepositInBD(user.id, 'USD', depositAmount, date, 'card', '3636595984847171', 1);
       }
     });
     return users;

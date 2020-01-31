@@ -76,38 +76,13 @@ export const banking = {
     return socket.send('BANKING:withdrawal-check', { amount: moneyAmount });
   },
 
-  async createDepositInBD(userId, balanceAmount, date,
-    paymentSystem, walletId, status, merchantName) {
-    if (merchantName) {
-      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+  async createDepositInBD(userId, currency = 'RUB', balanceAmount = 1000,
+    date = new Date(), paymentSystem = 'card_rub', walletId = '4132788660217293', status = 1, merchantName = 'payterra') {
+    await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
                               currency, time, payment_system, wallet, status, ps_data, date, merchant_name) 
-                              VALUES (${userId}, ${balanceAmount}, 'RUB',
+                              VALUES (${userId}, ${balanceAmount}, '${currency}',
                                      '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
                                      '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', '${merchantName}')`);
-    } else {
-      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
-                              currency, time, payment_system, wallet, status, ps_data, date) 
-                              VALUES (${userId}, ${balanceAmount}, 'RUB',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
-                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
-    }
-  },
-
-  async createDepositInBDUSD(userId, balanceAmount, date,
-    paymentSystem, walletId, status, merchantName) {
-    if (merchantName) {
-      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
-                              currency, time, payment_system, wallet, status, ps_data, date, merchant_name) 
-                              VALUES (${userId}, ${balanceAmount}, 'USD',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
-                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', '${merchantName}')`);
-    } else {
-      await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
-                              currency, time, payment_system, wallet, status, ps_data, date) 
-                              VALUES (${userId}, ${balanceAmount}, 'USD',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
-                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
-    }
   },
 
   async createWithdrawalInBD(userId, withdrawalAmount, date,
