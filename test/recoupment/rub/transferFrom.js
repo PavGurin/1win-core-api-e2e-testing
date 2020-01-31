@@ -6,7 +6,9 @@ import { checkErrMsg } from '../../../src/responseChecker';
 
 // юзеры, которые делют исходящий перевод
 describe('Users with transfer from', () => {
-  const USERS_NUMBER = 1;
+  const TEN_ROUBLES_CASE_ID = 5;
+  const HUNDRED_ROUBLES_CASE_ID = 3;
+  const USERS_NUMBER = 5;
   const DEPOSIT_AMOUNT = 200;
   let users = [];
   let currentUser = {};
@@ -33,24 +35,24 @@ describe('Users with transfer from', () => {
     expect(data.result).toEqual(false);
 
     const { data: withdrawalCreate } = await banking.withdrawalCreate('79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
-    // console.log(create);
+    // console.log(withdrawalCreate);
     expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
   });
 
   it('C1021310 - (-) transfer part of deposit, spent part of remaining money, withdraw money', async () => {
     await banking.transferCreate(100, 'RUB');
-    await cases.playCaseWithoutChance(1);
+    await cases.playCaseWithoutChance(TEN_ROUBLES_CASE_ID);
     const { data } = await banking.checkWithdrawalPossible(10);
     expect(data.result).toEqual(false);
 
     const { data: withdrawalCreate } = await banking.withdrawalCreate('79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
-    // console.log(create);
+    // console.log(withdrawalCreate);
     expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
   });
 
   it('C1021311 - (+) transfer part of deposit, spent remained money, withdraw amount <= balance', async () => {
     await banking.transferCreate(100, 'RUB');
-    await cases.playCaseWithoutChance(4);
+    await cases.playCaseWithoutChance(HUNDRED_ROUBLES_CASE_ID);
     const { data } = await banking.checkWithdrawalPossible(100500);
     expect(data.result).toEqual(true);
 
@@ -61,7 +63,7 @@ describe('Users with transfer from', () => {
 
   it('C1091386 - (-) transfer part of deposit, spent remained money, withdraw amount > balance', async () => {
     await banking.transferCreate(100, 'RUB');
-    await cases.playCaseWithoutChance(4);
+    await cases.playCaseWithoutChance(HUNDRED_ROUBLES_CASE_ID);
     const { data } = await banking.checkWithdrawalPossible(100500);
     expect(data.result).toEqual(true);
 

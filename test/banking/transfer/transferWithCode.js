@@ -33,6 +33,7 @@ describe('Transfer confirm with receiving code', () => {
   });
 
   it('C21436 (-) Active code of other user with 400 code response', async () => {
+    currentUser = (await userPool.usersWithBalanceRubAndConfirmCodes(1, BALANCE)).pop();
     await banking.transferCreate(20, 'RUB');
 
     const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });

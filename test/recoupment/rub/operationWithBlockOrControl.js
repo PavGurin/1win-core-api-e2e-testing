@@ -6,7 +6,8 @@ import { cases } from '../../../src/methods/cases';
 
 // Юзеры с withdrawal block & withdrawal manual control
 describe('Withdrawal block and manual control', () => {
-  const USERS_NUMBER = 1;
+  const HUNDRED_ROUBLES_CASE_ID = 3;
+  const USERS_NUMBER = 6;
   const DEPOSIT_AMOUNT = 100;
   let users = [];
   let currentUser = {};
@@ -23,12 +24,12 @@ describe('Withdrawal block and manual control', () => {
     expect(data.result).toEqual(false);
 
     const { data: withdrawalCreate } = await banking.withdrawalCreate('79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
-    // console.log(create);
+    // console.log(withdrawalCreate);
     expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
   });
 
   it('C1086846 - (+) withdrawal block, spent all deposit', async () => {
-    await cases.playCaseWithoutChance(4);
+    await cases.playCaseWithoutChance(HUNDRED_ROUBLES_CASE_ID);
     await setUserWithdrawalBlock(currentUser.id);
     const { data } = await banking.checkWithdrawalPossible(100);
     // console.log(data);
@@ -46,12 +47,12 @@ describe('Withdrawal block and manual control', () => {
     expect(data.result).toEqual(false);
 
     const { data: withdrawalCreate } = await banking.withdrawalCreate('79116665544', 'mts_rub', 'RUB', DEPOSIT_AMOUNT);
-    // console.log(create);
+    // console.log(withdrawalCreate);
     expect(withdrawalCreate.withdrawalBlocked).toEqual(true);
   });
 
   it('C1086848 - (+) withdrawal manual control, spent all deposit', async () => {
-    await cases.playCaseWithoutChance(4);
+    await cases.playCaseWithoutChance(HUNDRED_ROUBLES_CASE_ID);
     await setUserWithdrawalManualControl(currentUser.id);
     const { data } = await banking.checkWithdrawalPossible(100);
     // console.log(data);
@@ -72,7 +73,7 @@ describe('Withdrawal block and manual control', () => {
   });
 
   it('C1086872 - (+) user demo withdrawal, spent all deposit', async () => {
-    await cases.playCaseWithoutChance(4);
+    await cases.playCaseWithoutChance(HUNDRED_ROUBLES_CASE_ID);
     await setUserDemoWithdrawal(currentUser.id);
     await setUserWithdrawalBlock(currentUser.id);
     const { data } = await banking.checkWithdrawalPossible(100);

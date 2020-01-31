@@ -18,7 +18,7 @@ describe('Withdrawal with confirmation codes', () => {
     users = await userPool.usersWithBalanceRubAndConfirmCodes(USERS_NUMBER, BALANCE);
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
-    await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
+    await banking.withdrawalCreate('4553317749839107', 'card_rub', 'RUB', 100);
     // задержка для получения письма
     await sleep(4000);
     receivedMail = await mail.getMessage(currentUser.email);
@@ -32,9 +32,9 @@ describe('Withdrawal with confirmation codes', () => {
   });
 
   it('C27120 (-) Active code of other user', async () => {
-    currentUser = users.pop();
+    currentUser = (await userPool.usersWithBalanceRubAndConfirmCodes(1, BALANCE)).pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
-    await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
+    await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirm);
     expect(confirm.status).toEqual(200);
@@ -77,7 +77,7 @@ describe('Withdrawal with confirmation codes', () => {
   });
 
   it('C27221 (-) Active code of other withdrawal of this user', async () => {
-    await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
+    await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     expect(confirm.status).toEqual(200);
     checkErrMsg(confirm.data, 400, 'Неверный ключ запроса');

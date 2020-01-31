@@ -26,7 +26,7 @@ describe('Withdrawal confirm invalid', () => {
 
   it('C19339 (-) Incorrect code response 400', async () => {
     await userList.loginWithRealMoney();
-    await banking.withdrawalCreate('1111222200003333', 'card_rub', 'RUB', 100);
+    await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
     const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 99 });
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный ключ запроса');
@@ -41,7 +41,7 @@ describe('Withdrawal confirm invalid', () => {
     const transferMail = await mail.getMessage(currentUser.email);
     // console.log(transferMail);
 
-    await banking.withdrawalCreate('1234123412341234', 'card_rub', 'RUB', 100);
+    await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
 
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
     // console.log(confirmData);
