@@ -101,7 +101,7 @@ describe('One deposit', () => {
   it('C1090487 - (-) deposit + case + withdrawal + new deposit, withdraw again', async () => {
     const { data } = await cases.playCaseWithoutChance(HUNDRED_ROUBLES_CASE_ID);
     await banking.withdrawalCreate('79116665544', 'mts_rub', 'RUB', data.result / 2);
-    await banking.createDepositInBD(currentUser.id, 100, new Date(), 'mts_rub', '79111223366', 1);
+    await banking.createDepositInBD(currentUser.id, 'RUB', 100, new Date(), 'mts_rub', '79111223366', 1);
     const { data: check } = await banking.checkWithdrawalPossible(data.result / 2);
     expect(check.result).toEqual(false);
 

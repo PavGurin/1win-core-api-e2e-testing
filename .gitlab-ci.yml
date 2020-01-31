@@ -125,6 +125,15 @@ results:
     - npm i
     - npm run test:results
 
+user-history:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:user-history
+
 backend_staging:
   variables:
     TEST_URL: https://1win.dev/

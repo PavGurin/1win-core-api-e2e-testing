@@ -17,7 +17,7 @@ describe.skip('Users with bet with coeff < 1.1', () => {
     const betAmount = 100;
     const coeff = 1.09;
     const { data: user } = await register.usualRegMailru();
-    await banking.createDepositInBD(user.id, depositAmount, new Date(), 'card_rub', '2323565689897474', 1);
+    await banking.createDepositInBD(user.id, 'RUB', depositAmount, new Date(), 'card_rub', '2323565689897474', 1);
     await addBetToBD(user.id, 'RUB', betAmount, coeff, LOSE);
     await banking.setBalance(user.id, depositAmount - betAmount);
     const { data } = await cases.playCaseWithoutChance(4);
@@ -37,7 +37,7 @@ describe.skip('Users with bet with coeff < 1.1', () => {
     const betAmount = 100;
     const coeff = 1.09;
     const { data: user } = await register.usualRegMailru();
-    await banking.createDepositInBD(user.id, depositAmount, new Date(), 'card_rub', '2323565689897474', 1);
+    await banking.createDepositInBD(user.id, 'RUB', depositAmount, new Date(), 'card_rub', '2323565689897474', 1);
     await addBetToBD(user.id, 'RUB', betAmount, coeff, WIN);
     await banking.setBalance(user.id, depositAmount - betAmount + betAmount * coeff);
     const { data } = await cases.playCaseWithoutChance(4);
