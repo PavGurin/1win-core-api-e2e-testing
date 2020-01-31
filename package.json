@@ -28,7 +28,7 @@
     "test:user-meta": "jest --testPathPattern=./test/userMeta/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:user-profile": "jest --testPathPattern=./test/userProfile/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
 
-    "test:balance": "jest --testPathPattern=./test/balance/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:bonus": "jest --testPathPattern=./test/bonus/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:common": "jest --testPathPattern=./test/common/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:general": "jest --testPathPattern=./test/general/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:load": "jest --testPathPattern=./test/load/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",

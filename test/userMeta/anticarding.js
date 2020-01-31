@@ -8,9 +8,9 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -24,8 +24,8 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -40,9 +40,9 @@ describe('Anti - carding', () => {
     // console.log(user.id);
     await banking.createWithdrawalInBD(user.id, 100, new Date(), 'card_rub', '6363454521218989', 1);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -56,9 +56,9 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -72,9 +72,9 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -88,9 +88,9 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -104,9 +104,9 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);
@@ -120,9 +120,9 @@ describe('Anti - carding', () => {
     const { data: user } = await register.usualRegMailru();
     // console.log(user.id);
 
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
-    await banking.createDepositInBD(user.id, 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '55005500663311220', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '9696585874741212', '2', 'payterra');
+    await banking.createDepositInBD(user.id, 'RUB', 1000, new Date(), 'card_rub', '3344665588997700', '1', 'payterra');
     await banking.setBalance(user.id, 1000);
 
     const { data: caseResult } = await cases.playCaseWithoutChance(6);

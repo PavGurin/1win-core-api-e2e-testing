@@ -54,6 +54,10 @@ export async function getPWA(platform) {
   });
 }
 
+export async function profileMeta(userId) {
+  return socket.send('USER:profile-meta', {});
+}
+
 export async function setUserRiskCoef(userId, coef) {
   return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','user_risk_coefficient',${coef});`);
 }
@@ -85,6 +89,12 @@ export async function setUserCasesWinner(userId) {
 export async function setUserBonusAmount(userId, amount) {
   return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','bonus_amount',${amount});`);
 }
+
+export async function getUserBonusAmount(userId) {
+  const result = await mysqlConnection.executeQuery(`SELECT value FROM 1win.ma_users_meta WHERE id_user = ${userId} AND ma_users_meta.key = 'bonus_amount';`);
+  return result[0].value;
+}
+
 
 export async function setUserFullBlock(userId) {
   return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','full_block','true');`);

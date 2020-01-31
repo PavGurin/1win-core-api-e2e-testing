@@ -85,6 +85,25 @@ export const banking = {
                                      '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', '${merchantName}')`);
   },
 
+  async createTransferInBD(userId, currency = 'RUB', transferAmount = 1000,
+    date = new Date(), status = 1, senderId = 136) {
+    await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, date) 
+                              VALUES (${userId}, ${transferAmount}, '${currency}',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     'money-transfer', 'sender: ${senderId}', ${status}, '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+  },
+
+  async createPartnerWithdrawalInBD(userId, currency = 'RUB', amount = 1000,
+    partnerId = 182, date = new Date(), status = 1) {
+    await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
+                              currency, time, payment_system, wallet, status, date) 
+                              VALUES (${userId}, ${amount}, '${currency}',
+                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     'partner', 'partner:${partnerId}', ${status}, '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+  },
+
+
   async createWithdrawalInBD(userId, withdrawalAmount, date,
     paymentSystem, walletId, status, merchantName) {
     if (merchantName) {
