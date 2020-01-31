@@ -62,14 +62,17 @@ bets:
     reports:
       junit: artifacts/bets-output.xml
 
-user-profile:
+bonus:
   stage: tests
   variables:
-    CYPRESS_TESTRAIL_PROJECT_ID: 6
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
   when: manual
   script:
     - npm i
-    - npm run test:user-profile
+    - npm run test:bonus
+  artifacts:
+    reports:
+      junit: artifacts/bets-output.xml
 
 common:
   stage: tests
@@ -133,6 +136,15 @@ user-history:
   script:
     - npm i
     - npm run test:user-history
+
+user-profile:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
+  when: manual
+  script:
+    - npm i
+    - npm run test:user-profile
 
 backend_staging:
   variables:
