@@ -135,3 +135,13 @@ export const cbCurrency = (charCode, date = new Date()) => axios
   .then(({ data }) => parser.parse(data).ValCurs.Valute)
   .then(currencies => currencies.find(currency => currency.CharCode === charCode))
   .then(currency => currency.Value);
+
+export async function getCurrenciesFromDB(date) {
+  let Date = '';
+  if (date.getDay() === 7) date.setDate(date.getDate() - 1);
+  if (date.getDay() === 1) date.setDate(date.getDate() - 2);
+  date.getMonth() < 9 ? Date += `${date.getFullYear()}-0${date.getMonth() + 1}-${date.getDate()}`
+    : Date += `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const currencies = await mysqlConnection.executeQuery(`select * from 1win.ma_exchange_rates where date = '${Date}';`);
+  return currencies[0];
+}

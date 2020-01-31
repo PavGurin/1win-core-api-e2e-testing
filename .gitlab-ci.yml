@@ -119,6 +119,15 @@ matchTranslations:
     - npm i
     - npm run test:matchtranslations
 
+partner:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:partner
+
 results:
   stage: tests
   variables:
