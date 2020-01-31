@@ -35,6 +35,7 @@
     "test:matchStorage": "jest --testPathPattern=./test/matchStorage/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:matchStorage2": "jest --testPathPattern=./test/matchStorage2/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:matchTranslations": "jest --testPathPattern=./test/matchTranslations/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:partner": "jest --testPathPattern=./test/partner-integration/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:recoupment": "jest --testPathPattern=./test/recoupment/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:results": "jest --testPathPattern=./test/results/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:user-history": "jest --testPathPattern=./test/userHistory/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4"
