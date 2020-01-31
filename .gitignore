@@ -6,3 +6,5 @@ artifacts/
 .idea/
 package-lock.json
 junit.xml
+src/config.js
+yarn-error.log
