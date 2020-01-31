@@ -9,7 +9,7 @@ import { usersWithManualControl } from '../../src/methods/usersWithBlockAndManua
 
 
 describe('Withdrawal manual control tests', () => {
-  const BLOCKED_WALLET = '9898777766668989';
+  const BLOCKED_WALLET = '4775183475501655';
 
   describe('users without withdrawal_manual_control', () => {
     it('C28385 (+) withdrawal_manual_control = false by default', async () => {

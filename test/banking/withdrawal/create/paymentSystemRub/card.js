@@ -13,7 +13,7 @@ describe('Withdrawal create with valid test cases ', () => {
     await userList.loginWithRealMoney();
   });
   it('C19325 (+) With money card_rub + valid wallet', async () => {
-    const { data } = await banking.withdrawalCreate('0000111122223333', payment_system, currency, 100);
+    const { data } = await banking.withdrawalCreate('5137437961176095', payment_system, currency, 100);
     // console.log(data);
     successWithdrawalCreate(data);
   });

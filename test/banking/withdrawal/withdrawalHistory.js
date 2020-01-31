@@ -34,7 +34,7 @@ describe('Withdrawal history', () => {
     });
 
     it('C19360 -(+) with withdrawal @dev', async () => {
-      await banking.withdrawalCreate('1111222233334444', 'card_rub', 'RUB', 100);
+      await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
       // задержка для получения письма
       await sleep(4000);
       receivedMail = await mail.getMessage(currentUser.email);

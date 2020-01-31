@@ -12,14 +12,16 @@ export const userPool = {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
       const newUser = await register.regMailWithConfirmationCodes();
-      users.push({
-        email: newUser.data.email,
-        password: newUser.data.password,
-        id: newUser.data.user_id,
-        balance: balanceAmount,
-      });
-      query += `${newUser.data.user_id}`;
-      if (i !== (usersNumber - 1)) query += ', ';
+      if (newUser.data.user_id && newUser.data.email && newUser.data.password) {
+        users.push({
+          email: newUser.data.email,
+          password: newUser.data.password,
+          id: newUser.data.user_id,
+          balance: balanceAmount,
+        });
+        query += `${newUser.data.user_id}`;
+        if (i !== (usersNumber - 1)) query += ', ';
+      } else { i--; }
     }
     query += ');';
     // console.log(users);
@@ -35,14 +37,16 @@ export const userPool = {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
       const newUser = await register.usualReg();
-      users.push({
-        email: newUser.data.email,
-        password: newUser.data.password,
-        id: newUser.data.user_id,
-        balance: balanceAmount,
-      });
-      query += `${newUser.data.user_id}`;
-      if (i !== (usersNumber - 1)) query += ', ';
+      if (newUser.data.user_id && newUser.data.email && newUser.data.password) {
+        users.push({
+          email: newUser.data.email,
+          password: newUser.data.password,
+          id: newUser.data.user_id,
+          balance: balanceAmount,
+        });
+        query += `${newUser.data.user_id}`;
+        if (i !== (usersNumber - 1)) query += ', ';
+      } else { i--; }
     }
     query += ');';
     // console.log(users);
@@ -58,14 +62,16 @@ export const userPool = {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
       const newUser = await register.oneClickRegUSD();
-      users.push({
-        email: newUser.data.email,
-        password: newUser.data.password,
-        id: newUser.data.user_id,
-        balance: balanceAmount,
-      });
-      query += `${newUser.data.user_id}`;
-      if (i !== (usersNumber - 1)) query += ', ';
+      if (newUser.data.user_id && newUser.data.email && newUser.data.password) {
+        users.push({
+          email: newUser.data.email,
+          password: newUser.data.password,
+          id: newUser.data.user_id,
+          balance: balanceAmount,
+        });
+        query += `${newUser.data.user_id}`;
+        if (i !== (usersNumber - 1)) query += ', ';
+      } else { i--; }
     }
     query += ');';
     // console.log(users);
@@ -81,14 +87,16 @@ export const userPool = {
       /* eslint no-await-in-loop: 'off' */
       await logOut(socket);
       const newUser = await register.oneClickRegEUR(socket);
-      users.push({
-        email: newUser.data.email,
-        password: newUser.data.password,
-        id: newUser.data.user_id,
-        balance: balanceAmount,
-      });
-      query += `${newUser.data.user_id}`;
-      if (i !== (usersNumber - 1)) query += ', ';
+      if (newUser.data.user_id && newUser.data.email && newUser.data.password) {
+        users.push({
+          email: newUser.data.email,
+          password: newUser.data.password,
+          id: newUser.data.user_id,
+          balance: balanceAmount,
+        });
+        query += `${newUser.data.user_id}`;
+        if (i !== (usersNumber - 1)) query += ', ';
+      } else { i--; }
     }
     query += ');';
     // console.log(users);
@@ -104,14 +112,16 @@ export const userPool = {
       /* eslint no-await-in-loop: 'off' */
       await logOut();
       const newUser = await register.usualRegMailru();
-      users.push({
-        email: newUser.data.email,
-        password: newUser.data.password,
-        id: newUser.data.user_id,
-        balance: balanceAmount,
-      });
-      query += `${newUser.data.user_id}`;
-      if (i !== (usersNumber - 1)) query += ', ';
+      if (newUser.data.user_id && newUser.data.email && newUser.data.password) {
+        users.push({
+          email: newUser.data.user_id,
+          password: newUser.data.password,
+          id: newUser.data.user_id,
+          balance: balanceAmount,
+        });
+        query += `${newUser.data.user_id}`;
+        if (i !== (usersNumber - 1)) query += ', ';
+      } else { i--; }
     }
     query += ');';
     // console.log(users);
