@@ -1,3 +1,4 @@
+const stripAnsi = require('strip-ansi');
 const axios = require('axios');
 
 const config = {
@@ -55,7 +56,7 @@ class TestrailReporter {
         /* eslint quote-props: 'off' */
         'status_id': statusId(result.status),
         'case_id': titleToCaseId(result.title),
-        'comment': result.failureMessages[0],
+        'comment': stripAnsi(result.failureMessages[0]),
         'elapsed': result.duration && `${result.duration / 1000}s`,
       });
     });
