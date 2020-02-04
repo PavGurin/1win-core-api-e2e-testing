@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "jest": {
-    "testRegex": "./test/(?!global).*.[js]?$",
+    "testRegex": "./test/(?!global|.*/__snapshots__).*.[js]?$",
     "transform": {
       ".*": "./node_modules/babel-jest"
     },
@@ -27,7 +27,6 @@
     "test:health": "jest --testPathPattern=./test/health/.* --testTimeout=40000 --reporters=\"default\" --maxWorkers=4",
     "test:user-meta": "jest --testPathPattern=./test/userMeta/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:user-profile": "jest --testPathPattern=./test/userProfile/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
-
     "test:bonus": "jest --testPathPattern=./test/bonus/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:common": "jest --testPathPattern=./test/common/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:general": "jest --testPathPattern=./test/general/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
@@ -67,6 +66,7 @@
     "md5": "^2.2.1",
     "mysql2": "^1.6.5",
     "query-string": "^6.8.1",
-    "socket.io-client": "^2.2.0"
+    "socket.io-client": "^2.2.0",
+    "strip-ansi": "^6.0.0"
   }
 }
