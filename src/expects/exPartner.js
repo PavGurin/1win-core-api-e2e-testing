@@ -54,8 +54,9 @@ export function checkStatsAllAfterOneRegistrtaionCPA(receivedStatsAll, expectedR
 export function checkStatsDailyAfterOneRegistrtaion(receivedStatsDaily,
   expectedRegistrationNumber, expectedDate) {
   let expDate = '';
-  expectedDate.getMonth() < 9 ? expDate += `${expectedDate.getFullYear()}-0${expectedDate.getMonth() + 1}-${expectedDate.getDate()}`
-    : expDate += `${expectedDate.getFullYear()}-${expectedDate.getMonth() + 1}-${expectedDate.getDate()}`;
+  expectedDate.getMonth() < 9 ? expDate += `${expectedDate.getFullYear()}-0${expectedDate.getMonth() + 1}-`
+    : expDate += `${expectedDate.getFullYear()}-${expectedDate.getMonth() + 1}-`;
+  expectedDate.getDate() < 10 ? expDate += `0${expectedDate.getDate()}` : `${expectedDate.getDate()}`;
   expect(receivedStatsDaily.day_regs).toEqual(expectedRegistrationNumber);
   expect(receivedStatsDaily.date).toEqual(expDate);
   expect(receivedStatsDaily.day_payment_sum).toEqual(0);
@@ -81,9 +82,9 @@ export function checkStatsDailyAfterOneRegistrtaion(receivedStatsDaily,
 export function checkStatsDailyAfterOneRegistrtaionCPA(receivedStatsDaily,
   expectedRegistrationNumber, expectedDate) {
   let expDate = '';
-  expectedDate.getMonth() < 9 ? expDate += `${expectedDate.getFullYear()}-0${expectedDate.getMonth() + 1}-${expectedDate.getDate()}`
-    : expDate += `${expectedDate.getFullYear()}-${expectedDate.getMonth() + 1}-${expectedDate.getDate()}`;
-  expect(receivedStatsDaily.day_regs).toEqual(expectedRegistrationNumber);
+  expectedDate.getMonth() < 9 ? expDate += `${expectedDate.getFullYear()}-0${expectedDate.getMonth() + 1}-`
+    : expDate += `${expectedDate.getFullYear()}-${expectedDate.getMonth() + 1}-`;
+  expectedDate.getDate() < 10 ? expDate += `0${expectedDate.getDate()}` : `${expectedDate.getDate()}`;
   expect(receivedStatsDaily.date).toEqual(expDate);
   expect(receivedStatsDaily.day_payment_sum).toEqual(0);
   expect(receivedStatsDaily.day_deposits_amount).toEqual(0);
