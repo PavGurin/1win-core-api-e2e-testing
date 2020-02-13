@@ -74,6 +74,15 @@ bonus:
     reports:
       junit: artifacts/bets-output.xml
 
+cinema:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:cinema
+
 common:
   stage: tests
   variables:
