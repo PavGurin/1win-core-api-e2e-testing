@@ -21,6 +21,7 @@ describe('Several deposits', () => {
     // console.log(users);
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
+    await sleep(2000);
     // console.log(currentUser.email, currentUser.password);
   });
 

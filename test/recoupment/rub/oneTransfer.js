@@ -3,6 +3,7 @@ import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { cases } from '../../../src/methods/cases';
 import { checkErrMsg } from '../../../src/responseChecker';
+import { sleep } from '../../../src/methods/utils';
 
 // юзеры, которым был один трансфер
 describe('One transfer', () => {
@@ -19,6 +20,7 @@ describe('One transfer', () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
     // console.log(currentUser.email, currentUser.password);
+    await sleep(2000);
   });
 
   it('C1021299 - (-) nothing spent, withdraw money', async () => {

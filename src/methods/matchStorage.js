@@ -60,7 +60,7 @@ export async function getSingleMatch(service) {
       betStatus = Object.values(data.data.matchMap)[0].betstatus;
       // console.log(betStatus);
       if (service === 'prematch' || betStatus === ('started')) {
-        return Object.values(data.data.matchMap)[m];
+        return (Object.values(data.data.matchMap))[0];
       }
     }
   }

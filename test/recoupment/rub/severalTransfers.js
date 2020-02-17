@@ -3,6 +3,7 @@ import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { cases } from '../../../src/methods/cases';
 import { checkErrMsg } from '../../../src/responseChecker';
+import { sleep } from '../../../src/methods/utils';
 
 
 // юзеры, которым было несколько трансферов
@@ -21,6 +22,7 @@ describe('Several transfers', () => {
     await userList.loginWithParams(
       currentUser.email, currentUser.password,
     );
+    await sleep(2000);
     // console.log(currentUser.email, currentUser.password);
   });
 
