@@ -4,6 +4,7 @@ import { addBetToBD } from '../../../src/methods/betsInBD';
 import { banking } from '../../../src/methods/banking';
 import { checkErrMsg } from '../../../src/responseChecker';
 import { cases } from '../../../src/methods/cases';
+import { sleep } from '../../../src/methods/utils';
 
 // скип, по очередной версии требований ограничения на коэффициент нет
 describe.skip('Bets coeffs', () => {
@@ -19,6 +20,7 @@ describe.skip('Bets coeffs', () => {
     // console.log(users);
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
+    await sleep(2000);
   });
 
   it('C1139208 - (+), bet with coeff > 1.1 (win), withdraw amount < balance', async () => {

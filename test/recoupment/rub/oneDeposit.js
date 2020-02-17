@@ -3,7 +3,7 @@ import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { cases } from '../../../src/methods/cases';
 import { checkErrMsg } from '../../../src/responseChecker';
-
+import { sleep } from '../../../src/methods/utils';
 // юзеры с одним депозитом
 describe('One deposit', () => {
   const TEN_ROUBLES_CASE_ID = 5;
@@ -20,6 +20,7 @@ describe('One deposit', () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
     // console.log(currentUser);
+    await sleep(2000);
   });
 
   it('C1021290 - (-) nothing spent, withdraw money', async () => {

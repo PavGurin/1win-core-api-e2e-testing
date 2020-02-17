@@ -3,6 +3,7 @@ import { userList } from '../../../src/methods/userList';
 import { setUserDemoWithdrawal, setUserWithdrawalBlock, setUserWithdrawalManualControl } from '../../../src/methods/user';
 import { banking } from '../../../src/methods/banking';
 import { cases } from '../../../src/methods/cases';
+import { sleep } from '../../../src/methods/utils';
 
 // Юзеры с withdrawal block & withdrawal manual control
 describe('Withdrawal block and manual control', () => {
@@ -15,6 +16,7 @@ describe('Withdrawal block and manual control', () => {
     users = await userPool.usersWithDepositRub(USERS_NUMBER, DEPOSIT_AMOUNT);
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
+    await sleep(2000);
   });
 
   it('C1086845 - (-) withdrawal block, nothing spent', async () => {

@@ -3,6 +3,7 @@ import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { cases } from '../../../src/methods/cases';
 import { checkErrMsg } from '../../../src/responseChecker';
+import { sleep } from '../../../src/methods/utils';
 
 // юзеры, которые делют исходящий перевод
 describe('Users with transfer from', () => {
@@ -21,6 +22,7 @@ describe('Users with transfer from', () => {
       currentUser.email, currentUser.password,
     );
     // console.log(currentUser.email, currentUser.password);
+    await sleep(2000);
   });
 
   it('C1021308 - (+) transfer all deposit, can withdraw any amount', async () => {
