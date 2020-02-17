@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const config = {
   domain: '1win.testrail.io',
-  runName: `${process.env.CI_COMMIT_REF_NAME}:${process.env.TEST_URL}#${process.env.CI_PIPELINE_ID}`,
+  runName: `${process.env.CI_COMMIT_REF_NAME}: ${process.env.TEST_URL || process.env.SCRIPT_NAME} #${process.env.CI_PIPELINE_ID}`,
   username: process.env.CYPRESS_TESTRAIL_USER,
   password: process.env.CYPRESS_TESTRAIL_PASSWORD,
   projectId: process.env.CYPRESS_TESTRAIL_PROJECT_ID,

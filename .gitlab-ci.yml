@@ -42,6 +42,7 @@ banking:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'banking'
   when: manual
   script:
     - npm i
@@ -54,6 +55,7 @@ bets:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'bets'
   when: manual
   script:
     - npm i
@@ -66,6 +68,7 @@ bonus:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'bonus'
   when: manual
   script:
     - npm i
@@ -74,10 +77,31 @@ bonus:
     reports:
       junit: artifacts/bets-output.xml
 
+cases:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'cases'
+  when: manual
+  script:
+    - npm i
+    - npm run test:casino-jackpot
+
+casino:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'casino'
+  when: manual
+  script:
+    - npm i
+    - npm run test:casino-jackpot
+
 casino-jackpot:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'casino-jackpot'
   when: manual
   script:
     - npm i
@@ -87,6 +111,7 @@ cinema:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'cinema'
   when: manual
   script:
     - npm i
@@ -96,6 +121,7 @@ common:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'common'
   when: manual
   script:
     - npm i
@@ -105,6 +131,7 @@ general:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'general'
   when: manual
   script:
     - npm i
@@ -114,6 +141,7 @@ matchStorage:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'matchStorage'
   when: manual
   script:
     - npm i
@@ -123,6 +151,7 @@ matchStorage2:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'matchStorage2'
   when: manual
   script:
     - npm i
@@ -132,6 +161,7 @@ matchTranslations:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'matchTranslations'
   when: manual
   script:
     - npm i
@@ -141,6 +171,17 @@ partner:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'partner'
+  when: manual
+  script:
+    - npm i
+    - npm run test:partner
+
+recoupment:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'recoupment'
   when: manual
   script:
     - npm i
@@ -150,6 +191,7 @@ results:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'results'
   when: manual
   script:
     - npm i
@@ -159,6 +201,7 @@ user-history:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'user-history'
   when: manual
   script:
     - npm i
@@ -168,6 +211,7 @@ user-profile:
   stage: tests
   variables:
     CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'user-profile'
   when: manual
   script:
     - npm i
