@@ -38,6 +38,17 @@ export const register = {
       });
   },
 
+  async oneClickRegUAH() {
+    return socket.send('USER:auth-register',
+      {
+        isShort: true,
+        country: defaultCountry,
+        timezone: 23,
+        currency: 'UAH',
+        partner_key,
+      });
+  },
+
   async usualReg(usualRegistration) {
     return socket.send('USER:auth-register',
       {

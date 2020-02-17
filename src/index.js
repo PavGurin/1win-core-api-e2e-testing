@@ -12,8 +12,16 @@ export default class SocketClient {
     this.hash = Date.now() + Math.floor(Math.random() * 100);
     this.requestMap = {};
     this.resUsermeta = null;
+    this.resCasesStats = null;
+    this.resCasinoJackpot = null;
     this.userMeta = new Promise((res) => {
       this.resUsermeta = res;
+    });
+    this.casesStats = new Promise((res) => {
+      this.resCasesStats = res;
+    });
+    this.casinoJackpot = new Promise((res) => {
+      this.resCasinoJackpot = res;
     });
   }
 
@@ -90,6 +98,14 @@ export default class SocketClient {
       if (msg.type === 'user.meta') {
         this.resUsermeta(msg.data);
         this.userMeta = msg.data;
+      }
+      if (msg.type === 'cases-stats') {
+        this.resCasesStats(msg.data);
+        this.casesStats = msg.data;
+      }
+      if (msg.type === 'casino-jackpot') {
+        this.resCasinoJackpot(msg.data);
+        this.casinoJackpot = msg.data;
       }
       return;
     }

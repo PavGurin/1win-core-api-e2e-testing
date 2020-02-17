@@ -18,3 +18,7 @@ export function getDateHoursAgo(hoursAgo) {
   date.setHours(date.getHours() - hoursAgo);
   return date;
 }
+
+export function round(value) {
+  return Math.round(value * 100) / 100;
+}
