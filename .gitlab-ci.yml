@@ -74,6 +74,15 @@ bonus:
     reports:
       junit: artifacts/bets-output.xml
 
+casino-jackpot:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+  when: manual
+  script:
+    - npm i
+    - npm run test:casino-jackpot
+
 cinema:
   stage: tests
   variables:
