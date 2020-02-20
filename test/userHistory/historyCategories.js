@@ -68,7 +68,7 @@ describe('History categories', () => {
     const { data: user } = await register.oneClickReg();
     for (let i = 0; i < 3; i++) {
       // eslint-disable-next-line no-await-in-loop
-      await banking.createWithdrawalInBD(user.id, 100, new Date(), 'card_rub', '5520718827238343', 1, 'payterra');
+      await banking.createWithdrawalInBD(user.id, 'RUB', 100, 'card_rub', '5520718827238343', 1, new Date(), 'payterra');
     }
     const { data } = await history.categories();
     // console.log(data);
