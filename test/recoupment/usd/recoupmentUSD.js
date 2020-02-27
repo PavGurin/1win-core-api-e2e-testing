@@ -65,7 +65,7 @@ describe('One deposit', () => {
 
   it('C1086858 - (+) spent all money, withdraw amount > balance', async () => {
     const { data } = await cases.playCaseWithoutChance(HUNDRED_DOLLARS_CASE_ID);
-    console.log(data);
+    // console.log(data);
 
     const { data: withdrawalCheck } = await banking.checkWithdrawalPossible(100500);
     // console.log(withdrawalCheck);

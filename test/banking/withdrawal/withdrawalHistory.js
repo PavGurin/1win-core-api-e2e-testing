@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
@@ -36,7 +41,7 @@ describe('Withdrawal history', () => {
     it('C19360 -(+) with withdrawal @dev', async () => {
       await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
       // задержка для получения письма
-      await sleep(4000);
+      await sleep(10000);
       receivedMail = await mail.getMessage(currentUser.email);
       await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
 
@@ -50,13 +55,13 @@ describe('Withdrawal history', () => {
 
     it('C396397 (+) - Sort list, first must be last withdrawal ', async () => {
       await banking.transferCreate(20, 'RUB');
-      await sleep(4000);
+      await sleep(10000);
       receivedMail = await mail.getMessage(currentUser.email);
       await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
 
       await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
 
-      await sleep(4000);
+      await sleep(10000);
       receivedMail = await mail.getMessage(currentUser.email);
       await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
 

@@ -16,7 +16,7 @@ export const userForAutoConfirm = {
 
   async EmailBk() {
     return socket.send('USER:auth-login', {
-      login: 'lina.solodova.941@bk.ru',
+      login: 'emailbk@bk.ru',
       password: '123123',
     });
   },

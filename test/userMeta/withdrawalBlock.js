@@ -1,5 +1,10 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { register } from '../../src/methods/register';
-import { setUserWithdrawalBlock } from '../../src/methods/user';
+import { setUserWithdrawalBlock, setUserWithdrawalManualControl } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
 import { userPool } from '../../src/methods/userPool';
@@ -13,7 +18,7 @@ import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../
 import { cases } from '../../src/methods/cases';
 
 describe('Withdrawal block tests', () => {
-  const WALLET = '2552699635580001';
+  const WALLET = '5573631681598361';
   const USERS_NUMBER = 1;
   const BALANCE = 100;
   let currentUser = {};
@@ -42,13 +47,13 @@ describe('Withdrawal block tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(user.id, maxBetAmount.RUB + 1);
+      await banking.setBalance(user.id, maxBetAmount.RUB + 10);
 
       const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).toEqual('rejected');
-      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit');
+      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit_currency');
       expect(betResponse[coupon.couponId].status).toEqual(400);
     });
   });
@@ -76,7 +81,7 @@ describe('Withdrawal block tests', () => {
     it('C28401 (-) withdrawal_block = true, withdrawal confirm', async () => {
       await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      await sleep(4000);
+      await sleep(10000);
       const receivedMail = await mail.getMessage(currentUser.email);
       const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
@@ -122,7 +127,7 @@ describe('Withdrawal block tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 10);
 
       const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
@@ -134,35 +139,55 @@ describe('Withdrawal block tests', () => {
 
   describe('mail with auto confirm', () => {
     it('C28408 (-) withdrawal_block = true + @mail withdrawal', async () => {
-      const { data: user } = await usersWithBlock.userMail();
-      const { data } = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
-      // console.log(data);
-      expect(data.confirmationRequested).toEqual(false);
-      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
+      const { data } = await register.usualRegMailru();
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      // console.log(result);
+      await setUserWithdrawalBlock(data.id);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
+      // console.log(withdrawal);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28409 (-) withdrawal_block = true + @bk withdrawal', async () => {
-      const { data: user } = await usersWithBlock.userBk();
-      const { data } = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
-      // console.log(data);
-      expect(data.confirmationRequested).toEqual(false);
-      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
+      const { data } = await register.usualRegBkru();
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      // console.log(result);
+      await setUserWithdrawalBlock(data.id);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
+      // console.log(withdrawal);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28410 (-) withdrawal_block = true + @inbox withdrawal', async () => {
-      const { data: user } = await usersWithBlock.userInbox();
-      const { data } = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
-      // console.log(data);
-      expect(data.confirmationRequested).toEqual(false);
-      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
+      const { data } = await register.usualRegInboxru();
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      // console.log(result);
+      await setUserWithdrawalBlock(data.id);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
+      // console.log(withdrawal);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28411 (-) withdrawal_block = true + @list withdrawal', async () => {
-      const { data: user } = await usersWithBlock.userList();
-      const { data } = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
-      // console.log(data);
-      expect(data.confirmationRequested).toEqual(false);
-      expect(await banking.getWithdrawalStatus(user.id)).toEqual(0);
+      const { data } = await register.usualRegListru();
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      // console.log(result);
+      await setUserWithdrawalBlock(data.id);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
+      // console.log(withdrawal);
+      expect(withdrawal.confirmationRequested).toEqual(false);
+      expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
   });
 });

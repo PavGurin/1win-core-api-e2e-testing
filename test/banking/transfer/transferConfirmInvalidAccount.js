@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
@@ -37,7 +42,7 @@ describe('Transfer confirm invalid - account', () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
     await banking.withdrawalCreate('1234123412341234', 'card_rub', 'RUB', 100);
-    await sleep(4000);
+    await sleep(10000);
     const withdrawalMail = await mail.getMessage(currentUser.email);
 
     await banking.transferCreateAccount(20, 'RUB');

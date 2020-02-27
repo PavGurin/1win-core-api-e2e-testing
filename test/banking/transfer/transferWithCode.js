@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
@@ -22,7 +27,7 @@ describe('Transfer confirm with receiving code', () => {
     await userList.loginWithParams(currentUser.email, currentUser.password);
     await banking.transferCreate(20, 'RUB');
     // задержка, чтобы письмо успело придти на почту
-    await sleep(4000);
+    await sleep(10000);
     receivedMail = await mail.getMessage(currentUser.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
   });
@@ -64,7 +69,7 @@ describe('Transfer confirm with receiving code', () => {
   });
 
   it('C27217 (-) Active code of other operation that was obtained after transfer code', async () => {
-    await banking.withdrawalCreate('1234123412341234', 'card_rub', 'RUB', 100);
+    await banking.withdrawalCreate('5121640361313600', 'card_rub', 'RUB', 100);
     await sleep(4000);
     const withdrawalMail = await mail.getMessage(currentUser.email);
     // console.log(withdrawalMail);

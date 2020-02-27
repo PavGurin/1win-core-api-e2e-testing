@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { checkErrorMsg, checkSuccess } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
 import { mail } from '../../src/methods/mail';
@@ -6,9 +11,11 @@ import { checkMailRequisites } from '../../src/expects/exMail';
 import { forgotConfirm, forgotRecovery } from '../../src/methods/user';
 
 describe('Conformation methods for user data recovery', () => {
-  it('C19316 (+) with correct code', async () => {
+  it.skip('C19316 (+) with correct code //blocked cause message is not sent on staging', async () => {
+    // скип, потому что на стейдже не отправляется письмо
     const user = await register.regMailWithConfirmationCodes();
     const sentReq = await forgotRecovery(user.data.email);
+    // console.log(sentReq.data);
 
     await sleep(4000);
     const receivedMail = await mail.getMessage(user.data.email);

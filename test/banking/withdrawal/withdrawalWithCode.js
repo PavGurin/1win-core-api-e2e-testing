@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
@@ -20,7 +25,7 @@ describe('Withdrawal with confirmation codes', () => {
     await userList.loginWithParams(currentUser.email, currentUser.password);
     await banking.withdrawalCreate('4553317749839107', 'card_rub', 'RUB', 100);
     // задержка для получения письма
-    await sleep(4000);
+    await sleep(10000);
     receivedMail = await mail.getMessage(currentUser.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение вывода', 'Confirmation - 1Win', 'confirmation@fbet.top');
   });
@@ -69,7 +74,7 @@ describe('Withdrawal with confirmation codes', () => {
 
   it('C27220 (-) Active code of other operation that was obtained after withdrawal code', async () => {
     await banking.transferCreate(20, 'RUB');
-    await sleep(4500);
+    await sleep(10000);
     const transferMail = await mail.getMessage(currentUser.email);
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: transferMail.code });
     expect(confirm.status).toEqual(200);

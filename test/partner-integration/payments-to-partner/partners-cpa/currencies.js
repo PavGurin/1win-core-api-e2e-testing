@@ -43,7 +43,7 @@ describe('Payments to CPA partner, all currency combinations', () => {
   beforeAll(async () => {
     const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
     // console.log(dbResult);
-    sleep(1500);
+    await sleep(150);
   });
 
   it('C1789901 (+) Partner RUB + player RUB', async () => {

@@ -83,6 +83,57 @@ export const register = {
         ...usualRegistration,
       });
   },
+  async usualRegBkru(usualRegistration) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: false,
+        name: randomStr(),
+        email: `${randomStr(10)}_test@bk.ru`,
+        phone: randomNum().toString(),
+        password: defaultPassword,
+        repeat_password: defaultPassword,
+        country: defaultCountry,
+        timezone: 23,
+        birthday: 946587600000,
+        currency: 'RUB',
+        partner_key,
+        ...usualRegistration,
+      });
+  },
+  async usualRegListru(usualRegistration) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: false,
+        name: randomStr(),
+        email: `${randomStr(10)}_test@list.ru`,
+        phone: randomNum().toString(),
+        password: defaultPassword,
+        repeat_password: defaultPassword,
+        country: defaultCountry,
+        timezone: 23,
+        birthday: 946587600000,
+        currency: 'RUB',
+        partner_key,
+        ...usualRegistration,
+      });
+  },
+  async usualRegInboxru(usualRegistration) {
+    return socket.send('USER:auth-register',
+      {
+        isShort: false,
+        name: randomStr(),
+        email: `${randomStr(10)}_test@inbox.ru`,
+        phone: randomNum().toString(),
+        password: defaultPassword,
+        repeat_password: defaultPassword,
+        country: defaultCountry,
+        timezone: 23,
+        birthday: 946587600000,
+        currency: 'RUB',
+        partner_key,
+        ...usualRegistration,
+      });
+  },
   async regMailWithConfirmationCodes() {
     return socket.send('USER:auth-register',
       {

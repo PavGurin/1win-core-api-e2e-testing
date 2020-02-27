@@ -5,7 +5,7 @@ import {
 } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
-import { usersWithManualControl } from '../../src/methods/usersWithBlockAndManualControl';
+import { cases } from '../../src/methods/cases';
 
 
 describe('Withdrawal manual control tests', () => {
@@ -53,33 +53,48 @@ describe('Withdrawal manual control tests', () => {
 
   describe('withdrawal_manual_control = true + mail with auto confirm', () => {
     it('C28404 (+) withdrawal_manual_control = true + @mail withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
-      const { data: withdrawal } = await banking.withdrawalCreate('5698548963217458', 'card_rub', 'RUB', 100);
+      const { data } = await register.usualRegMailru();
+      await setUserWithdrawalManualControl(data.id);
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).toEqual(false);
       expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28405 (+) withdrawal_manual_control = true + @bk withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
-      const { data: withdrawal } = await banking.withdrawalCreate('5698548963217458', 'card_rub', 'RUB', 100);
+      const { data } = await register.usualRegBkru();
+      await setUserWithdrawalManualControl(data.id);
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).toEqual(false);
       expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28406 (+) withdrawal_manual_control = true + @inbox withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
-      await usersWithManualControl.userInbox();
-      const { data: withdrawal } = await banking.withdrawalCreate('5698548963217458', 'card_rub', 'RUB', 100);
+      const { data } = await register.usualRegInboxru();
+      await setUserWithdrawalManualControl(data.id);
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).toEqual(false);
       expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);
     });
 
     it('C28407 (+) withdrawal_manual_control = true + @list withdrawal', async () => {
-      const { data } = await usersWithManualControl.userMail();
-      const { data: withdrawal } = await banking.withdrawalCreate('5698548963217458', 'card_rub', 'RUB', 100);
+      const { data } = await register.usualRegListru();
+      await setUserWithdrawalManualControl(data.id);
+      await banking.createDepositInBD(data.id, 'RUB', 500);
+      await banking.setBalance(data.id, 500);
+      const { data: { result } } = await cases.playCaseWithoutChance(4);
+      const { data: withdrawal } = await banking.withdrawalCreate('5404367567655984', 'card_rub', 'RUB', result);
       // console.log(withdrawal);
       expect(withdrawal.confirmationRequested).toEqual(false);
       expect(await banking.getWithdrawalStatus(data.id)).toEqual(0);

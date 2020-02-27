@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { register } from '../../src/methods/register';
 import { setUserCasesWinner, setUserWithdrawalBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
@@ -13,7 +18,7 @@ import { successDbDeposit } from '../../src/expects/exDatabaseTests';
 import { cases } from '../../src/methods/cases';
 
 describe('Cases winner tests', () => {
-  const WALLET = '1234965822365478';
+  const WALLET = '4179554079764315';
   let currentUser = {};
   let users = [];
 
@@ -73,7 +78,7 @@ describe('Cases winner tests', () => {
     it('C28438 (+) cases_winner = true + withdrawal_block = false, withdrawal confirm', async () => {
       await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      await sleep(4000);
+      await sleep(10000);
       const receivedMail = await mail.getMessage(currentUser.email);
       const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
@@ -101,13 +106,13 @@ describe('Cases winner tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(user.id, maxBetAmount.RUB + 1);
+      await banking.setBalance(user.id, maxBetAmount.RUB + 10);
 
       const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).toEqual('rejected');
-      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit');
+      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit_currency');
       expect(betResponse[coupon.couponId].status).toEqual(400);
     });
   });
@@ -121,7 +126,7 @@ describe('Cases winner tests', () => {
       await setUserWithdrawalBlock(currentUser.id);
       await setUserCasesWinner(currentUser.id);
       await userList.loginWithParams(currentUser.email, currentUser.password);
-      sleep(5);
+      await sleep(100);
     });
 
     it('C28429 (+) cases_winner = true + withdrawal_block = true, case 1  (min cost 10 rub)', async () => {
@@ -162,7 +167,7 @@ describe('Cases winner tests', () => {
     it('C28433 (-) withdrawal_block = true, withdrawal confirm', async () => {
       const { data } = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      await sleep(5000);
+      await sleep(10000);
       const receivedMail = await mail.getMessage(currentUser.email);
       const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
@@ -202,7 +207,8 @@ describe('Cases winner tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 10);
+      // console.log(await banking.balanceCheck());
 
       const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);

@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
 import { sleep } from '../../src/methods/utils';
