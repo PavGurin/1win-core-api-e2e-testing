@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { banking } from '../../../src/methods/banking';
 import { sleep } from '../../../src/methods/utils';
@@ -22,7 +27,7 @@ describe('Transfer confirm with receiving code - account', () => {
     await userList.loginWithParams(currentUser.email, currentUser.password);
     await banking.transferCreateAccount(20, 'RUB');
     // задержка, чтобы письмо успело придти на почту
-    await sleep(4000);
+    await sleep(10000);
     receivedMail = await mail.getMessage(currentUser.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
   });
@@ -45,7 +50,7 @@ describe('Transfer confirm with receiving code - account', () => {
   it(' (-) Expired code with 404 code response', async () => {
     // на стейдже код протухнет через 30 секунд
     // на проде этот тест упадет, т.к. таймаут задан для всех тестов 40 секунд
-    await sleep(transferExpirationTime - 4000);
+    await sleep(transferExpirationTime - 10000);
     const confirmData = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     expect(confirmData.status).toEqual(200);
@@ -65,7 +70,7 @@ describe('Transfer confirm with receiving code - account', () => {
 
   it(' (-) Active code of other operation that was obtained after transfer code', async () => {
     await banking.withdrawalCreate('1234123412341234', 'card_rub', 'RUB', 100);
-    await sleep(4000);
+    await sleep(10000);
     const withdrawalMail = await mail.getMessage(currentUser.email);
     // console.log(withdrawalMail);
     const confirm = await socket.send('BANKING:transfer-confirm', { code: withdrawalMail.code });

@@ -5,7 +5,7 @@ import { sleep } from '../../src/methods/utils';
 describe.skip('одновременные запросы на игру в кейсы', () => {
   beforeEach(async () => {
     await userList.loginWithRubUsdCase();
-    sleep(3);
+    await sleep(100);
   });
 
   it('1 user одновременные запросы без подтверждения перевода', async () => {

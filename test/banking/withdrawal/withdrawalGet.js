@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { checkErrMsg } from '../../../src/responseChecker';
 import { userPool } from '../../../src/methods/userPool';
@@ -41,7 +46,7 @@ describe('Withdrawal get', () => {
       await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
 
       // задержка для получения письма
-      await sleep(4000);
+      await sleep(10000);
       receivedMail = await mail.getMessage(currentUser.email);
       const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
 
@@ -60,7 +65,7 @@ describe('Withdrawal get', () => {
     it('C19362 (+) Get - 100 RUB money-transfer ', async () => {
       await banking.transferCreate(20, 'RUB');
       // задержка, чтобы письмо успело придти на почту
-      await sleep(4000);
+      await sleep(10000);
       receivedMail = await mail.getMessage(currentUser.email);
       await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
 

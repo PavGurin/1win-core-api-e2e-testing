@@ -1,11 +1,15 @@
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
 import { userList } from '../../src/methods/userList';
+import { register } from '../../src/methods/register';
+import { banking } from '../../src/methods/banking';
 
 const PREMATCH = 'prematch';
 
 beforeEach(async () => {
-  await userList.loginWithRealMoney();
+  // await userList.loginWithRealMoney();
+  const { data: user } = await register.oneClickReg();
+  await banking.setBalance(user.id);
 });
 
 
@@ -27,6 +31,6 @@ describe('maxBetAmount', () => {
     const { data: { maxBetAmount: maxBetAmount2 } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount2);
 
-    expect(Object.values(maxBetAmount2)[0]).toEqual((Object.values(maxBetAmount1)[0] - betAmount));
+    expect(maxBetAmount2.RUB).toEqual(maxBetAmount1.RUB - betAmount);
   });
 });

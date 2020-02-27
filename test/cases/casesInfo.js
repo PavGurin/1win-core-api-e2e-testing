@@ -9,7 +9,7 @@ describe('Get all info about cases for different currencies', () => {
   describe('Registered user', () => {
     beforeEach(async () => {
       await register.oneClickReg();
-      sleep(3);
+      await sleep(100);
     });
 
     it('C1461832 - currency RUB', async () => {

@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userPool } from '../../src/methods/userPool';
 import { setUserWithdrawalManualControl } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
@@ -33,7 +38,7 @@ describe('users with withdrawal_manual_control = true', () => {
   it('C28635 (-) withdrawal_manual_control = true, withdrawal confirm', async () => {
     const ban = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
     // console.log(ban);
-    await sleep(4000);
+    await sleep(10000);
     const receivedMail = await mail.getMessage(currentUser.email);
     const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirm);
@@ -80,13 +85,13 @@ describe('users with withdrawal_manual_control = true', () => {
     // console.log(coupon);
     const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
     // console.log(maxBetAmount);
-    await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
+    await banking.setBalance(currentUser.id, maxBetAmount.RUB + 10);
 
     const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
     // console.log(betResponse);
 
     expect(betResponse[coupon.couponId].error.result).toEqual('rejected');
-    expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit');
+    expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit_currency');
     expect(betResponse[coupon.couponId].status).toEqual(400);
   });
 });

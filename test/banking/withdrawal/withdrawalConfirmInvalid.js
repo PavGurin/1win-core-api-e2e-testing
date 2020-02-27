@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
@@ -25,7 +30,7 @@ describe('Withdrawal confirm invalid', () => {
   });
 
   it('C19339 (-) Incorrect code response 400', async () => {
-    await userList.loginWithRealMoney();
+    // await userList.loginWithRealMoney();
     await banking.withdrawalCreate('4630308028175088', 'card_rub', 'RUB', 100);
     const { data } = await socket.send('BANKING:withdrawal-confirm', { code: 99 });
     // console.log(data);
@@ -37,7 +42,7 @@ describe('Withdrawal confirm invalid', () => {
     await userList.loginWithParams(currentUser.email, currentUser.password);
 
     await banking.transferCreate(20, 'RUB');
-    await sleep(4500);
+    await sleep(10000);
     const transferMail = await mail.getMessage(currentUser.email);
     // console.log(transferMail);
 

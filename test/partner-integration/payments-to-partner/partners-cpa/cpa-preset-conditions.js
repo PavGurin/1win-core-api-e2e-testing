@@ -26,7 +26,7 @@ describe('Cpa preset conditions', () => {
   beforeAll(async () => {
     const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
     // console.log(dbResult);
-    sleep(1500);
+    await sleep(150);
   });
 
   it('C1789913 (+) cpa_gambling_amount - one case, spent preset value', async () => {

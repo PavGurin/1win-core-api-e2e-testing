@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { userList } from '../../../src/methods/userList';
 import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
@@ -36,8 +41,9 @@ describe('Transfer confirm invalid', () => {
   it('C27219 (-) Active code of other operation that was obtained before transfer code', async () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
-    await banking.withdrawalCreate('1234123412341234', 'card_rub', 'RUB', 100);
-    await sleep(4000);
+    const { data } = await banking.withdrawalCreate('5121640361313600', 'card_rub', 'RUB', 100);
+    // console.log(data);
+    await sleep(10000);
     const withdrawalMail = await mail.getMessage(currentUser.email);
 
     await banking.transferCreate(20, 'RUB');

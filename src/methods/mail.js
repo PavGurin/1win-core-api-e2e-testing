@@ -5,27 +5,19 @@ import axios from 'axios';
 export const mail = {
   // получение токена для запросов
   async getToken() {
-    const tokenData = await axios.post('https://www.ahem.email/api/auth/token', {}, {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
-    // console.log(tokenData);
-    return tokenData.data.token;
-  },
-
-  // получение доступного домена
-  async getDomain() {
-    const token = await mail.getToken();
-    const properties = await axios.get('https://www.ahem.email/api/properties', {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    // console.log(properties);
-    return properties.data.allowedDomains[0];
+    try {
+      const { data } = await axios.post('https://www.ahem.email/api/auth/token', {}, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+      // console.log(data);
+      return data.token;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   },
 
   // получение письма и кода из него
@@ -38,43 +30,53 @@ export const mail = {
   async getMessage(emailAddress) {
     const token = await mail.getToken();
     const mailbox = emailAddress.match(/.*(?=@ahem.email)/)[0];
-    const mailboxData = await axios.get(`https://www.ahem.email/api/mailbox/${mailbox}/email`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-      },
-    });
-    const mailData = await axios.get(`https://www.ahem.email/api/mailbox/${mailbox}/email/${mailboxData.data[0].emailId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-      },
-    });
-    const message = {};
-    message.subject = mailData.data.subject;
-    message.text = mailData.data.html;
-    message.from_address = mailData.data.from.value[0].address;
-    message.from_name = mailData.data.from.value[0].name;
+    try {
+      const { data: mailBox } = await axios.get(`https://www.ahem.email/api/mailbox/${mailbox}/email`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      });
+      const { data } = await axios.get(`https://www.ahem.email/api/mailbox/${mailbox}/email/${mailBox[0].emailId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+        },
+      });
+      const message = {};
+      message.subject = data.subject;
+      message.text = data.html;
+      message.from_address = data.from.value[0].address;
+      message.from_name = data.from.value[0].name;
 
-    // получаем из текста письма 7 цифр подряд, после которых нет
-    // точки, символа доллара, рубля или евро
-    const regexpMatch = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|₽|€|@)/);
-    // если кода нет, возвращаем -1 в этом поле
-    // eslint-disable-next-line prefer-destructuring
-    if (regexpMatch) { message.code = regexpMatch[0]; } else message.code = -1;
-    // console.log(message);
-    await mail.deleteMessage(mailbox, mailboxData.data[0].emailId);
-    return message;
+      // получаем из текста письма 7 цифр подряд, после которых нет
+      // точки, символа доллара, рубля или евро
+      const regexpMatch = message.text.match(/\d\d\d\d\d\d\d(?!\.|\$|₽|€|@)/);
+      // если кода нет, возвращаем -1 в этом поле
+      if (regexpMatch) {
+        // eslint-disable-next-line prefer-destructuring
+        message.code = regexpMatch[0];
+      } else message.code = -1;
+      // console.log(message);
+      await mail.deleteMessage(mailbox, mailBox[0].emailId, token);
+      return message;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
   },
 
   // удаление письма
-  async deleteMessage(emailAddress, mailId) {
-    const token = await mail.getToken();
-    return axios.delete(`https://www.ahem.email/api/mailbox/${emailAddress}/email/${mailId}`, {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async deleteMessage(emailAddress, mailId, token) {
+    try {
+      await axios.delete(`https://www.ahem.email/api/mailbox/${emailAddress}/email/${mailId}`, {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
   },
 };

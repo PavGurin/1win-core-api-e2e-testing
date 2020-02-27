@@ -1,3 +1,8 @@
+/**
+ * @jest-environment node
+ */
+
+
 import { register } from '../../src/methods/register';
 import { setUserDemoWithdrawal, setUserWithdrawalBlock } from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
@@ -13,7 +18,7 @@ import { successDbDeposit } from '../../src/expects/exDatabaseTests';
 import { cases } from '../../src/methods/cases';
 
 describe('User demo withdrawal tests', () => {
-  const WALLET = '1234965822365478';
+  const WALLET = '4179554079764315';
   let currentUser = {};
   let users = [];
 
@@ -48,7 +53,7 @@ describe('User demo withdrawal tests', () => {
     it('C28423 (+) user_demo_withdrawal = true + withdrawal_block = false, withdrawal confirm', async () => {
       await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
-      await sleep(4000);
+      await sleep(10000);
       const receivedMail = await mail.getMessage(currentUser.email);
       const { data: confirm } = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
       // console.log(confirm);
@@ -80,13 +85,13 @@ describe('User demo withdrawal tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 10);
 
       const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);
 
       expect(betResponse[coupon.couponId].error.result).toEqual('rejected');
-      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit');
+      expect(betResponse[coupon.couponId].error.messageLangKey).toEqual('riskmanagement.error.market_limit_currency');
       expect(betResponse[coupon.couponId].status).toEqual(400);
     });
   });
@@ -153,7 +158,7 @@ describe('User demo withdrawal tests', () => {
       // console.log(coupon);
       const { data: { maxBetAmount } } = await getMaxBetAmount(coupon, singleMatch);
       // console.log(maxBetAmount);
-      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 1);
+      await banking.setBalance(currentUser.id, maxBetAmount.RUB + 10);
 
       const { data: betResponse } = await makeOrdinaryBet(coupon, maxBetAmount.RUB + 1);
       // console.log(betResponse);

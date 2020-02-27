@@ -22,7 +22,7 @@ describe('Cases stats tests', () => {
 
   it('C1802222 - check stats after 10 seconds (should be new push)', async () => {
     const stats = await socket.casesStats;
-    await sleep(10000);
+    await sleep(10500);
     const stats2 = await socket.casesStats;
     // console.log(stats);
     // console.log(stats2);

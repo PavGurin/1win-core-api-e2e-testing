@@ -16,7 +16,7 @@ describe('Cases play with different chance', () => {
       users = await userPool.usersWithBalanceRub(USERS_NUMBER, BALANCE);
       currentUser = users.pop();
       await userList.loginWithParams(currentUser.email, currentUser.password);
-      sleep(3);
+      await sleep(100);
     });
 
 
@@ -56,7 +56,7 @@ describe('Cases play with different chance', () => {
       users = await userPool.usersWithBalanceUsd(USERS_NUMBER, BALANCE);
       currentUser = users.pop();
       await userList.loginWithParams(currentUser.email, currentUser.password);
-      sleep(3);
+      await sleep(100);
     });
 
     it('C490205 - (+) play  cases 10 with chance = 10', async () => {
@@ -94,7 +94,7 @@ describe('Cases play with different chance', () => {
       users = await userPool.usersWithBalanceEur(USERS_NUMBER, BALANCE);
       currentUser = users.pop();
       await userList.loginWithParams(currentUser.email, currentUser.password);
-      sleep(3);
+      await sleep(100);
     });
 
     it('C1508935 - (+) play  cases 19 with chance = 10', async () => {

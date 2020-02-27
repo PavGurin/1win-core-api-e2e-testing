@@ -1,24 +1,4 @@
 export const usersWithManualControl = {
-  async userMail() {
-    return socket.send('USER:auth-login', {
-      login: 'yulia.gazizova.94@mail.ru', // A87654321A
-      password: '123123',
-    });
-  },
-  async userInbox() {
-    return socket.send('USER:auth-login', {
-      login: 'yulia.gazizova.94@inbox.ru', // A87654321A
-      password: '123123',
-    });
-  },
-
-  async userBk() {
-    return socket.send('USER:auth-login', {
-      login: 'yulia.gazizova.94@bk.ru', // A87654321A
-      password: '123123',
-    });
-  },
-
   async userList() {
     return socket.send('USER:auth-login', {
       login: 'yulia.gazizova.94@list.ru', // A87654321A

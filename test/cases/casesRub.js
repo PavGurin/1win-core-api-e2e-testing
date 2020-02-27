@@ -16,7 +16,7 @@ describe('Valid сases play RUB', () => {
     users = await userPool.usersWithBalanceRub(USERS_NUMBER, BALANCE);
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
-    sleep(3);
+    await sleep(100);
   });
 
   it('C608898 - (+) play  cases 10', async () => {

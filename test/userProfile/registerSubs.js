@@ -13,7 +13,7 @@ describe('Registration with sub id parameter', () => {
   beforeEach(async () => {
     const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
     // console.log(dbResult);
-    sleep(3);
+    await sleep(100);
   });
   // (+) for positive tests (-) for negative tests
   it('C20067 (+) Sub id 1', async () => {

@@ -18,7 +18,7 @@ export const favor = {
   },
   async getRandomGameMatches() {
     const { data } = await favor.getGamesMatches();
-    console.log(data);
+    // console.log(data);
     // return data.data.translations[1];
   },
 

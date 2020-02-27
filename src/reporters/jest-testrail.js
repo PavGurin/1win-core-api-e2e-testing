@@ -1,3 +1,5 @@
+/* eslint no-console: off */
+
 const stripAnsi = require('strip-ansi');
 const axios = require('axios');
 
@@ -44,7 +46,6 @@ class TestrailReporter {
         include_all: true,
       });
       this.testRunId = id;
-      // eslint-disable-next-line no-console
     } catch (e) { console.log(e.response.data); }
   }
 
@@ -73,14 +74,12 @@ class TestrailReporter {
     try {
       await this.axiosInstance.post(`/add_results_for_cases/${this.testRunId}`, { 'results': this.res });
     } catch (e) {
-      // eslint-disable-next-line no-console
       await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
       console.log(e.response.data);
     }
     try {
       await this.axiosInstance.post(`/close_run/${this.testRunId}`, {});
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.log(e.response.data);
     }
   }
