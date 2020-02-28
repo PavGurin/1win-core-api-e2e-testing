@@ -99,3 +99,7 @@ export async function getUserBonusAmount(userId) {
 export async function setUserFullBlock(userId) {
   return mysqlConnection.executeQuery(`INSERT INTO 1win.ma_users_meta VALUES ('${userId}','full_block','true');`);
 }
+
+export async function setUserRegisterDate(userId, date) {
+  return mysqlConnection.executeQuery(`UPDATE 1win.ma_users SET time_registration = '${date}' WHERE id = ${userId};`);
+}
