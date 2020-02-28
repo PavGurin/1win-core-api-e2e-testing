@@ -185,7 +185,7 @@ recoupment:
   when: manual
   script:
     - npm i
-    - npm run test:partner
+    - npm run test:recoupment
 
 results:
   stage: tests
