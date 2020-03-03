@@ -4,7 +4,10 @@
 
 
 import { register } from '../../src/methods/register';
-import { setUserWithdrawalBlock, setUserWithdrawalManualControl } from '../../src/methods/user';
+import {
+  setUserWithdrawalBlock, updateProfile,
+// eslint-disable-next-line import/named
+} from '../../src/methods/user';
 import { userList } from '../../src/methods/userList';
 import { banking } from '../../src/methods/banking';
 import { userPool } from '../../src/methods/userPool';
@@ -65,7 +68,13 @@ describe('Withdrawal block tests', () => {
       await setUserWithdrawalBlock(currentUser.id);
       await userList.loginWithParams(currentUser.email, currentUser.password);
     });
-
+    it('C2025651 (+) withdrawal_block = true, save changes in settings', async () => {
+      // const { data } = await updateProfile2(currentUser.password);
+      const { data } = await updateProfile({
+        password: currentUser.password,
+      });
+      checkErrMsg(data, 500, 'Internal Server Error');
+    });
     it('C28399 (+) withdrawal_block = false when in db = true', async () => {
       const meta = await socket.userMeta;
       // console.log(meta);

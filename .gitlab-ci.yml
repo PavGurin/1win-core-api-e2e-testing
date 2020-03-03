@@ -217,6 +217,16 @@ user-history:
     - npm i
     - npm run test:user-history
 
+user-meta:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 6
+    SCRIPT_NAME: 'user-meta'
+  when: manual
+  script:
+    - npm i
+    - npm run test:user-meta
+
 user-profile:
   stage: tests
   variables:
