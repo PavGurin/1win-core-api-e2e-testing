@@ -197,6 +197,16 @@ results:
     - npm i
     - npm run test:results
 
+search:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'search'
+  when: manual
+  script:
+    - npm i
+    - npm run test:search
+
 user-history:
   stage: tests
   variables:
