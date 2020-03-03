@@ -12,7 +12,7 @@ function getCookie(headers) {
 }
 
 export const partner = {
-  async register(email, password, currency) {
+  async register(email, password, currency, hash = '') {
     try {
       const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/user/register`, {
         name: `${randomStr(10)}`, // eslint-disable-line object-shorthand
@@ -23,7 +23,7 @@ export const partner = {
         password: password, // eslint-disable-line object-shorthand
         password_repeat: password,
         currency: currency, // eslint-disable-line object-shorthand
-        owner_hash: '',
+        owner_hash: hash,
         domain: 'partner-staging.1win.dev',
         disableCaptcha: true,
       });
@@ -120,6 +120,35 @@ export const partner = {
     const { data } = await partner.createPromocode(cookie, promocode, sourceId);
     await partner.setCpaPresetForPartnerKey(data.id, cpaPreset);
     return { data };
+  },
+  async UrlSubPartner(cookie) {
+    try {
+      const { data: { hash } } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/links/subpartner`, {
+        headers: {
+          // Authorization: AUTH_TOKEN,
+          cookie: cookie, // eslint-disable-line object-shorthand
+        },
+      });
+      return hash;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+  async getStatsSubpartner(cookie) {
+    try {
+      const { data } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/stats_v2/subpartners`, {
+        headers: {
+          // Authorization: AUTH_TOKEN,
+          Cookie: cookie,
+        },
+      });
+      // console.log(data);
+      return { data };
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
   },
 
   async getDefaultSourceId(cookie) {

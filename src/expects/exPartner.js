@@ -1,6 +1,7 @@
 import { getCurrenciesFromDB } from '../methods/banking';
 import { mysqlConnection } from '../methods/mysqlConnection';
 
+
 export function checkStatsAllAfterOneRegistrtaion(receivedStatsAll, expectedRegistrationNumber) {
   expect(receivedStatsAll.values.regs).toEqual(expectedRegistrationNumber);
   expect(receivedStatsAll.values.date).toEqual(null);
