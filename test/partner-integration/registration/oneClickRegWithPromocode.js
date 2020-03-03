@@ -2,6 +2,7 @@
  * @jest-environment node
  */
 
+import { sleep } from '../../../src/methods/utils';
 import { register } from '../../../src/methods/register';
 import { partner } from '../../../src/methods/partner';
 import { randomNum, randomStr } from '../../../src/randomizer';
@@ -10,7 +11,6 @@ import {
   checkStatsAllAfterOneRegistrtaionCPA,
   checkStatsDailyAfterOneRegistrtaion, checkStatsDailyAfterOneRegistrtaionCPA,
 } from '../../../src/expects/exPartner';
-import { sleep } from '../../../src/methods/utils';
 
 describe('One click registration with promocode', () => {
   const defaultPass = '123123AA';
@@ -26,7 +26,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -47,7 +46,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -68,7 +66,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -89,7 +86,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -111,7 +107,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -132,7 +127,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -143,7 +137,7 @@ describe('One click registration with promocode', () => {
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
 
-    it('C1789843 (+) USD partner + EUR', async () => {
+    it('C1789843  (+) USD partner + EUR', async () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
@@ -153,7 +147,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -174,7 +167,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -196,7 +188,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -217,7 +208,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -238,7 +228,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -259,7 +248,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -282,7 +270,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -303,7 +290,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -324,7 +310,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -345,7 +330,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -366,7 +350,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -387,7 +370,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -398,7 +380,7 @@ describe('One click registration with promocode', () => {
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
 
-    it('C1789855 (+) USD partner + EUR ', async () => {
+    it('C1789855  (+) USD partner + EUR ', async () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
@@ -408,7 +390,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -429,7 +410,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -450,7 +430,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -471,7 +450,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -492,7 +470,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -513,7 +490,6 @@ describe('One click registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);

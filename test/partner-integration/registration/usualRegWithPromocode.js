@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-
+import { sleep } from '../../../src/methods/utils';
 import { register } from '../../../src/methods/register';
 import { partner } from '../../../src/methods/partner';
 import { randomNum, randomStr } from '../../../src/randomizer';
@@ -10,7 +10,6 @@ import {
   checkStatsAllAfterOneRegistrtaionCPA,
   checkStatsDailyAfterOneRegistrtaion, checkStatsDailyAfterOneRegistrtaionCPA,
 } from '../../../src/expects/exPartner';
-import { sleep } from '../../../src/methods/utils';
 
 describe('Email registration with promocode', () => {
   const defaultPass = '123123AA';
@@ -26,7 +25,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -47,7 +45,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -68,7 +65,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -89,7 +85,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -110,7 +105,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -131,7 +125,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -152,7 +145,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -173,7 +165,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -194,7 +185,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -215,7 +205,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -236,7 +225,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -257,7 +245,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -280,7 +267,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -301,7 +287,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -322,7 +307,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -343,7 +327,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -364,7 +347,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -385,7 +367,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -407,7 +388,6 @@ describe('Email registration with promocode', () => {
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
 
-      await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
@@ -427,7 +407,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -448,7 +427,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -469,7 +447,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -490,7 +467,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
@@ -511,7 +487,6 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-
       await sleep(1000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
       // console.log(statsAll);
