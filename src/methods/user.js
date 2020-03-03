@@ -12,7 +12,6 @@ export const updateProfile = newProfile => socket.send('USER:profile-update',
     timezone: 1,
     ...newProfile,
   });
-
 export async function changeCurrency(currency) {
   return socket.send('USER:profile-changeCurrency', {
     currency,
