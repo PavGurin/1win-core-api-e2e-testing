@@ -25,6 +25,7 @@ export const partner = {
         currency: currency, // eslint-disable-line object-shorthand
         owner_hash: hash,
         domain: 'partner-staging.1win.dev',
+        traffic_source: 'autotests',
         disableCaptcha: true,
       });
       /* , {
