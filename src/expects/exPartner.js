@@ -369,6 +369,94 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
     .toEqual(paymentCPA);
 }
 
+export async function getHybridCpaProfit(partnerId) {
+  const [result] = await mysqlConnection.executeQuery(` select sum(event_value) from 1win_partner.stats_v2  
+              where broadcaster_id in (select broadcaster_id from 1win_partner.stats_v2 where event = 'CPA_PAYOUT') 
+               and event = 'PAYMENT' and  partner_id = ${partnerId};`);
+  return result['sum(event_value)'];
+}
+
+/**
+ * caseCostProfitArray - пары из суммы кейса и выигрыша, пример
+ * [{ caseCost: 10, profit: 31.32 }, { caseCost: 10, profit: 3.9 }],
+ */
+export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedStatsDaily,
+  caseCostProfitArray, expectedCpaPaymentAmountUsd, expectedCpaPaymentCount,
+  partnerCurrency, playerCurrency, partnerId) {
+  expect(receivedStatsAll.values.payments_amount).toEqual(caseCostProfitArray.length);
+  expect(receivedStatsDaily.day_payments_amount).toEqual(caseCostProfitArray.length);
+  expect(receivedStatsAll.values.regs).toEqual(1);
+  expect(receivedStatsDaily.day_regs).toEqual(1);
+
+  let profit = 0;
+  let loss = 0;
+  let difference = 0;
+
+  const coeff = await getCoeffForPayment(partnerCurrency, playerCurrency);
+  const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
+
+  caseCostProfitArray.forEach(async (caseN) => {
+    (caseN.caseCost - caseN.profit) <= 0
+      ? profit += round(round(caseN.profit - caseN.caseCost) * coeff)
+      : loss += round(round(caseN.caseCost - caseN.profit) * coeff);
+    difference += round(round(caseN.caseCost - caseN.profit) * coeff);
+  });
+
+  profit = round(profit).toFixed(2);
+  loss = round(loss).toFixed(2);
+  difference = round(difference).toFixed(2);
+
+  const payment = difference / 2;
+  let paymentCPA;
+  expectedCpaPaymentAmountUsd !== 0
+    ? paymentCPA = round(expectedCpaPaymentAmountUsd * coeffCpaPayment).toFixed(2)
+    : paymentCPA = '0.00';
+
+  expect(receivedStatsAll.values.profit_case_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsAll.values.loss_case_sum.toFixed(2)).toEqual(loss);
+
+  expect(receivedStatsDaily.day_profit_case_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsDaily.day_loss_case_sum.toFixed(2)).toEqual(loss);
+
+  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+
+  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+
+
+  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+
+  expect(receivedStatsAll.values.payment_sum).toBeCloseTo(payment);
+  expect(receivedStatsAll.values.epc).toBeCloseTo(payment);
+  expect(receivedStatsDaily.day_payment_sum).toBeCloseTo(payment);
+  expect(receivedStatsDaily.day_epc).toBeCloseTo(payment);
+
+  if (paymentCPA !== '0.00') {
+    expect(receivedStatsAll.values.cpa_payout_count).toEqual(expectedCpaPaymentCount);
+    expect(receivedStatsDaily.day_cpa_payout_count).toEqual(expectedCpaPaymentCount);
+  } else {
+    expect(receivedStatsAll.values.cpa_payout_count).toEqual(0);
+    expect(receivedStatsDaily.day_cpa_payout_count).toEqual(0);
+  }
+
+  expect(receivedStatsAll.values.cpa_payout_amount.toFixed(2))
+    .toEqual(paymentCPA);
+  expect(receivedStatsDaily.day_cpa_payout_amount.toFixed(2))
+    .toEqual(paymentCPA);
+
+  const cpaProfit = await getHybridCpaProfit(partnerId);
+  expect(receivedStatsAll.values.cpa_profit).toEqual(cpaProfit);
+  expect(receivedStatsDaily.day_cpa_profit).toEqual(cpaProfit);
+  expect(receivedStatsAll.values.rs_profit).toBeCloseTo(payment - cpaProfit);
+  expect(receivedStatsDaily.day_rs_profit).toBeCloseTo(payment - cpaProfit);
+}
+
 export async function checkUserMetaCpaPending(userId, value = true) {
   const result = await mysqlConnection.executeQuery(`select value from 1win.ma_users_meta where id_user = ${userId} and ma_users_meta.key = 'CPA_PAYOUT';`);
   // console.log(result);

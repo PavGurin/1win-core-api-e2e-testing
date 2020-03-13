@@ -83,12 +83,25 @@ export const partner = {
     await mysqlConnection.executeQuery(`insert into 1win_partner.users_meta values (${userId}, 'cpa', 'true')`);
   },
 
+  async setHybrid(userId) {
+    await mysqlConnection.executeQuery(`insert into 1win_partner.users_meta values (${userId}, 'hybrid', 'true')`);
+  },
+
   async registerWithCPA(email, password, currency) {
     await partner.register(email, password, currency);
     const { data, cookie } = await partner.login(email, password);
     const { data: info } = await partner.getUserInfo(cookie);
     await partner.setCPA(info.user.id);
     return { data, cookie };
+  },
+
+  async registerHybrid(email, password, currency) {
+    await partner.register(email, password, currency);
+    const { data, cookie } = await partner.login(email, password);
+    const { data: info } = await partner.getUserInfo(cookie);
+    await partner.setCPA(info.user.id);
+    await partner.setHybrid(info.user.id);
+    return { data, cookie, partnerId: info.user.id };
   },
 
   async createPromocode(cookie, promocode, sourceId) {
