@@ -1,3 +1,5 @@
+import { generateExpressCoupon } from '../methods/better';
+
 export function checkSearchResults(results, expectedSubString, matchesFound, tournamentsFound, lang = 'ru', expectedService) {
   if (tournamentsFound) {
     results.tournaments.forEach((tournament) => {
@@ -25,4 +27,10 @@ export function checkSearchResults(results, expectedSubString, matchesFound, tou
   } else {
     expect(JSON.stringify(results.matches)).toEqual('{}');
   }
+}
+
+export function checkEmptySearch(data, status) {
+  expect(status).toEqual(200);
+  expect(Object.values(data.data.matches).length).toBeGreaterThan(0);
+  expect(Object.values(data.data.tournaments).length).toBeGreaterThan(0);
 }

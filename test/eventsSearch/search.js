@@ -1,6 +1,6 @@
 import { search } from '../../src/methods/search';
 import { checkErrMsg } from '../../src/responseChecker';
-import { checkSearchResults } from '../../src/expects/exSearch';
+import {checkEmptySearch, checkSearchResults} from '../../src/expects/exSearch';
 
 describe('Events search tests', () => {
   describe('Lang = ru', () => {
@@ -67,7 +67,7 @@ describe('Events search tests', () => {
       const word = '';
       const { data } = await search('ru', word);
       // console.log(data);
-      checkErrMsg(data, 500, '400'); // wtf?
+      checkEmptySearch(data, data.status);
     });
 
     it('C2012374 (-) Long search substring', async () => {
@@ -201,7 +201,7 @@ describe('Events search tests', () => {
       const word = '';
       const { data } = await search('en', word);
       // console.log(data);
-      checkErrMsg(data, 500, '400'); // wtf?
+      checkEmptySearch(data, data.status);
     });
 
     it('C2012388 (-) Long search substring', async () => {
