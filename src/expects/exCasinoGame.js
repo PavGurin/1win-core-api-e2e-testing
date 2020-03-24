@@ -56,3 +56,10 @@ export function compareJackpot(jackpot1, jackpot2, expectedValue) {
     expect(jackpot2.current.UAH).toBeGreaterThan(jackpot1.current.UAH);
   }
 }
+
+export function checkPoker(data) {
+  expect(data.gameHtml).toBeString();
+  expect(data.gameScript).toBeNull();
+  expect(data.gameHtml).toContain('id="cubeia-iframe"');
+  expect(data.gameHtml).toMatch(/.*src=".*cubeia.com\/poker-client\/poker\/login\/200\/.*/);
+}
