@@ -1,6 +1,6 @@
 import { search } from '../../src/methods/search';
 import { checkErrMsg } from '../../src/responseChecker';
-import {checkEmptySearch, checkSearchResults} from '../../src/expects/exSearch';
+import { checkEmptySearch, checkSearchResults } from '../../src/expects/exSearch';
 
 describe('Events search tests', () => {
   describe('Lang = ru', () => {
