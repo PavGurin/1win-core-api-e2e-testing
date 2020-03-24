@@ -127,6 +127,16 @@ common:
     - npm i
     - npm run test:common
 
+favourites:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'favourites'
+  when: manual
+  script:
+    - npm i
+    - npm run test:favourites
+
 general:
   stage: tests
   variables:

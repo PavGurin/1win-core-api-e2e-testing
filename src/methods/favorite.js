@@ -6,25 +6,16 @@ export const favor = {
       id: tournamentId,
     });
   },
-  async GetfavouriteTournament() {
-    return socket.send('MS-FAVOURITE:favourites-get', {
-      type: 'bets:tournament',
+  async getAndDeleteRandomMatches(matchId) {
+    return socket.send('MS-FAVOURITE:favourites-toggle', {
+      type: 'bets:match',
+      id: matchId,
     });
-  },
-  async getGamesMatches() {
-    const { data } = await socket.send('MATCH-TRANSLATIONS:translations ', {
-    });
-    return { data };
-  },
-  async getRandomGameMatches() {
-    const { data } = await favor.getGamesMatches();
-    // console.log(data);
-    // return data.data.translations[1];
   },
 
-  async addToFavourites(gameId) {
-    return socket.send('CASINO-3:games-favourites-toggle', {
-      gameId: gameId, // eslint-disable-line object-shorthand
+  async checkFavourites() {
+    return socket.send('MS-FAVOURITE:favourites-get', {
+      type: ['bets:tournament', 'bets:match'],
     });
   },
 };
