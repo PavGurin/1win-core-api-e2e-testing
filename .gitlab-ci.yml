@@ -107,6 +107,16 @@ casino-jackpot:
     - npm i
     - npm run test:casino-jackpot
 
+casino-poker:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'casino-poker'
+  when: manual
+  script:
+    - npm i
+    - npm run test:casino-poker
+
 cinema:
   stage: tests
   variables:

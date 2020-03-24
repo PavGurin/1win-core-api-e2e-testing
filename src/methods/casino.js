@@ -1,3 +1,5 @@
+import config from '../config';
+
 export const casino = {
 
   async getGames() {
@@ -26,6 +28,13 @@ export const casino = {
   async removeFromFavourites(gameInFavourtiesId) {
     return socket.send('CASINO-3:games-favourites-toggle', {
       gameId: gameInFavourtiesId, // eslint-disable-line object-shorthand
+    });
+  },
+
+  async getCubeia(isMobile = false) {
+    return socket.send('CASINO-3:games-cubeia', {
+      backUrl: config.backendURL,
+      isMobile: isMobile, // eslint-disable-line object-shorthand
     });
   },
 };
