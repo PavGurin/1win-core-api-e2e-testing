@@ -137,6 +137,16 @@ common:
     - npm i
     - npm run test:common
 
+custom-bets:
+  stage: tests
+  variables:
+    CYPRESS_TESTRAIL_PROJECT_ID: 4
+    SCRIPT_NAME: 'custom-bets'
+  when: manual
+  script:
+    - npm i
+    - npm run test:customBets
+
 favourites:
   stage: tests
   variables:

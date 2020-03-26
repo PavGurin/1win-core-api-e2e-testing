@@ -35,6 +35,7 @@
     "test:casino-poker": "jest --testPathPattern=./test/casino-poker/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:common": "jest --testPathPattern=./test/common/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:cinema": "jest --testPathPattern=./test/cinema/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
+    "test:customBets": "jest --testPathPattern=./test/customBets/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:favourites": "jest --testPathPattern=./test/favourites/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:general": "jest --testPathPattern=./test/general/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",
     "test:load": "jest --testPathPattern=./test/load/.* --testTimeout=40000 --reporters=\"default\" --reporters=\"./src/reporters/jest-testrail.js\" --maxWorkers=4",

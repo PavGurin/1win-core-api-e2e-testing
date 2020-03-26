@@ -16,7 +16,7 @@ import {
 
 // описание СРА https://fbet-gitlab.ex2b.co/qa/qa-autotests/-/wikis/7.Partnerka/CPA
 
-describe('Payments to CPA partner, all currency combinations', () => {
+describe('Payments for cases to CPA partner, all currency combinations', () => {
   const defaultPass = '123123AA';
   const THOUSAND_ROUBLES_CASE_ID = 6;
   const CASE_COST_RUB = 1000;

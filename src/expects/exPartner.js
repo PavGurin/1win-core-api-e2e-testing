@@ -109,11 +109,11 @@ export function checkStatsDailyAfterOneRegistrtaionCPA(receivedStatsDaily,
   expect(receivedStatsDaily.day_cpa_payout_amount).toEqual(0);
 }
 
-export async function getCoeffForPayment(partnerCurrency, playerCurrency) {
+export async function getCurrencyExchangeCoeff(convertToCurrency, covertFromCurrency) {
   const currencyRates = await getCurrenciesFromDB(new Date());
   // console.log(currencyRates);
 
-  const currencyPair = `${partnerCurrency}-${playerCurrency}`;
+  const currencyPair = `${convertToCurrency}-${covertFromCurrency}`;
   let coeff;
   switch (currencyPair) {
     case 'RUB-USD':
@@ -150,7 +150,7 @@ export async function getCoeffForPayment(partnerCurrency, playerCurrency) {
       coeff = currencyRates.usd / currencyRates.uah;
       break;
     case 'UAH-EUR':
-      coeff = currencyRates.eur / currencyRates.eur;
+      coeff = currencyRates.eur / currencyRates.uah;
       break;
     default: coeff = 1;
       break;
@@ -196,7 +196,7 @@ export async function checkPartnerPaymentBets(receivedStatsAll, receivedStatsDai
   let loss = 0;
   let difference = 0;
 
-  const coeff = await getCoeffForPayment(partnerCurrency, playerCurrency);
+  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
 
   BetProfitArray.forEach(async (bet) => {
     (bet) <= 0
@@ -254,7 +254,7 @@ export async function checkPartnerPaymentCase(receivedStatsAll, receivedStatsDai
   let loss = 0;
   let difference = 0;
 
-  const coeff = await getCoeffForPayment(partnerCurrency, playerCurrency);
+  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
 
   caseCostProfitArray.forEach(async (caseN) => {
     (caseN.caseCost - caseN.profit) <= 0
@@ -316,7 +316,7 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
   let loss = 0;
   let difference = 0;
 
-  const coeff = await getCoeffForPayment(partnerCurrency, playerCurrency);
+  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
   const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
 
   caseCostProfitArray.forEach(async (caseN) => {
@@ -392,7 +392,7 @@ export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedS
   let loss = 0;
   let difference = 0;
 
-  const coeff = await getCoeffForPayment(partnerCurrency, playerCurrency);
+  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
   const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
 
   caseCostProfitArray.forEach(async (caseN) => {
@@ -466,4 +466,66 @@ export async function checkUserMetaCpaPending(userId, value = true) {
 export async function checkUserMetaCpaWaitForSec(userId, value = true) {
   const result = await mysqlConnection.executeQuery(`select value from 1win.ma_users_meta where id_user = ${userId} and ma_users_meta.key = 'CPA_PAYOUT';`);
   value ? expect(result[0].value).toEqual('WAITING_SECURITY') : expect(result[0]).toEqual(undefined);
+}
+
+export async function checkPartnerPaymentBetsCPA(receivedStatsAll, receivedStatsDaily,
+  BetProfitArray, expectedPaymentAmountUsd, partnerCurrency, playerCurrency) {
+  expect(receivedStatsAll.values.regs).toEqual(1);
+  expect(receivedStatsDaily.day_regs).toEqual(1);
+
+  let profit = 0;
+  let loss = 0;
+  let difference = 0;
+
+  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
+  const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
+
+  BetProfitArray.forEach(async (betPrize) => {
+    (betPrize) > 0
+      ? profit += round(round(betPrize) * coeff)
+      : loss += round(round(betPrize) * (-1) * coeff);
+    difference += round(round(betPrize) * (-1) * coeff);
+  });
+
+  profit = round(profit).toFixed(2);
+  loss = round(loss).toFixed(2);
+  difference = round(difference).toFixed(2);
+
+  let paymentCPA;
+  expectedPaymentAmountUsd !== 0
+    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment).toFixed(2)
+    : paymentCPA = '0.00';
+
+  expect(receivedStatsAll.values.profit_bets_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsAll.values.loss_bets_sum.toFixed(2)).toEqual(loss);
+
+  expect(receivedStatsDaily.day_profit_bets_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsDaily.day_loss_bets_sum.toFixed(2)).toEqual(loss);
+
+  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+
+  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
+    .toEqual(profit);
+  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+
+
+  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+
+  if (paymentCPA !== '0.00') {
+    expect(receivedStatsAll.values.cpa_payout_count).toEqual(1);
+    expect(receivedStatsDaily.day_cpa_payout_count).toEqual(1);
+  } else {
+    expect(receivedStatsAll.values.cpa_payout_count).toEqual(0);
+    expect(receivedStatsDaily.day_cpa_payout_count).toEqual(0);
+  }
+
+  expect(receivedStatsAll.values.cpa_payout_amount.toFixed(2))
+    .toEqual(paymentCPA);
+  expect(receivedStatsDaily.day_cpa_payout_amount.toFixed(2))
+    .toEqual(paymentCPA);
 }
