@@ -7,7 +7,7 @@ import { register } from '../../../src/methods/register';
 import { banking } from '../../../src/methods/banking';
 import { Refund } from '../../../src/methods/BetsRefund';
 import { sleep } from '../../../src/methods/utils';
-import { checkPartnerPaymentBets, checkPartnerPaymentCase, getCoeffForPayment } from '../../../src/expects/exPartner';
+import { checkPartnerPaymentBets, checkPartnerPaymentCase, getCurrencyExchangeCoeff } from '../../../src/expects/exPartner';
 import { cases } from '../../../src/methods/cases';
 import { changeCurrency } from '../../../src/methods/user';
 
@@ -174,7 +174,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('RUB', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('RUB', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -206,7 +206,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'RUB', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('RUB', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('RUB', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -238,7 +238,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('RUB', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('RUB', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -270,7 +270,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('RUB', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('RUB', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -302,7 +302,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('RUB', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('RUB', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -334,7 +334,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('RUB', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('RUB', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -366,7 +366,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -398,7 +398,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -430,7 +430,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -462,7 +462,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -494,7 +494,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -526,7 +526,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -558,7 +558,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'RUB'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'RUB'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -590,7 +590,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'RUB'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'RUB'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -622,7 +622,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('USD', 'RUB'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('USD', 'RUB'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -654,7 +654,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'EUR', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('EUR', 'RUB'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('EUR', 'RUB'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -686,7 +686,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'EUR', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('EUR', 'USD'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('EUR', 'USD'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 
@@ -718,7 +718,7 @@ describe(' Subpartner ', () => {
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'EUR', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const MyIncome = (p0.webmasterSum).toFixed(2);
-    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCoeffForPayment('EUR', 'EUR'))).toFixed(2);
+    const PartnerIncome = ((p0.partnerSum * 0.05) / (await getCurrencyExchangeCoeff('EUR', 'EUR'))).toFixed(2);
     expect(MyIncome).toEqual(PartnerIncome);
   });
 });

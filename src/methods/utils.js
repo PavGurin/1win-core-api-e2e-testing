@@ -23,3 +23,48 @@ export function getDateHoursAgo(hoursAgo) {
 export function round(value) {
   return Math.round(value * 100) / 100;
 }
+
+
+export function isKyrillic(str) {
+  return /[а-яё -0-9_.,?!()]/i.test(str.toLowerCase());
+}
+
+export function isLatinic(str) {
+  return /[a-z -0-9_.,?!()]/i.test(str.toLowerCase());
+}
+
+export function checkArraySortedById(array) {
+  // check if received array is sorted
+  if (array.length === 0 || array.length === 1) return true;
+  let sorted = true;
+  for (let i = 1; i < array.length; i++) {
+    if (array[i].id < array[i - 1].id) {
+      sorted = false;
+      return sorted;
+    }
+  }
+  return sorted;
+}
+
+export function formatDateYyyyMmDd(date) {
+  let result = `${date.getFullYear()}-`;
+  date.getMonth() < 9 ? result += `0${date.getMonth() + 1}-` : result += `${date.getMonth() + 1}-`;
+  date.getDate() < 10 ? result += `0${date.getDate()}` : result += `${date.getDate()}`;
+  return result;
+}
+
+export function formatDateYyyyMmDdHhIiSs(date) {
+  let result = formatDateYyyyMmDd(date);
+  date.getHours() < 10 ? result += ` 0${date.getHours()}:` : result += ` ${date.getHours()}:`;
+  date.getMinutes() < 10 ? result += `0${date.getMinutes()}:` : result += `${date.getMinutes()}:`;
+  date.getSeconds() < 10 ? result += `0${date.getSeconds()}` : result += `${date.getSeconds()}`;
+  return result;
+}
+
+export function dateRemoveTZ(date) {
+  return (date.replace('T', ' ')).slice(0, date.length - 5);
+}
+
+export function rndNumInRange(min, max) {
+  return Math.floor((Math.random() * (max - min) + min) * 100) / 100;
+}

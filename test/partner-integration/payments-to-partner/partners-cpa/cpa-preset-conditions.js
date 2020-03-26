@@ -9,10 +9,11 @@ import { banking } from '../../../../src/methods/banking';
 import { cases } from '../../../../src/methods/cases';
 import { sleep } from '../../../../src/methods/utils';
 import {
-  checkUserMetaCpaPending, checkPartnerPaymentCasesCPA,
+  checkUserMetaCpaPending, checkPartnerPaymentCasesCPA, checkPartnerPaymentBetsCPA,
 } from '../../../../src/expects/exPartner';
 import { createPreset, getLastPresetNumber } from '../../../../src/methods/partnerInDB';
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
+import { betsCustom } from '../../../../src/methods/betsCustom';
 
 // описание СРА https://fbet-gitlab.ex2b.co/qa/qa-autotests/-/wikis/7.Partnerka/CPA
 
@@ -22,11 +23,12 @@ describe('Cpa preset conditions', () => {
   const CASE_COST_USD = 10;
   const EXPECTED_PAYMENT_AMOUNT_USD = 5;
   const TIME_REGISTRATION = 10000;
+  const BET_AMOUNT = 10;
 
   beforeAll(async () => {
     const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
     // console.log(dbResult);
-    await sleep(150);
+    await sleep(1500);
   });
 
   it('C1789913 (+) cpa_gambling_amount - one case, spent preset value', async () => {
@@ -434,5 +436,138 @@ describe('Cpa preset conditions', () => {
       [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 0, 'USD', 'USD');
 
     await checkUserMetaCpaPending(user.id, false);
+  });
+
+  it('(+) cpa_bet_count = 1, custom bet', async () => {
+    const coeff = 10;
+    let presetNumber = await getLastPresetNumber();
+    presetNumber++;
+
+    const promocode = randomNum(10).toString();
+    const partnerEmail = `${randomStr(10)}@ahem.email`;
+    // console.log(partnerEmail);
+
+    await createPreset(presetNumber, 0, 1, 0,
+      0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
+    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
+    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { data: { id: promocodeId } } = await partner
+      .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
+    // console.log(promocodeId);
+
+    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    // console.log(user);
+    await banking.setBalance(user.id, BET_AMOUNT);
+
+    await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
+
+    await sleep(1000);
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+    // console.log(statsAll);
+
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    // console.log(statsDay);
+
+    await checkPartnerPaymentBetsCPA(statsAll, statsDay.days[0], [BET_AMOUNT * coeff - BET_AMOUNT], EXPECTED_PAYMENT_AMOUNT_USD, 'USD', 'USD');
+  });
+
+  it('(-) cpa_bet_count = 2, one custom bet', async () => {
+    const coeff = 10;
+    let presetNumber = await getLastPresetNumber();
+    presetNumber++;
+
+    const promocode = randomNum(10).toString();
+    const partnerEmail = `${randomStr(10)}@ahem.email`;
+    // console.log(partnerEmail);
+
+    await createPreset(presetNumber, 0, 2, 0,
+      0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
+    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
+    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { data: { id: promocodeId } } = await partner
+      .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
+    // console.log(promocodeId);
+
+    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    // console.log(user);
+    await banking.setBalance(user.id, BET_AMOUNT);
+
+    await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
+
+    await sleep(1000);
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+    // console.log(statsAll);
+
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    // console.log(statsDay);
+
+    await checkPartnerPaymentBetsCPA(statsAll, statsDay.days[0], [BET_AMOUNT * coeff - BET_AMOUNT], 0, 'USD', 'USD');
+  });
+
+
+  it('(+) cpa_bet_amount <= bet amount, custom bet', async () => {
+    const coeff = 10;
+    let presetNumber = await getLastPresetNumber();
+    presetNumber++;
+
+    const promocode = randomNum(10).toString();
+    const partnerEmail = `${randomStr(10)}@ahem.email`;
+    // console.log(partnerEmail);
+
+    await createPreset(presetNumber, 0, 1, BET_AMOUNT,
+      0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
+    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
+    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { data: { id: promocodeId } } = await partner
+      .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
+    // console.log(promocodeId);
+
+    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    // console.log(user);
+    await banking.setBalance(user.id, BET_AMOUNT);
+
+    await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
+
+    await sleep(1000);
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+    // console.log(statsAll);
+
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    // console.log(statsDay);
+
+    await checkPartnerPaymentBetsCPA(statsAll, statsDay.days[0], [BET_AMOUNT * coeff - BET_AMOUNT], EXPECTED_PAYMENT_AMOUNT_USD, 'USD', 'USD');
+  });
+
+  it('(-) cpa_bet_amount > bet amount, custom bet', async () => {
+    const coeff = 10;
+    let presetNumber = await getLastPresetNumber();
+    presetNumber++;
+
+    const promocode = randomNum(10).toString();
+    const partnerEmail = `${randomStr(10)}@ahem.email`;
+    // console.log(partnerEmail);
+
+    await createPreset(presetNumber, 0, 1, BET_AMOUNT + 0.01,
+      0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
+    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
+    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { data: { id: promocodeId } } = await partner
+      .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
+    // console.log(promocodeId);
+
+    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    // console.log(user);
+    await banking.setBalance(user.id, BET_AMOUNT);
+
+    await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
+
+    await sleep(1000);
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+    // console.log(statsAll);
+
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    // console.log(statsDay);
+
+    await checkPartnerPaymentBetsCPA(statsAll, statsDay.days[0], [BET_AMOUNT * coeff - BET_AMOUNT], 0, 'USD', 'USD');
   });
 });

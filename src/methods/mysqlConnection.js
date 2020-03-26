@@ -33,6 +33,15 @@ export const mysqlConnection = {
           database: dbName,
         });
         break;
+      case 'custom_bets':
+        connection = await mysql.createConnection({
+          host: '195.201.174.206',
+          port: 13306,
+          user: 'mscuser',
+          password: 'Zco7gpStmP',
+          database: '1win_test',
+        });
+        break;
       default:
         connection = await mysql.createConnection({
           host: 'backend.1win-prodlike.tech',

@@ -1,5 +1,7 @@
 // методы для работы с почтой
 // описание использованного api https://www.ahem.email/help/api
+
+/* eslint no-console:off */
 import axios from 'axios';
 
 export const mail = {
