@@ -19,6 +19,15 @@ export async function addBetToBD(userId, currency, amount, coeff, status,
                                 '${currency}', 0, 0, ${profit}, 0, '${type}', '${device}')`);
 }
 
+export async function addSoldBetToBD(userId, currency, amount, profit, coeff, type = 'ordinary', timeOpen = new Date() / 1, timeClose = new Date() / 1, device = 'app-android') {
+  await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_bets(id_user, time_open, time_close, 
+                         status, amount, total_coefficient, currency, sys, flags, profit, promo_amount, 
+                         betType, device) 
+                         VALUES('${userId}', '${timeOpen}', '${timeClose}', '4', '${amount}', '${coeff}', 
+                                '${currency}', '0', '0', '${profit}', '0', '${type}', '${device}')`);
+}
+
+
 export async function getUsersLastBetId(userId) {
   const result = await mysqlConnection.executeQuery(`SELECT id FROM 1win.ma_bets WHERE id_user = ${userId} ORDER BY id DESC LIMIT 1`);
   return result[0].id;

@@ -114,7 +114,7 @@ export const userPool = {
       const newUser = await register.usualRegMailru();
       if (newUser.data.user_id && newUser.data.email && newUser.data.password) {
         users.push({
-          email: newUser.data.user_id,
+          email: newUser.data.email,
           password: newUser.data.password,
           id: newUser.data.user_id,
           balance: balanceAmount,

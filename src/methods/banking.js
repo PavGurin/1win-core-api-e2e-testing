@@ -2,7 +2,7 @@ import axios from 'axios';
 import parser from 'fast-xml-parser';
 import { randomStr } from '../randomizer';
 import { mysqlConnection } from './mysqlConnection';
-
+import { formatDateYyyyMmDd, formatDateYyyyMmDdHhIiSs } from './utils';
 
 export const banking = {
 
@@ -79,19 +79,19 @@ export const banking = {
   async createDepositInBD(userId, currency = 'RUB', balanceAmount = 1000,
     date = new Date(), paymentSystem = 'card_rub', walletId = '4132788660217293', status = 1, merchantName = 'payterra') {
     await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
-                              currency, time, payment_system, wallet, status, ps_data, date, merchant_name) 
+                              currency, time, payment_system, wallet, status, ps_data, date, merchant_name, is_played_back) 
                               VALUES (${userId}, ${balanceAmount}, '${currency}',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
-                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', '${merchantName}')`);
+                                     '${formatDateYyyyMmDdHhIiSs(date)}',
+                                     '${paymentSystem}', '${walletId}', ${status}, '${walletId}', '${formatDateYyyyMmDd(date)}', '${merchantName}', '0')`);
   },
 
   async createTransferInBD(userId, currency = 'RUB', transferAmount = 1000,
     date = new Date(), status = 1, senderId = 136) {
     await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
-                              currency, time, payment_system, wallet, status, date) 
+                              currency, time, payment_system, wallet, status, date, is_played_back) 
                               VALUES (${userId}, ${transferAmount}, '${currency}',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
-                                     'money-transfer', 'sender: ${senderId}', ${status}, '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+                                     '${formatDateYyyyMmDdHhIiSs(date)}',
+                                     'money-transfer', 'sender: ${senderId}', ${status}, '${formatDateYyyyMmDd(date)}', '0');`);
   },
 
   async createPartnerWithdrawalInBD(userId, currency = 'RUB', amount = 1000,
@@ -99,8 +99,8 @@ export const banking = {
     await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
                               currency, time, payment_system, wallet, status, date) 
                               VALUES (${userId}, ${amount}, '${currency}',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
-                                     'partner', 'partner:${partnerId}', ${status}, '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}')`);
+                                     '${formatDateYyyyMmDdHhIiSs(date)}',
+                                     'partner', 'partner:${partnerId}', ${status}, '${formatDateYyyyMmDd(date)}')`);
   },
 
 
@@ -109,9 +109,9 @@ export const banking = {
     await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_withdrawal (id_user, amount, currency, time, 
                                payment_system, wallet, status, merchant_name, device, merchant_is_checked, date, payed_amount)
                               VALUES (${userId}, ${withdrawalAmount}, '${currency}',
-                                     '${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}',
+                                     '${formatDateYyyyMmDdHhIiSs(date)}',
                                      '${paymentSystem}', '${walletId}', ${status}, '${merchantName}', 'app-android', 0,
-                                      '${date.getFullYear()}-${date.getMonth()}-${date.getDate()}', 0)`);
+                                      '${formatDateYyyyMmDd(date)}', 0)`);
   },
 };
 
