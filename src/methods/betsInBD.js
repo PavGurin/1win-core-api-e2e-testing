@@ -85,7 +85,7 @@ export async function makeSuccessfulOrdinaryBet(user, currency, amount, coeff) {
   await setSelectionStatus(selectionId[0].id, 2);
 
   // ждем, пока отработает скрипт, проставляющий ставке статус такой, как у ее селекшена
-  await sleep(60000);
+  await sleep(45000);
 
   // достаем из базы ставку
   const bet = await getBet(betId);

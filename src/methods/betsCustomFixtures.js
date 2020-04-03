@@ -21,8 +21,8 @@ export const betsCustomFixtures = {
      values (${value}, ${titleRu}, ${titleEn}, ${isDisabled})`, 'custom_bets');
   },
 
-  async addGroup(titleRu, titleEn, createdAt = formatDateYyyyMmDdHhIiSs(new Date()),
-    updatedAt = formatDateYyyyMmDdHhIiSs(new Date()), isDisabled = 0) {
+  async addGroup(titleRu, titleEn, createdAt = formatDateYyyyMmDdHhIiSs(new Date(), true),
+    updatedAt = formatDateYyyyMmDdHhIiSs(new Date(), true), isDisabled = 0) {
     const rnd = randomNum(10);
     if (!titleRu) { titleRu = `название группы ${rnd}`; }
     if (!titleEn) { titleEn = `group title ${rnd}`; }
@@ -42,9 +42,9 @@ export const betsCustomFixtures = {
   },
 
   async addEvent(groupId, titleRu, titleEn, descriptionRu, descriptionEn,
-    createdAt = formatDateYyyyMmDdHhIiSs(new Date()),
-    updatedAt = formatDateYyyyMmDdHhIiSs(new Date()),
-    startAt = formatDateYyyyMmDdHhIiSs(new Date()), stopAt, isDisabled = 0) {
+    createdAt = formatDateYyyyMmDdHhIiSs(new Date(), true),
+    updatedAt = formatDateYyyyMmDdHhIiSs(new Date(), true),
+    startAt = formatDateYyyyMmDdHhIiSs(new Date(), true), stopAt, isDisabled = 0) {
     const rnd = randomNum(10);
     if (!titleRu) { titleRu = `название события ${rnd}`; }
     if (!titleEn) { titleEn = `event title ${rnd}`; }
@@ -53,7 +53,7 @@ export const betsCustomFixtures = {
     if (!stopAt) {
       stopAt = new Date();
       stopAt.setDate(stopAt.getDate() + 10);
-      stopAt = formatDateYyyyMmDdHhIiSs(stopAt);
+      stopAt = formatDateYyyyMmDdHhIiSs(stopAt, true);
     }
 
     const tid = await getLastTranslationId();
@@ -75,8 +75,8 @@ export const betsCustomFixtures = {
 
   async addResult(eventId, titleRu, titleEn, descriptionRu, descriptionEn,
     factor = rndNumInRange(1, 10).toFixed(2), isDisabled = 0, outcome = 0,
-    createdAt = formatDateYyyyMmDdHhIiSs(new Date()),
-    updatedAt = formatDateYyyyMmDdHhIiSs(new Date())) {
+    createdAt = formatDateYyyyMmDdHhIiSs(new Date(), true),
+    updatedAt = formatDateYyyyMmDdHhIiSs(new Date(), true)) {
     const rnd = randomNum(10);
     if (!titleRu) { titleRu = `название исхода ${rnd}`; }
     if (!titleEn) { titleEn = `result title ${rnd}`; }
@@ -139,5 +139,9 @@ export const betsCustomFixtures = {
 
   async setEventStopTime(eventId, stopTime) {
     return mysqlConnection.executeQuery(`update 1win_test.custom_events set stop_at = '${stopTime}' where id = '${eventId}';`, 'custom_bets');
+  },
+
+  async setResultOutcome(resultId, outcome) {
+    return mysqlConnection.executeQuery(`update 1win_test.custom_results set outcome = '${outcome}' where id = '${resultId}';`, 'custom_bets');
   },
 };

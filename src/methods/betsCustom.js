@@ -7,6 +7,7 @@
 /* eslint object-shorthand: off */
 import { randomNum, randomStr } from '../randomizer';
 import { formatDateYyyyMmDdHhIiSs, sleep } from './utils';
+import { betsCustomFixtures } from './betsCustomFixtures';
 
 export const betsCustom = {
   /**
@@ -85,39 +86,20 @@ export const betsCustom = {
     });
   },
 
-  async successfulOrdinaryBet(amount, coeff) {
-    // TODO передлать с использованием betsCustomFixtures
-    let start = new Date();
-    start.setHours(start.getHours() - 4);
-    start = formatDateYyyyMmDdHhIiSs(start);
-
+  async successfulOrdinaryBet(eventId, results, amount) {
     let stop = new Date();
-    stop.setHours(stop.getHours() - 3);
     stop.setSeconds(stop.getSeconds() + 10);
-    stop = formatDateYyyyMmDdHhIiSs(stop);
+    stop = formatDateYyyyMmDdHhIiSs(stop, true);
 
-    const group = await this.createGroup();
-    const event = await betsCustom.createEvent(group.id, null, null, start, stop, [{
-      title: [{ value: `${randomStr(20)}`, langId: 1, isDefault: true }],
-      description: [{ value: `${randomStr(20)}`, langId: 1, isDefault: true }],
-      factor: coeff.toFixed(2),
-    }, {
-      title: [{ value: `${randomStr(20)}`, langId: 1, isDefault: true }],
-      description: [{ value: `${randomStr(20)}`, langId: 1, isDefault: true }],
-      factor: '1.11',
-    }]);
+    await betsCustomFixtures.setEventStopTime(eventId, stop);
 
-    const { data } = await this.makeOrdinaryBet(event.results[0].id,
-      amount, event.results[0].factor);
+    const { data } = await this.makeOrdinaryBet(results[0].id, amount, results[0].factor);
     // console.log(data);
 
-    await sleep(8000);
-    await this.changeResult(event.results[0].id, null, null, null, 2);
-    await this.changeResult(event.results[1].id, null, null, null, 1);
-    await sleep(20000);
-
-    await betsCustom.changeGroup(group.id, null, 1);
-    await betsCustom.changeEvent(event.id, null, null, null, null, 1);
+    await sleep(10000);
+    await betsCustomFixtures.setResultOutcome(results[0].id, 2);
+    await betsCustomFixtures.setResultOutcome(results[1].id, 1);
+    await sleep(45000);
   },
 
   async maxBetAmount(resultId, coeff) {

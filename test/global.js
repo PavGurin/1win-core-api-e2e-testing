@@ -8,7 +8,7 @@ beforeAll(async () => {
   global.defaultPartnerKey = 'test001';
   global.defaultVisitDomain = '1win.dev';
   global.transferExpirationTime = process.env.TRANSFER_EXPIRATION_TIME || 30000;
-  jest.setTimeout(65000);
+  jest.setTimeout(80000);
 });
 
 beforeEach(async () => {

@@ -80,7 +80,7 @@ describe('Custom bets client requests', () => {
       });
 
       it('C2034382 (-) groups with only events with stop time < current time are not displayed', async () => {
-        const newTime = formatDateYyyyMmDdHhIiSs(new Date());
+        const newTime = formatDateYyyyMmDdHhIiSs(new Date(), true);
         await betsCustomFixtures.setEventStopTime(event.id, newTime);
         await sleep(5000);
         const { data } = await betsCustom.groups();
@@ -201,7 +201,7 @@ describe('Custom bets client requests', () => {
       });
 
       it('C2034375 (-) event with stop time < current time is not displayed', async () => {
-        const newTime = formatDateYyyyMmDdHhIiSs(new Date());
+        const newTime = formatDateYyyyMmDdHhIiSs(new Date(), true);
         await betsCustomFixtures.setEventStopTime(event.id, newTime);
         await sleep(5000);
         const { data } = await betsCustom.groupEvents(group.id, 1);
@@ -290,7 +290,7 @@ describe('Custom bets client requests', () => {
       });
 
       it('C2034358 (+) event with stop time < current time', async () => {
-        const newTime = formatDateYyyyMmDdHhIiSs(new Date());
+        const newTime = formatDateYyyyMmDdHhIiSs(new Date(), true);
         await betsCustomFixtures.setEventStopTime(event.id, newTime);
         await sleep(5000);
         const { data } = await betsCustom.event(event.id);
@@ -371,7 +371,7 @@ describe('Custom bets client requests', () => {
       });
 
       it('C2035348 (-) groups with only events with stop time < current time are not displayed', async () => {
-        const newTime = formatDateYyyyMmDdHhIiSs(new Date());
+        const newTime = formatDateYyyyMmDdHhIiSs(new Date(), true);
         await betsCustomFixtures.setEventStopTime(event.id, newTime);
         await sleep(5000);
         const { data } = await betsCustom.groups();
@@ -492,7 +492,7 @@ describe('Custom bets client requests', () => {
       });
 
       it('C2035364 (-) event with stop time < current time is not displayed', async () => {
-        const newTime = formatDateYyyyMmDdHhIiSs(new Date());
+        const newTime = formatDateYyyyMmDdHhIiSs(new Date(), true);
         await betsCustomFixtures.setEventStopTime(event.id, newTime);
         await sleep(5000);
         const { data } = await betsCustom.groupEvents(group.id, 1);
@@ -581,7 +581,7 @@ describe('Custom bets client requests', () => {
       });
 
       it('C2035375 (+) event with stop time < current time', async () => {
-        const newTime = formatDateYyyyMmDdHhIiSs(new Date());
+        const newTime = formatDateYyyyMmDdHhIiSs(new Date(), true);
         await betsCustomFixtures.setEventStopTime(event.id, newTime);
         await sleep(5000);
         const { data } = await betsCustom.event(event.id);
