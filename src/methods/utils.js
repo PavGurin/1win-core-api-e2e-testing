@@ -46,18 +46,33 @@ export function checkArraySortedById(array) {
   return sorted;
 }
 
-export function formatDateYyyyMmDd(date) {
-  let result = `${date.getFullYear()}-`;
-  date.getMonth() < 9 ? result += `0${date.getMonth() + 1}-` : result += `${date.getMonth() + 1}-`;
-  date.getDate() < 10 ? result += `0${date.getDate()}` : result += `${date.getDate()}`;
+export function formatDateYyyyMmDd(date, utc = false) {
+  let result;
+  if (!utc) {
+    result = `${date.getFullYear()}-`;
+    date.getMonth() < 9 ? result += `0${date.getMonth() + 1}-` : result += `${date.getMonth() + 1}-`;
+    date.getDate() < 10 ? result += `0${date.getDate()}` : result += `${date.getDate()}`;
+  } else {
+    result = `${date.getUTCFullYear()}-`;
+    date.getUTCMonth() < 9 ? result += `0${date.getUTCMonth() + 1}-` : result += `${date.getUTCMonth() + 1}-`;
+    date.getUTCDate() < 10 ? result += `0${date.getUTCDate()}` : result += `${date.getUTCDate()}`;
+  }
   return result;
 }
 
-export function formatDateYyyyMmDdHhIiSs(date) {
-  let result = formatDateYyyyMmDd(date);
-  date.getHours() < 10 ? result += ` 0${date.getHours()}:` : result += ` ${date.getHours()}:`;
-  date.getMinutes() < 10 ? result += `0${date.getMinutes()}:` : result += `${date.getMinutes()}:`;
-  date.getSeconds() < 10 ? result += `0${date.getSeconds()}` : result += `${date.getSeconds()}`;
+export function formatDateYyyyMmDdHhIiSs(date, utc = false) {
+  let result;
+  if (!utc) {
+    result = formatDateYyyyMmDd(date);
+    date.getHours() < 10 ? result += ` 0${date.getHours()}:` : result += ` ${date.getHours()}:`;
+    date.getMinutes() < 10 ? result += `0${date.getMinutes()}:` : result += `${date.getMinutes()}:`;
+    date.getSeconds() < 10 ? result += `0${date.getSeconds()}` : result += `${date.getSeconds()}`;
+  } else {
+    result = formatDateYyyyMmDd(date, true);
+    date.getUTCHours() < 10 ? result += ` 0${date.getUTCHours()}:` : result += ` ${date.getUTCHours()}:`;
+    date.getUTCMinutes() < 10 ? result += `0${date.getUTCMinutes()}:` : result += `${date.getUTCMinutes()}:`;
+    date.getUTCSeconds() < 10 ? result += `0${date.getUTCSeconds()}` : result += `${date.getUTCSeconds()}`;
+  }
   return result;
 }
 
