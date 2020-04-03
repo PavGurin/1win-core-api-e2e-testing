@@ -52,7 +52,7 @@ describe('hybrid', () => {
         const { data } = await cases.playCaseWithoutChance(17); // 100 rub
         caseCostProfits.push({ caseCost: 100, profit: data.result });
         // console.log(data);
-        await sleep(1000);
+        await sleep(10000);
         const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
         // console.log(statsAll);
 

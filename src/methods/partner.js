@@ -2,7 +2,7 @@ import axios from 'axios';
 import { randomNum, randomStr } from '../randomizer';
 import { mysqlConnection } from './mysqlConnection';
 
-const PARTNER_STAGING_URL = 'https://partner-staging.1win.dev';
+const PARTNER_STAGING_URL = 'https://partner.staging.1win-prodlike.tech';
 // const AUTH_TOKEN = 'Basic YWRtaW46Zk1xM0VaVXB2OGhOMmg=';
 
 function getCookie(headers) {

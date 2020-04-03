@@ -42,7 +42,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -70,7 +70,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price);
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -98,7 +98,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(user.id, CASE_COST_EUR);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
     // console.log(caseWin);
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -131,7 +131,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(user.id, CASE_COST_UAH);
     const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
     // console.log(caseWin);
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -166,7 +166,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -198,7 +198,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -230,7 +230,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -262,7 +262,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -294,7 +294,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -326,7 +326,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -358,7 +358,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -390,7 +390,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -422,7 +422,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -454,7 +454,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -486,7 +486,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -518,7 +518,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -550,7 +550,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -582,7 +582,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -614,7 +614,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -646,7 +646,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -678,7 +678,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
@@ -710,7 +710,7 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(2000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
     // console.log(statsAll);
     const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
