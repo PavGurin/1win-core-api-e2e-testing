@@ -9,7 +9,7 @@ export async function addFirstDeposit(partnerId, hashId, sourceId, userId, amoun
     : Date += `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getUTCHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
   const broadcaster_id = `${randomStr(8)}-${randomStr(4)}-${randomStr(4)}-${randomStr(12)}`;
-  await mysqlConnection.executeQuery(`insert into 1win_partner.stats_v2(broadcaster_id, partner_id, hash_id, 
+  return mysqlConnection.executeQuery(`insert into 1win_partner.stats_v2(broadcaster_id, partner_id, hash_id, 
                                   source_id, user_id, event, event_value, event_source_id, date, country) 
                                   VALUES('${broadcaster_id}', 
                                          '${partnerId}', '${hashId}', '${sourceId}', '${userId}', 'FIRST_DEPOSIT', 
@@ -24,7 +24,7 @@ export async function addDeposit(partnerId, hashId, sourceId, userId, amount, da
     : Date += `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getUTCHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
   const broadcaster_id = `${randomStr(8)}-${randomStr(4)}-${randomStr(4)}-${randomStr(12)}`;
-  await mysqlConnection.executeQuery(`insert into 1win_partner.stats_v2(broadcaster_id, partner_id, hash_id, 
+  return mysqlConnection.executeQuery(`insert into 1win_partner.stats_v2(broadcaster_id, partner_id, hash_id, 
                                   source_id, user_id, event, event_value, event_source_id, date, country) 
                                   VALUES('${broadcaster_id}', 
                                          '${partnerId}', '${hashId}', '${sourceId}', '${userId}', 'DEPOSIT', 
@@ -34,7 +34,7 @@ export async function addDeposit(partnerId, hashId, sourceId, userId, amount, da
 
 export async function createPreset(version, depositAmount, betCount, betAmount,
   gamblingAmount, totalAmount, timeFromReg, partnerProfit) {
-  await mysqlConnection.executeQuery(`insert into 1win_partner.cpa_preset values('${version}','cpa_deposit_amount', '${depositAmount}'), 
+  return mysqlConnection.executeQuery(`insert into 1win_partner.cpa_preset values('${version}','cpa_deposit_amount', '${depositAmount}'), 
                                            ('${version}', 'cpa_bet_amount', '${betAmount}'), 
                                            ('${version}', 'cpa_bet_count', '${betCount}'), 
                                            ('${version}', 'cpa_gambling_amount', '${gamblingAmount}'),

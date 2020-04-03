@@ -135,6 +135,9 @@ export async function getCurrenciesFromDB(date) {
   date.getMonth() < 9 ? Date += `${date.getFullYear()}-0${date.getMonth() + 1}-`
     : Date += `${date.getFullYear()}-${date.getMonth() + 1}-`;
   date.getDate() < 10 ? Date += `0${date.getDate()}` : Date += `${date.getDate()}`;
-  const currencies = await mysqlConnection.executeQuery(`select * from 1win.ma_exchange_rates where date = '${Date}';`);
+  let currencies = await mysqlConnection.executeQuery(`select * from 1win.ma_exchange_rates where date = '${Date}';`);
+  if (!currencies[0]) {
+    currencies = await mysqlConnection.executeQuery('select * from 1win.ma_exchange_rates order by date desc limit 1;');
+  }
   return currencies[0];
 }

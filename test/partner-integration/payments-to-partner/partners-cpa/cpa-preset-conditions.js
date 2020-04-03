@@ -53,7 +53,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -88,7 +88,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -123,7 +123,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -138,7 +138,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin2 } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin2);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll2);
 
@@ -173,7 +173,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -186,7 +186,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin2 } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin2);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll2);
 
@@ -221,7 +221,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -256,7 +256,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -291,7 +291,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -306,7 +306,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin2 } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin2);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll2);
 
@@ -341,7 +341,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -354,7 +354,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin2 } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin2);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll2);
 
@@ -389,7 +389,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -425,7 +425,7 @@ describe('Cpa preset conditions', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -462,7 +462,7 @@ describe('Cpa preset conditions', () => {
 
     await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -495,7 +495,7 @@ describe('Cpa preset conditions', () => {
 
     await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -528,7 +528,7 @@ describe('Cpa preset conditions', () => {
 
     await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -561,7 +561,7 @@ describe('Cpa preset conditions', () => {
 
     await betsCustom.successfulOrdinaryBet(BET_AMOUNT, coeff);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 

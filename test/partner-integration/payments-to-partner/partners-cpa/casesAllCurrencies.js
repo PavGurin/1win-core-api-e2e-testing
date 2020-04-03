@@ -63,7 +63,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -93,7 +93,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -123,7 +123,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -153,7 +153,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -183,7 +183,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -213,7 +213,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -243,7 +243,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -273,7 +273,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -303,7 +303,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -333,7 +333,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -363,7 +363,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
@@ -393,7 +393,7 @@ describe('Payments for cases to CPA partner, all currency combinations', () => {
     const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
     // console.log(caseWin);
 
-    await sleep(1000);
+    await sleep(10000);
     const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
     // console.log(statsAll);
 
