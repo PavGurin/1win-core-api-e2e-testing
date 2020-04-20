@@ -144,4 +144,8 @@ export const betsCustomFixtures = {
   async setResultOutcome(resultId, outcome) {
     return mysqlConnection.executeQuery(`update 1win_test.custom_results set outcome = '${outcome}' where id = '${resultId}';`, 'custom_bets');
   },
+
+  async setSelectionStatus(oddId, newStatus) {
+    await mysqlConnection.executeQuery(`UPDATE 1win.ma_selections SET status = '${newStatus}' WHERE odds_id = ${oddId}`);
+  },
 };

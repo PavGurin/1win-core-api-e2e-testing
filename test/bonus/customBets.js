@@ -1,8 +1,9 @@
 import { register } from '../../src/methods/register';
 import { banking } from '../../src/methods/banking';
-import { getUserBonusAmount, setUserBonusAmount } from '../../src/methods/user';
+import { setUserBonusAmount } from '../../src/methods/user';
 import { betsCustom } from '../../src/methods/betsCustom';
 import { betsCustomFixtures } from '../../src/methods/betsCustomFixtures';
+import { checkBonus } from '../../src/expects/exBonus';
 
 describe('Bonus amount for custom bets', () => {
   const AMOUNT_RUB = 1000;
@@ -41,11 +42,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_RUB);
       await banking.setBalance(user.id, AMOUNT_RUB);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_RUB);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_RUB * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_RUB);
+      await checkBonus(user.id, bet, AMOUNT_RUB * 0.95, AMOUNT_RUB * 0.05, AMOUNT_RUB * COEFF);
     });
 
     it('C2072152 (+) USD', async () => {
@@ -56,11 +54,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_USD);
       await banking.setBalance(user.id, AMOUNT_USD);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_USD);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_USD * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_USD);
+      await checkBonus(user.id, bet, AMOUNT_USD * 0.95, AMOUNT_USD * 0.05, AMOUNT_USD * COEFF);
     });
 
     it('C2072153 (+) EUR', async () => {
@@ -70,11 +65,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_EUR);
       await banking.setBalance(user.id, AMOUNT_EUR);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_EUR);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_EUR * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_EUR);
+      await checkBonus(user.id, bet, AMOUNT_EUR * 0.95, AMOUNT_EUR * 0.05, AMOUNT_EUR * COEFF);
     });
 
     it('C2072154 (+) UAH', async () => {
@@ -84,11 +76,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_UAH);
       await banking.setBalance(user.id, AMOUNT_UAH);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_UAH);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_UAH * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_UAH);
+      await checkBonus(user.id, bet, AMOUNT_UAH * 0.95, AMOUNT_UAH * 0.05, AMOUNT_UAH * COEFF);
     });
   });
   describe('Coeff = 3', () => {
@@ -108,11 +97,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_RUB);
       await banking.setBalance(user.id, AMOUNT_RUB);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_RUB);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_RUB * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_RUB);
+      await checkBonus(user.id, bet, AMOUNT_RUB * 0.95, AMOUNT_RUB * 0.05, AMOUNT_RUB * COEFF);
     });
 
     it('C2072156 (+) USD', async () => {
@@ -123,11 +109,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_USD);
       await banking.setBalance(user.id, AMOUNT_USD);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_USD);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_USD * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_USD);
+      await checkBonus(user.id, bet, AMOUNT_USD * 0.95, AMOUNT_USD * 0.05, AMOUNT_USD * COEFF);
     });
 
     it('C2072157 (+) EUR', async () => {
@@ -137,11 +120,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_EUR);
       await banking.setBalance(user.id, AMOUNT_EUR);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_EUR);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_EUR * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_EUR);
+      await checkBonus(user.id, bet, AMOUNT_EUR * 0.95, AMOUNT_EUR * 0.05, AMOUNT_EUR * COEFF);
     });
 
     it('C2072158 (+) UAH', async () => {
@@ -151,11 +131,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_UAH);
       await banking.setBalance(user.id, AMOUNT_UAH);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_UAH);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe((AMOUNT_UAH * 0.95).toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_UAH);
+      await checkBonus(user.id, bet, AMOUNT_UAH * 0.95, AMOUNT_UAH * 0.05, AMOUNT_UAH * COEFF);
     });
   });
   describe('Coeff < 3', () => {
@@ -175,11 +152,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_RUB);
       await banking.setBalance(user.id, AMOUNT_RUB);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_RUB);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe(AMOUNT_RUB.toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_RUB);
+      await checkBonus(user.id, bet, AMOUNT_RUB, 0, AMOUNT_RUB * COEFF);
     });
 
     it('C2072160 (-) USD', async () => {
@@ -190,11 +164,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_USD);
       await banking.setBalance(user.id, AMOUNT_USD);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_USD);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe(AMOUNT_USD.toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_USD);
+      await checkBonus(user.id, bet, AMOUNT_USD, 0, AMOUNT_USD * COEFF);
     });
 
     it('C2072161 (-) EUR', async () => {
@@ -204,11 +175,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_EUR);
       await banking.setBalance(user.id, AMOUNT_EUR);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_EUR);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe(AMOUNT_EUR.toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_EUR);
+      await checkBonus(user.id, bet, AMOUNT_EUR, 0, AMOUNT_EUR * COEFF);
     });
 
     it('C2072162 (-) UAH', async () => {
@@ -218,11 +186,8 @@ describe('Bonus amount for custom bets', () => {
       await setUserBonusAmount(user.id, AMOUNT_UAH);
       await banking.setBalance(user.id, AMOUNT_UAH);
 
-      await betsCustom.successfulOrdinaryBet(event.id, results, AMOUNT_UAH);
-
-      const newBonusAmount = await getUserBonusAmount(user.id);
-      // console.log(newBonusAmount);
-      expect(newBonusAmount).toBe(AMOUNT_UAH.toString());
+      const bet = await betsCustom.successfulOrdinaryBet(user.id, event.id, results, AMOUNT_UAH);
+      await checkBonus(user.id, bet, AMOUNT_UAH, 0, AMOUNT_UAH * COEFF);
     });
   });
 });

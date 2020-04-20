@@ -5,9 +5,10 @@
 
 
 /* eslint object-shorthand: off */
-import { randomNum, randomStr } from '../randomizer';
+import { randomNum } from '../randomizer';
 import { formatDateYyyyMmDdHhIiSs, sleep } from './utils';
 import { betsCustomFixtures } from './betsCustomFixtures';
+import { getUsersLastBetId, waitForBetSuccess } from './betsInBD';
 
 export const betsCustom = {
   /**
@@ -86,20 +87,25 @@ export const betsCustom = {
     });
   },
 
-  async successfulOrdinaryBet(eventId, results, amount) {
+  async successfulOrdinaryBet(userId, eventId, results, amount) {
     let stop = new Date();
-    stop.setSeconds(stop.getSeconds() + 10);
+    stop.setSeconds(stop.getSeconds() + 5);
     stop = formatDateYyyyMmDdHhIiSs(stop, true);
 
     await betsCustomFixtures.setEventStopTime(eventId, stop);
 
     const { data } = await this.makeOrdinaryBet(results[0].id, amount, results[0].factor);
     // console.log(data);
+    const betId = await getUsersLastBetId(userId);
+    // console.log(betId);
 
-    await sleep(10000);
-    await betsCustomFixtures.setResultOutcome(results[0].id, 2);
-    await betsCustomFixtures.setResultOutcome(results[1].id, 1);
-    await sleep(45000);
+    await sleep(5000);
+    // await betsCustomFixtures.setResultOutcome(results[0].id, 2);
+    // await betsCustomFixtures.setResultOutcome(results[1].id, 1);
+    await betsCustomFixtures.setSelectionStatus(results[0].id, 2);
+
+    // ждем, пока отработает скрипт, проставляющий ставке статус такой, как у ее селекшена
+    return waitForBetSuccess(60000, betId, 2);
   },
 
   async maxBetAmount(resultId, coeff) {
