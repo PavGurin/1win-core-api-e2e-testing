@@ -1,7 +1,8 @@
 import { register } from '../../src/methods/register';
 import { banking } from '../../src/methods/banking';
-import { getUserBonusAmount, setUserBonusAmount } from '../../src/methods/user';
+import { setUserBonusAmount } from '../../src/methods/user';
 import { makeSuccessfulOrdinaryBet } from '../../src/methods/betsInBD';
+import { checkBonus } from '../../src/expects/exBonus';
 
 describe('Bonus amount spending depending on bet coefficient', () => {
   const amount = 300;
@@ -14,12 +15,7 @@ describe('Bonus amount spending depending on bet coefficient', () => {
     await setUserBonusAmount(user.id, amount);
 
     const bet = await makeSuccessfulOrdinaryBet(user, 'USD', amount, coeff);
-    expect(bet.status).toBe(2);
-    expect(bet.profit.toString()).toBe((amount * coeff).toFixed(0));
-    expect(bet.promo_amount).toBe(0);
-
-    const newBonusAmount = await getUserBonusAmount(user.id);
-    expect(newBonusAmount).toBe(amount.toString());
+    await checkBonus(user.id, bet, amount, 0, amount * coeff);
   });
 
   it('C1789789 (+) coeff = 3.0', async () => {
@@ -31,12 +27,7 @@ describe('Bonus amount spending depending on bet coefficient', () => {
     await setUserBonusAmount(user.id, amount);
 
     const bet = await await makeSuccessfulOrdinaryBet(user, 'RUB', amount, coeff);
-    expect(bet.status).toBe(2);
-    expect(bet.profit).toBe(amount * coeff);
-    expect(bet.promo_amount).toBe(amount * 0.05);
-
-    const newBonusAmount = await getUserBonusAmount(user.id);
-    expect(newBonusAmount).toBe((amount * 0.95).toString());
+    await checkBonus(user.id, bet, amount * 0.95, amount * 0.05, amount * coeff);
   });
 
   it('C1789790 (+) coeff > 3.0', async () => {
@@ -48,11 +39,6 @@ describe('Bonus amount spending depending on bet coefficient', () => {
     await setUserBonusAmount(user.id, amount);
 
     const bet = await makeSuccessfulOrdinaryBet(user, 'EUR', amount, coeff);
-    expect(bet.status).toBe(2);
-    expect(bet.profit.toString()).toBe((amount * coeff).toFixed(0));
-    expect(bet.promo_amount).toBe(amount * 0.05);
-
-    const newBonusAmount = await getUserBonusAmount(user.id);
-    expect(newBonusAmount).toBe((amount * 0.95).toString());
+    await checkBonus(user.id, bet, amount * 0.95, amount * 0.05, amount * coeff);
   });
 });

@@ -63,6 +63,25 @@ export async function getBet(betId) {
   return result[0];
 }
 
+export async function waitForBetSuccess(ms, betId, status) {
+  // ожидаем нужного статуса ставки, но не более ms миллисекунд
+  /* eslint no-param-reassign: off */
+  let bet;
+  while (ms > 0) {
+    await sleep(2000);
+    bet = await getBet(betId);
+    if (bet.status === status) {
+      ms = 0;
+    } else {
+      ms -= 2000;
+    }
+    // console.log(ms);
+    // console.log(bet.status);
+  }
+
+  return bet;
+}
+
 export async function makeSuccessfulOrdinaryBet(user, currency, amount, coeff) {
   // добавляем ставку для юзера в ma_bets
   await addBetToBD(user.id, currency, amount, coeff, 0, 'ordinary');
@@ -85,11 +104,7 @@ export async function makeSuccessfulOrdinaryBet(user, currency, amount, coeff) {
   await setSelectionStatus(selectionId[0].id, 2);
 
   // ждем, пока отработает скрипт, проставляющий ставке статус такой, как у ее селекшена
-  await sleep(45000);
-
-  // достаем из базы ставку
-  const bet = await getBet(betId);
-  return bet;
+  return waitForBetSuccess(60000, betId, 2);
 }
 
 export async function makeSuccessfulExpressBet(user, currency, amount, coeff) {
@@ -104,7 +119,7 @@ export async function makeSuccessfulExpressBet(user, currency, amount, coeff) {
     /* eslint no-await-in-loop:off */
     // копируем рандомный селекшн в ma_selections и привязываем его к ставке
     const selection = await getRandomSelection();
-    // selection.description.replace(/.*("coefficient":.*..*)}}.*/, `"coefficient":${coeff}`);
+    selection.description.replace(/'/, "\\'");
     // console.log(selection);
     await addSelectionToBD(betId, selection.market, selection.match_id, selection.awayteam_id,
       selection.hometeam_id, selection.odds_id, selection.type_id, selection.sub_type,
@@ -122,9 +137,5 @@ export async function makeSuccessfulExpressBet(user, currency, amount, coeff) {
   });
 
   // ждем, пока отработает скрипт, проставляющий ставке статус такой, как у ее селекшена
-  await sleep(60000);
-
-  // достаем из базы ставку
-  const bet = await getBet(betId);
-  return bet;
+  return waitForBetSuccess(60000, betId, 2);
 }

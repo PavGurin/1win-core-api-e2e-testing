@@ -1,9 +1,10 @@
 import { register } from '../../src/methods/register';
 import { banking } from '../../src/methods/banking';
-import { getUserBonusAmount, setUserBonusAmount } from '../../src/methods/user';
+import { setUserBonusAmount } from '../../src/methods/user';
 import { makeSuccessfulExpressBet } from '../../src/methods/betsInBD';
+import { checkExpressBonus } from '../../src/expects/exBonus';
 
-describe('Bonus amount spending depending on bet coefficient', () => {
+describe('Bonus is not given for express bets', () => {
   const amount = 300;
   it('C1868684 (-) coeff < 3.0', async () => {
     const coeff = 2.99;
@@ -14,11 +15,7 @@ describe('Bonus amount spending depending on bet coefficient', () => {
     await setUserBonusAmount(user.id, amount);
 
     const bet = await makeSuccessfulExpressBet(user, 'USD', amount, coeff);
-    expect(bet.status).toBe(2);
-    expect(bet.promo_amount).toBe(0);
-
-    const newBonusAmount = await getUserBonusAmount(user.id);
-    expect(newBonusAmount).toBe(amount.toString());
+    await checkExpressBonus(user.id, bet, amount, 0);
   });
 
   it('C1868685 (-) coeff = 3.0', async () => {
@@ -30,11 +27,7 @@ describe('Bonus amount spending depending on bet coefficient', () => {
     await setUserBonusAmount(user.id, amount);
 
     const bet = await await makeSuccessfulExpressBet(user, 'RUB', amount, coeff);
-    expect(bet.status).toBe(2);
-    expect(bet.promo_amount).toBe(0);
-
-    const newBonusAmount = await getUserBonusAmount(user.id);
-    expect(newBonusAmount).toBe(amount.toString());
+    await checkExpressBonus(user.id, bet, amount, 0);
   });
 
   it('C1868686 (-) coeff > 3.0', async () => {
@@ -46,10 +39,6 @@ describe('Bonus amount spending depending on bet coefficient', () => {
     await setUserBonusAmount(user.id, amount);
 
     const bet = await makeSuccessfulExpressBet(user, 'EUR', amount, coeff);
-    expect(bet.status).toBe(2);
-    expect(bet.promo_amount).toBe(0);
-
-    const newBonusAmount = await getUserBonusAmount(user.id);
-    expect(newBonusAmount).toBe(amount.toString());
+    await checkExpressBonus(user.id, bet, amount, 0);
   });
 });
