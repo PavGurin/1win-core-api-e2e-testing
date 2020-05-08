@@ -52,11 +52,10 @@ describe('hybrid', () => {
         const { data } = await cases.playCaseWithoutChance(17); // 100 rub
         caseCostProfits.push({ caseCost: 100, profit: data.result });
         // console.log(data);
-        await sleep(10000);
-        const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+        const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
         // console.log(statsAll);
 
-        const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+        const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
         console.log(statsDay);
         // eslint-disable-next-line radix
         expect(parseFloat(((statsDay.days['0'].day_difference) / 2).toFixed(2)))
@@ -67,11 +66,11 @@ describe('hybrid', () => {
 
       await checkUserMetaCpaPending(user.id);
 
-      await sleep(1000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
+      await sleep(12000);
+      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       console.log(statsAll2);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       console.log(statsDay2);
     }
   });

@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { randomNum, randomStr } from '../randomizer';
 import { mysqlConnection } from './mysqlConnection';
+import { sleep } from './utils';
 
 const PARTNER_STAGING_URL = 'https://partner.staging.1win-prodlike.tech';
 // const AUTH_TOKEN = 'Basic YWRtaW46Zk1xM0VaVXB2OGhOMmg=';
+const TIMEOUT = 40000;
 
 function getCookie(headers) {
   const cookie1 = (headers['set-cookie'][0]).match(/(.*); path=.*/)[1];
@@ -181,44 +183,68 @@ export const partner = {
     }
   },
 
-  async getStatsAll(cookie, linkPromoId, sourceId) {
-    try {
-      const { data } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/stats_v2/all`, {
-        params: {
-          sources: sourceId,
-          hashId: linkPromoId,
-        },
-        headers: {
-          // Authorization: AUTH_TOKEN,
-          Cookie: cookie,
-        },
-      });
-      // console.log(data);
-      return { data };
-    } catch (error) {
-      // console.log(error.data);
-      return error.data;
+  async getStatsAll(cookie, linkPromoId, sourceId, expectedParameter) {
+    let left_ms = TIMEOUT;
+    let data;
+    while (left_ms > 0) {
+      /* eslint no-await-in-loop:off */
+      try {
+        const { data: data1 } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/stats_v2/all`, {
+          params: {
+            sources: sourceId,
+            hashId: linkPromoId,
+          },
+          headers: {
+            // Authorization: AUTH_TOKEN,
+            Cookie: cookie,
+          },
+        });
+        // console.log(data);
+        data = data1;
+      } catch (error) {
+        // console.log(error.data);
+        // eslint-disable-next-line prefer-destructuring
+        data = error.data;
+      }
+      if (data.values[expectedParameter] !== 0 && data.values[expectedParameter] !== undefined) {
+        return { data };
+      }
+      await sleep(2000);
+      left_ms -= 2000;
     }
+    return { data };
   },
 
-  async getStatsDay(cookie, day, linkPromoId, sourceId) {
-    try {
-      const { data } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/stats_v2/days`, {
-        params: {
-          day: `${day / 1}, ${day / 1}`,
-          sources: sourceId,
-          hashId: linkPromoId,
-        },
-        headers: {
+  async getStatsDay(cookie, day, linkPromoId, sourceId, expectedParameter) {
+    let left_ms = TIMEOUT;
+    let data;
+    while (left_ms > 0) {
+      /* eslint no-await-in-loop:off */
+      try {
+        const { data: data1 } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/stats_v2/days`, {
+          params: {
+            day: `${day / 1}, ${day / 1}`,
+            sources: sourceId,
+            hashId: linkPromoId,
+          },
+          headers: {
           // Authorization: AUTH_TOKEN,
-          Cookie: cookie,
-        },
-      });
-      // console.log(data);
-      return { data };
-    } catch (error) {
+            Cookie: cookie,
+          },
+        });
+        // console.log(data);
+        data = data1;
+      } catch (error) {
       // console.log(error.data);
-      return error.data;
+        // eslint-disable-next-line prefer-destructuring
+        data = error.data;
+      }
+      if (data.days[0][expectedParameter] !== 0 && data.days[0][expectedParameter] !== undefined) {
+        return { data };
+      }
+      await sleep(2000);
+      left_ms -= 2000;
     }
+    return { data };
   },
 };

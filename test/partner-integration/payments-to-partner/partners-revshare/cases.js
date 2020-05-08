@@ -46,11 +46,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'RUB', 'RUB');
@@ -71,11 +71,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 'RUB', 'USD');
@@ -96,11 +96,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_EUR, profit: caseWin.result }], 'RUB', 'EUR');
@@ -121,11 +121,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_UAH, profit: caseWin.result }], 'RUB', 'UAH');
@@ -146,11 +146,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'USD', 'RUB');
@@ -171,11 +171,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 'USD', 'USD');
@@ -196,11 +196,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_EUR, profit: caseWin.result }], 'USD', 'EUR');
@@ -221,11 +221,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_UAH, profit: caseWin.result }], 'USD', 'UAH');
@@ -246,11 +246,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'EUR', 'RUB');
@@ -271,11 +271,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 'EUR', 'USD');
@@ -296,11 +296,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_EUR, profit: caseWin.result }], 'EUR', 'EUR');
@@ -321,11 +321,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_UAH, profit: caseWin.result }], 'EUR', 'UAH');
@@ -348,11 +348,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'USD', 'RUB');
@@ -360,11 +360,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin2 } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin2);
 
-      await sleep(10000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
+      await sleep(5000);
+      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll2);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay2);
 
       await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB, profit: caseWin2.result }], 'USD', 'RUB');
@@ -385,11 +385,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'RUB', 'RUB');
@@ -397,11 +397,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin2 } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin2);
 
-      await sleep(10000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
+      await sleep(5000);
+      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll2);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay2);
 
       await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB, profit: caseWin2.result }], 'RUB', 'RUB');
@@ -425,11 +425,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'RUB', 'RUB');
@@ -437,11 +437,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin2 } = await cases.playCaseWithoutChance(FIVE_HUNDRED_ROUBLES_CASE_ID);
       // console.log(caseWin2);
 
-      await sleep(10000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
+      await sleep(5000);
+      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll2);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay2);
 
       await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB_2, profit: caseWin2.result }], 'RUB', 'RUB');
@@ -465,11 +465,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
       // console.log(caseWin);
 
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
       await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'USD', 'RUB');
@@ -477,11 +477,11 @@ describe('Payments to revshare partner from cases', () => {
       const { data: caseWin2 } = await cases.playCaseWithoutChance(FIVE_HUNDRED_ROUBLES_CASE_ID);
       // console.log(caseWin2);
 
-      await sleep(10000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId);
+      await sleep(5000);
+      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll2);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay2);
 
       await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB_2, profit: caseWin2.result }], 'USD', 'RUB');
