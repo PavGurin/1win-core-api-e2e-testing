@@ -11,6 +11,8 @@ import { checkPartnerPaymentBets, checkPartnerPaymentCase, getCurrencyExchangeCo
 import { cases } from '../../../src/methods/cases';
 import { changeCurrency } from '../../../src/methods/user';
 
+// TODO тесты на ставки со всеми комбинациями валют, кейсы в другом файле
+
 describe(' Subpartner ', () => {
   const Money = 2000;
   const Bets_RUB = 2000;
@@ -42,10 +44,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -70,76 +72,12 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'RUB', 'USD');
-    const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
-    const Myincome = (p0.webmasterSum).toFixed(2);
-    const Partnerincome = (p0.partnerSum * 0.05).toFixed(2);
-    expect(Myincome).toEqual(Partnerincome);
-  });
-  it('C1998170 - Субпартнер + партнер + кейс EUR ', async () => {
-    const promocode = randomNum(10).toString();
-    const partnerEmail = `${randomStr(10)}@ahem.email`;
-    const partnerEmail2 = `${randomStr(10)}@ahem.email`;
-    await partner.register(partnerEmail, defaultPass, 'RUB');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
-    const hash = await partner.UrlSubPartner(cookie);
-    // console.log(hash);
-    await partner.register(partnerEmail2, defaultPass, 'RUB', hash);
-    const { cookie: cookie2 } = await partner.login(partnerEmail2, defaultPass);
-    const { data: { id: promocodeId } } = await partner.createPromocode(cookie2, promocode);
-    // console.log(promocode);
-    const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
-    // console.log(user);
-    await banking.setBalance(user.id, CASE_COST_EUR);
-    const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
-    // console.log(caseWin);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
-    // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
-    // console.log(statsDay);
-    await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{
-      caseCost: CASE_COST_EUR,
-      profit: caseWin.result,
-    }], 'RUB', 'EUR');
-    const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
-    const Myincome = (p0.webmasterSum).toFixed(2);
-    const Partnerincome = (p0.partnerSum * 0.05).toFixed(2);
-    expect(Myincome).toEqual(Partnerincome);
-  });
-  it('C1998171 - Субпартнер + партнер + кейс UAH', async () => {
-    const promocode = randomNum(10).toString();
-    const partnerEmail = `${randomStr(10)}@ahem.email`;
-    const partnerEmail2 = `${randomStr(10)}@ahem.email`;
-    await partner.register(partnerEmail, defaultPass, 'RUB');
-    // console.log(partnerEmail, defaultPass);
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
-    const hash = await partner.UrlSubPartner(cookie);
-    // console.log(hash);
-    await partner.register(partnerEmail2, defaultPass, 'RUB', hash);
-    // console.log(partnerEmail2, defaultPass);
-    const { cookie: cookie2 } = await partner.login(partnerEmail2, defaultPass);
-    const { data: { id: promocodeId } } = await partner.createPromocode(cookie2, promocode);
-    // console.log(promocode);
-    const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
-    // console.log(user);
-    await banking.setBalance(user.id, CASE_COST_UAH);
-    const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
-    // console.log(caseWin);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
-    // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
-    // console.log(statsDay);
-    await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{
-      caseCost: CASE_COST_UAH,
-      profit: caseWin.result,
-    }], 'RUB', 'UAH');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
     const Myincome = (p0.webmasterSum).toFixed(2);
     const Partnerincome = (p0.partnerSum * 0.05).toFixed(2);
@@ -166,10 +104,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -198,10 +136,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'RUB', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -230,10 +168,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -262,10 +200,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -294,10 +232,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -326,10 +264,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -358,10 +296,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -390,10 +328,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -422,10 +360,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -454,10 +392,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -486,10 +424,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -518,10 +456,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -550,10 +488,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -582,10 +520,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -614,10 +552,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -646,10 +584,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'EUR', 'RUB');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -678,10 +616,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'EUR', 'USD');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);
@@ -710,10 +648,10 @@ describe(' Subpartner ', () => {
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
     // console.log(price)
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie2, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie2, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'EUR', 'EUR');
     const { data: { partners: [p0] } } = await partner.getStatsSubpartner(cookie);

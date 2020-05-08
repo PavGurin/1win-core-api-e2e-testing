@@ -36,10 +36,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
   });
@@ -55,10 +55,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'RUB', 'USD');
   });
@@ -74,10 +74,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'EUR');
   });
@@ -93,10 +93,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_UAH);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_UAH - price], 'RUB', 'UAH');
   });
@@ -111,10 +111,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     const { data: { id } } = await register.oneClickRegRubWithPromocode(promocode);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_RUB);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'RUB', 'RUB');
   });
@@ -129,10 +129,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     const { data: { id } } = await register.oneClickRegUsdWithPromocode(promocode);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_USD);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'RUB', 'USD');
   });
@@ -148,10 +148,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_EUR);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'RUB', 'EUR');
   });
@@ -166,10 +166,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     const { data: { id } } = await register.oneClickRegUahWithPromocode(promocode);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_UAH);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_UAH - price], 'RUB', 'UAH');
   });
@@ -185,10 +185,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
   });
@@ -204,10 +204,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
   });
@@ -223,10 +223,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
   });
@@ -241,10 +241,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     const { data: { id } } = await register.oneClickRegUahWithPromocode(promocode);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_UAH);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_UAH - price], 'USD', 'UAH');
   });
@@ -260,10 +260,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_RUB);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'EUR', 'RUB');
   });
@@ -279,10 +279,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_USD);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'EUR', 'USD');
   });
@@ -298,10 +298,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_EUR);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'EUR', 'EUR');
   });
@@ -316,10 +316,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     const { data: { id } } = await register.oneClickRegUahWithPromocode(promocode);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetOrdinar(Bets_UAH);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_UAH - price], 'EUR', 'UAH');
   });
@@ -335,10 +335,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_RUB);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'USD', 'RUB');
   });
@@ -354,10 +354,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_USD);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'USD', 'USD');
   });
@@ -373,10 +373,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_EUR);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'USD', 'EUR');
   });
@@ -392,10 +392,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_UAH);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_UAH - price], 'USD', 'UAH');
   });
@@ -411,10 +411,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_RUB);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_RUB - price], 'EUR', 'RUB');
   });
@@ -430,10 +430,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_USD);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_USD - price], 'EUR', 'USD');
   });
@@ -449,10 +449,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_EUR);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_EUR - price], 'EUR', 'EUR');
   });
@@ -468,10 +468,10 @@ describe('One click registration with promocode + play bets and sale bets ', () 
     // console.log(id);
     await banking.setBalance(id, Money);
     const price = await Refund.SellBetExpress(Bets_UAH);
-    await sleep(10000);
-    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+    const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
     // console.log(statsAll);
-    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+    const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
     // console.log(statsDay);
     await checkPartnerPaymentBets(statsAll, statsDay.days[0], [Bets_UAH - price], 'EUR', 'UAH');
   });

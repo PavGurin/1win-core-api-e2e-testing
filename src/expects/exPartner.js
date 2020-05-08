@@ -1,6 +1,13 @@
 import { getCurrenciesFromDB } from '../methods/banking';
 import { mysqlConnection } from '../methods/mysqlConnection';
+import { partner } from '../methods/partner';
+import { formatDateYyyyMmDd } from '../methods/utils';
 
+// из-за проблем округления может быть разница в 1 копейку
+// в received и expected
+// поэтому для сумм денег проверяем что received и expected равны с точностью 0,01
+// https://github.com/jest-community/jest-extended#tobewithinstart-end
+// для верхней границы берем + 0,011, т.к. проверяется < а не <=
 
 export function checkStatsAllAfterOneRegistrtaion(receivedStatsAll, expectedRegistrationNumber) {
   expect(receivedStatsAll.values.regs).toEqual(expectedRegistrationNumber);
@@ -54,10 +61,7 @@ export function checkStatsAllAfterOneRegistrtaionCPA(receivedStatsAll, expectedR
 
 export function checkStatsDailyAfterOneRegistrtaion(receivedStatsDaily,
   expectedRegistrationNumber, expectedDate) {
-  let expDate = '';
-  expectedDate.getMonth() < 9 ? expDate += `${expectedDate.getFullYear()}-0${expectedDate.getMonth() + 1}-`
-    : expDate += `${expectedDate.getFullYear()}-${expectedDate.getMonth() + 1}-`;
-  expectedDate.getDate() < 10 ? expDate += `0${expectedDate.getDate()}` : expDate += `${expectedDate.getDate()}`;
+  const expDate = formatDateYyyyMmDd(expectedDate);
   expect(receivedStatsDaily.day_regs).toEqual(expectedRegistrationNumber);
   expect(receivedStatsDaily.date).toEqual(expDate);
   expect(receivedStatsDaily.day_payment_sum).toEqual(0);
@@ -82,10 +86,7 @@ export function checkStatsDailyAfterOneRegistrtaion(receivedStatsDaily,
 
 export function checkStatsDailyAfterOneRegistrtaionCPA(receivedStatsDaily,
   expectedRegistrationNumber, expectedDate) {
-  let expDate = '';
-  expectedDate.getMonth() < 9 ? expDate += `${expectedDate.getFullYear()}-0${expectedDate.getMonth() + 1}-`
-    : expDate += `${expectedDate.getFullYear()}-${expectedDate.getMonth() + 1}-`;
-  expectedDate.getDate() < 10 ? expDate += `0${expectedDate.getDate()}` : expDate += `${expectedDate.getDate()}`;
+  const expDate = formatDateYyyyMmDd(expectedDate);
   expect(receivedStatsDaily.date).toEqual(expDate);
   expect(receivedStatsDaily.day_payment_sum).toEqual(0);
   expect(receivedStatsDaily.day_deposits_amount).toEqual(0);
@@ -181,7 +182,7 @@ export async function getCoeffForCpaPayment(partnerCurrency) {
 }
 
 export function round(value) {
-  return Math.round(value * 100) / 100;
+  return parseFloat((Math.round(value * 100) / 100).toFixed(2));
 }
 
 
@@ -205,44 +206,55 @@ export async function checkPartnerPaymentBets(receivedStatsAll, receivedStatsDai
     difference += round(round(bet) * coeff);
   });
 
-  profit = round(profit).toFixed(2);
-  loss = round(loss).toFixed(2);
-  difference = round(difference).toFixed(2);
+  profit = round(profit);
+  loss = round(loss);
+  difference = round(difference);
 
-  const payment = difference / 2;
+  const payment = round(difference / 2);
   // console.log((caseCost - caseProfit) * coeff);
   // console.log(payment);
 
-  expect(receivedStatsAll.values.profit_bets_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_bets_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_bets_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_bets_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsDaily.day_profit_bets_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_bets_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsDaily.day_profit_bets_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_bets_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
 
-  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
-  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsAll.values.difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
 
-  // из-за проблем округления может быть разница в 1 копейку
-  // в received и expected
-  // поэтому проверяем что received и expected равны с точностью 0,005
-  // https://jestjs.io/docs/en/expect#tobeclosetonumber-numdigits
-  expect(receivedStatsAll.values.payment_sum).toBeCloseTo(payment);
-  expect(receivedStatsAll.values.epc).toBeCloseTo(payment);
-  expect(receivedStatsDaily.day_payment_sum).toBeCloseTo(payment);
-  expect(receivedStatsDaily.day_epc).toBeCloseTo(payment);
+  expect(receivedStatsAll.values.payment_sum)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsAll.values.epc)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_payment_sum)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_epc)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
 }
 
+// eslint-disable-next-line spaced-comment
+/**
+ * caseCostProfitArray - пары из суммы кейса и выигрыша, пример
+ * [{ caseCost: 10, profit: 31.32 }, { caseCost: 10, profit: 3.9 }],
+ **/
 export async function checkPartnerPaymentCase(receivedStatsAll, receivedStatsDaily,
   caseCostProfitArray, partnerCurrency, playerCurrency) {
   expect(receivedStatsAll.values.payments_amount).toEqual(caseCostProfitArray.length);
@@ -263,50 +275,50 @@ export async function checkPartnerPaymentCase(receivedStatsAll, receivedStatsDai
     difference += round(round(caseN.caseCost - caseN.profit) * coeff);
   });
 
-  profit = round(profit).toFixed(2);
-  loss = round(loss).toFixed(2);
-  difference = round(difference).toFixed(2);
+  profit = round(profit);
+  loss = round(loss);
+  difference = round(difference);
 
-  const payment = difference / 2;
+  const payment = round(difference / 2);
   // console.log((caseCost - caseProfit) * coeff);
   // console.log(payment);
 
-  expect(receivedStatsAll.values.profit_case_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_case_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_case_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_case_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsDaily.day_profit_case_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_case_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsDaily.day_profit_case_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_case_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
 
-  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
-  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsAll.values.difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
 
-  // из-за проблем округления может быть разница в 1 копейку
-  // в received и expected
-  // поэтому проверяем что received и expected равны с точностью 0,005
-  // https://jestjs.io/docs/en/expect#tobeclosetonumber-numdigits
-  expect(receivedStatsAll.values.payment_sum).toBeCloseTo(payment);
-  expect(receivedStatsAll.values.epc).toBeCloseTo(payment);
-  expect(receivedStatsDaily.day_payment_sum).toBeCloseTo(payment);
-  expect(receivedStatsDaily.day_epc).toBeCloseTo(payment);
+  expect(receivedStatsAll.values.payment_sum)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsAll.values.epc)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_payment_sum)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_epc)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
 }
 
-
-// eslint-disable-next-line spaced-comment
-/**
- * caseCostProfitArray - пары из суммы кейса и выигрыша, пример
- * [{ caseCost: 10, profit: 31.32 }, { caseCost: 10, profit: 3.9 }],
-**/
 export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStatsDaily,
   caseCostProfitArray, expectedPaymentAmountUsd, partnerCurrency, playerCurrency) {
   expect(receivedStatsAll.values.regs).toEqual(1);
@@ -326,36 +338,42 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
     difference += round(round(caseN.caseCost - caseN.profit) * coeff);
   });
 
-  profit = round(profit).toFixed(2);
-  loss = round(loss).toFixed(2);
-  difference = round(difference).toFixed(2);
+  profit = round(profit);
+  loss = round(loss);
+  difference = round(difference);
 
   let paymentCPA;
   expectedPaymentAmountUsd !== 0
-    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment).toFixed(2)
-    : paymentCPA = '0.00';
+    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment)
+    : paymentCPA = 0;
 
-  expect(receivedStatsAll.values.profit_case_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_case_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_case_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_case_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsDaily.day_profit_case_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_case_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsDaily.day_profit_case_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_case_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
 
-  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
-  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsAll.values.difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
 
-  if (paymentCPA !== '0.00') {
+  if (paymentCPA !== 0) {
     expect(receivedStatsAll.values.cpa_payout_count).toEqual(1);
     expect(receivedStatsDaily.day_cpa_payout_count).toEqual(1);
   } else {
@@ -363,10 +381,10 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
     expect(receivedStatsDaily.day_cpa_payout_count).toEqual(0);
   }
 
-  expect(receivedStatsAll.values.cpa_payout_amount.toFixed(2))
-    .toEqual(paymentCPA);
-  expect(receivedStatsDaily.day_cpa_payout_amount.toFixed(2))
-    .toEqual(paymentCPA);
+  expect(receivedStatsAll.values.cpa_payout_amount)
+    .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_cpa_payout_amount)
+    .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
 }
 
 export async function getHybridCpaProfit(partnerId) {
@@ -402,42 +420,52 @@ export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedS
     difference += round(round(caseN.caseCost - caseN.profit) * coeff);
   });
 
-  profit = round(profit).toFixed(2);
-  loss = round(loss).toFixed(2);
-  difference = round(difference).toFixed(2);
+  profit = round(profit);
+  loss = round(loss);
+  difference = round(difference);
 
-  const payment = difference / 2;
+  const payment = round(difference / 2);
   let paymentCPA;
   expectedCpaPaymentAmountUsd !== 0
-    ? paymentCPA = round(expectedCpaPaymentAmountUsd * coeffCpaPayment).toFixed(2)
-    : paymentCPA = '0.00';
+    ? paymentCPA = round(expectedCpaPaymentAmountUsd * coeffCpaPayment)
+    : paymentCPA = 0;
 
-  expect(receivedStatsAll.values.profit_case_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_case_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_case_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_case_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsDaily.day_profit_case_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_case_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsDaily.day_profit_case_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_case_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
 
-  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
-  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsAll.values.difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.payment_sum).toBeCloseTo(payment);
-  expect(receivedStatsAll.values.epc).toBeCloseTo(payment);
-  expect(receivedStatsDaily.day_payment_sum).toBeCloseTo(payment);
-  expect(receivedStatsDaily.day_epc).toBeCloseTo(payment);
+  expect(receivedStatsAll.values.payment_sum)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsAll.values.epc)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_payment_sum)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_epc)
+    .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
 
-  if (paymentCPA !== '0.00') {
+  if (paymentCPA !== 0) {
     expect(receivedStatsAll.values.cpa_payout_count).toEqual(expectedCpaPaymentCount);
     expect(receivedStatsDaily.day_cpa_payout_count).toEqual(expectedCpaPaymentCount);
   } else {
@@ -445,16 +473,20 @@ export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedS
     expect(receivedStatsDaily.day_cpa_payout_count).toEqual(0);
   }
 
-  expect(receivedStatsAll.values.cpa_payout_amount.toFixed(2))
-    .toEqual(paymentCPA);
-  expect(receivedStatsDaily.day_cpa_payout_amount.toFixed(2))
-    .toEqual(paymentCPA);
+  expect(receivedStatsAll.values.cpa_payout_amount)
+    .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_cpa_payout_amount)
+    .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
 
   const cpaProfit = await getHybridCpaProfit(partnerId);
-  expect(receivedStatsAll.values.cpa_profit).toEqual(cpaProfit);
-  expect(receivedStatsDaily.day_cpa_profit).toEqual(cpaProfit);
-  expect(receivedStatsAll.values.rs_profit).toBeCloseTo(payment - cpaProfit);
-  expect(receivedStatsDaily.day_rs_profit).toBeCloseTo(payment - cpaProfit);
+  expect(receivedStatsAll.values.cpa_profit)
+    .toBeWithin(round(cpaProfit - 0.01), round(cpaProfit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_cpa_profit)
+    .toBeWithin(round(cpaProfit - 0.01), round(cpaProfit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.rs_profit)
+    .toBeWithin(round(payment - cpaProfit - 0.01), round(payment - cpaProfit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_rs_profit)
+    .toBeWithin(round(payment - cpaProfit - 0.01), round(payment - cpaProfit + 0.01) + 0.001);
 }
 
 export async function checkUserMetaCpaPending(userId, value = true) {
@@ -487,36 +519,42 @@ export async function checkPartnerPaymentBetsCPA(receivedStatsAll, receivedStats
     difference += round(round(betPrize) * (-1) * coeff);
   });
 
-  profit = round(profit).toFixed(2);
-  loss = round(loss).toFixed(2);
-  difference = round(difference).toFixed(2);
+  profit = round(profit);
+  loss = round(loss);
+  difference = round(difference);
 
   let paymentCPA;
   expectedPaymentAmountUsd !== 0
-    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment).toFixed(2)
-    : paymentCPA = '0.00';
+    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment)
+    : paymentCPA = 0;
 
-  expect(receivedStatsAll.values.profit_bets_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_bets_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_bets_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_bets_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsDaily.day_profit_bets_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_bets_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsDaily.day_profit_bets_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_bets_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsAll.values.loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsAll.values.loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
-  expect(receivedStatsAll.values.profit_total_sum.toFixed(2))
-    .toEqual(profit);
-  expect(receivedStatsDaily.day_loss_total_sum.toFixed(2)).toEqual(loss);
+  expect(receivedStatsAll.values.profit_total_sum)
+    .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_loss_total_sum)
+    .toBeWithin(round(loss - 0.01), round(loss + 0.01) + 0.001);
 
 
-  expect(receivedStatsAll.values.difference.toFixed(2)).toEqual(difference);
-  expect(receivedStatsDaily.day_difference.toFixed(2)).toEqual(difference);
+  expect(receivedStatsAll.values.difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_difference)
+    .toBeWithin(round(difference - 0.01), round(difference + 0.01) + 0.001);
 
-  if (paymentCPA !== '0.00') {
+  if (paymentCPA !== 0) {
     expect(receivedStatsAll.values.cpa_payout_count).toEqual(1);
     expect(receivedStatsDaily.day_cpa_payout_count).toEqual(1);
   } else {
@@ -524,8 +562,20 @@ export async function checkPartnerPaymentBetsCPA(receivedStatsAll, receivedStats
     expect(receivedStatsDaily.day_cpa_payout_count).toEqual(0);
   }
 
-  expect(receivedStatsAll.values.cpa_payout_amount.toFixed(2))
-    .toEqual(paymentCPA);
-  expect(receivedStatsDaily.day_cpa_payout_amount.toFixed(2))
-    .toEqual(paymentCPA);
+  expect(receivedStatsAll.values.cpa_payout_amount)
+    .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
+  expect(receivedStatsDaily.day_cpa_payout_amount)
+    .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
+}
+
+export async function checkSubpartnerPayment(partnerCookie, partnerCurrency, subpartnerCurrency,
+  expectedSubpartnerIncome) {
+  const { data: { partners: [p0] } } = await partner.getStatsSubpartner(partnerCookie);
+  expect(p0.partnerSum)
+    .toBeWithin(round(expectedSubpartnerIncome - 0.01),
+      round(expectedSubpartnerIncome + 0.01) + 0.001);
+  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, subpartnerCurrency);
+  const incomeFromSubpartner = round(p0.partnerSum * 0.05 * coeff);
+  expect(p0.webmasterSum)
+    .toBeWithin(round(incomeFromSubpartner - 0.02), round(incomeFromSubpartner + 0.02) + 0.01);
 }

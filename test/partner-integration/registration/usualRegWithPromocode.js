@@ -32,12 +32,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -52,12 +52,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -72,12 +72,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -92,12 +92,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -112,12 +112,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -132,12 +132,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -152,12 +152,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -172,12 +172,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -192,12 +192,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -212,12 +212,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -232,12 +232,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -252,12 +252,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaion(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaion(statsDay.days[0], 1, new Date());
     });
@@ -274,12 +274,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -294,12 +294,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -314,12 +314,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -334,12 +334,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -354,12 +354,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -374,12 +374,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -395,11 +395,11 @@ describe('Email registration with promocode', () => {
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
 
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -414,12 +414,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -434,12 +434,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegRubPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -454,12 +454,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUsdPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -474,12 +474,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegEurPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
@@ -494,12 +494,12 @@ describe('Email registration with promocode', () => {
       // console.log(promocodeId);
 
       const { data: user } = await register.usualRegUahPromocode(promocode);
-      await sleep(10000);
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId);
+
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
       checkStatsAllAfterOneRegistrtaionCPA(statsAll, 1);
 
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_regs');
       // console.log(statsDay);
       checkStatsDailyAfterOneRegistrtaionCPA(statsDay.days[0], 1, new Date());
     });
