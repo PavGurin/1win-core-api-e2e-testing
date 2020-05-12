@@ -11,7 +11,7 @@ import { sleep } from '../../../../src/methods/utils';
 import {
   checkUserMetaCpaPending, checkPartnerPaymentCasesCPA, checkPartnerPaymentBetsCPA,
 } from '../../../../src/expects/exPartner';
-import { createPreset, getLastPresetNumber } from '../../../../src/methods/partnerInDB';
+import { createPreset } from '../../../../src/methods/partnerInDB';
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 import { betsCustom } from '../../../../src/methods/betsCustom';
 
@@ -32,14 +32,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789913 (+) cpa_gambling_amount - one case, spent preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -67,14 +64,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789914 (-) cpa_gambling_amount - one case, spent less than preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -102,14 +96,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789915 (+) cpa_gambling_amount - several cases, spent preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -152,14 +143,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789916 (-) cpa_gambling_amount - several cases, spent less than preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD * 2 + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -200,14 +188,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789917 (+) cpa_total_amount - one case, spent preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       0, CASE_COST_USD, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -235,14 +220,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789918 (-) cpa_total_amount - one case, spent less than preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       0, CASE_COST_USD + 0.01, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -270,14 +252,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789919 (+) cpa_total_amount - several cases, spent preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       0, CASE_COST_USD + 0.01, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -320,14 +299,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789920 (-) cpa_total_amount - several cases, spent less than preset value', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD * 2 + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -368,14 +344,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789921 (+) cpa_time_registration, fulfill conditions before preset time', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD, 0, TIME_REGISTRATION, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -403,14 +376,11 @@ describe('Cpa preset conditions', () => {
   });
 
   it('C1789922 (-) cpa_time_registration, fulfill conditions after preset time', async () => {
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 0, 0,
+    const presetNumber = await createPreset(0, 0, 0,
       CASE_COST_USD + 0.01, 0, TIME_REGISTRATION, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -441,14 +411,11 @@ describe('Cpa preset conditions', () => {
   // TODO переписать с учетом betsCustomFixtures и новой successfulOrdinaryBet
   it.skip('(+) cpa_bet_count = 1, custom bet', async () => {
     const coeff = 10;
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 1, 0,
+    const presetNumber = await createPreset(0, 1, 0,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -474,14 +441,11 @@ describe('Cpa preset conditions', () => {
   // TODO переписать с учетом betsCustomFixtures и новой successfulOrdinaryBet
   it.skip('(-) cpa_bet_count = 2, one custom bet', async () => {
     const coeff = 10;
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 2, 0,
+    const presetNumber = await createPreset(0, 2, 0,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -507,14 +471,11 @@ describe('Cpa preset conditions', () => {
   // TODO переписать с учетом betsCustomFixtures и новой successfulOrdinaryBet
   it.skip('(+) cpa_bet_amount <= bet amount, custom bet', async () => {
     const coeff = 10;
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 1, BET_AMOUNT,
+    const presetNumber = await createPreset(0, 1, BET_AMOUNT,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
@@ -540,14 +501,11 @@ describe('Cpa preset conditions', () => {
   // TODO переписать с учетом betsCustomFixtures и новой successfulOrdinaryBet
   it.skip('(-) cpa_bet_amount > bet amount, custom bet', async () => {
     const coeff = 10;
-    let presetNumber = await getLastPresetNumber();
-    presetNumber++;
-
     const promocode = randomNum(10).toString();
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    await createPreset(presetNumber, 0, 1, BET_AMOUNT + 0.01,
+    const presetNumber = await createPreset(0, 1, BET_AMOUNT + 0.01,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
     await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
     const { cookie } = await partner.login(partnerEmail, defaultPass);
