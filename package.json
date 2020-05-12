@@ -76,6 +76,7 @@
     "mysql2": "^1.6.5",
     "query-string": "^6.8.1",
     "socket.io-client": "^2.2.0",
-    "strip-ansi": "^6.0.0"
+    "strip-ansi": "^6.0.0",
+    "uuid": "^8.0.0"
   }
 }

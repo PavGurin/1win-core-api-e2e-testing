@@ -132,12 +132,12 @@ export async function getCurrenciesFromDB(date) {
   let Date = '';
   if (date.getDay() === 7) date.setDate(date.getDate() - 1);
   if (date.getDay() === 1) date.setDate(date.getDate() - 2);
-  date.getMonth() < 9 ? Date += `${date.getFullYear()}-0${date.getMonth() + 1}-`
-    : Date += `${date.getFullYear()}-${date.getMonth() + 1}-`;
-  date.getDate() < 10 ? Date += `0${date.getDate()}` : Date += `${date.getDate()}`;
+  Date = formatDateYyyyMmDd(date);
+  // console.log(Date);
   let currencies = await mysqlConnection.executeQuery(`select * from 1win.ma_exchange_rates where date = '${Date}';`);
   if (!currencies[0]) {
-    currencies = await mysqlConnection.executeQuery('select * from 1win.ma_exchange_rates order by date desc limit 1;');
+    currencies = await mysqlConnection.executeQuery(`select * from 1win.ma_exchange_rates where date < '${Date}' order by date desc limit 1;`);
   }
+  // console.log(currencies[0]);
   return currencies[0];
 }

@@ -389,7 +389,7 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
 
 export async function getHybridCpaProfit(partnerId) {
   const [result] = await mysqlConnection.executeQuery(` select sum(event_value) from 1win_partner.stats_v2  
-              where broadcaster_id in (select broadcaster_id from 1win_partner.stats_v2 where event = 'CPA_PAYOUT') 
+              where event_source_id in (select broadcaster_id from 1win_partner.stats_v2 where event = 'CPA_PAYOUT') 
                and event = 'PAYMENT' and  partner_id = ${partnerId};`);
   return result['sum(event_value)'];
 }
@@ -401,8 +401,10 @@ export async function getHybridCpaProfit(partnerId) {
 export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedStatsDaily,
   caseCostProfitArray, expectedCpaPaymentAmountUsd, expectedCpaPaymentCount,
   partnerCurrency, playerCurrency, partnerId) {
-  expect(receivedStatsAll.values.payments_amount).toEqual(caseCostProfitArray.length);
-  expect(receivedStatsDaily.day_payments_amount).toEqual(caseCostProfitArray.length);
+  expect(receivedStatsAll.values.payments_amount)
+    .toEqual(caseCostProfitArray.length + expectedCpaPaymentCount);
+  expect(receivedStatsDaily.day_payments_amount)
+    .toEqual(caseCostProfitArray.length + expectedCpaPaymentCount);
   expect(receivedStatsAll.values.regs).toEqual(1);
   expect(receivedStatsDaily.day_regs).toEqual(1);
 
@@ -423,8 +425,13 @@ export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedS
   profit = round(profit);
   loss = round(loss);
   difference = round(difference);
+  let cpaProfit = parseFloat(await getHybridCpaProfit(partnerId));
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(cpaProfit)) {
+    cpaProfit = 0;
+  }
+  const payment = round(difference / 2 + cpaProfit);
 
-  const payment = round(difference / 2);
   let paymentCPA;
   expectedCpaPaymentAmountUsd !== 0
     ? paymentCPA = round(expectedCpaPaymentAmountUsd * coeffCpaPayment)
@@ -478,7 +485,6 @@ export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedS
   expect(receivedStatsDaily.day_cpa_payout_amount)
     .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
 
-  const cpaProfit = await getHybridCpaProfit(partnerId);
   expect(receivedStatsAll.values.cpa_profit)
     .toBeWithin(round(cpaProfit - 0.01), round(cpaProfit + 0.01) + 0.001);
   expect(receivedStatsDaily.day_cpa_profit)
