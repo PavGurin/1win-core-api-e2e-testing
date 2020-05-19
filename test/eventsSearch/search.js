@@ -270,10 +270,144 @@ describe('Events search tests', () => {
     });
   });
 
+  describe('Lang = de', () => {
+    it('C2141425 (+) Valid response', async () => {
+      const { data } = await search('de', 'spain');
+      // console.log(data);
+      expect(data.status).toEqual(200);
+      expect(data.data.tournaments).toBeArray();
+      expect(data.data.matches).toBeObject();
+    });
+
+    it('C2141426 (+) Search match', async () => {
+      const word = 'manchester';
+      const { data: { data } } = await search('de', word);
+      // console.log(JSON.stringify(data));
+      checkSearchResults(data, word, true, false, 'en');
+    });
+
+    it('C2141427 (+) Search tournament', async () => {
+      const word = 'league';
+      const { data: { data } } = await search('de', word);
+      // console.log(data);
+      checkSearchResults(data, word, false, true, 'en');
+    });
+
+    it('C2141428 (+) Searched substring both in match and in tournament', async () => {
+      const word = 'club';
+      const { data: { data } } = await search('de', word);
+      checkSearchResults(data, word, true, true, 'en');
+    });
+
+    it('C2141429 (-) Nothing found', async () => {
+      const word = 'abcdef';
+      const { data: { data } } = await search('de', word);
+      checkSearchResults(data, word, false, false, 'en');
+    });
+
+    it('C2141430 (-) Search russian word', async () => {
+      const word = 'лига';
+      const { data: { data } } = await search('de', word);
+      // console.log(data);
+      checkSearchResults(data, word, false, false, 'en');
+    });
+
+    it('C2141431 (+) Search number', async () => {
+      const word = '1';
+      const { data: { data } } = await search('de', word);
+      // console.log(data);
+      checkSearchResults(data, word, true, true, 'en');
+    });
+
+    it('C2141432 (-) Search only symbol', async () => {
+      const word = '.';
+      const { data: { data } } = await search('de', word);
+      checkSearchResults(data, word, false, false, 'en');
+    });
+
+    it('C2141433 (+) Search letter + symbol', async () => {
+      const word = 'league,';
+      const { data: { data } } = await search('de', word);
+      checkSearchResults(data, word, false, true, 'en');
+    });
+
+    it('C2141434 (-) Empty search', async () => {
+      const word = '';
+      const { data } = await search('de', word);
+      // console.log(data);
+      checkEmptySearch(data, data.status);
+    });
+
+    it('C2141435 (-) Long search substring', async () => {
+      const word = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+      const { data: { data } } = await search('de', word);
+      checkSearchResults(data, word, false, false, 'en');
+    });
+
+    it('C2141436 (+) Search space', async () => {
+      const word = ' ';
+      const { data: { data } } = await search('de', word);
+      checkSearchResults(data, word, true, true, 'en');
+    });
+
+    it('C2141437 (+) Search does not depend on upper/lower case', async () => {
+      const word1 = 'league';
+      const word2 = 'LEAGUE';
+
+      const { data: { data: data1 } } = await search('de', word1);
+      const { data: { data: data2 } } = await search('de', word2);
+
+      expect(data1).toEqual(data2);
+    });
+
+    it('C2141438 (+) Space at the end of search substring is not deleted', async () => {
+      const word1 = 'league';
+      const word2 = 'league ';
+
+      const { data: { data: data1 } } = await search('de', word1);
+      const { data: { data: data2 } } = await search('de', word2);
+
+      expect(data1).not.toEqual(data2);
+    });
+
+    it('C2141439 (+) Search by part of word', async () => {
+      const word = 'ity';
+      const regex = RegExp(`(.*[a-zA-Z]+(?! )${word}.*|.*${word}(?! )[a-zA-Z]+)|.*[a-zA-Z]+${word}[a-zA-Z]+.*`);
+      const { data: { data } } = await search('de', word);
+      // console.log(data);
+      expect(data.tournaments
+        .some(tournament => regex.test(tournament.tournamentName.ru.toLowerCase()))
+          || Object.values(data.matches)
+            .some(match => regex.test(match[0].awayTeamName.ru.toLowerCase())
+                  || regex.test(match[0].homeTeamName.ru.toLowerCase()))).toEqual(true);
+    });
+
+    it('C2141440 (+) Search live', async () => {
+      const word = 'a';
+      const service = 'live';
+      const { data: { data } } = await search('de', word, service);
+      checkSearchResults(data, word, true, true, 'en', service);
+    });
+
+    it('C2141441 (+) Search prematch', async () => {
+      const word = 'club';
+      const service = 'prematch';
+      const { data: { data } } = await search('de', word, service);
+      checkSearchResults(data, word, true, true, 'en', service);
+    });
+
+    it('C2141442 (-) Search with invalid service', async () => {
+      const word = 'club';
+      const { data: { data } } = await search('de', word, 'sadfsadf');
+      // console.log(data);
+      checkSearchResults(data, word, false, false);
+    });
+  });
+
   it('C2019922 (-) Search with invalid lang', async () => {
     const word = 'league';
-    const { data } = await search('qweqwe', word);
-    // console.log(data);
-    checkErrMsg(data, 500, '400'); // wtf?
+    const { data } = await search(1, word);
+    // console.log(JSON.stringify(data));
+    checkErrMsg(data, 400, 'Bad request, language should have a type of string, but found number');
   });
 });
