@@ -28,12 +28,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -48,12 +47,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -68,12 +66,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -88,12 +85,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -109,12 +105,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -129,12 +124,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -149,12 +143,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -169,12 +162,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -190,12 +182,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -210,12 +201,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -230,12 +220,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -250,12 +239,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -272,12 +260,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -292,12 +279,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -312,12 +298,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -332,12 +317,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -352,12 +336,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -372,12 +355,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -392,12 +374,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -412,12 +393,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -432,12 +412,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -452,12 +431,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -472,12 +450,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);
@@ -492,12 +469,11 @@ describe('One click registration with promocode', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.registerWithCPA(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocodeWithCPA(cookie, promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'regs');
       // console.log(statsAll);

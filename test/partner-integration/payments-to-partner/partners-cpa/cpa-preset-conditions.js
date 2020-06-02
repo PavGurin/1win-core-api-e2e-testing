@@ -11,7 +11,6 @@ import { sleep } from '../../../../src/methods/utils';
 import {
   checkUserMetaCpaPending, checkPartnerPaymentCasesCPA, checkPartnerPaymentBetsCPA,
 } from '../../../../src/expects/exPartner';
-import { createPreset } from '../../../../src/methods/partnerInDB';
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 import { betsCustom } from '../../../../src/methods/betsCustom';
 
@@ -36,15 +35,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -68,15 +66,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -100,15 +97,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD * 3);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -147,15 +143,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD * 2 + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD * 2);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -192,15 +187,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       0, CASE_COST_USD, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -224,15 +218,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       0, CASE_COST_USD + 0.01, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -256,15 +249,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       0, CASE_COST_USD + 0.01, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD * 3);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -303,15 +295,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD * 2 + 0.01, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD * 2);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -348,15 +339,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD, 0, TIME_REGISTRATION, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD);
     const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
@@ -380,15 +370,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 0, 0,
+    const presetNumber = await partner.createPreset(0, 0, 0,
       CASE_COST_USD + 0.01, 0, TIME_REGISTRATION, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, CASE_COST_USD);
     await sleep(9000);
@@ -415,15 +404,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 1, 0,
+    const presetNumber = await partner.createPreset(0, 1, 0,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, BET_AMOUNT);
 
@@ -445,15 +433,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 2, 0,
+    const presetNumber = await partner.createPreset(0, 2, 0,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, BET_AMOUNT);
 
@@ -475,15 +462,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 1, BET_AMOUNT,
+    const presetNumber = await partner.createPreset(0, 1, BET_AMOUNT,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, BET_AMOUNT);
 
@@ -505,15 +491,14 @@ describe('Cpa preset conditions', () => {
     const partnerEmail = `${randomStr(10)}@ahem.email`;
     // console.log(partnerEmail);
 
-    const presetNumber = await createPreset(0, 1, BET_AMOUNT + 0.01,
+    const presetNumber = await partner.createPreset(0, 1, BET_AMOUNT + 0.01,
       0, 0, 600000, EXPECTED_PAYMENT_AMOUNT_USD);
-    await partner.registerWithCPA(partnerEmail, defaultPass, 'USD');
-    const { cookie } = await partner.login(partnerEmail, defaultPass);
+    const { cookie } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
     const { data: { id: promocodeId } } = await partner
       .createPromocodeWithCPA(cookie, promocode, null, presetNumber);
     // console.log(promocodeId);
 
-    const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+    const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
     // console.log(user);
     await banking.setBalance(user.id, BET_AMOUNT);
 

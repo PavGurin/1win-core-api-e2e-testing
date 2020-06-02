@@ -203,48 +203,18 @@ export const register = {
       });
   },
 
-  async oneClickRegRubWithPromocode(promocode) {
+  async oneClickRegWithPromocode(promocode, currency = 'RUB') {
     return socket.send('USER:auth-register',
       {
         isShort: true,
         country: defaultCountry,
         timezone: 23,
         partner_key: promocode,
-        currency: 'RUB',
-      });
-  },
-  async oneClickRegUsdWithPromocode(promocode) {
-    return socket.send('USER:auth-register',
-      {
-        isShort: true,
-        country: defaultCountry,
-        timezone: 23,
-        partner_key: promocode,
-        currency: 'USD',
-      });
-  },
-  async oneClickRegEurWithPromocode(promocode) {
-    return socket.send('USER:auth-register',
-      {
-        isShort: true,
-        country: defaultCountry,
-        timezone: 23,
-        partner_key: promocode,
-        currency: 'EUR',
-      });
-  },
-  async oneClickRegUahWithPromocode(promocode) {
-    return socket.send('USER:auth-register',
-      {
-        isShort: true,
-        country: defaultCountry,
-        timezone: 23,
-        partner_key: promocode,
-        currency: 'UAH',
+        currency,
       });
   },
 
-  async usualRegUsdPromocode(promocode) {
+  async usualRegPromocode(promocode, currency = 'RUB') {
     return socket.send('USER:auth-register',
       {
         isShort: false,
@@ -256,58 +226,7 @@ export const register = {
         country: defaultCountry,
         timezone: 23,
         birthday: 946587600000,
-        currency: 'USD',
-        partner_key: promocode,
-      });
-  },
-
-  async usualRegRubPromocode(promocode) {
-    return socket.send('USER:auth-register',
-      {
-        isShort: false,
-        name: randomStr(),
-        email: `${randomStr(5)}_test@new.xyz`,
-        phone: randomNum().toString(),
-        password: defaultPassword,
-        repeat_password: defaultPassword,
-        country: defaultCountry,
-        timezone: 23,
-        birthday: 946587600000,
-        currency: 'RUB',
-        partner_key: promocode,
-      });
-  },
-
-  async usualRegEurPromocode(promocode) {
-    return socket.send('USER:auth-register',
-      {
-        isShort: false,
-        name: randomStr(),
-        email: `${randomStr(5)}_test@new.xyz`,
-        phone: randomNum().toString(),
-        password: defaultPassword,
-        repeat_password: defaultPassword,
-        country: defaultCountry,
-        timezone: 23,
-        birthday: 946587600000,
-        currency: 'EUR',
-        partner_key: promocode,
-      });
-  },
-
-  async usualRegUahPromocode(promocode) {
-    return socket.send('USER:auth-register',
-      {
-        isShort: false,
-        name: randomStr(),
-        email: `${randomStr(5)}_test@new.xyz`,
-        phone: randomNum().toString(),
-        password: defaultPassword,
-        repeat_password: defaultPassword,
-        country: defaultCountry,
-        timezone: 23,
-        birthday: 946587600000,
-        currency: 'UAH',
+        currency,
         partner_key: promocode,
       });
   },

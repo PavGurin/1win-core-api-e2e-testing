@@ -6,7 +6,6 @@ import { randomNum, randomStr } from '../../../../src/randomizer';
 import { partner } from '../../../../src/methods/partner';
 import { register } from '../../../../src/methods/register';
 import { banking } from '../../../../src/methods/banking';
-import { addHybridCpaPayment, createPreset } from '../../../../src/methods/partnerInDB';
 import { cases } from '../../../../src/methods/cases';
 import { sleep } from '../../../../src/methods/utils';
 import { checkPartnerPaymentCasesHybrid } from '../../../../src/expects/exPartner';
@@ -32,13 +31,13 @@ describe('Cases', () => {
   describe('Case one time + cpa qualified', () => {
     let presetNumber;
     beforeAll(async () => {
-      presetNumber = await createPreset(0, 0, 0, 0, 1, 100000, 1);
+      presetNumber = await partner.createPreset(0, 0, 0, 0, 1, 100000, 1);
     });
     it('C2131463 Partner RUB + player RUB', async () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -46,14 +45,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_RUB);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -70,7 +69,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -78,14 +77,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_USD);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -102,7 +101,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -110,14 +109,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_EUR);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -134,7 +133,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -142,14 +141,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_UAH);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -166,7 +165,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -174,14 +173,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_RUB);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -198,7 +197,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -206,18 +205,18 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_USD);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
-      console.log(statsAll);
+      // console.log(statsAll);
 
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
       // console.log(statsDay.days[0]);
@@ -230,7 +229,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -238,14 +237,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_EUR);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -262,7 +261,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -270,14 +269,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_UAH);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -294,7 +293,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -302,14 +301,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_RUB);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -326,7 +325,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -334,14 +333,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_USD);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -358,7 +357,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -366,14 +365,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_EUR);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -390,7 +389,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -398,14 +397,14 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_ID_UAH);
       // console.log(caseWin);
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -423,13 +422,13 @@ describe('Cases', () => {
   describe('Case several times + cpa not qualified', () => {
     let presetNumber;
     beforeAll(async () => {
-      presetNumber = await createPreset(0, 0, 0, 0, 100, 100000, 1);
+      presetNumber = await partner.createPreset(0, 0, 0, 0, 100, 100000, 1);
     });
     it('C2131475 Partner RUB + player RUB', async () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -437,7 +436,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB * 3);
 
@@ -464,7 +463,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -472,7 +471,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD * 3);
 
@@ -499,7 +498,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -507,7 +506,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR * 3);
 
@@ -534,7 +533,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -542,7 +541,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH * 3);
 
@@ -569,7 +568,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -577,7 +576,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB * 3);
 
@@ -604,7 +603,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -612,7 +611,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD * 3);
 
@@ -639,7 +638,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -647,7 +646,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR * 3);
 
@@ -674,7 +673,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -682,7 +681,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH * 3);
 
@@ -709,7 +708,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -717,7 +716,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB * 3);
 
@@ -744,7 +743,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -752,7 +751,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD * 3);
 
@@ -779,7 +778,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -787,7 +786,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR * 3);
 
@@ -814,7 +813,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -822,7 +821,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH * 3);
 
@@ -850,13 +849,13 @@ describe('Cases', () => {
   describe('Case several times + cpa qualified', () => {
     let presetNumber;
     beforeAll(async () => {
-      presetNumber = await createPreset(0, 0, 0, 0, 1, 100000, 1);
+      presetNumber = await partner.createPreset(0, 0, 0, 0, 1, 100000, 1);
     });
     it('C2131487 Partner RUB + player RUB', async () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -864,7 +863,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB * 3);
 
@@ -878,7 +877,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -894,7 +893,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -902,7 +901,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD * 3);
 
@@ -916,7 +915,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -932,7 +931,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -940,7 +939,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR * 3);
 
@@ -954,7 +953,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -970,7 +969,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'RUB');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -978,7 +977,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH * 3);
 
@@ -992,7 +991,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1008,7 +1007,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1016,7 +1015,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB * 3);
 
@@ -1030,7 +1029,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1046,7 +1045,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1054,7 +1053,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD * 3);
 
@@ -1068,7 +1067,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1084,7 +1083,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1092,7 +1091,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR * 3);
 
@@ -1106,7 +1105,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1122,7 +1121,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1130,7 +1129,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH * 3);
 
@@ -1144,7 +1143,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1160,7 +1159,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1168,7 +1167,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB * 3);
 
@@ -1182,7 +1181,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1198,7 +1197,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1206,7 +1205,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD * 3);
 
@@ -1220,7 +1219,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
@@ -1236,7 +1235,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1244,7 +1243,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR * 3);
 
@@ -1258,7 +1257,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -1273,7 +1272,7 @@ describe('Cases', () => {
       const promocode = randomNum(10).toString();
       const partnerEmail = `${randomStr(10)}@ahem.email`;
 
-      const { partnerId, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
+      const { info: { user: { id: partnerId } }, cookie } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
       // console.log(`partnerId = ${partnerId}`);
 
       const { data: { id: promocodeId } } = await partner
@@ -1281,7 +1280,7 @@ describe('Cases', () => {
       // console.log(promocode);
       // console.log(promocodeId);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH * 3);
 
@@ -1295,7 +1294,7 @@ describe('Cases', () => {
       }
 
       await sleep(10000);
-      await addHybridCpaPayment(partnerId);
+      await partner.addCpaPayment(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
