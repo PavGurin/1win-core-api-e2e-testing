@@ -83,3 +83,9 @@ export function dateRemoveTZ(date) {
 export function rndNumInRange(min, max) {
   return Math.floor((Math.random() * (max - min) + min) * 100) / 100;
 }
+
+// для партнера генерируется не российский номер, чтобы его не надо было подтверждать
+// NODE_ENV === 'test'||(WITHDRAW_CONFIRM_ONLY_RUSSIAN_NUMBERS === 'true' && !phone.startsWith('7'))
+export function rndPhoneForPartner() {
+  return Math.floor(rndNumInRange(69000000000, 69999999999));
+}

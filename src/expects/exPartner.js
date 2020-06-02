@@ -185,7 +185,6 @@ export function round(value) {
   return parseFloat((Math.round(value * 100) / 100).toFixed(2));
 }
 
-
 export async function checkPartnerPaymentBets(receivedStatsAll, receivedStatsDaily,
   BetProfitArray, partnerCurrency, playerCurrency) {
   expect(receivedStatsAll.values.payments_amount).toEqual(1);
@@ -250,24 +249,20 @@ export async function checkPartnerPaymentBets(receivedStatsAll, receivedStatsDai
     .toBeWithin(round(payment - 0.01), round(payment + 0.01) + 0.001);
 }
 
+
 // eslint-disable-next-line spaced-comment
 /**
  * caseCostProfitArray - пары из суммы кейса и выигрыша, пример
  * [{ caseCost: 10, profit: 31.32 }, { caseCost: 10, profit: 3.9 }],
  **/
-export async function checkPartnerPaymentCase(receivedStatsAll, receivedStatsDaily,
-  caseCostProfitArray, partnerCurrency, playerCurrency) {
-  expect(receivedStatsAll.values.payments_amount).toEqual(caseCostProfitArray.length);
-  expect(receivedStatsAll.values.regs).toEqual(1);
-  expect(receivedStatsDaily.day_payments_amount).toEqual(caseCostProfitArray.length);
-  expect(receivedStatsDaily.day_regs).toEqual(1);
 
+export async function calculateExpectedCasePayments(caseCostProfitArray,
+  partnerCurrency, playerCurrency) {
   let profit = 0;
   let loss = 0;
   let difference = 0;
 
   const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
-
   caseCostProfitArray.forEach(async (caseN) => {
     (caseN.caseCost - caseN.profit) <= 0
       ? profit += round(round(caseN.profit - caseN.caseCost) * coeff)
@@ -280,8 +275,67 @@ export async function checkPartnerPaymentCase(receivedStatsAll, receivedStatsDai
   difference = round(difference);
 
   const payment = round(difference / 2);
-  // console.log((caseCost - caseProfit) * coeff);
-  // console.log(payment);
+  return {
+    profit, loss, difference, payment,
+  };
+}
+
+export async function calculateExpectedCpaPayments(expectedPaymentAmountUsd, partnerCurrency) {
+  const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
+  let paymentCPA;
+  expectedPaymentAmountUsd !== 0
+    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment)
+    : paymentCPA = 0;
+  return paymentCPA;
+}
+
+export async function getHybridCpaProfit(partnerId, sourceId) {
+  if (!sourceId) {
+    const [result] = await mysqlConnection.executeQuery(` select sum(event_value) from 1win_partner.stats_v2  
+              where event_source_id in (select broadcaster_id from 1win_partner.stats_v2 where event = 'CPA_PAYOUT') 
+               and event = 'PAYMENT' and  partner_id = ${partnerId};`);
+    return result['sum(event_value)'];
+  } else { // eslint-disable-line no-else-return
+    const [result] = await mysqlConnection.executeQuery(` select sum(event_value) from 1win_partner.stats_v2  
+              where event_source_id in (select broadcaster_id from 1win_partner.stats_v2 where event = 'CPA_PAYOUT') 
+               and event = 'PAYMENT' and  partner_id = ${partnerId} and source_id = ${sourceId};`);
+    return result['sum(event_value)'];
+  }
+}
+
+export async function calculateExpectedCaseHybridPayments(partnerId, caseCostProfitArray,
+  expectedCpaPaymentAmountUsd, expectedCpaPaymentCount, partnerCurrency, playerCurrency, sourceId) {
+  const {
+    profit, loss, difference,
+  } = await calculateExpectedCasePayments(caseCostProfitArray, partnerCurrency, playerCurrency);
+
+  let cpaProfit = parseFloat(await getHybridCpaProfit(partnerId, sourceId));
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(cpaProfit)) {
+    cpaProfit = 0;
+  }
+  const payment = round(difference / 2 + cpaProfit);
+
+  const paymentCPA = await calculateExpectedCpaPayments(expectedCpaPaymentAmountUsd
+      * expectedCpaPaymentCount, partnerCurrency);
+
+  const paymentRs = payment - cpaProfit;
+
+  return {
+    profit, loss, difference, cpaProfit, payment, paymentCPA, paymentRs,
+  };
+}
+
+export async function checkPartnerPaymentCase(receivedStatsAll, receivedStatsDaily,
+  caseCostProfitArray, partnerCurrency, playerCurrency) {
+  expect(receivedStatsAll.values.payments_amount).toEqual(caseCostProfitArray.length);
+  expect(receivedStatsAll.values.regs).toEqual(1);
+  expect(receivedStatsDaily.day_payments_amount).toEqual(caseCostProfitArray.length);
+  expect(receivedStatsDaily.day_regs).toEqual(1);
+
+  const {
+    profit, loss, difference, payment,
+  } = await calculateExpectedCasePayments(caseCostProfitArray, partnerCurrency, playerCurrency);
 
   expect(receivedStatsAll.values.profit_case_sum)
     .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
@@ -324,28 +378,11 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
   expect(receivedStatsAll.values.regs).toEqual(1);
   expect(receivedStatsDaily.day_regs).toEqual(1);
 
-  let profit = 0;
-  let loss = 0;
-  let difference = 0;
+  const {
+    profit, loss, difference,
+  } = await calculateExpectedCasePayments(caseCostProfitArray, partnerCurrency, playerCurrency);
 
-  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
-  const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
-
-  caseCostProfitArray.forEach(async (caseN) => {
-    (caseN.caseCost - caseN.profit) <= 0
-      ? profit += round(round(caseN.profit - caseN.caseCost) * coeff)
-      : loss += round(round(caseN.caseCost - caseN.profit) * coeff);
-    difference += round(round(caseN.caseCost - caseN.profit) * coeff);
-  });
-
-  profit = round(profit);
-  loss = round(loss);
-  difference = round(difference);
-
-  let paymentCPA;
-  expectedPaymentAmountUsd !== 0
-    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment)
-    : paymentCPA = 0;
+  const paymentCPA = await calculateExpectedCpaPayments(expectedPaymentAmountUsd, partnerCurrency);
 
   expect(receivedStatsAll.values.profit_case_sum)
     .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
@@ -387,17 +424,6 @@ export async function checkPartnerPaymentCasesCPA(receivedStatsAll, receivedStat
     .toBeWithin(round(paymentCPA - 0.01), round(paymentCPA + 0.01) + 0.001);
 }
 
-export async function getHybridCpaProfit(partnerId) {
-  const [result] = await mysqlConnection.executeQuery(` select sum(event_value) from 1win_partner.stats_v2  
-              where event_source_id in (select broadcaster_id from 1win_partner.stats_v2 where event = 'CPA_PAYOUT') 
-               and event = 'PAYMENT' and  partner_id = ${partnerId};`);
-  return result['sum(event_value)'];
-}
-
-/**
- * caseCostProfitArray - пары из суммы кейса и выигрыша, пример
- * [{ caseCost: 10, profit: 31.32 }, { caseCost: 10, profit: 3.9 }],
- */
 export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedStatsDaily,
   caseCostProfitArray, expectedCpaPaymentAmountUsd, expectedCpaPaymentCount,
   partnerCurrency, playerCurrency, partnerId) {
@@ -408,34 +434,10 @@ export async function checkPartnerPaymentCasesHybrid(receivedStatsAll, receivedS
   expect(receivedStatsAll.values.regs).toEqual(1);
   expect(receivedStatsDaily.day_regs).toEqual(1);
 
-  let profit = 0;
-  let loss = 0;
-  let difference = 0;
-
-  const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
-  const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
-
-  caseCostProfitArray.forEach(async (caseN) => {
-    (caseN.caseCost - caseN.profit) <= 0
-      ? profit += round(round(caseN.profit - caseN.caseCost) * coeff)
-      : loss += round(round(caseN.caseCost - caseN.profit) * coeff);
-    difference += round(round(caseN.caseCost - caseN.profit) * coeff);
-  });
-
-  profit = round(profit);
-  loss = round(loss);
-  difference = round(difference);
-  let cpaProfit = parseFloat(await getHybridCpaProfit(partnerId));
-  // eslint-disable-next-line no-restricted-globals
-  if (isNaN(cpaProfit)) {
-    cpaProfit = 0;
-  }
-  const payment = round(difference / 2 + cpaProfit);
-
-  let paymentCPA;
-  expectedCpaPaymentAmountUsd !== 0
-    ? paymentCPA = round(expectedCpaPaymentAmountUsd * coeffCpaPayment)
-    : paymentCPA = 0;
+  const {
+    profit, loss, difference, cpaProfit, payment, paymentCPA,
+  } = await calculateExpectedCaseHybridPayments(partnerId, caseCostProfitArray,
+    expectedCpaPaymentAmountUsd, expectedCpaPaymentCount, partnerCurrency, playerCurrency);
 
   expect(receivedStatsAll.values.profit_case_sum)
     .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
@@ -516,7 +518,6 @@ export async function checkPartnerPaymentBetsCPA(receivedStatsAll, receivedStats
   let difference = 0;
 
   const coeff = await getCurrencyExchangeCoeff(partnerCurrency, playerCurrency);
-  const coeffCpaPayment = await getCoeffForCpaPayment(partnerCurrency);
 
   BetProfitArray.forEach(async (betPrize) => {
     (betPrize) > 0
@@ -529,10 +530,7 @@ export async function checkPartnerPaymentBetsCPA(receivedStatsAll, receivedStats
   loss = round(loss);
   difference = round(difference);
 
-  let paymentCPA;
-  expectedPaymentAmountUsd !== 0
-    ? paymentCPA = round(expectedPaymentAmountUsd * coeffCpaPayment)
-    : paymentCPA = 0;
+  const paymentCPA = await calculateExpectedCpaPayments(expectedPaymentAmountUsd, partnerCurrency);
 
   expect(receivedStatsAll.values.profit_bets_sum)
     .toBeWithin(round(profit - 0.01), round(profit + 0.01) + 0.001);
@@ -584,4 +582,67 @@ export async function checkSubpartnerPayment(partnerCookie, partnerCurrency, sub
   const incomeFromSubpartner = round(p0.partnerSum * 0.05 * coeff);
   expect(p0.webmasterSum)
     .toBeWithin(round(incomeFromSubpartner - 0.02), round(incomeFromSubpartner + 0.02) + 0.01);
+}
+
+export async function checkSourceProfit(cookie, sourceId, expectedBalance, expectedProfit) {
+  const sourceStats = await partner.getSourceIncome(cookie, sourceId);
+  // console.log(sourceStats);
+  if (expectedBalance === 0) {
+    expect(sourceStats.balance).toEqual(0);
+  } else {
+    expect(parseFloat(sourceStats.balance))
+      .toBeWithin(expectedBalance - 0.05, expectedBalance + 0.051);
+  }
+  if (expectedProfit === 0) {
+    expect(sourceStats.profit).toEqual(0);
+  } else {
+    expect(parseFloat(sourceStats.profit))
+      .toBeWithin(expectedProfit - 0.05, expectedProfit + 0.051);
+  }
+}
+
+export function checkSources(receivedSources, expectedSources) {
+  expectedSources.forEach((source) => {
+    const receivedSource = receivedSources.find(received => received.id === source.id);
+    expect(receivedSource).not.toBeUndefined();
+    expect(receivedSource.name).toEqual(source.name);
+    expect(receivedSource.verification_status).toEqual('pending');
+    expect(receivedSource.is_sub_partner).toEqual(source.is_sub_partner);
+  });
+}
+
+export function checkChatGreetingMessage(receivedMessages, partnerId, regTime) {
+  expect(receivedMessages.length).toEqual(1);
+  expect(receivedMessages[0].id).toBeNumber();
+  expect(receivedMessages[0].chatId).toEqual(partnerId);
+  expect(receivedMessages[0].text).toEqual('\n'
+      + '    Добрый день!\n'
+      + '\n'
+      + '    Мы очень рады, что Вы присоединились к нашей партнерской программе.\n\n'
+      + '    С нами Вы можете работать по моделям RevShare, CPA и Hybrid.\n'
+      + '    По всем вопросам Вы можете обращаться в данный чат, а также к менеджеру в Telegram – @win_one\n'
+      + '    ');
+  expect(receivedMessages[0].time).not.toBeBefore(regTime);
+  expect(receivedMessages[0].partnerReadTime).toEqual(null);
+  expect(receivedMessages[0].adminReadTime).toEqual(null);
+  expect(receivedMessages[0].sentByAdmin).toEqual(1);
+  expect(receivedMessages[0].file).toEqual(null);
+  expect(receivedMessages[0].fileType).toEqual(null);
+  expect(receivedMessages[0].isEmailSent).toEqual(0);
+  expect(receivedMessages[0].name).toEqual(null);
+  expect(receivedMessages[0].email).toEqual(null);
+  expect(receivedMessages[0].sender).toEqual('Поддержка');
+}
+
+export function checkPartnerWithdrawalError(received, expectedCode, expectedMessage) {
+  expect(received.error).toEqual(true);
+  expect(received.error_code).toEqual(expectedCode);
+  expect(received.message).toEqual(expectedMessage);
+}
+
+export function checkPartnerWithdrawalSuccess(profitAfterWithdrawal,
+  balanceAfterWithdrawal, profitBeforeWithdrawal, balanceBeforeWithdrawal, withdrawalAmount) {
+  expect(profitAfterWithdrawal).toEqual(profitBeforeWithdrawal);
+  expect(balanceAfterWithdrawal.toString())
+    .toEqual((balanceBeforeWithdrawal - withdrawalAmount).toString());
 }

@@ -1,21 +1,17 @@
 /**
  * @jest-environment node
  */
-import { partner } from '../../../src/methods/partner';
-import { randomNum, randomStr } from '../../../src/randomizer';
-import { register } from '../../../src/methods/register';
-import { banking } from '../../../src/methods/banking';
-import { Refund } from '../../../src/methods/BetsRefund';
-import { sleep } from '../../../src/methods/utils';
+import { partner } from '../../../../src/methods/partner';
+import { randomNum, randomStr } from '../../../../src/randomizer';
+import { register } from '../../../../src/methods/register';
+import { banking } from '../../../../src/methods/banking';
+import { sleep } from '../../../../src/methods/utils';
 import {
-  checkPartnerPaymentBets,
   checkPartnerPaymentCase,
   checkSubpartnerPayment,
-  getCurrencyExchangeCoeff,
-} from '../../../src/expects/exPartner';
-import { cases } from '../../../src/methods/cases';
-import { changeCurrency } from '../../../src/methods/user';
-import { mysqlConnection } from '../../../src/methods/mysqlConnection';
+} from '../../../../src/expects/exPartner';
+import { cases } from '../../../../src/methods/cases';
+import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 
 describe(' Subpartner ', () => {
   const CASE_COST_RUB = 10000;
@@ -40,17 +36,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -69,17 +63,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -101,17 +93,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -133,17 +123,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -168,17 +156,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -200,17 +186,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -232,17 +216,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -264,17 +246,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -299,17 +279,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -331,17 +309,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -363,17 +339,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -395,17 +369,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'RUB');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -430,17 +402,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -462,17 +432,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -494,17 +462,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -526,17 +492,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -561,17 +525,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -593,17 +555,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -625,17 +585,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -657,17 +615,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -692,17 +648,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -724,17 +678,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -756,17 +708,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -788,17 +738,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'USD');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -823,17 +771,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -855,17 +801,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -887,17 +831,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -919,17 +861,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'RUB', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'RUB', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -954,17 +894,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -986,17 +924,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -1018,17 +954,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -1050,17 +984,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'USD', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'USD', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
@@ -1085,17 +1017,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegRubWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_RUB);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_RUB_ID);
@@ -1117,17 +1047,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUsdWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_USD);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_USD_ID);
@@ -1149,17 +1077,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegEurWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_EUR);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_EUR_ID);
@@ -1181,17 +1107,15 @@ describe(' Subpartner ', () => {
       const partnerEmail = `${randomStr(10)}@ahem.email`;
       const subpartnerEmail = `${randomStr(10)}@ahem.email`;
 
-      await partner.register(partnerEmail, defaultPass, 'EUR');
-      const { cookie } = await partner.login(partnerEmail, defaultPass);
+      const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const hash = await partner.UrlSubPartner(cookie);
-      await partner.register(subpartnerEmail, defaultPass, 'EUR', hash);
-      const { cookie: cookieSubPartner } = await partner.login(subpartnerEmail, defaultPass);
+      const { cookie: cookieSubPartner } = await partner.registerRevshare(subpartnerEmail, defaultPass, 'EUR', hash);
       const { data: { id: promocodeId } } = await partner
         .createPromocode(cookieSubPartner, promocode);
       // console.log(partnerEmail, subpartnerEmail);
       // console.log(promocode);
 
-      const { data: user } = await register.oneClickRegUahWithPromocode(promocode);
+      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
       // console.log(user);
       await banking.setBalance(user.id, CASE_COST_UAH);
       const { data: caseWin } = await cases.playCaseWithoutChance(CASE_UAH_ID);
