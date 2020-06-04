@@ -157,6 +157,7 @@ export const partner = {
         traffic_source: 'autotests',
         language: lang,
         disableCaptcha: true,
+        collaboration_model: 'RS',
       });
       /* , {
         headers: {
