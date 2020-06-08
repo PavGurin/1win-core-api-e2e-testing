@@ -9,7 +9,7 @@ import { register } from '../../../../src/methods/register';
 import { regUsersAndPlayCases } from '../../../../src/methods/regUsersForPartner';
 import {
   calculateExpectedCaseHybridPayments,
-  checkPartnerWithdrawalError, checkPartnerWithdrawalSuccess,
+  checkPartnerError, checkPartnerWithdrawalSuccess,
   checkSourceProfit,
   checkSources,
 } from '../../../../src/expects/exPartner';
@@ -210,8 +210,8 @@ describe('Hybrid multibalance tests', () => {
       const { data: user } = await register.oneClickReg();
       await sleep(1500);
       await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-      const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-      checkPartnerWithdrawalError(withdrawal, 400, 'hybridEnabled');
+      const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+      checkPartnerError(withdrawal, 400, 'hybridEnabled');
     });
 
     // пока вывод запрещен для гирбридных партнеров, когда разрешат, убрать скип
@@ -236,13 +236,13 @@ describe('Hybrid multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 5) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 RUB.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 RUB.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
         }
       });
       it('C2157488 - Active users < 10, USD', async () => {
@@ -265,13 +265,13 @@ describe('Hybrid multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 2) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 USD.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 USD.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
         }
       });
       it('C2157489 - Active users < 10, EUR', async () => {
@@ -294,13 +294,13 @@ describe('Hybrid multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 1) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 EUR.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 EUR.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
         }
       });
 
@@ -324,13 +324,13 @@ describe('Hybrid multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 5) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 2000 RUB.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 2000 RUB.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
         }
       });
       it('C2157491 - Deposits amount < 80, USD', async () => {
@@ -353,13 +353,13 @@ describe('Hybrid multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 2) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 USD.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 USD.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
         }
       });
       it('C2157492 - Deposits amount < 70, EUR', async () => {
@@ -382,13 +382,13 @@ describe('Hybrid multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 1) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 EUR.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 EUR.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
         }
       });
 
@@ -399,8 +399,8 @@ describe('Hybrid multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+        const withdrawal = await partner.addWithdrawal(cookie, '1', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
       });
       it('C2157494 - Withdrawal amount < 2, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
@@ -409,8 +409,8 @@ describe('Hybrid multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+        const withdrawal = await partner.addWithdrawal(cookie, '1', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
       });
       it('C2157495 - Withdrawal amount < 1, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
@@ -419,8 +419,8 @@ describe('Hybrid multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '0.5');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+        const withdrawal = await partner.addWithdrawal(cookie, '0.5', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
       });
 
       it('C2157496 - Withdrawal amount > balance, RUB', async () => {
@@ -430,8 +430,8 @@ describe('Hybrid multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
       it('C2157497 - Withdrawal amount > balance, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerHybrid(partnerEmail, defaultPass, 'USD');
@@ -440,8 +440,8 @@ describe('Hybrid multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
       it('C2157498 - Withdrawal amount > balance, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerHybrid(partnerEmail, defaultPass, 'EUR');
@@ -450,8 +450,8 @@ describe('Hybrid multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
     });
 
@@ -479,8 +479,8 @@ describe('Hybrid multibalance tests', () => {
 
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
@@ -513,8 +513,8 @@ describe('Hybrid multibalance tests', () => {
 
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
@@ -547,8 +547,8 @@ describe('Hybrid multibalance tests', () => {
 
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
