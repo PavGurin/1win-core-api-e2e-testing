@@ -97,6 +97,16 @@ export const partner = {
                                          '${amount}', '${userId}', '${Date}', '${country}');`);
   },
 
+  // устанавливает в базе баланс партнера = amount
+  async setBalance(partnerId, amount) {
+    if (amount) {
+      return mysqlConnection.executeQuery(`update 1win_partner.users set balance = '${amount}' where id = '${partnerId}';`);
+    } else { // eslint-disable-line no-else-return
+      const [result] = await mysqlConnection.executeQuery(`select balance_v2_hook_test from 1win_partner.users where id = '${partnerId}';`);
+      return mysqlConnection.executeQuery(`update 1win_partner.users set balance = '${result.balance_v2_hook_test}' where id = '${partnerId}';`);
+    }
+  },
+
   /** Partner REST methods */
   // логин партнером с email и password, возвращает {data, cookie}
   // cookie используется для дальнейших запросов этим партнером
@@ -445,10 +455,9 @@ export const partner = {
     }
   },
 
-  // привязывает к партнеру юзера 1вин с email и phone
+  // привязывает к партнеру почту email
   // нужна cookie партнера
-  async connectUser(cookie, email, phone) {
-    // console.log(phone);
+  async mailConnect(cookie, email) {
     try {
       const { data: mailConnect } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/withdrawals/connect_user`, {
         email,
@@ -459,6 +468,17 @@ export const partner = {
         },
       });
       // console.log(mailConnect);
+      return mailConnect;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+
+  // привязывает к партнеру телефон phone
+  // нужна cookie партнера
+  async phoneConnect(cookie, phone) {
+    try {
       const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/user/add_phone`, {
         phone,
       }, {
@@ -468,18 +488,88 @@ export const partner = {
         },
       });
       // console.log(data);
-      if (data.code) {
-        const { data: confirm } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/user/add_phone_confirm`, {
-          code: data.code,
-        }, {
-          headers: {
-            // Authorization: AUTH_TOKEN,
-            Cookie: cookie,
-          },
-        });
-        // console.log(confirm);
-      }
       return data;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+
+  // подтверждение привязанного телефона кодом code
+  // нужна cookie партнера
+  async phoneConfirm(cookie, code) {
+    try {
+      const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/user/add_phone_confirm`, {
+        code,
+      }, {
+        headers: {
+          // Authorization: AUTH_TOKEN,
+          Cookie: cookie,
+        },
+      });
+      // console.log(data);
+      return data;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+
+  // создает вывод суммой amount из источника sourceId
+  // (для юзера с мультибалансом sourceId можно не указывать)
+  // нужна cookie партнера
+  async withdrawalCreate(cookie, amount, sourceId) {
+    try {
+      const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/withdrawals/add`, {
+        sourceId,
+        sum: amount,
+      }, {
+        headers: {
+          Cookie: cookie,
+        },
+      });
+      // console.log(data);
+      return data;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+
+  // подтверждение вывода кодом code
+  // нужна cookie партнера
+  async withdrawalConfirm(cookie, code) {
+    try {
+      const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/withdrawals/add_confirm`, {
+        code,
+      }, {
+        headers: {
+          Cookie: cookie,
+        },
+      });
+      // console.log(confirm);
+      return data;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+
+  // привязывает к партнеру юзера 1вин с email и phone
+  // с подветрджением телефона
+  // нужна cookie партнера
+  async connectUser(cookie, email, phone) {
+    try {
+      let phoneConfirm;
+      const mailConnect = await this.mailConnect(cookie, email);
+      // console.log(mailConnect);
+      const addPhone = await this.phoneConnect(cookie, phone);
+      // console.log(addPhone);
+      if (addPhone.code) {
+        phoneConfirm = await this.phoneConfirm(cookie, addPhone.code);
+        // console.log(phoneConfirm);
+      }
+      return phoneConfirm || addPhone;
     } catch (error) {
       // console.log(error.data);
       return error.data;
@@ -502,29 +592,18 @@ export const partner = {
   },
 
   // создает вывод из источника с id = sourceId с суммой amount
+  // с подтверждеием кода
   // нужна cookie партнера
-  async addWithdrawal(cookie, sourceId, amount) {
+  async addWithdrawal(cookie, amount, sourceId) {
     try {
-      const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/withdrawals/add`, {
-        sourceId,
-        sum: amount,
-      }, {
-        headers: {
-          Cookie: cookie,
-        },
-      });
-      // console.log(data);
-      if (data.code) {
-        const { data: confirm } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/withdrawals/add_confirm`, {
-          code: data.code,
-        }, {
-          headers: {
-            Cookie: cookie,
-          },
-        });
-        // console.log(confirm);
+      let withdrawalConfirm;
+      const withdrawalCreate = await this.withdrawalCreate(cookie, amount, sourceId);
+      // console.log(withdrawalCreate);
+      if (withdrawalCreate.code) {
+        withdrawalConfirm = await this.withdrawalConfirm(cookie, withdrawalCreate.code);
+        // console.log(withdrawalConfirm);
       }
-      return data;
+      return withdrawalConfirm || withdrawalCreate;
     } catch (error) {
       // console.log(error.data);
       return error.data;

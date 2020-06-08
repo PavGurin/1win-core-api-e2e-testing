@@ -9,7 +9,7 @@ import { register } from '../../../../src/methods/register';
 import { regUsersAndPlayCases } from '../../../../src/methods/regUsersForPartner';
 import {
   calculateExpectedCasePayments,
-  checkPartnerWithdrawalError, checkPartnerWithdrawalSuccess,
+  checkPartnerError, checkPartnerWithdrawalSuccess,
   checkSourceProfit,
   checkSources,
 } from '../../../../src/expects/exPartner';
@@ -191,7 +191,7 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(8, 1, 500, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
         await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
 
@@ -202,13 +202,13 @@ describe('Revshare multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 5) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 RUB.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 RUB.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
         }
       });
       it('C2149731 - Deposits amount < 5000, RUB', async () => {
@@ -219,7 +219,7 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(1, 1, 500, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
         await regUsersAndPlayCases(10, 1, 100, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 200);
 
@@ -230,13 +230,13 @@ describe('Revshare multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 5) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 2000 RUB.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 2000 RUB.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
         }
       });
 
@@ -248,7 +248,7 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(8, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 20);
         await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
 
@@ -259,13 +259,13 @@ describe('Revshare multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 2) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 USD.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 USD.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
         }
       });
       it('C2149733 - Deposits amount < 80, USD', async () => {
@@ -276,7 +276,7 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(1, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
         await regUsersAndPlayCases(10, 1, 2, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 5);
 
@@ -287,13 +287,13 @@ describe('Revshare multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 2) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 USD.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 USD.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
         }
       });
 
@@ -305,7 +305,7 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(8, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 20);
         await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
 
@@ -316,13 +316,13 @@ describe('Revshare multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 1) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 EUR.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 EUR.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
         }
       });
       it('C2149735 - Deposits amount < 70, EUR', async () => {
@@ -333,7 +333,7 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(1, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
         await regUsersAndPlayCases(10, 1, 2, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 5);
 
@@ -344,13 +344,13 @@ describe('Revshare multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
         if (income.balance >= 1) {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 EUR.');
+          checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 EUR.');
         } else {
-          checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+          checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
         }
       });
 
@@ -361,8 +361,8 @@ describe('Revshare multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
       it('C2157471 - Withdrawal amount > balance, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
@@ -371,8 +371,8 @@ describe('Revshare multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
       it('C2157472 - Withdrawal amount > balance, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
@@ -381,8 +381,8 @@ describe('Revshare multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
 
       it('C2157476 - Withdrawal amount < 5, RUB', async () => {
@@ -392,8 +392,8 @@ describe('Revshare multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+        const withdrawal = await partner.addWithdrawal(cookie, '1', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
       });
       it('C2157477 - Withdrawal amount < 2, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
@@ -402,8 +402,8 @@ describe('Revshare multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+        const withdrawal = await partner.addWithdrawal(cookie, '1', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
       });
       it('C2157478 - Withdrawal amount < 1, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
@@ -412,8 +412,8 @@ describe('Revshare multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '0.5');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+        const withdrawal = await partner.addWithdrawal(cookie, '0.5', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
       });
     });
 
@@ -426,31 +426,32 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(2, 5, 500, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
         let incomeBefore;
+        let usersNum = 0;
         do {
-          await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-
-          // console.log(partnerEmail);
-          await sleep(10000);
+          await regUsersAndPlayCases(1, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+          usersNum++;
+          await sleep(2000);
           incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
           // console.log(incomeBefore);
-        } while (incomeBefore.balance < 5);
+        } while (usersNum < 10 || incomeBefore.balance < 5);
 
         const incomeBefore2 = await partner.getSourceIncome(cookie, sourceId2);
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
 
         checkPartnerWithdrawalSuccess(incomeAfter.profit, incomeAfter.balance,
           incomeBefore.profit, incomeBefore.balance, incomeBefore.balance);
-        await checkSourceProfit(cookie, sourceId2, incomeBefore2.balance, incomeBefore2.profit);
+        await checkSourceProfit(cookie, sourceId2, parseFloat(incomeBefore2.balance),
+          parseFloat(incomeBefore2.profit));
         await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
       });
       it('C2149737 - Partner USD', async () => {
@@ -461,31 +462,32 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(2, 5, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
         let incomeBefore;
+        let usersNum = 0;
         do {
-          await regUsersAndPlayCases(10, 1, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-
-          // console.log(partnerEmail);
-          await sleep(10000);
+          await regUsersAndPlayCases(1, 1, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+          usersNum++;
+          await sleep(2000);
           incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
           // console.log(incomeBefore);
-        } while (incomeBefore.balance < 2);
+        } while (usersNum < 10 || incomeBefore.balance < 2);
 
         const incomeBefore2 = await partner.getSourceIncome(cookie, sourceId2);
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
 
         checkPartnerWithdrawalSuccess(incomeAfter.profit, incomeAfter.balance,
           incomeBefore.profit, incomeBefore.balance, incomeBefore.balance);
-        await checkSourceProfit(cookie, sourceId2, incomeBefore2.balance, incomeBefore2.profit);
+        await checkSourceProfit(cookie, sourceId2, parseFloat(incomeBefore2.balance),
+          parseFloat(incomeBefore2.profit));
         await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
       });
       it('C2149738 - Partner EUR', async () => {
@@ -496,31 +498,32 @@ describe('Revshare multibalance tests', () => {
         const { data: { id: promocodeId1 } } = await partner
           .createPromocode(cookie, promocode1, sourceId1);
         const { data: { id: promocodeId2 } } = await partner
-          .createPromocode(cookie, promocode1, sourceId1);
+          .createPromocode(cookie, promocode2, sourceId2);
         await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
         let incomeBefore;
+        let usersNum = 0;
         do {
-          await regUsersAndPlayCases(10, 1, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-
-          // console.log(partnerEmail);
-          await sleep(10000);
+          await regUsersAndPlayCases(1, 1, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+          usersNum++;
+          await sleep(2000);
           incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
           // console.log(incomeBefore);
-        } while (incomeBefore.balance < 1);
+        } while (usersNum < 10 || incomeBefore.balance < 1);
 
         const incomeBefore2 = await partner.getSourceIncome(cookie, sourceId2);
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
 
         checkPartnerWithdrawalSuccess(incomeAfter.profit, incomeAfter.balance,
           incomeBefore.profit, incomeBefore.balance, incomeBefore.balance);
-        await checkSourceProfit(cookie, sourceId2, incomeBefore2.balance, incomeBefore2.profit);
+        await checkSourceProfit(cookie, sourceId2, parseFloat(incomeBefore2.balance),
+          parseFloat(incomeBefore2.profit));
         await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
       });
     });

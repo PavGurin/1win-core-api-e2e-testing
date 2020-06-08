@@ -634,7 +634,7 @@ export function checkChatGreetingMessage(receivedMessages, partnerId, regTime) {
   expect(receivedMessages[0].sender).toEqual('Поддержка');
 }
 
-export function checkPartnerWithdrawalError(received, expectedCode, expectedMessage) {
+export function checkPartnerError(received, expectedCode, expectedMessage) {
   expect(received.error).toEqual(true);
   expect(received.error_code).toEqual(expectedCode);
   expect(received.message).toEqual(expectedMessage);

@@ -8,7 +8,7 @@ import { partner } from '../../../../src/methods/partner';
 import { register } from '../../../../src/methods/register';
 import { regUsersAndPlayCases } from '../../../../src/methods/regUsersForPartner';
 import {
-  calculateExpectedCpaPayments, checkPartnerWithdrawalError, checkPartnerWithdrawalSuccess,
+  calculateExpectedCpaPayments, checkPartnerError, checkPartnerWithdrawalSuccess,
   checkSourceProfit,
   checkSources,
 } from '../../../../src/expects/exPartner';
@@ -222,10 +222,10 @@ describe('CPA multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
-        checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 RUB.');
+        checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 RUB.');
       });
       it('C2152780 - Active users < 10, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
@@ -247,10 +247,10 @@ describe('CPA multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
-        checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 USD.');
+        checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 USD.');
       });
       it('C2152781 - Active users < 10, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
@@ -272,10 +272,10 @@ describe('CPA multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
-        checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 EUR.');
+        checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 2 активных клиентов и общая сумма их депозитов составляет 10000 EUR.');
       });
 
       it('C2152782 - Deposits amount < 5000, RUB', async () => {
@@ -298,10 +298,10 @@ describe('CPA multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
-        checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 2000 RUB.');
+        checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 5000 RUB. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 2000 RUB.');
       });
       it('C2152783 - Deposits amount < 80, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
@@ -323,10 +323,10 @@ describe('CPA multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
-        checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 USD.');
+        checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 80 USD. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 USD.');
       });
       it('C2152784 - Deposits amount < 70, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
@@ -348,10 +348,10 @@ describe('CPA multibalance tests', () => {
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (income.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (income.balance).toString(), sourceId1);
         // console.log(withdrawal);
-        checkPartnerWithdrawalError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 EUR.');
+        checkPartnerError(withdrawal, 400, 'Для вывода средств, Вам необходимо привести не менее 10 клиентов через систему реферальных ссылок, а их общая сумма депозитов должна составлять не менее 70 EUR. На данный момент у Вас привлечено 10 активных клиентов и общая сумма их депозитов составляет 50 EUR.');
       });
 
       it('C2152785 - Withdrawal amount < 5, RUB', async () => {
@@ -361,8 +361,8 @@ describe('CPA multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
+        const withdrawal = await partner.addWithdrawal(cookie, '1', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 5 RUB.');
       });
       it('C2152786 - Withdrawal amount < 2, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
@@ -371,8 +371,8 @@ describe('CPA multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
+        const withdrawal = await partner.addWithdrawal(cookie, '1', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 2 USD.');
       });
       it('C2152787 - Withdrawal amount < 1, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
@@ -381,8 +381,8 @@ describe('CPA multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '0.5');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
+        const withdrawal = await partner.addWithdrawal(cookie, '0.5', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Минимальная сумма вывода - 1 EUR.');
       });
 
       it('C2157473 - Withdrawal amount > balance, RUB', async () => {
@@ -392,8 +392,8 @@ describe('CPA multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
       it('C2157474 - Withdrawal amount > balance, USD', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'USD');
@@ -402,8 +402,8 @@ describe('CPA multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
       it('C2157475 - Withdrawal amount > balance, EUR', async () => {
         const { cookie, info: { user: { id: partnerId } } } = await partner.registerCPA(partnerEmail, defaultPass, 'EUR');
@@ -412,8 +412,8 @@ describe('CPA multibalance tests', () => {
         const { data: user } = await register.oneClickReg();
         await sleep(1500);
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1, '1000');
-        checkPartnerWithdrawalError(withdrawal, 400, 'Недостаточно средств');
+        const withdrawal = await partner.addWithdrawal(cookie, '1000', sourceId1);
+        checkPartnerError(withdrawal, 400, 'Недостаточно средств');
       });
     });
 
@@ -440,8 +440,8 @@ describe('CPA multibalance tests', () => {
 
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
@@ -474,8 +474,8 @@ describe('CPA multibalance tests', () => {
 
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
@@ -508,8 +508,8 @@ describe('CPA multibalance tests', () => {
 
         const { data: user } = await register.oneClickReg();
         await partner.connectUser(cookie, user.email, `${rndPhoneForPartner()}`);
-        const withdrawal = await partner.addWithdrawal(cookie, sourceId1,
-          (incomeBefore.balance).toString());
+        const withdrawal = await partner.addWithdrawal(cookie,
+          (incomeBefore.balance).toString(), sourceId1);
         // console.log(withdrawal);
         const incomeAfter = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeAfter);
