@@ -187,9 +187,9 @@ export const partner = {
   // data - ответ на запрос /login
   // info - инфа о юзере
   async registerRevshare(email, password, currency, hash = '', lang = 'ru') {
-    await partner.register(email, password, currency, hash, lang);
-    const { data, cookie } = await partner.login(email, password);
-    const { data: info } = await partner.getUserInfo(cookie);
+    await this.register(email, password, currency, hash, lang);
+    const { data, cookie } = await this.login(email, password);
+    const { data: info } = await this.getUserInfo(cookie);
     return { data, cookie, info };
   },
 
@@ -198,10 +198,10 @@ export const partner = {
   // data - ответ на запрос /login
   // info - инфа о юзере
   async registerCPA(email, password, currency, lang = 'ru') {
-    await partner.register(email, password, currency, '', lang);
-    const { data, cookie } = await partner.login(email, password);
-    const { data: info } = await partner.getUserInfo(cookie);
-    await partner.setCPA(info.user.id);
+    await this.register(email, password, currency, '', lang);
+    const { data, cookie } = await this.login(email, password);
+    const { data: info } = await this.getUserInfo(cookie);
+    await this.setCPA(info.user.id);
     return { data, cookie, info };
   },
 
@@ -210,10 +210,10 @@ export const partner = {
   // data - ответ на запрос /login
   // info - инфа о юзере
   async registerHybrid(email, password, currency, lang = 'ru') {
-    await partner.register(email, password, currency, '', lang);
-    const { data, cookie } = await partner.login(email, password);
-    const { data: info } = await partner.getUserInfo(cookie);
-    await partner.setHybrid(info.user.id);
+    await this.register(email, password, currency, '', lang);
+    const { data, cookie } = await this.login(email, password);
+    const { data: info } = await this.getUserInfo(cookie);
+    await this.setHybrid(info.user.id);
     return { data, cookie, info };
   },
 
@@ -270,11 +270,11 @@ export const partner = {
   async createPromocode(cookie, promocode, sourceId) {
     try {
       let source;
-      if (sourceId) { source = sourceId; } else (source = await partner.getSourceId(cookie));
+      if (sourceId) { source = sourceId; } else (source = await this.getSourceId(cookie));
       const { data } = await axios.post(`${PARTNER_STAGING_URL}/api/v2/promo/add`, {
         name: promocode,
         source_id: source,
-        // source_id: sourceId || await partner.getDefaultSourceId(),
+        // source_id: sourceId || await this.getDefaultSourceId(),
       }, {
         headers: {
           // Authorization: AUTH_TOKEN,
@@ -294,8 +294,8 @@ export const partner = {
   // нужна cookie партнера, для которого хотим создать
   // sourceId - id источника, можно не указывать, тогда будет промокод для источника по умолчанию
   async createPromocodeWithCPA(cookie, promocode, sourceId, cpaPreset = 7) {
-    const { data } = await partner.createPromocode(cookie, promocode, sourceId);
-    await partner.setCpaPresetForPartnerKey(data.id, cpaPreset);
+    const { data } = await this.createPromocode(cookie, promocode, sourceId);
+    await this.setCpaPresetForPartnerKey(data.id, cpaPreset);
     return { data };
   },
 

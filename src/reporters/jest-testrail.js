@@ -44,8 +44,8 @@ class TestrailReporter {
       if (titleToCaseId(result.title)) {
         // eslint-disable-next-line no-param-reassign
         if (result.fullName.includes(config.filter)) result.status = 'blocked';
-        this.casesIds.push(titleToCaseId(result.title));
         if (statusId(result.status) !== undefined) {
+          this.casesIds.push(titleToCaseId(result.title));
           this.res.push({
           /* eslint quote-props: 'off' */
             'status_id': statusId(result.status),
