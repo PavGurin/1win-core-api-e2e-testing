@@ -217,6 +217,24 @@ export const partner = {
     return { data, cookie, info };
   },
 
+  // возвращает список всех источников (массив)
+  // нужна cookie партнера
+  async getSources(cookie) {
+    try {
+      const { data } = await axios.get(`${PARTNER_STAGING_URL}/api/v2/sources/list`, {
+        headers: {
+          // Authorization: AUTH_TOKEN,
+          Cookie: cookie,
+        },
+      });
+      // console.log(data);
+      return data.results;
+    } catch (error) {
+      // console.log(error.data);
+      return error.data;
+    }
+  },
+
   // возвращает id источника по его названию
   // если не указать, то вернется id источника по умолчанию
   // нужна cookie партнера

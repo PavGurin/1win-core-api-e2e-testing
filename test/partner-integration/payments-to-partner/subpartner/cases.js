@@ -13,7 +13,7 @@ import {
 import { cases } from '../../../../src/methods/cases';
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 
-describe(' Subpartner ', () => {
+describe(' subpartner ', () => {
   const CASE_COST_RUB = 10000;
   const CASE_RUB_ID = 8;
   const CASE_COST_USD = 200;

@@ -4,6 +4,10 @@ import { partner } from './partner';
 import { banking } from './banking';
 import { cases } from './cases';
 
+// регистрация юзеров 1вин в заданной валюте, каждый юзер играет в кейс стоимостью caseCost
+// numCasesPlayed число раз
+// partnerId, promocodeId, sourceId, depositAmount - необязательные параметры,
+// при их указании для юзера будут также созданы FIRST_DEPOSIT и DEPOSIT
 export async function regUsersAndPlayCases(numUsers, numUserCasesPlayed, caseCost,
   usersCurrency, promocode, partnerId, promocodeId, sourceId, depositAmount) {
   /* eslint no-await-in-loop: off */

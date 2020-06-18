@@ -9,6 +9,7 @@ import { checkPartnerError } from '../../../../src/expects/exPartner';
 import { regUsersAndPlayCases } from '../../../../src/methods/regUsersForPartner';
 import { register } from '../../../../src/methods/register';
 import { rndNumInRange, rndPhoneForPartner, sleep } from '../../../../src/methods/utils';
+import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 
 const defaultPass = '123123AA';
 const cpaPayment = 1;
@@ -21,6 +22,10 @@ describe('Cpa partner withdrawal tests', () => {
   let presetId;
 
   beforeAll(async () => {
+    const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
+    // console.log(dbResult);
+    await sleep(1500);
+
     presetId = await partner.createPreset(0, 0, 0, 0, 1, 100000, cpaPayment);
   });
 
@@ -60,9 +65,9 @@ describe('Cpa partner withdrawal tests', () => {
       await partner.mailConnect(cookie, data.email);
       await partner.phoneConnect(cookie, `7${Math.floor(rndNumInRange(9000000000, 9999999999))}`);
       const withdrawal = await partner.withdrawalCreate(cookie, '500');
-      console.log(withdrawal);
+      // console.log(withdrawal);
       const withdrawalConfirm = await partner.withdrawalConfirm(cookie, withdrawal.code);
-      console.log(withdrawalConfirm);
+      // console.log(withdrawalConfirm);
       expect(withdrawalConfirm.balance).toEqual(0);
       const { data: { user: { balance } } } = await partner.getUserInfo(cookie);
       expect(balance).toEqual('0.00');
