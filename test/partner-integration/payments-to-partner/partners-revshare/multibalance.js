@@ -14,6 +14,7 @@ import {
   checkSources,
 } from '../../../../src/expects/exPartner';
 import { sleep, rndPhoneForPartner } from '../../../../src/methods/utils';
+import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 
 const defaultPass = '123123AA';
 const userDeposit = 5000;
@@ -23,6 +24,12 @@ describe('Revshare multibalance tests', () => {
   let partnerEmail;
   let promocode1;
   let promocode2;
+
+  beforeAll(async () => {
+    const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
+    // console.log(dbResult);
+    await sleep(1500);
+  });
 
   beforeEach(async () => {
     partnerEmail = `${randomStr(10)}@ahem.email`;

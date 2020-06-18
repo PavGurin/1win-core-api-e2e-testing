@@ -13,13 +13,15 @@ import {
   checkSourceProfit,
   checkSources,
 } from '../../../../src/expects/exPartner';
+import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 
 const defaultPass = '123123AA';
 const cpaPayment1 = 10;
 const cpaPayment2 = 20;
 const userDeposit = 5000;
 
-describe('Hybrid multibalance tests', () => {
+// skip т.к. для hybrid мультибаланс сейчас не включается
+describe.skip('Hybrid multibalance tests', () => {
   /* eslint no-await-in-loop: off */
   let presetId1;
   let presetId2;
@@ -28,6 +30,10 @@ describe('Hybrid multibalance tests', () => {
   let promocode2;
 
   beforeAll(async () => {
+    const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
+    // console.log(dbResult);
+    await sleep(1500);
+
     presetId1 = await partner.createPreset(0, 0, 0, 0, 1, 100000, cpaPayment1);
     presetId2 = await partner.createPreset(0, 0, 0, 0, 1, 100000, cpaPayment2);
   });
