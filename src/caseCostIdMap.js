@@ -40,3 +40,7 @@ export const caseCostIdMap = {
     { id: 33, cost: 5000 },
   ],
 };
+
+export function caseIdByCost(currency, cost) {
+  return caseCostIdMap[currency].find(item => item.cost === cost).id;
+}

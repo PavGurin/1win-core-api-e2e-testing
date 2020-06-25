@@ -12,7 +12,7 @@ import { rndNumInRange, rndPhoneForPartner, sleep } from '../../../../src/method
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 
 const defaultPass = '123123AA';
-const cpaPayment = 1;
+const cpaPayment = 10;
 
 describe('Hybrid partner withdrawal tests', () => {
   /* eslint no-await-in-loop: off */
