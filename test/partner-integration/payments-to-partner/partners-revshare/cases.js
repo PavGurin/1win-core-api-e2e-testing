@@ -12,17 +12,13 @@ import {
 } from '../../../../src/expects/exPartner';
 import { sleep } from '../../../../src/methods/utils';
 import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
+import { regUsersAndPlayCases } from '../../../../src/methods/regUsersForPartner';
+import { caseIdByCost } from '../../../../src/caseCostIdMap';
 
 describe('Payments to revshare partner from cases', () => {
   const defaultPass = '123123AA';
-  const THOUSAND_ROUBLES_CASE_ID = 6;
-  const CASE_COST_RUB = 1000;
-  const TEN_USD_CASE_ID = 13;
-  const CASE_COST_USD = 10;
-  const TEN_EUR_CASE_ID = 21;
-  const CASE_COST_EUR = 10;
-  const FIVE_HUNDRED_UAH_CASE_ID = 31;
-  const CASE_COST_UAH = 500;
+  let partnerEmail;
+  let promocode;
 
   beforeAll(async () => {
     const dbResult = await mysqlConnection.executeQuery('DELETE FROM 1win.riskmanagement_ip_log;');
@@ -30,445 +26,254 @@ describe('Payments to revshare partner from cases', () => {
     await sleep(1500);
   });
 
+  beforeEach(async () => {
+    promocode = randomNum(10).toString();
+    partnerEmail = `${randomStr(10)}@ahem.email`;
+    // console.log(partnerEmail);
+  });
+
   describe('All partner and player currency combinations', () => {
     it('C1789885 (+) Partner RUB + player RUB', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 1000, 'RUB', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'RUB', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'RUB', 'RUB');
     });
 
     it('C1789886 (+) Partner RUB + player USD', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_USD);
-      const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
-      // console.log(caseWin);
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 20, 'USD', promocode);
 
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 'RUB', 'USD');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'RUB', 'USD');
     });
 
     it('C1789887 (+) Partner RUB + player EUR', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_EUR);
-      const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 20, 'EUR', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_EUR, profit: caseWin.result }], 'RUB', 'EUR');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'RUB', 'EUR');
     });
 
     it('C1789888 (+) Partner RUB + player UAH', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_UAH);
-      const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 500, 'UAH', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_UAH, profit: caseWin.result }], 'RUB', 'UAH');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'RUB', 'UAH');
     });
 
     it('C1789889 (+) Partner USD + player RUB', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 1000, 'RUB', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'USD', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'USD', 'RUB');
     });
 
     it('C1789890 (+) Partner USD + player USD', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_USD);
-      const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 20, 'USD', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 'USD', 'USD');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'USD', 'USD');
     });
 
     it('C1789891 (+) Partner USD + player EUR', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_EUR);
-      const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 20, 'EUR', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_EUR, profit: caseWin.result }], 'USD', 'EUR');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'USD', 'EUR');
     });
 
     it('C1789892 (+) Partner USD + player UAH', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_UAH);
-      const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 500, 'UAH', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_UAH, profit: caseWin.result }], 'USD', 'UAH');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'USD', 'UAH');
     });
 
     it('C1789893 (+) Partner EUR + player RUB', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 1000, 'RUB', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'EUR', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'EUR', 'RUB');
     });
 
     it('C1789894 (+) Partner EUR + player USD', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'USD');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_USD);
-      const { data: caseWin } = await cases.playCaseWithoutChance(TEN_USD_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 20, 'USD', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_USD, profit: caseWin.result }], 'EUR', 'USD');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'EUR', 'USD');
     });
 
     it('C1789895 (+) Partner EUR + player EUR', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'EUR');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_EUR);
-      const { data: caseWin } = await cases.playCaseWithoutChance(TEN_EUR_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 20, 'EUR', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_EUR, profit: caseWin.result }], 'EUR', 'EUR');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'EUR', 'EUR');
     });
 
     it('C1789896 (+) Partner EUR + player UAH', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'EUR');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'UAH');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_UAH);
-      const { data: caseWin } = await cases.playCaseWithoutChance(FIVE_HUNDRED_UAH_CASE_ID);
-      // console.log(caseWin);
-
+      const { caseResults } = await regUsersAndPlayCases(1, 1, 500, 'UAH', promocode);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_UAH, profit: caseWin.result }], 'EUR', 'UAH');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'EUR', 'UAH');
     });
   });
 
   describe('Cases played several times', () => {
     it('C1789897 (+) Different partner and player currency, same case', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB * 2);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin);
+      const { caseResults } = await regUsersAndPlayCases(1, 2, 1000, 'RUB', promocode);
 
-
+      await sleep(5000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'USD', 'RUB');
-
-      const { data: caseWin2 } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin2);
-
-      await sleep(5000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
-      // console.log(statsAll2);
-
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
-      // console.log(statsDay2);
-
-      await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB, profit: caseWin2.result }], 'USD', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'USD', 'RUB');
     });
 
     it('C1789898 (+) Same partner and player currency, same case', async () => {
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
-      const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
-      // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB * 2);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin);
+      const { caseResults } = await regUsersAndPlayCases(1, 2, 1000, 'RUB', promocode);
 
-
+      await sleep(5000);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
       // console.log(statsAll);
-
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
       // console.log(statsDay);
 
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'RUB', 'RUB');
-
-      const { data: caseWin2 } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
-      // console.log(caseWin2);
-
-      await sleep(5000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
-      // console.log(statsAll2);
-
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
-      // console.log(statsDay2);
-
-      await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB, profit: caseWin2.result }], 'RUB', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], caseResults, 'RUB', 'RUB');
     });
 
     it('C1789899 (+) Same partner and player currency, different cases', async () => {
-      const CASE_COST_RUB_2 = 500;
-      const FIVE_HUNDRED_ROUBLES_CASE_ID = 4;
-
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'RUB');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
       const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB + CASE_COST_RUB_2);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
+      await banking.setBalance(user.id, 1500);
+      const { data: caseWin } = await cases.playCaseWithoutChance(caseIdByCost('RUB', 1000));
       // console.log(caseWin);
-
-
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
-      // console.log(statsAll);
-
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
-      // console.log(statsDay);
-
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'RUB', 'RUB');
-
-      const { data: caseWin2 } = await cases.playCaseWithoutChance(FIVE_HUNDRED_ROUBLES_CASE_ID);
+      const { data: caseWin2 } = await cases.playCaseWithoutChance(caseIdByCost('RUB', 500));
       // console.log(caseWin2);
 
       await sleep(5000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
-      // console.log(statsAll2);
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
+      // console.log(statsAll);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
+      // console.log(statsDay);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
-      // console.log(statsDay2);
-
-      await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB_2, profit: caseWin2.result }], 'RUB', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: 1000, profit: caseWin.result }, { caseCost: 500, profit: caseWin2.result }], 'RUB', 'RUB');
     });
 
     it('C1789900 (+) Different partner and player currency, different cases', async () => {
-      const CASE_COST_RUB_2 = 500;
-      const FIVE_HUNDRED_ROUBLES_CASE_ID = 4;
-
-      const promocode = randomNum(10).toString();
-      const partnerEmail = `${randomStr(10)}@ahem.email`;
-      // console.log(partnerEmail);
-
       const { cookie } = await partner.registerRevshare(partnerEmail, defaultPass, 'USD');
       const { data: { id: promocodeId } } = await partner.createPromocode(cookie, promocode);
       // console.log(promocodeId);
       const { data: user } = await register.oneClickRegWithPromocode(promocode, 'RUB');
       // console.log(user);
-      await banking.setBalance(user.id, CASE_COST_RUB + CASE_COST_RUB_2);
-      const { data: caseWin } = await cases.playCaseWithoutChance(THOUSAND_ROUBLES_CASE_ID);
+      await banking.setBalance(user.id, 1500);
+      const { data: caseWin } = await cases.playCaseWithoutChance(caseIdByCost('RUB', 1000));
       // console.log(caseWin);
-
-
-      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
-      // console.log(statsAll);
-
-      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
-      // console.log(statsDay);
-
-      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }], 'USD', 'RUB');
-
-      const { data: caseWin2 } = await cases.playCaseWithoutChance(FIVE_HUNDRED_ROUBLES_CASE_ID);
+      const { data: caseWin2 } = await cases.playCaseWithoutChance(caseIdByCost('RUB', 500));
       // console.log(caseWin2);
 
       await sleep(5000);
-      const { data: statsAll2 } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
-      // console.log(statsAll2);
+      const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'difference');
+      // console.log(statsAll);
+      const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
+      // console.log(statsDay);
 
-      const { data: statsDay2 } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_difference');
-      // console.log(statsDay2);
-
-      await checkPartnerPaymentCase(statsAll2, statsDay2.days[0], [{ caseCost: CASE_COST_RUB, profit: caseWin.result }, { caseCost: CASE_COST_RUB_2, profit: caseWin2.result }], 'USD', 'RUB');
+      await checkPartnerPaymentCase(statsAll, statsDay.days[0], [{ caseCost: 1000, profit: caseWin.result }, { caseCost: 500, profit: caseWin2.result }], 'USD', 'RUB');
     });
   });
 });

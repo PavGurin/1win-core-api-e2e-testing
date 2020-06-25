@@ -48,8 +48,8 @@ describe('Revshare multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocode(cookie, promocode2, sourceId2);
 
-      const caseResults1 = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const caseResults2 = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
+      const { caseResults: caseResults1 } = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { caseResults: caseResults2 } = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
       const { payment: payment1 } = await calculateExpectedCasePayments(caseResults1, 'RUB', 'RUB');
       const { payment: payment2 } = await calculateExpectedCasePayments(caseResults2, 'RUB', 'USD');
@@ -70,8 +70,8 @@ describe('Revshare multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocode(cookie, promocode2, sourceId2);
 
-      const caseResults1 = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const caseResults2 = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
+      const { caseResults: caseResults1 } = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { caseResults: caseResults2 } = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
       const { payment: payment1 } = await calculateExpectedCasePayments(caseResults1, 'RUB', 'EUR');
       const { payment: payment2 } = await calculateExpectedCasePayments(caseResults2, 'RUB', 'UAH');
@@ -92,8 +92,8 @@ describe('Revshare multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocode(cookie, promocode2, sourceId2);
 
-      const caseResults1 = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const caseResults2 = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
+      const { caseResults: caseResults1 } = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { caseResults: caseResults2 } = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
       const { payment: payment1 } = await calculateExpectedCasePayments(caseResults1, 'USD', 'RUB');
       const { payment: payment2 } = await calculateExpectedCasePayments(caseResults2, 'USD', 'UAH');
@@ -114,8 +114,8 @@ describe('Revshare multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocode(cookie, promocode2, sourceId2);
 
-      const caseResults1 = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const caseResults2 = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
+      const { caseResults: caseResults1 } = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { caseResults: caseResults2 } = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
       const { payment: payment1 } = await calculateExpectedCasePayments(caseResults1, 'USD', 'USD');
       const { payment: payment2 } = await calculateExpectedCasePayments(caseResults2, 'USD', 'EUR');
@@ -136,8 +136,8 @@ describe('Revshare multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocode(cookie, promocode2, sourceId2);
 
-      const caseResults1 = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const caseResults2 = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
+      const { caseResults: caseResults1 } = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { caseResults: caseResults2 } = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
       const { payment: payment1 } = await calculateExpectedCasePayments(caseResults1, 'EUR', 'RUB');
       const { payment: payment2 } = await calculateExpectedCasePayments(caseResults2, 'EUR', 'EUR');
@@ -158,8 +158,8 @@ describe('Revshare multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocode(cookie, promocode2, sourceId2);
 
-      const caseResults1 = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const caseResults2 = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
+      const { caseResults: caseResults1 } = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { caseResults: caseResults2 } = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
 
       const { payment: payment1 } = await calculateExpectedCasePayments(caseResults1, 'EUR', 'USD');
       const { payment: payment2 } = await calculateExpectedCasePayments(caseResults2, 'EUR', 'UAH');

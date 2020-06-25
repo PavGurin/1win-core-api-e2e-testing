@@ -42,6 +42,7 @@ describe.skip('Hybrid multibalance tests', () => {
     partnerEmail = `${randomStr(10)}@ahem.email`;
     promocode1 = `${randomStr(8)}`;
     promocode2 = `${randomStr(8)}`;
+    // console.log(partnerEmail);
   });
 
   describe('Two sources + default, check source stats', () => {
@@ -55,16 +56,15 @@ describe.skip('Hybrid multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocodeWithCPA(cookie, promocode2, sourceId2, presetId2);
 
-      const casesProfit1 = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const casesProfit2 = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
-
+      const { casesResults: casesResults1 } = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { casesResults: casesResults2 } = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
       await sleep(8000);
       await partner.addCpaPayment(partnerId);
       await sleep(2000);
-      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit1, cpaPayment1, 2, 'RUB', 'RUB', sourceId1);
-      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit2, cpaPayment2, 2, 'RUB', 'USD', sourceId2);
-      // console.log(partnerEmail);
+      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults1, cpaPayment1, 2, 'RUB', 'RUB', sourceId1);
+      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults2, cpaPayment2, 2, 'RUB', 'USD', sourceId2);
       // console.log(payment1);
+
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
       await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
@@ -79,16 +79,15 @@ describe.skip('Hybrid multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocodeWithCPA(cookie, promocode2, sourceId2, presetId2);
 
-      const casesProfit1 = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const casesProfit2 = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
-
+      const { casesResults: casesResults1 } = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { casesResults: casesResults2 } = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
       await sleep(8000);
       await partner.addCpaPayment(partnerId);
       await sleep(2000);
-      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit1, cpaPayment1, 2, 'RUB', 'EUR', sourceId1);
-      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit2, cpaPayment2, 2, 'RUB', 'UAH', sourceId2);
-      // console.log(partnerEmail);
+      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults1, cpaPayment1, 2, 'RUB', 'EUR', sourceId1);
+      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults2, cpaPayment2, 2, 'RUB', 'UAH', sourceId2);
       // console.log(payment1);
+
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
       await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
@@ -103,16 +102,15 @@ describe.skip('Hybrid multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocodeWithCPA(cookie, promocode2, sourceId2, presetId2);
 
-      const casesProfit1 = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const casesProfit2 = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
-
+      const { casesResults: casesResults1 } = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { casesResults: casesResults2 } = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
       await sleep(8000);
       await partner.addCpaPayment(partnerId);
       await sleep(2000);
-      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit1, cpaPayment1, 2, 'USD', 'RUB', sourceId1);
-      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit2, cpaPayment2, 2, 'USD', 'UAH', sourceId2);
-      // console.log(partnerEmail);
+      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults1, cpaPayment1, 2, 'USD', 'RUB', sourceId1);
+      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults2, cpaPayment2, 2, 'USD', 'UAH', sourceId2);
       // console.log(payment1);
+
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
       await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
@@ -127,16 +125,15 @@ describe.skip('Hybrid multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocodeWithCPA(cookie, promocode2, sourceId2, presetId2);
 
-      const casesProfit1 = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const casesProfit2 = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
-
+      const { casesResults: casesResults1 } = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { casesResults: casesResults2 } = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
       await sleep(8000);
       await partner.addCpaPayment(partnerId);
       await sleep(2000);
-      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit1, cpaPayment1, 2, 'USD', 'USD', sourceId1);
-      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit2, cpaPayment2, 2, 'USD', 'EUR', sourceId2);
-      // console.log(partnerEmail);
+      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults1, cpaPayment1, 2, 'USD', 'USD', sourceId1);
+      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults2, cpaPayment2, 2, 'USD', 'EUR', sourceId2);
       // console.log(payment1);
+
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
       await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
@@ -151,16 +148,15 @@ describe.skip('Hybrid multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocodeWithCPA(cookie, promocode2, sourceId2, presetId2);
 
-      const casesProfit1 = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const casesProfit2 = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
-
+      const { casesResults: casesResults1 } = await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { casesResults: casesResults2 } = await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
       await sleep(8000);
       await partner.addCpaPayment(partnerId);
       await sleep(2000);
-      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit1, cpaPayment1, 2, 'EUR', 'RUB', sourceId1);
-      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit2, cpaPayment2, 2, 'EUR', 'EUR', sourceId2);
-      // console.log(partnerEmail);
+      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults1, cpaPayment1, 2, 'EUR', 'RUB', sourceId1);
+      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults2, cpaPayment2, 2, 'EUR', 'EUR', sourceId2);
       // console.log(payment1);
+
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
       await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
@@ -175,16 +171,15 @@ describe.skip('Hybrid multibalance tests', () => {
       const { data: { id: promocodeId2 } } = await partner
         .createPromocodeWithCPA(cookie, promocode2, sourceId2, presetId2);
 
-      const casesProfit1 = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
-      const casesProfit2 = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
-
+      const { casesResults: casesResults1 } = await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
+      const { casesResults: casesResults2 } = await regUsersAndPlayCases(2, 5, 500, 'UAH', promocode2, partnerId, promocodeId2, sourceId2, userDeposit);
       await sleep(8000);
       await partner.addCpaPayment(partnerId);
       await sleep(2000);
-      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit1, cpaPayment1, 2, 'EUR', 'USD', sourceId1);
-      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesProfit2, cpaPayment2, 2, 'EUR', 'UAH', sourceId2);
-      // console.log(partnerEmail);
+      const { payment: payment1 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults1, cpaPayment1, 2, 'EUR', 'USD', sourceId1);
+      const { payment: payment2 } = await calculateExpectedCaseHybridPayments(partnerId, casesResults2, cpaPayment2, 2, 'EUR', 'UAH', sourceId2);
       // console.log(payment1);
+
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
       await checkSourceProfit(cookie, await partner.getSourceId(cookie), 0, 0);
@@ -235,7 +230,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(8, 1, 1000, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, 1000);
         await regUsersAndPlayCases(2, 5, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const { data: user } = await register.oneClickReg();
@@ -264,7 +259,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(8, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 20);
         await regUsersAndPlayCases(2, 5, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const { data: user } = await register.oneClickReg();
@@ -293,7 +288,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(8, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 20);
         await regUsersAndPlayCases(2, 5, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, userDeposit);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const { data: user } = await register.oneClickReg();
@@ -323,7 +318,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(1, 1, 1000, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, 10000);
         await regUsersAndPlayCases(10, 1, 100, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 200);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const { data: user } = await register.oneClickReg();
@@ -352,7 +347,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(1, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 100);
         await regUsersAndPlayCases(10, 1, 2, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 5);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const { data: user } = await register.oneClickReg();
@@ -381,7 +376,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(1, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 100);
         await regUsersAndPlayCases(10, 1, 2, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 5);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const { data: user } = await register.oneClickReg();
@@ -476,7 +471,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(10, 1, 1000, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 1000);
         await regUsersAndPlayCases(10, 1, 1000, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, 1000);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
@@ -510,7 +505,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(10, 1, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 20);
         await regUsersAndPlayCases(10, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 20);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
@@ -544,7 +539,7 @@ describe.skip('Hybrid multibalance tests', () => {
         await regUsersAndPlayCases(10, 1, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 20);
         await regUsersAndPlayCases(10, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 20);
 
-        // console.log(partnerEmail);
+
         await sleep(10000);
         await partner.addCpaPayment(partnerId);
         const incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
