@@ -76,6 +76,22 @@ export const banking = {
     return socket.send('BANKING:withdrawal-check', { amount: moneyAmount });
   },
 
+  async userdata(currency) {
+    return socket.send('BANKING:userdata', { currency });
+  },
+
+  async userdataSnippet(currency) {
+    return socket.send('BANKING:userdata-payment-snippet', { currency });
+  },
+
+  async depositMethodsPopular(currency) {
+    return socket.send('BANKING:methods-payment-popular', { currency });
+  },
+
+  async withdrawalMethodsPopular(currency) {
+    return socket.send('BANKING:methods-withdrawal-popular', { currency });
+  },
+
   async createDepositInBD(userId, currency = 'RUB', balanceAmount = 1000,
     date = new Date(), paymentSystem = 'card_rub', walletId = '4132788660217293', status = 1, merchantName = 'payterra') {
     await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
