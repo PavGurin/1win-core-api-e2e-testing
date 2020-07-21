@@ -1,4 +1,3 @@
-
 export function successDepositCreate(data,
   expectedCurrency, expectedPaymentType, expectedAmount) {
   expect(data.apiResponse.error).toEqual(false);
@@ -11,4 +10,9 @@ export function successWithdrawalCreate(data) {
   expect(data).toBeObject();
   expect(data.email).not.toEqual(null);
   expect(data.message).toEqual(undefined);
+}
+
+export function checkUserdataSnippet(data, expectedPaymentMethod, expectedAmount) {
+  expect(data.mostPaymentMethod).toEqual(expectedPaymentMethod);
+  expect(data.paymentAmountSnippet).toEqual(expectedAmount);
 }

@@ -76,10 +76,6 @@ export const banking = {
     return socket.send('BANKING:withdrawal-check', { amount: moneyAmount });
   },
 
-  async userdata(currency) {
-    return socket.send('BANKING:userdata', { currency });
-  },
-
   async userdataSnippet(currency) {
     return socket.send('BANKING:userdata-payment-snippet', { currency });
   },
