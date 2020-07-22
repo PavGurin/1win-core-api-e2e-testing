@@ -379,4 +379,71 @@ describe('Userdata snippet for user with rub', () => {
       });
     });
   });
+
+  describe('user with several deposits', () => {
+    describe('same payment method', () => {
+      const paymentMethod = 'card_rub';
+      const walletId = '4132788660217293';
+      it('average amount < 900', async () => {
+        const { data: user } = await register.oneClickReg();
+        await banking
+          .createDepositInBD(user.id, currency, 200, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 300, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 400, new Date(), paymentMethod, walletId);
+        const { data } = await banking.userdataSnippet(currency);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod, 900);
+      });
+      it('900 < average amount < 1000', async () => {
+        const { data: user } = await register.oneClickReg();
+        await banking
+          .createDepositInBD(user.id, currency, 910, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 930, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 960, new Date(), paymentMethod, walletId);
+        const { data } = await banking.userdataSnippet(currency);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod, 900);
+      });
+      it('average amount = 1000', async () => {
+        const { data: user } = await register.oneClickReg();
+        await banking
+          .createDepositInBD(user.id, currency, 950, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 1000, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 1050, new Date(), paymentMethod, walletId);
+        const { data } = await banking.userdataSnippet(currency);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod, 1000);
+      });
+      it('average amount > 1000', async () => {
+        const { data: user } = await register.oneClickReg();
+        await banking
+          .createDepositInBD(user.id, currency, 1060, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 2280, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 1150, new Date(), paymentMethod, walletId);
+        const { data } = await banking.userdataSnippet(currency);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod, 1500);
+      });
+      it('average amount > max merchant amount', async () => {
+        const { data: user } = await register.oneClickReg();
+        await banking
+          .createDepositInBD(user.id, currency, 111111, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 222222, new Date(), paymentMethod, walletId);
+        await banking
+          .createDepositInBD(user.id, currency, 333333, new Date(), paymentMethod, walletId);
+        const { data } = await banking.userdataSnippet(currency);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod, 100000);
+      });
+    });
+  });
 });
