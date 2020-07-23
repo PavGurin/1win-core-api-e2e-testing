@@ -153,3 +153,10 @@ export async function getCurrenciesFromDB(date) {
   // console.log(currencies[0]);
   return currencies[0];
 }
+
+export async function getMinDepAmount(currency) {
+  const minDepAmountRub = 900;
+  const exchRates = await getCurrenciesFromDB(new Date());
+  const amount = minDepAmountRub / exchRates[currency.toLowerCase()];
+  return Math.ceil(amount / 5) * 5;
+}

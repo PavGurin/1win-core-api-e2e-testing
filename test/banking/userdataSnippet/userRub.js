@@ -454,15 +454,14 @@ describe('Userdata snippet for user with rub', () => {
       const paymentMethod3 = 'btc_usd';
       const walletId3 = '5123564544';
       it('two deposits, different methods', async () => {
-        // TODO
         const { data: user } = await register.oneClickReg();
         await banking
-          .createDepositInBD(user.id, currency, 100, new Date(), paymentMethod1, walletId1);
+          .createDepositInBD(user.id, currency, 100, new Date(), paymentMethod2, walletId2);
         await banking
-          .createDepositInBD(user.id, currency, 20, new Date(), paymentMethod2, walletId2);
+          .createDepositInBD(user.id, currency, 20, new Date(), paymentMethod1, walletId1);
         const { data } = await banking.userdataSnippet(currency);
-        console.log(data);
-        // checkUserdataSnippet(data, paymentMethod, 900);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod1, 900);
       });
       it('two deposits with one payment method and one with other, avg amount < 900', async () => {
         const { data: user } = await register.oneClickReg();
@@ -525,6 +524,26 @@ describe('Userdata snippet for user with rub', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod3, 1300);
         // это ок, должен быть хардкод на фронте, переключится на мин сумму для btc/eth
+      });
+      it('deposits with three methods, the most used is returned', async () => {
+        /* eslint no-await-in-loop: off */
+        const { data: user } = await register.oneClickReg();
+        // console.log(user.email, user.password);
+        for (let i = 0; i < 3; i++) {
+          await banking
+            .createDepositInBD(user.id, currency, 200, new Date(), paymentMethod1, walletId1);
+        }
+        for (let i = 0; i < 5; i++) {
+          await banking
+            .createDepositInBD(user.id, currency, 50, new Date(), paymentMethod2, walletId2);
+        }
+        for (let i = 0; i < 2; i++) {
+          await banking
+            .createDepositInBD(user.id, currency, 1750, new Date(), paymentMethod3, walletId3);
+        }
+        const { data } = await banking.userdataSnippet(currency);
+        // console.log(data);
+        checkUserdataSnippet(data, paymentMethod2, 900);
       });
     });
   });
