@@ -1,14 +1,19 @@
-import { banking } from '../../../src/methods/banking';
+import { banking, getMinDepAmount } from '../../../src/methods/banking';
 import { checkUserdataSnippet } from '../../../src/expects/exBanking';
 import { register } from '../../../src/methods/register';
 
 describe('Userdata snippet for user with rub', () => {
   const currency = 'RUB';
+  let minDepAmount;
+  beforeAll(async () => {
+    minDepAmount = await getMinDepAmount(currency);
+  });
+
   it('C2172089 user with no deposits', async () => {
     await register.oneClickReg();
     const { data } = await banking.userdataSnippet(currency);
     // console.log(data);
-    checkUserdataSnippet(data, 'card_rub', 900);
+    checkUserdataSnippet(data, 'card_rub', minDepAmount);
   });
 
   describe('user with one deposit', () => {
@@ -21,7 +26,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 899, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172091 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -29,7 +34,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 958, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172092 amount >= 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -57,7 +62,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 352, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172095 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -65,7 +70,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 999, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172096 amount >= 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -93,7 +98,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 214, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172099 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -101,7 +106,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 999, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172100 amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -129,7 +134,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 756, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172103 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -137,7 +142,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 901, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172104 amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -165,7 +170,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 15, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172107 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -173,7 +178,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 944, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172108 amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -202,7 +207,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 111, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172111 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -210,7 +215,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 977, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172112 amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -239,7 +244,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 234, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172115 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -247,7 +252,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 987, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172116 amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -276,7 +281,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 891, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172119 900 < amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -284,7 +289,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 900, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172120 amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -394,7 +399,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 400, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172155 900 < average amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -406,7 +411,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 960, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod, 900);
+        checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
       it('C2172156 average amount = 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -461,7 +466,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 20, new Date(), paymentMethod1, walletId1);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod1, 900);
+        checkUserdataSnippet(data, paymentMethod1, minDepAmount);
       });
       it('C2172131 two deposits with one payment method and one with other, avg amount < 900', async () => {
         const { data: user } = await register.oneClickReg();
@@ -473,7 +478,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 20, new Date(), paymentMethod2, walletId2);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod2, 900);
+        checkUserdataSnippet(data, paymentMethod2, minDepAmount);
       });
       it('C2172132 two deposits with one payment method and one with other, 900 < avg amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -485,7 +490,7 @@ describe('Userdata snippet for user with rub', () => {
           .createDepositInBD(user.id, currency, 961, new Date(), paymentMethod2, walletId2);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod2, 900);
+        checkUserdataSnippet(data, paymentMethod2, minDepAmount);
       });
       it('C2172133 two deposits with one payment method and one with other, avg amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
@@ -543,7 +548,7 @@ describe('Userdata snippet for user with rub', () => {
         }
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
-        checkUserdataSnippet(data, paymentMethod2, 900);
+        checkUserdataSnippet(data, paymentMethod2, minDepAmount);
       });
     });
   });

@@ -156,6 +156,9 @@ export async function getCurrenciesFromDB(date) {
 
 export async function getMinDepAmount(currency) {
   const minDepAmountRub = 900;
+  if (currency === 'RUB') {
+    return minDepAmountRub;
+  }
   const exchRates = await getCurrenciesFromDB(new Date());
   const amount = minDepAmountRub / exchRates[currency.toLowerCase()];
   return Math.ceil(amount / 5) * 5;
