@@ -9,7 +9,7 @@ describe('Userdata snippet for user with uah', () => {
     minDepAmount = await getMinDepAmount(currency);
   });
 
-  it('user with no deposits', async () => {
+  it('C2172199 user with no deposits', async () => {
     await register.oneClickRegUAH();
     const { data } = await banking.userdataSnippet(currency);
     // console.log(data);
@@ -20,7 +20,7 @@ describe('Userdata snippet for user with uah', () => {
     describe('deposit method = card', () => {
       const paymentMethod = 'card';
       const walletId = '4132788660217293';
-      it('amount < 900 rub', async () => {
+      it('C2172200 amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 100, new Date(), paymentMethod, walletId);
@@ -28,7 +28,7 @@ describe('Userdata snippet for user with uah', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('900 rub < amount < 1000 rub', async () => {
+      it('C2172201 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 374, new Date(), paymentMethod, walletId);
@@ -36,7 +36,7 @@ describe('Userdata snippet for user with uah', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('amount > 1000 rub', async () => {
+      it('C2172202 amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 472, new Date(), paymentMethod, walletId);
@@ -44,7 +44,7 @@ describe('Userdata snippet for user with uah', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 475);
       });
-      it('amount > max merchant amount', async () => {
+      it('C2172203 amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 30001, new Date(), paymentMethod, walletId);
@@ -59,7 +59,7 @@ describe('Userdata snippet for user with uah', () => {
     describe('same payment method', () => {
       const paymentMethod = 'card';
       const walletId = '4132788660217293';
-      it('average amount < 900 rub', async () => {
+      it('C2172204 average amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 150, new Date(), paymentMethod, walletId);
@@ -71,7 +71,7 @@ describe('Userdata snippet for user with uah', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('900 rub < average amount < 1000 rub', async () => {
+      it('C2172205 900 rub < average amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 363, new Date(), paymentMethod, walletId);
@@ -83,7 +83,7 @@ describe('Userdata snippet for user with uah', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('average amount > 1000 rub', async () => {
+      it('C2172206 average amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 418, new Date(), paymentMethod, walletId);
@@ -95,7 +95,7 @@ describe('Userdata snippet for user with uah', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 610);
       });
-      it('average amount > max merchant amount', async () => {
+      it('C2172207 average amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUAH();
         await banking
           .createDepositInBD(user.id, currency, 30001, new Date(), paymentMethod, walletId);

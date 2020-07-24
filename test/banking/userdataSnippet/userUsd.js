@@ -9,7 +9,7 @@ describe('Userdata snippet for user with usd', () => {
     minDepAmount = await getMinDepAmount(currency);
   });
 
-  it('user with no deposits', async () => {
+  it('C2172137 user with no deposits', async () => {
     await register.oneClickRegUSD();
     const { data } = await banking.userdataSnippet(currency);
     // console.log(data);
@@ -20,7 +20,7 @@ describe('Userdata snippet for user with usd', () => {
     describe('deposit method = card', () => {
       const paymentMethod = 'card';
       const walletId = '4132788660217293';
-      it('amount < 900 rub', async () => {
+      it('C2172138 amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 5, new Date(), paymentMethod, walletId);
@@ -28,7 +28,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('900 rub < amount < 1000 rub', async () => {
+      it('C2172139 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 14, new Date(), paymentMethod, walletId);
@@ -36,7 +36,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('amount > 1000 rub', async () => {
+      it('C2172140 amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 27, new Date(), paymentMethod, walletId);
@@ -44,7 +44,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 30);
       });
-      it('amount > max merchant amount', async () => {
+      it('C2172141 amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 1001, new Date(), paymentMethod, walletId);
@@ -56,7 +56,7 @@ describe('Userdata snippet for user with usd', () => {
     describe('deposit method = qiwi_usd', () => {
       const paymentMethod = 'qiwi_usd';
       const walletId = '79001234567';
-      it('amount < 900 rub', async () => {
+      it('C2172142 amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 2, new Date(), paymentMethod, walletId);
@@ -64,7 +64,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('900 rub < amount < 1000 rub', async () => {
+      it('C2172143 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 13, new Date(), paymentMethod, walletId);
@@ -72,7 +72,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('amount > 1000 rub', async () => {
+      it('C2172144 amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 16, new Date(), paymentMethod, walletId);
@@ -80,7 +80,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 20);
       });
-      it('amount > max merchant amount', async () => {
+      it('C2172145 amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 3901, new Date(), paymentMethod, walletId);
@@ -92,7 +92,7 @@ describe('Userdata snippet for user with usd', () => {
     describe('deposit method = btc_usd', () => {
       const paymentMethod = 'btc_usd';
       const walletId = '5123564544';
-      it('amount < 900 rub', async () => {
+      it('C2172146 amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 10, new Date(), paymentMethod, walletId);
@@ -100,7 +100,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);
       });
-      it('900 rub < amount < 1000 rub', async () => {
+      it('C2172147 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 13, new Date(), paymentMethod, walletId);
@@ -108,7 +108,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);
       });
-      it('amount > 1000 rub', async () => {
+      it('C2172148 amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         // console.log(user.email, user.password);
         await banking
@@ -117,7 +117,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 270);
       });
-      it('amount > max merchant amount', async () => {
+      it('C2172149 amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 3501, new Date(), paymentMethod, walletId);
@@ -129,7 +129,7 @@ describe('Userdata snippet for user with usd', () => {
     describe('deposit method = eth_usd', () => {
       const paymentMethod = 'eth_usd';
       const walletId = '876686785';
-      it('amount < 900 rub', async () => {
+      it('C2172150 amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 8, new Date(), paymentMethod, walletId);
@@ -137,7 +137,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);
       });
-      it('900 rub < amount < 1000 rub', async () => {
+      it('C2172151 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 14, new Date(), paymentMethod, walletId);
@@ -145,7 +145,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);
       });
-      it('amount > 1000 rub', async () => {
+      it('C2172152 amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         // console.log(user.email, user.password);
         await banking
@@ -154,7 +154,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 90);
       });
-      it('amount > max merchant amount', async () => {
+      it('C2172153 amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 5000, new Date(), paymentMethod, walletId);
@@ -169,7 +169,7 @@ describe('Userdata snippet for user with usd', () => {
     describe('same payment method', () => {
       const paymentMethod = 'card';
       const walletId = '4132788660217293';
-      it('average amount < 900 rub', async () => {
+      it('C2172159 average amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 11, new Date(), paymentMethod, walletId);
@@ -181,7 +181,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('900 rub < average amount < 1000 rub', async () => {
+      it('C2172160 900 rub < average amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 13, new Date(), paymentMethod, walletId);
@@ -193,7 +193,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('average amount > 1000 rub', async () => {
+      it('C2172162 average amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 30, new Date(), paymentMethod, walletId);
@@ -205,7 +205,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 30);
       });
-      it('average amount > max merchant amount', async () => {
+      it('C2172163 average amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 1001, new Date(), paymentMethod, walletId);
@@ -225,7 +225,7 @@ describe('Userdata snippet for user with usd', () => {
       const walletId2 = '79031234567';
       const paymentMethod3 = 'btc_usd';
       const walletId3 = '5123564544';
-      it('two deposits, different methods', async () => {
+      it('C2172164 two deposits, different methods', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 11, new Date(), paymentMethod2, walletId2);
@@ -235,7 +235,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod1, minDepAmount);
       });
-      it('two deposits with one payment method and one with other, avg amount < 900 rub', async () => {
+      it('C2172165 two deposits with one payment method and one with other, avg amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 11, new Date(), paymentMethod1, walletId1);
@@ -247,7 +247,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod2, minDepAmount);
       });
-      it('two deposits with one payment method and one with other, 900 rub < avg amount < 1000 rub', async () => {
+      it('C2172166 two deposits with one payment method and one with other, 900 rub < avg amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 13, new Date(), paymentMethod1, walletId1);
@@ -259,7 +259,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod2, minDepAmount);
       });
-      it('two deposits with one payment method and one with other, avg amount > 1000 rub', async () => {
+      it('C2172167 two deposits with one payment method and one with other, avg amount > 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 20, new Date(), paymentMethod1, walletId1);
@@ -271,7 +271,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod2, 40);
       });
-      it('two deposits with one payment method and one with other, avg amount > max merchant amount', async () => {
+      it('C2172168 two deposits with one payment method and one with other, avg amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
           .createDepositInBD(user.id, currency, 1000, new Date(), paymentMethod1, walletId1);
@@ -283,7 +283,7 @@ describe('Userdata snippet for user with usd', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod1, 1000);
       });
-      it('two deposits with one payment method and one with other, avg amount < min merchant amount', async () => {
+      it('C2172169 two deposits with one payment method and one with other, avg amount < min merchant amount', async () => {
         const { data: user } = await register.oneClickRegUSD();
         // console.log(user.email, user.password);
         await banking
@@ -297,7 +297,7 @@ describe('Userdata snippet for user with usd', () => {
         checkUserdataSnippet(data, paymentMethod3, 20);
         // это ок, должен быть хардкод на фронте, переключится на мин сумму для btc/eth
       });
-      it('deposits with three methods, the most used is returned', async () => {
+      it('C2172170 deposits with three methods, the most used is returned', async () => {
         /* eslint no-await-in-loop: off */
         const { data: user } = await register.oneClickRegUSD();
         // console.log(user.email, user.password);

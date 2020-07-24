@@ -384,7 +384,7 @@ describe('Userdata snippet for user with rub', () => {
     describe('same payment method', () => {
       const paymentMethod = 'card_rub';
       const walletId = '4132788660217293';
-      it('average amount < 900', async () => {
+      it('C2172154 average amount < 900', async () => {
         const { data: user } = await register.oneClickReg();
         await banking
           .createDepositInBD(user.id, currency, 200, new Date(), paymentMethod, walletId);
@@ -396,7 +396,7 @@ describe('Userdata snippet for user with rub', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 900);
       });
-      it('900 < average amount < 1000', async () => {
+      it('C2172155 900 < average amount < 1000', async () => {
         const { data: user } = await register.oneClickReg();
         await banking
           .createDepositInBD(user.id, currency, 910, new Date(), paymentMethod, walletId);
@@ -408,7 +408,7 @@ describe('Userdata snippet for user with rub', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 900);
       });
-      it('average amount = 1000', async () => {
+      it('C2172156 average amount = 1000', async () => {
         const { data: user } = await register.oneClickReg();
         // console.log(user.email, user.password);
         await banking
@@ -421,7 +421,7 @@ describe('Userdata snippet for user with rub', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 1000);
       });
-      it('average amount > 1000', async () => {
+      it('C2172157 average amount > 1000', async () => {
         const { data: user } = await register.oneClickReg();
         await banking
           .createDepositInBD(user.id, currency, 1060, new Date(), paymentMethod, walletId);
@@ -433,7 +433,7 @@ describe('Userdata snippet for user with rub', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 1500);
       });
-      it('average amount > max merchant amount', async () => {
+      it('C2172158 average amount > max merchant amount', async () => {
         const { data: user } = await register.oneClickReg();
         await banking
           .createDepositInBD(user.id, currency, 111111, new Date(), paymentMethod, walletId);
