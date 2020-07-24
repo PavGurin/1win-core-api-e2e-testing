@@ -76,6 +76,18 @@ export const banking = {
     return socket.send('BANKING:withdrawal-check', { amount: moneyAmount });
   },
 
+  async userdataSnippet(currency) {
+    return socket.send('BANKING:userdata-payment-snippet', { currency });
+  },
+
+  async depositMethodsPopular(currency) {
+    return socket.send('BANKING:methods-payment-popular', { currency });
+  },
+
+  async withdrawalMethodsPopular(currency) {
+    return socket.send('BANKING:methods-withdrawal-popular', { currency });
+  },
+
   async createDepositInBD(userId, currency = 'RUB', balanceAmount = 1000,
     date = new Date(), paymentSystem = 'card_rub', walletId = '4132788660217293', status = 1, merchantName = 'payterra') {
     await mysqlConnection.executeQuery(`INSERT INTO 1win.ma_deposits (id_user, amount, 
@@ -140,4 +152,11 @@ export async function getCurrenciesFromDB(date) {
   }
   // console.log(currencies[0]);
   return currencies[0];
+}
+
+export async function getMinDepAmount(currency) {
+  const minDepAmountRub = 900;
+  const exchRates = await getCurrenciesFromDB(new Date());
+  const amount = minDepAmountRub / exchRates[currency.toLowerCase()];
+  return Math.ceil(amount / 5) * 5;
 }

@@ -13,21 +13,21 @@ describe('Creating deposit for btc_usd - RUB', () => {
     user = await register.oneClickReg();
   });
 
-  it('C28655 - (+) amount = 1751 & wallet = empty', async () => {
-    await banking.depositCreate('', paymentType, currency, 1751);
+  it('C28655 - (+) amount = 2251 & wallet = empty', async () => {
+    await banking.depositCreate('', paymentType, currency, 2251);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC ;`);
     // console.log(dbResult);
-    successDbDeposit(dbResult, 1751, '',
+    successDbDeposit(dbResult, 2251, '',
       'btc_usd', 'RUB');
   });
 
   it('C28656 - min amount & wallet = symbols', async () => {
-    await banking.depositCreate('+79215598289', paymentType, currency, 1750);
+    await banking.depositCreate('+79215598289', paymentType, currency, 2250);
     const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${user.data.id} ORDER BY id DESC ;`);
     // console.log(dbResult);
-    successDbDeposit(dbResult, 1750, '+79215598289',
+    successDbDeposit(dbResult, 2250, '+79215598289',
       'btc_usd', 'RUB');
   });
 
@@ -63,13 +63,13 @@ describe('Create deposite for btc_usd invalid - RUB', () => {
 
 
   it('C28662 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('79215598386', paymentType, currency, 1749.6);
+    const { data } = await banking.depositCreate('79215598386', paymentType, currency, 2249.6);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C28663 - amount < min amount', async () => {
-    const { data } = await banking.depositCreate('79215598486', paymentType, currency, 1749);
+    const { data } = await banking.depositCreate('79215598486', paymentType, currency, 2249);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
