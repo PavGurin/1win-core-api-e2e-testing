@@ -59,10 +59,6 @@ describe('Titles route tests', () => {
     beforeAll(async () => {
       await insertTitles(titles);
     });
-    afterAll(async () => {
-      await sleep(5000);
-      await mysqlConnection.executeQuery(`delete from 1win.ma_titles where path = '${path}';`);
-    });
 
     it('C2190641 (+) lang = ru', async () => {
       const data = await getTitles({ lang: 'ru', path });
