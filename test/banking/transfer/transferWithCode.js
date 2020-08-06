@@ -17,8 +17,8 @@ let receivedMail = {};
 let currentUser = {};
 let users = [];
 
-
-describe('Transfer confirm with receiving code', () => {
+// скип, т.к письма на стейдже не отправляются
+describe.skip('Transfer confirm with receiving code', () => {
   // перед каждым тестом просиходит логин, ссздание перевода, получение письма с почты
   beforeEach(async () => {
     // формируем пул юзеров
