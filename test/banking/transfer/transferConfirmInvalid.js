@@ -38,7 +38,8 @@ describe('Transfer confirm invalid', () => {
     checkErrMsg(data, 400, 'Неверный ключ запроса');
   });
 
-  it('C27219 (-) Active code of other operation that was obtained before transfer code', async () => {
+  // скип, т.к на стейдже не отправляются письма
+  it.skip('C27219 (-) Active code of other operation that was obtained before transfer code', async () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
     const { data } = await banking.withdrawalCreate('5121640361313600', 'card_rub', 'RUB', 100);

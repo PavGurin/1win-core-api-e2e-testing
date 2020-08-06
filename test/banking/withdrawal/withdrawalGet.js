@@ -36,7 +36,8 @@ describe('Withdrawal get', () => {
     });
   });
 
-  describe('Withdrawal get card_rub', () => {
+  // скип, т.к на стейдже не отправляются письма
+  describe.skip('Withdrawal get card_rub', () => {
     beforeEach(async () => {
       currentUser = users.pop();
       await userList.loginWithParams(currentUser.email, currentUser.password);

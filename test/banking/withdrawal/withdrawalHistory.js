@@ -32,7 +32,8 @@ describe('Withdrawal history', () => {
     });
   });
 
-  describe('User with money', () => {
+  // скип, т.к на стейдже не отправляются письма
+  describe.skip('User with money', () => {
     beforeEach(async () => {
       currentUser = users.pop();
       await userList.loginWithParams(currentUser.email, currentUser.password);

@@ -37,7 +37,8 @@ describe('Withdrawal confirm invalid', () => {
     checkErrMsg(data, 400, 'Неверный ключ запроса');
   });
 
-  it('C27222 (-) Active code of other operation that was obtained before withdrawal code', async () => {
+  // скип, т.к на стейдже не отправляются письма
+  it.skip('C27222 (-) Active code of other operation that was obtained before withdrawal code', async () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
 
