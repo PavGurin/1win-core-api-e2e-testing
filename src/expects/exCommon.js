@@ -18,6 +18,18 @@ export function checkTitles(data, expectedLang, expectedPath) {
   });
 }
 
+export function checkTitlesToMatchExpected(data, expectedArray) {
+  expect(data.success).toEqual(true);
+  expect(data.titles.length).toEqual(expectedArray.length);
+  expectedArray.forEach((title) => {
+    const receivedTitle = data.titles.find(received => received.text === title.text);
+    expect(receivedTitle.id).toBeGreaterThan(0);
+    expect(receivedTitle.lang).toEqual(title.lang);
+    expect(receivedTitle.path).toEqual(title.path);
+    expect(receivedTitle.is_dynamic).toEqual(title.isDynamic);
+  });
+}
+
 export function checkEmptyTitles(data) {
   expect(data.success).toEqual(true);
   expect(data.titles.length).toEqual(0);

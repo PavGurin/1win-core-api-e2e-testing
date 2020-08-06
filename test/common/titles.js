@@ -1,37 +1,8 @@
-import { checkEmptyTitles, checkTitles } from '../../src/expects/exCommon';
-import { mysqlConnection } from '../../src/methods/mysqlConnection';
+import { getTitles, insertTitles } from '../../src/methods/common';
+import { checkEmptyTitles, checkTitles, checkTitlesToMatchExpected } from '../../src/expects/exCommon';
 import { randomStr } from '../../src/randomizer';
 
-const axios = require('axios');
 
-async function getTitles(params) {
-  try {
-    const { data } = await axios.get('https://master_staging.staging.1win-prodlike.tech/common2/titles/all', {
-      params,
-    });
-    return data;
-  } catch (e) {
-    return { data: e.response.data, status: e.response.status, statusText: e.response.statusText };
-  }
-}
-async function insertTitles(titlesArray) {
-  const [res] = await mysqlConnection.executeQuery('select id from 1win.test_ma_titles order by id desc limit 1');
-  const titles = [];
-  let i = 1;
-  titlesArray.forEach(async (title) => {
-    try {
-      await mysqlConnection.executeQuery(`insert into 1win.test_ma_titles(lang, path, text, is_dynamic)
-  values('${title.lang}', '${title.path}', '${title.text}', '${title.isDynamic}');`);
-      titles.push({ id: res.id + i, ...title });
-      i++;
-    } catch (e) {
-      console.log(e);
-    }
-  });
-  return titles;
-}
-
-// TODO таблица test_ma_titles? (перименовать?)
 describe('Titles route tests', () => {
   describe('Check params', () => {
     it(' no params', async () => {
@@ -73,28 +44,44 @@ describe('Titles route tests', () => {
   });
   describe('Insert titles into DB and find them', () => {
     /* eslint object-curly-newline: off */
-    let titlesInDB;
     const rnd = randomStr(10);
-    const titles = [{ lang: 'ru', path: `testpath_${rnd}`, text: `текст ${rnd}`, isDynamic: 0 },
-      { lang: 'en', path: `testpath_${rnd}`, text: `text ${rnd}`, isDynamic: 0 },
-      { lang: 'fr', path: `testpath_${rnd}`, text: `frtext ${rnd}`, isDynamic: 0 },
-      { lang: 'ru', path: `testpath2_${rnd}`, text: `текст 2 ${rnd}`, isDynamic: 1 },
-      { lang: 'en', path: `testpath2_${rnd}`, text: `text 2 ${rnd}`, isDynamic: 1 },
-      { lang: 'fr', path: `testpath2_${rnd}`, text: `frtext 2 ${rnd}`, isDynamic: 1 }];
+    const path = `testpath_${rnd}`;
+    const titles = [{ lang: 'ru', path, text: `текст ${rnd}`, isDynamic: 0 },
+      { lang: 'en', path, text: `text ${rnd}`, isDynamic: 0 },
+      { lang: 'de', path, text: `de text ${rnd}`, isDynamic: 0 },
+      { lang: 'de', path, text: `de text 2 ${rnd}`, isDynamic: 0 },
+      { lang: 'ru', path, text: `текст 2 ${rnd}`, isDynamic: 1 },
+      { lang: 'ru', path, text: `текст 3 ${rnd}`, isDynamic: 1 },
+      { lang: 'en', path, text: `text 2 ${rnd}`, isDynamic: 1 },
+      { lang: 'fr', path, text: `fr text  ${rnd}`, isDynamic: 1 }];
     beforeAll(async () => {
-      titlesInDB = await insertTitles(titles);
+      await insertTitles(titles);
     });
 
-    afterAll(async () => {
-      titlesInDB.forEach(async (title) => {
-        await mysqlConnection.executeQuery(`delete from 1win.test_ma_titles where id = ${title.id}`);
-      });
+    it(' lang = ru', async () => {
+      const data = await getTitles({ lang: 'ru', path: `testpath_${rnd}` });
+      // console.log(data);
+      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'ru'));
     });
-    it(' all', async () => {
-      const { data } = await getTitles();
-      console.log(data);
-      console.log(titlesInDB);
-      // checkTitles(data);
+    it(' lang = en', async () => {
+      const data = await getTitles({ lang: 'en', path: `testpath_${rnd}` });
+      // console.log(data);
+      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'en'));
+    });
+    it(' lang = fr', async () => {
+      const data = await getTitles({ lang: 'fr', path: `testpath_${rnd}` });
+      // console.log(data);
+      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'fr'));
+    });
+    it(' lang = de', async () => {
+      const data = await getTitles({ lang: 'de', path: `testpath_${rnd}` });
+      // console.log(data);
+      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'de'));
+    });
+    it(' lang not specified', async () => {
+      const data = await getTitles({ path: `testpath_${rnd}` });
+      // console.log(data);
+      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'ru'));
     });
   });
 });
