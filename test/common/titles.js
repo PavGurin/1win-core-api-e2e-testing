@@ -62,12 +62,12 @@ describe('Titles route tests', () => {
     });
     it(' path + unexistent lang', async () => {
       const data = await getTitles({ lang: 'test', path: 'cases' });
-      console.log(data);
+      // console.log(data);
       checkEmptyTitles(data);
     });
     it(' unexistent path + lang', async () => {
       const data = await getTitles({ lang: 'ru', path: 'test' });
-      console.log(data);
+      // console.log(data);
       checkEmptyTitles(data);
     });
   });
