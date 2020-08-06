@@ -1,5 +1,5 @@
 describe('Widgets 1', () => {
-  it('C21143 - (+) valid request', async () => {
+  it('C1789506 - (+) valid request', async () => {
     const { data } = await socket.send('COMMON:widgets-1', {
 
       matchId: '-1',
@@ -10,7 +10,7 @@ describe('Widgets 1', () => {
     expect(data.message).toEqual('Widget with ID 1 not found');
   });
 
-  it('C1453967 - (+) valid request', async () => {
+  it('C1789507 - (+) valid request', async () => {
     const { data } = await socket.send('COMMON:casino-widget', {
 
       games: ['spacewars_not_mobile_sw', 'bigbadwolf'],
