@@ -1,6 +1,7 @@
 import { getTitles, insertTitles } from '../../src/methods/common';
 import { checkEmptyTitles, checkTitles, checkTitlesToMatchExpected } from '../../src/expects/exCommon';
 import { randomStr } from '../../src/randomizer';
+import { mysqlConnection } from '../../src/methods/mysqlConnection';
 
 
 describe('Titles route tests', () => {
@@ -56,6 +57,9 @@ describe('Titles route tests', () => {
       { lang: 'fr', path, text: `fr text  ${rnd}`, isDynamic: 1 }];
     beforeAll(async () => {
       await insertTitles(titles);
+    });
+    afterAll(async () => {
+      await mysqlConnection.executeQuery(`delete from 1win.ma_titles where path = '${path}';`);
     });
 
     it('C2190641 (+) lang = ru', async () => {
