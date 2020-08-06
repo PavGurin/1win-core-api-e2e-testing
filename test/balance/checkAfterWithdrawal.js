@@ -25,13 +25,15 @@ describe('Withdrawal with confirmation codes', () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
     await banking.withdrawalCreate('5469550073662048', 'card_rub', 'RUB', 100);
+  });
+
+  // скип, т.к на стейдже не отправляются письма
+  it.skip('C27123 (+) Balance checking after successful withdrawal', async () => {
     // задержка для получения письма
     await sleep(4000);
     receivedMail = await mail.getMessage(currentUser.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение вывода', 'Confirmation - 1Win', 'confirmation@fbet.top');
-  });
 
-  it('C27123 (+) Balance checking after successful withdrawal', async () => {
     const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     checkSuccess(confirm);
@@ -41,7 +43,13 @@ describe('Withdrawal with confirmation codes', () => {
   });
 
   it('C27201 (-) Balance checking after not successful withdrawal', async () => {
-    const confirm = await socket.send('BANKING:withdrawal-confirm', { code: receivedMail.code + 1 });
+    // задержка для получения письма
+    // await sleep(4000);
+    // receivedMail = await mail.getMessage(currentUser.email);
+    // checkMailRequisites(receivedMail, '1Win - Подтверждение вывода', 'Confirmation - 1Win',
+    // 'confirmation@fbet.top');
+
+    const confirm = await socket.send('BANKING:withdrawal-confirm', { code: 1111111 });
     // console.log(confirmData);
     expect(confirm.data.status).toEqual(400);
 

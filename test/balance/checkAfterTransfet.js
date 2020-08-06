@@ -29,13 +29,14 @@ describe('Balance checking', () => {
     currentUser = users.pop();
     await userList.loginWithParams(currentUser.email, currentUser.password);
     await banking.transferCreate(20, 'RUB');
+  });
+
+  // скип, т.к на стейдже не отправляются письма
+  it.skip('C21440 (+) after successful transfer', async () => {
     // задержка, чтобы письмо успело придти на почту
     await sleep(4000);
     receivedMail = await mail.getMessage(currentUser.email);
     checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win', 'confirmation@fbet.top');
-  });
-
-  it('C21440 (+) after successful transfer', async () => {
     const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code });
     // console.log(confirmData);
     checkSuccess(confirm);
@@ -49,7 +50,10 @@ describe('Balance checking', () => {
   });
 
   it('C27200 (-) after not successful transfer', async () => {
-    const confirm = await socket.send('BANKING:transfer-confirm', { code: receivedMail.code + 1 });
+    // receivedMail = await mail.getMessage(currentUser.email);
+    // checkMailRequisites(receivedMail, '1Win - Подтверждение перевода', 'Confirmation - 1Win',
+    // 'confirmation@fbet.top');
+    const confirm = await socket.send('BANKING:transfer-confirm', { code: 1111111 });
     expect(confirm.status).toEqual(200);
     expect(confirm.data.status).toEqual(400);
 
