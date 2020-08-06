@@ -2,6 +2,7 @@ import { getTitles, insertTitles } from '../../src/methods/common';
 import { checkEmptyTitles, checkTitles, checkTitlesToMatchExpected } from '../../src/expects/exCommon';
 import { randomStr } from '../../src/randomizer';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
+import { sleep } from '../../src/methods/utils';
 
 
 describe('Titles route tests', () => {
@@ -59,6 +60,7 @@ describe('Titles route tests', () => {
       await insertTitles(titles);
     });
     afterAll(async () => {
+      await sleep(5000);
       await mysqlConnection.executeQuery(`delete from 1win.ma_titles where path = '${path}';`);
     });
 
