@@ -15,7 +15,7 @@ export async function getTitles(params) {
 export async function insertTitles(titlesArray) {
   titlesArray.forEach(async (title) => {
     try {
-      await mysqlConnection.executeQuery(`insert into 1win.test_ma_titles(lang, path, text, is_dynamic)
+      await mysqlConnection.executeQuery(`insert into 1win.ma_titles(lang, path, text, is_dynamic)
   values('${title.lang}', '${title.path}', '${title.text}', '${title.isDynamic}');`);
     } catch (e) {
       console.log(e);
