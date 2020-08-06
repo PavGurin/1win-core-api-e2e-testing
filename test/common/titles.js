@@ -5,7 +5,7 @@ import { randomStr } from '../../src/randomizer';
 
 describe('Titles route tests', () => {
   describe('Check params', () => {
-    it(' no params', async () => {
+    it('C2190635 (-) no params', async () => {
       const data = await getTitles();
       // console.log(data);
       expect(data.data).toEqual('Bad Request');
@@ -13,17 +13,17 @@ describe('Titles route tests', () => {
       expect(data.statusText).toEqual('Bad Request');
       // checkTitles(data);
     });
-    it(' path only, russian lang by default', async () => {
+    it('C2190636 (+) path only, russian lang by default', async () => {
       const data = await getTitles({ path: 'cases' });
       // console.log(data);
       checkTitles(data, 'ru', 'cases');
     });
-    it(' path + lang', async () => {
+    it('C2190637 (+) path + lang', async () => {
       const data = await getTitles({ lang: 'en', path: 'cases' });
       // console.log(data);
       checkTitles(data, 'en', 'cases');
     });
-    it(' lang only', async () => {
+    it('C2190638 (-) lang only', async () => {
       const data = await getTitles({ lang: 'en' });
       // console.log(data);
       expect(data.data).toEqual('Bad Request');
@@ -31,18 +31,18 @@ describe('Titles route tests', () => {
       expect(data.statusText).toEqual('Bad Request');
       // checkTitles(data);
     });
-    it(' path + unexistent lang', async () => {
+    it('C2190639 (-) path + unexistent lang', async () => {
       const data = await getTitles({ lang: 'test', path: 'cases' });
       // console.log(data);
       checkEmptyTitles(data);
     });
-    it(' unexistent path + lang', async () => {
+    it('C2190640 (-) unexistent path + lang', async () => {
       const data = await getTitles({ lang: 'ru', path: 'test' });
       // console.log(data);
       checkEmptyTitles(data);
     });
   });
-  describe('Insert titles into DB and find them', () => {
+  describe('Insert titles into DB and get them in request', () => {
     /* eslint object-curly-newline: off */
     const rnd = randomStr(10);
     const path = `testpath_${rnd}`;
@@ -58,30 +58,35 @@ describe('Titles route tests', () => {
       await insertTitles(titles);
     });
 
-    it(' lang = ru', async () => {
-      const data = await getTitles({ lang: 'ru', path: `testpath_${rnd}` });
+    it('C2190641 (+) lang = ru', async () => {
+      const data = await getTitles({ lang: 'ru', path });
       // console.log(data);
       checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'ru'));
     });
-    it(' lang = en', async () => {
-      const data = await getTitles({ lang: 'en', path: `testpath_${rnd}` });
+    it('C2190642 (+) lang = en', async () => {
+      const data = await getTitles({ lang: 'en', path });
       // console.log(data);
       checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'en'));
     });
-    it(' lang = fr', async () => {
-      const data = await getTitles({ lang: 'fr', path: `testpath_${rnd}` });
+    it('C2190643 (+) lang = fr', async () => {
+      const data = await getTitles({ lang: 'fr', path });
       // console.log(data);
       checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'fr'));
     });
-    it(' lang = de', async () => {
-      const data = await getTitles({ lang: 'de', path: `testpath_${rnd}` });
+    it('C2190644 (+) lang = de', async () => {
+      const data = await getTitles({ lang: 'de', path });
       // console.log(data);
       checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'de'));
     });
-    it(' lang not specified', async () => {
-      const data = await getTitles({ path: `testpath_${rnd}` });
+    it('C2190645 (+) lang not specified', async () => {
+      const data = await getTitles({ path });
       // console.log(data);
       checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'ru'));
+    });
+    it('C2190646 (-) lang not present in db for this path', async () => {
+      const data = await getTitles({ lang: 'ua', path });
+      // console.log(data);
+      checkEmptyTitles(data);
     });
   });
 });
