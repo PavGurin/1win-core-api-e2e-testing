@@ -35,7 +35,8 @@ describe('users with withdrawal_manual_control = true', () => {
     expect(data.confirmationRequested).toEqual(true);
   });
 
-  it('C28635 (-) withdrawal_manual_control = true, withdrawal confirm', async () => {
+  // скип, т.к на стейдже не отправляются письма
+  it.skip('C28635 (-) withdrawal_manual_control = true, withdrawal confirm', async () => {
     const ban = await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
     // console.log(ban);
     await sleep(10000);

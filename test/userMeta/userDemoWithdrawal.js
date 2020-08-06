@@ -50,7 +50,8 @@ describe('User demo withdrawal tests', () => {
       expect(data.confirmationRequested).toEqual(true);
     });
 
-    it('C28423 (+) user_demo_withdrawal = true + withdrawal_block = false, withdrawal confirm', async () => {
+    // скип, т.к на стейдже не отправляются письма
+    it.skip('C28423 (+) user_demo_withdrawal = true + withdrawal_block = false, withdrawal confirm', async () => {
       await banking.withdrawalCreate(WALLET, 'card_rub', 'RUB', 100);
       // console.log(data);
       await sleep(10000);
