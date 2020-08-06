@@ -31,7 +31,6 @@ async function insertTitles(titlesArray) {
   return titles;
 }
 
-// TODO по сокету?
 // TODO таблица test_ma_titles? (перименовать?)
 describe('Titles route tests', () => {
   describe('Check params', () => {
@@ -73,16 +72,16 @@ describe('Titles route tests', () => {
     });
   });
   describe('Insert titles into DB and find them', () => {
+    /* eslint object-curly-newline: off */
     let titlesInDB;
+    const rnd = randomStr(10);
+    const titles = [{ lang: 'ru', path: `testpath_${rnd}`, text: `текст ${rnd}`, isDynamic: 0 },
+      { lang: 'en', path: `testpath_${rnd}`, text: `text ${rnd}`, isDynamic: 0 },
+      { lang: 'fr', path: `testpath_${rnd}`, text: `frtext ${rnd}`, isDynamic: 0 },
+      { lang: 'ru', path: `testpath2_${rnd}`, text: `текст 2 ${rnd}`, isDynamic: 1 },
+      { lang: 'en', path: `testpath2_${rnd}`, text: `text 2 ${rnd}`, isDynamic: 1 },
+      { lang: 'fr', path: `testpath2_${rnd}`, text: `frtext 2 ${rnd}`, isDynamic: 1 }];
     beforeAll(async () => {
-      const rnd = randomStr(10);
-      /* eslint object-curly-newline: off */
-      const titles = [{ lang: 'ru', path: `testpath_${rnd}`, text: `текст ${rnd}`, isDynamic: 0 },
-        { lang: 'en', path: `testpath_${rnd}`, text: `text ${rnd}`, isDynamic: 0 },
-        { lang: 'fr', path: `testpath_${rnd}`, text: `frtext ${rnd}`, isDynamic: 0 },
-        { lang: 'ru', path: `testpath2_${rnd}`, text: `текст 2 ${rnd}`, isDynamic: 1 },
-        { lang: 'en', path: `testpath2_${rnd}`, text: `text 2 ${rnd}`, isDynamic: 1 },
-        { lang: 'fr', path: `testpath2_${rnd}`, text: `frtext 2 ${rnd}`, isDynamic: 1 }];
       titlesInDB = await insertTitles(titles);
     });
 
