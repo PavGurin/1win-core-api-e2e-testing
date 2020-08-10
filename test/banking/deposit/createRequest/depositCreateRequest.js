@@ -4,6 +4,7 @@ import { mysqlConnection } from '../../../../src/methods/mysqlConnection';
 import { successDbDeposit } from '../../../../src/expects/exDatabaseTests';
 
 let user = {};
+
 describe('Deposit requests', () => {
   describe('Deposit requests in RUB', () => {
     const paymentType = 'card_rub';
