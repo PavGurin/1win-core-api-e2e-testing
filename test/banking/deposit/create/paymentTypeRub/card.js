@@ -2,7 +2,7 @@ import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
 import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
-import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
+import { getLastDeposit, successDbDeposit } from '../../../../../src/expects/exBanking';
 
 const paymentType = 'card_rub';
 const currency = 'RUB';
@@ -15,45 +15,31 @@ describe('Create deposite for card_rub - RUB', () => {
 
   it('C22538 - min amount', async () => {
     await banking.depositCreate('3333444455556666', paymentType, currency, 100);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100, '3333444455556666',
+    await successDbDeposit(user.data.id, 100, '3333444455556666',
       'card_rub', 'RUB');
   });
 
   it('C22539 - > min amount', async () => {
     await banking.depositCreate('9090787856564545', paymentType, currency, 101);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 101, '9090787856564545',
+    await successDbDeposit(user.data.id, 101, '9090787856564545',
       'card_rub', 'RUB');
   });
 
   it('C22540 - max amount', async () => {
     await banking.depositCreate('0909090999990909', paymentType, currency, 100000);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100000, '0909090999990909',
+    await successDbDeposit(user.data.id, 100000, '0909090999990909',
       'card_rub', 'RUB');
   });
 
   it('C22541 - < max amount', async () => {
     await banking.depositCreate('5566556644553344', paymentType, currency, 99999);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 99999, '5566556644553344',
+    await successDbDeposit(user.data.id, 99999, '5566556644553344',
       'card_rub', 'RUB');
   });
 
   it('C22543 wallet = undefined', async () => {
     await banking.depositCreate(undefined, paymentType, currency, 100);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
+    const dbResult = await getLastDeposit(user.data.id);
     expect(dbResult.length).toEqual(0);
   });
 });

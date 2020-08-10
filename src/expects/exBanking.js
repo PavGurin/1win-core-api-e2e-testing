@@ -8,7 +8,7 @@ export function successDepositCreate(data,
   expect(data.amount).toEqual(expectedAmount);
 }
 
-async function getLastDeposit(userId) {
+export async function getLastDeposit(userId) {
   return mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
  WHERE id_user = ${userId} ORDER BY id DESC;`);
 }

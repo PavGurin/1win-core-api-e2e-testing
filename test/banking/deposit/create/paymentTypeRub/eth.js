@@ -1,8 +1,7 @@
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
-import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
-import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
+import { getLastDeposit, successDbDeposit } from '../../../../../src/expects/exBanking';
 
 const paymentType = 'eth_usd';
 const currency = 'RUB';
@@ -13,40 +12,34 @@ describe('Create deposit for eth_usd - RUB', () => {
     user = await register.oneClickReg();
   });
 
-  it('C28665 - (+) amount = 751 & wallet = (+7)phone', async () => {
+  it('C28665 - (+) amount = 1751 & wallet = (+7)phone', async () => {
     await banking.depositCreate('+79001234567', paymentType, currency, 1751);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 1751, '+79001234567',
+    await successDbDeposit(user.data.id, 1751, '+79001234567',
       'eth_usd', 'RUB');
   });
 
   it('C28666 - min amount & wallet = symbols', async () => {
     await banking.depositCreate('+79215598289', paymentType, currency, 1750);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 1750, '+79215598289',
+    await successDbDeposit(user.data.id, 1750, '+79215598289',
       'eth_usd', 'RUB');
   });
 
   it('C28667 - max amount & wallet = numbers', async () => {
     await banking.depositCreate('+79215598226', paymentType, currency, 21000);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 21000, '+79215598226',
+    await successDbDeposit(user.data.id, 21000, '+79215598226',
       'eth_usd', 'RUB');
   });
 
   it('C28668 - < max amount & wallet = numbers', async () => {
     await banking.depositCreate('+79215598236', paymentType, currency, 20999);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 20999, '+79215598236',
+    await successDbDeposit(user.data.id, 20999, '+79215598236',
       'eth_usd', 'RUB');
+  });
+
+  it('C2196283 wallet = undefined', async () => {
+    await banking.depositCreate(undefined, paymentType, currency, 3000);
+    const dbResult = await getLastDeposit(user.data.id);
+    expect(dbResult.length).toEqual(1);
   });
 });
 

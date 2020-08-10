@@ -1,7 +1,7 @@
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
-import { successDbDeposit } from '../../../../../src/expects/exBanking';
+import { getLastDeposit, successDbDeposit } from '../../../../../src/expects/exBanking';
 
 describe('Creating deposit for beeline_rub', () => {
   const paymentType = 'beeline_rub';
@@ -41,6 +41,12 @@ describe('Creating deposit for beeline_rub', () => {
       await banking.depositCreate('+79215598236', paymentType, currency, 14999);
       await successDbDeposit(user.data.id, 14999, '9215598236',
         'beeline_rub', 'RUB');
+    });
+
+    it('C2196284 wallet = undefined', async () => {
+      await banking.depositCreate(undefined, paymentType, currency, 1000);
+      const dbResult = await getLastDeposit(user.data.id);
+      expect(dbResult.length).toEqual(0);
     });
   });
 
