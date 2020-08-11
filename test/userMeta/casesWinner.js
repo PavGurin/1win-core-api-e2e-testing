@@ -14,7 +14,7 @@ import { checkErrMsg } from '../../src/responseChecker';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
-import { successDbDeposit } from '../../src/expects/exDatabaseTests';
+import { successDbDeposit } from '../../src/expects/exBanking';
 import { cases } from '../../src/methods/cases';
 
 describe('Cases winner tests', () => {
@@ -94,9 +94,7 @@ describe('Cases winner tests', () => {
 
     it('C28440 (+) cases_winner = true + withdrawal_block = false, deposit create', async () => {
       await banking.depositCreate(WALLET, 'card_rub', 'RUB', 100);
-      // console.log(data);
-      const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
-      successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
+      await successDbDeposit(currentUser.id, 100, WALLET, 'card_rub', 'RUB');
     });
 
     it('C28653 (-) cases_winner = true + withdrawal_block = false, make bet > maxBetAmount', async () => {
