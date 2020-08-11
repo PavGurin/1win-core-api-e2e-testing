@@ -6,24 +6,25 @@ import { register } from '../../../../../src/methods/register';
 const paymentType = 'btc_usd';
 const currency = 'RUB';
 
+// скип, эти тесты будут работать только на проде, т.к. на стейдже будет ответ 500
 describe.skip('Create deposit for btc_usd - RUB @master', () => {
   beforeEach(async () => {
     await register.oneClickReg();
   });
 
   it(' - (+) amount = 1750 & wallet = (+7)phone', async () => {
-    const { data } = await banking.depositCreateRequest('+79001234567', paymentType, currency, 1751);
+    const { data } = await banking.depositCreateRequest('+79001234567', paymentType, currency, 2251);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 1751);
+      paymentType, 2251);
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequest('+79215598289', paymentType, currency, 1750);
+    const { data } = await banking.depositCreateRequest('+79215598289', paymentType, currency, 2250);
 
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 1750);
+      paymentType, 2250);
   });
 
   it(' - max amount & wallet = numbers', async () => {
@@ -53,13 +54,13 @@ describe.skip('Create deposite for btc_usd invalid - RUB', () => {
 
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRequest('79215598386', paymentType, currency, 1749.6);
+    const { data } = await banking.depositCreateRequest('79215598386', paymentType, currency, 2249.6);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount < min amount', async () => {
-    const { data } = await banking.depositCreateRequest('79215598486', paymentType, currency, 1749);
+    const { data } = await banking.depositCreateRequest('79215598486', paymentType, currency, 2220);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

@@ -6,6 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'card_rub';
 const currency = 'RUB';
 
+// скип, эти тесты будут работать только на проде, т.к. на стейдже будет ответ 500
 describe.skip('Create deposite for card_rub - RUB @master', () => {
   beforeEach(async () => {
     await register.oneClickReg();
@@ -33,17 +34,17 @@ describe.skip('Create deposite for card_rub - RUB @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequest('123234345456 etryrt', paymentType, currency, 10);
+    const { data } = await banking.depositCreateRequest('123234345456 etryrt', paymentType, currency, 100);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 10);
+      paymentType, 100);
   });
 
   it(' - > min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequest('12№%:№%:45456etryrt', paymentType, currency, 11);
+    const { data } = await banking.depositCreateRequest('12№%:№%:45456etryrt', paymentType, currency, 110);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 11);
+      paymentType, 110);
   });
 
   it(' - max amount & wallet = numbers', async () => {
@@ -116,19 +117,19 @@ describe.skip('Create deposite for card_rub invalid - RUB', () => {
   });
 
   it(' - amount = string - number', async () => {
-    const { data } = await banking.depositCreateRequest('', paymentType, currency, '50');
+    const { data } = await banking.depositCreateRequest('', paymentType, currency, '500');
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRequest('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreateRequest('', paymentType, currency, 99.9);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - 1 < amount < min amount', async () => {
-    const { data } = await banking.depositCreateRequest('', paymentType, currency, 9);
+    const { data } = await banking.depositCreateRequest('', paymentType, currency, 69);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
@@ -152,14 +153,14 @@ describe.skip('Create deposite for card_rub invalid - RUB', () => {
   });
 
   it(' - wallet = long string', async () => {
-    const { data } = await banking.depositCreateRequest('1231231231231231453453345345342312312312312123123123123', paymentType, currency, 10);
+    const { data } = await banking.depositCreateRequest('1231231231231231453453345345342312312312312123123123123', paymentType, currency, 100);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   // Не знаю что тут должно быть
   it(' - incorrect paymentType = card_rub_test', async () => {
-    const { data } = await banking.depositCreateRequest('3123123123', 'card_rub_test', currency, 10);
+    const { data } = await banking.depositCreateRequest('3123123123', 'card_rub_test', currency, 100);
     // console.log(data);
     checkErrMsg(data, 400, '?????');
   });
