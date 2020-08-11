@@ -6,6 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'yamoney_rub';
 const currency = 'RUB';
 
+// скип, эти тесты будут работать только на проде, т.к. на стейдже будет ответ 500
 describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
   beforeEach(async () => {
     await register.oneClickReg();
@@ -48,19 +49,19 @@ describe.skip('Create deposite for yamoney_ru - RUB @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreate('123234345456 etryrt', paymentType, currency, 10);
+    const { data } = await banking.depositCreate('123234345456 etryrt', paymentType, currency, 100);
 
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 10);
+      paymentType, 100);
   });
 
   it(' - > min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 11);
+    const { data } = await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 101);
 
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 11);
+      paymentType, 101);
   });
 
   it(' - max amount & wallet = numbers', async () => {
@@ -132,19 +133,19 @@ describe.skip('Create deposite for yamoney_ru invalid - RUB', () => {
   });
 
   it(' - amount =string - number', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, '50');
+    const { data } = await banking.depositCreate('', paymentType, currency, '500');
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('', paymentType, currency, 99.9);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 9);
+    const { data } = await banking.depositCreate('', paymentType, currency, 12);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

@@ -18,6 +18,7 @@ export async function insertTitles(titlesArray) {
       await mysqlConnection.executeQuery(`insert into 1win.ma_titles(lang, path, text, is_dynamic)
   values('${title.lang}', '${title.path}', '${title.text}', '${title.isDynamic}');`);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log(e);
     }
   });

@@ -10,7 +10,7 @@ import { banking } from '../../src/methods/banking';
 import { sleep } from '../../src/methods/utils';
 import { mail } from '../../src/methods/mail';
 import { mysqlConnection } from '../../src/methods/mysqlConnection';
-import { successDbDeposit } from '../../src/expects/exDatabaseTests';
+import { successDbDeposit } from '../../src/expects/exBanking';
 import { cases } from '../../src/methods/cases';
 import { getSingleMatch } from '../../src/methods/matchStorage';
 import { generateOrdinaryCoupon, getMaxBetAmount, makeOrdinaryBet } from '../../src/methods/better';
@@ -56,8 +56,7 @@ describe('users with withdrawal_manual_control = true', () => {
   it('C28637 (+) withdrawal_manual_control = true, deposit create', async () => {
     const ban = await banking.depositCreate(WALLET, 'card_rub', 'RUB', 100);
     // console.log(ban);
-    const res = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits WHERE id_user = ${currentUser.id} ;`);
-    successDbDeposit(res, 100, WALLET, 'card_rub', 'RUB');
+    await successDbDeposit(currentUser.id, 100, WALLET, 'card_rub', 'RUB');
   });
 
   it('C28638 (+) withdrawal_manual_control = true, cases', async () => {

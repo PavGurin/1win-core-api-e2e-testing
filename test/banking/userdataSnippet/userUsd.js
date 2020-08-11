@@ -140,7 +140,7 @@ describe('Userdata snippet for user with usd', () => {
       it('C2172151 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegUSD();
         await banking
-          .createDepositInBD(user.id, currency, 14, new Date(), paymentMethod, walletId);
+          .createDepositInBD(user.id, currency, 13, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);

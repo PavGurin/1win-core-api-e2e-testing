@@ -28,7 +28,7 @@ describe('Userdata snippet for user with eur', () => {
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, minDepAmount);
       });
-      it('C2172173 900 rub < C2172172amount < 1000 rub', async () => {
+      it('C2172173 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegEUR();
         await banking
           .createDepositInBD(user.id, currency, 12, new Date(), paymentMethod, walletId);
@@ -103,7 +103,7 @@ describe('Userdata snippet for user with eur', () => {
       it('C2172181 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegEUR();
         await banking
-          .createDepositInBD(user.id, currency, 12, new Date(), paymentMethod, walletId);
+          .createDepositInBD(user.id, currency, 11, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);
@@ -132,7 +132,7 @@ describe('Userdata snippet for user with eur', () => {
       it('C2172184 amount < 900 rub', async () => {
         const { data: user } = await register.oneClickRegEUR();
         await banking
-          .createDepositInBD(user.id, currency, 24, new Date(), paymentMethod, walletId);
+          .createDepositInBD(user.id, currency, 9, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);
@@ -140,7 +140,7 @@ describe('Userdata snippet for user with eur', () => {
       it('C2172185 900 rub < amount < 1000 rub', async () => {
         const { data: user } = await register.oneClickRegEUR();
         await banking
-          .createDepositInBD(user.id, currency, 12, new Date(), paymentMethod, walletId);
+          .createDepositInBD(user.id, currency, 11, new Date(), paymentMethod, walletId);
         const { data } = await banking.userdataSnippet(currency);
         // console.log(data);
         checkUserdataSnippet(data, paymentMethod, 25);

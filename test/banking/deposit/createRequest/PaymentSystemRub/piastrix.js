@@ -6,6 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'piastrix_rub';
 const currency = 'RUB';
 
+// скип, эти тесты будут работать только на проде, т.к. на стейдже будет ответ 500
 describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   beforeEach(async () => {
     await register.oneClickReg();
@@ -33,19 +34,19 @@ describe.skip('Create deposite for piastrix_rub - RUB @master', () => {
   });
 
   it(' - min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequest('123234345456 etryrt', paymentType, currency, 1);
+    const { data } = await banking.depositCreateRequest('123234345456 etryrt', paymentType, currency, 100);
 
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 1);
+      paymentType, 100);
   });
 
   it(' - > min amount & wallet = symbols', async () => {
-    const { data } = await banking.depositCreateRequest('12№%:№%:45456etryrt', paymentType, currency, 2);
+    const { data } = await banking.depositCreateRequest('12№%:№%:45456etryrt', paymentType, currency, 200);
 
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 2);
+      paymentType, 200);
   });
 
   it(' - max amount & wallet = numbers', async () => {
@@ -118,13 +119,13 @@ describe.skip('Create deposite for piastrix_rub invalid - RUB', () => {
   });
 
   it(' - amount = string-number', async () => {
-    const { data } = await banking.depositCreateRequest('', paymentType, currency, '50');
+    const { data } = await banking.depositCreateRequest('', paymentType, currency, '500');
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreateRequest('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreateRequest('', paymentType, currency, 99.9);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
@@ -142,20 +143,20 @@ describe.skip('Create deposite for piastrix_rub invalid - RUB', () => {
   });
 
   it(' - wallet = null', async () => {
-    const { data } = await banking.depositCreateRequest(null, paymentType, currency, 1);
+    const { data } = await banking.depositCreateRequest(null, paymentType, currency, 100);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   it(' - wallet = long string', async () => {
-    const { data } = await banking.depositCreateRequest('1231231231231231453453345345342312312312312123123123123', paymentType, currency, 1);
+    const { data } = await banking.depositCreateRequest('1231231231231231453453345345342312312312312123123123123', paymentType, currency, 100);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверный формат кошелька');
   });
 
   // Не знаю что тут должно быть
   it(' - incorrect paymentType = piastrix_rub_test', async () => {
-    const { data } = await banking.depositCreateRequest('12312312312', 'piastrix_rub_test', currency, 1);
+    const { data } = await banking.depositCreateRequest('12312312312', 'piastrix_rub_test', currency, 100);
     // console.log(data);
     checkErrMsg(data, 400, '?????');
   });

@@ -42,7 +42,7 @@ describe('Make custom bet', () => {
         },
       },
     });
-    console.log(data);
+    // console.log(data);
     expect(data.status).toEqual(200);
     expect(data['prematch_1905415208_10_0_1_*'].status).toEqual(200);
     expect(data['prematch_1905415208_10_0_1_*'].error).toEqual(false);
@@ -72,7 +72,7 @@ describe('Make custom bet', () => {
         },
       },
     });
-    console.log(data);
+    // console.log(data);
   });
 
   it.skip('Test2', async () => {
@@ -80,7 +80,7 @@ describe('Make custom bet', () => {
     await banking.setBalance(user.id, 500);
     // const coupon = new Coupon()
     const { data } = await betsCustom.makeBetShort(6, 100);
-    console.log(data);
+    // console.log(data);
   });
 
   describe('Ordinary bet', () => {

@@ -1,8 +1,7 @@
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
-import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
-import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
+import { getLastDeposit, successDbDeposit } from '../../../../../src/expects/exBanking';
 
 describe('Creating deposit for beeline_rub', () => {
   const paymentType = 'beeline_rub';
@@ -16,47 +15,38 @@ describe('Creating deposit for beeline_rub', () => {
 
     it('C22485 - (+) amount = 100 && wallet = (+7)phone', async () => {
       await banking.depositCreate('+79001234567', paymentType, currency, 100);
-      const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-      // console.log(dbResult);
-      successDbDeposit(dbResult, 100, '9001234567',
+      await successDbDeposit(user.data.id, 100, '9001234567',
         'beeline_rub', 'RUB');
     });
 
-    it('C22488 - min amount && wallet = symbols', async () => {
-      await banking.depositCreate('+79215598289', paymentType, currency, 10);
-      const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id}  ORDER BY id DESC ;`);
-      // console.log(dbResult);
-      successDbDeposit(dbResult, 10, '9215598289',
+    it('C22488 - min amount && wallet = (7)phone', async () => {
+      await banking.depositCreate('79215598289', paymentType, currency, 100);
+      await successDbDeposit(user.data.id, 100, '9215598289',
         'beeline_rub', 'RUB');
     });
 
-    it('C22489 - > min amount && wallet = symbols', async () => {
-      await banking.depositCreate('+79215598216', paymentType, currency, 11);
-      const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC ;`);
-      // console.log(dbResult);
-      successDbDeposit(dbResult, 11, '9215598216',
+    it('C22489 - > min amount && wallet = phone without 7', async () => {
+      await banking.depositCreate('9215598216', paymentType, currency, 120.5);
+      await successDbDeposit(user.data.id, 120.5, '9215598216',
         'beeline_rub', 'RUB');
     });
 
-    it('C22490 - max amount && wallet = numbers', async () => {
+    it('C22490 - max amount && wallet = (+7)phone)', async () => {
       await banking.depositCreate('+79215598226', paymentType, currency, 15000);
-      const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC ;`);
-      // console.log(dbResult);
-      successDbDeposit(dbResult, 15000, '9215598226',
+      await successDbDeposit(user.data.id, 15000, '9215598226',
         'beeline_rub', 'RUB');
     });
 
-    it('C22491 - < max amount && wallet = numbers', async () => {
+    it('C22491 - < max amount && wallet = (7)phone)', async () => {
       await banking.depositCreate('+79215598236', paymentType, currency, 14999);
-      const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id}  ORDER BY id DESC ;`);
-      // console.log(dbResult);
-      successDbDeposit(dbResult, 14999, '9215598236',
+      await successDbDeposit(user.data.id, 14999, '9215598236',
         'beeline_rub', 'RUB');
+    });
+
+    it('C2196284 wallet = undefined', async () => {
+      await banking.depositCreate(undefined, paymentType, currency, 1000);
+      const dbResult = await getLastDeposit(user.data.id);
+      expect(dbResult.length).toEqual(0);
     });
   });
 
@@ -65,13 +55,13 @@ describe('Creating deposit for beeline_rub', () => {
       await register.oneClickReg();
     });
     it('C22500 - amount double < min amount', async () => {
-      const { data } = await banking.depositCreate('79215598386', paymentType, currency, 0.6);
+      const { data } = await banking.depositCreate('79215598386', paymentType, currency, 99.9);
       // console.log(data);
       checkErrMsg(data, 400, 'Неверная сумма');
     });
 
     it('C22501 - amount < min amount', async () => {
-      const { data } = await banking.depositCreate('79215598486', paymentType, currency, 9);
+      const { data } = await banking.depositCreate('79215598486', paymentType, currency, 50);
       // console.log(data);
       checkErrMsg(data, 400, 'Неверная сумма');
     });

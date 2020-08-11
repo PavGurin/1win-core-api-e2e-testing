@@ -1,6 +1,7 @@
-import { register } from '../../../src/methods/register';
+import { register } from '../../src/methods/register';
 
 describe('Deposit requests', () => {
+  /* eslint no-console:off */
   beforeEach(async () => {
     await register.oneClickReg();
   });

@@ -6,6 +6,7 @@ import { checkErrMsg } from '../../../../../src/responseChecker';
 const paymentType = 'qiwi_rub';
 const currency = 'RUB';
 
+// скип, эти тесты будут работать только на проде, т.к. на стейдже будет ответ 500
 describe.skip('Create deposite for qiwi_rub - RUB @master', () => {
   beforeEach(async () => {
     await register.oneClickReg();
@@ -31,28 +32,28 @@ describe.skip('Create deposite for qiwi_rub - RUB @master', () => {
   });
 
   it(' min amount & wallet = (+91)', async () => {
-    const { data } = await banking.depositCreateRequest('+919001234567', paymentType, currency, 10);
+    const { data } = await banking.depositCreateRequest('+919001234567', paymentType, currency, 100);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 10);
+    successDepositCreate(data, currency, paymentType, 100);
   });
 
   it(' - > min amount & wallet = (+994)', async () => {
-    const { data } = await banking.depositCreateRequest('+9949001234567', paymentType, currency, 11);
+    const { data } = await banking.depositCreateRequest('+9949001234567', paymentType, currency, 101);
 
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 11);
+    successDepositCreate(data, currency, paymentType, 101);
   });
 
   it(' - max amount & wallet = (+82)', async () => {
-    const { data } = await banking.depositCreateRequest('+829001234567', paymentType, currency, 15000);
+    const { data } = await banking.depositCreateRequest('+829001234567', paymentType, currency, 250000);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15000);
+    successDepositCreate(data, currency, paymentType, 250000);
   });
 
   it(' - < max amount & wallet = (+372)', async () => {
-    const { data } = await banking.depositCreateRequest('+3729001234567', paymentType, currency, 14999);
+    const { data } = await banking.depositCreateRequest('+3729001234567', paymentType, currency, 249999);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 14999);
+    successDepositCreate(data, currency, paymentType, 249999);
   });
 
   it(' - without currency & wallet = (+375)', async () => {
@@ -66,119 +67,119 @@ describe.skip('Create deposite for qiwi_rub - RUB @master', () => {
   });
 
   it(' - amount & wallet = (+374)', async () => {
-    const { data } = await banking.depositCreateRequest('+3749001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreateRequest('+3749001234567', paymentType, currency, 150);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 150);
   });
 
   it(' - amount & wallet = (+44)', async () => {
-    const { data } = await banking.depositCreate('+449001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+449001234567', paymentType, currency, 100);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 100);
   });
 
   it(' - amount & wallet = (+998)', async () => {
-    const { data } = await banking.depositCreate('+9989001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+9989001234567', paymentType, currency, 378.88);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 378.88);
   });
 
   it(' - amount & wallet = (+972)', async () => {
-    const { data } = await banking.depositCreate('+9729001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+9729001234567', paymentType, currency, 222);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 222);
   });
 
   it(' - amount & wallet = (+66)', async () => {
-    const { data } = await banking.depositCreate('+669001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+669001234567', paymentType, currency, 333);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 333);
   });
 
   it(' - amount & wallet = (+90)', async () => {
-    const { data } = await banking.depositCreate('+909001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+909001234567', paymentType, currency, 123);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 123);
   });
 
   it(' - amount & wallet = (+81)', async () => {
-    const { data } = await banking.depositCreate('+8149001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+8149001234567', paymentType, currency, 111);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 111);
   });
 
   it(' - amount & wallet = (+1)', async () => {
-    const { data } = await banking.depositCreate('+19001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+19001234567', paymentType, currency, 101);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 101);
   });
 
   it(' - amount & wallet = (+507)', async () => {
-    const { data } = await banking.depositCreate('+5079001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+5079001234567', paymentType, currency, 102);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 102);
   });
 
   it(' - amount & wallet = (+77)', async () => {
-    const { data } = await banking.depositCreate('+779001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+779001234567', paymentType, currency, 999);
     // console.log(data);
-    successDepositCreate(data, currency, paymentType, 15);
+    successDepositCreate(data, currency, paymentType, 999);
   });
 
   it(' - amount & wallet = (+380)', async () => {
-    const { data } = await banking.depositCreate('+3809001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+3809001234567', paymentType, currency, 666.66);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 666.66);
   });
 
   it(' - amount & wallet = (+371)', async () => {
-    const { data } = await banking.depositCreate('+3719001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+3719001234567', paymentType, currency, 138);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 138);
   });
 
   it(' - amount & wallet = (+370)', async () => {
-    const { data } = await banking.depositCreate('+3709001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+3709001234567', paymentType, currency, 217);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 217);
   });
 
   it(' - amount & wallet = (+996)', async () => {
-    const { data } = await banking.depositCreate('+9969001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+9969001234567', paymentType, currency, 100);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 100);
   });
 
   it(' - amount & wallet = (+9955)', async () => {
-    const { data } = await banking.depositCreate('+99559001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+99559001234567', paymentType, currency, 12345);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 12345);
   });
 
   it(' - amount & wallet = (+992)', async () => {
-    const { data } = await banking.depositCreate('+9929001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+9929001234567', paymentType, currency, 9999);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 9999);
   });
 
   it(' - amount & wallet = (+373)', async () => {
-    const { data } = await banking.depositCreate('+3739001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+3739001234567', paymentType, currency, 867.99);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 867.99);
   });
 
   it(' - amount & wallet = (+84)', async () => {
-    const { data } = await banking.depositCreate('+849001234567', paymentType, currency, 15);
+    const { data } = await banking.depositCreate('+849001234567', paymentType, currency, 915);
     // console.log(data);
     successDepositCreate(data, currency,
-      paymentType, 15);
+      paymentType, 915);
   });
 
   it(' - < max amount & wallet = valid short number', async () => {
@@ -226,31 +227,31 @@ describe.skip('Create deposite for qiwi_rub invalid - RUB', () => {
 
 
   it(' - amount = number - string', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, '50');
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, '500');
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 99.9);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount < min amount', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 9);
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 87);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount > max amount', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 15001);
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 250001);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' - amount double > max amount', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 15000.000001);
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 250000.000001);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

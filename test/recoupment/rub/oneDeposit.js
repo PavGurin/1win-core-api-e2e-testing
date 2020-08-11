@@ -80,6 +80,7 @@ describe('One deposit', () => {
 
 // для проверки в админке
 describe.skip('tests', () => {
+  /* eslint no-console:off */
   it('test 1', async () => {
     const { data: user } = await register.oneClickReg();
     console.log({ id: user.id, email: user.email, pass: user.password });

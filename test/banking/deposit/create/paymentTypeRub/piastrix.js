@@ -1,8 +1,7 @@
 import { register } from '../../../../../src/methods/register';
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
-import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
-import { successDbDeposit } from '../../../../../src/expects/exDatabaseTests';
+import { getLastDeposit, successDbDeposit } from '../../../../../src/expects/exBanking';
 
 const paymentType = 'piastrix_rub';
 const currency = 'RUB';
@@ -13,40 +12,34 @@ describe('Create deposite for piastrix_rub - RUB ', () => {
     user = await register.oneClickReg();
   });
 
-  it('C22594 - (+) amount = 100 & wallet = empty', async () => {
-    await banking.depositCreate('', paymentType, currency, 100);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 100, '',
+  it('C22594 - (+) amount = double & wallet = empty', async () => {
+    await banking.depositCreate('', paymentType, currency, 100.51);
+    await successDbDeposit(user.data.id, 100.51, '',
       'piastrix_rub', 'RUB');
   });
 
-  it('C22597 - min amount & wallet = symbols', async () => {
-    await banking.depositCreate('123234345456 etryrt', paymentType, currency, 1);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 1, '123234345456 etryrt',
+  it('C22597 - min amount (100) & wallet = symbols', async () => {
+    await banking.depositCreate('123234345456 etryrt', paymentType, currency, 100);
+    await successDbDeposit(user.data.id, 100, '123234345456 etryrt',
       'piastrix_rub', 'RUB');
   });
 
   it('C22598 - > min amount & wallet = symbols', async () => {
-    await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 2);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 2, '12№%:№%:45456etryrt',
+    await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 250);
+    await successDbDeposit(user.data.id, 250, '12№%:№%:45456etryrt',
       'piastrix_rub', 'RUB');
   });
 
   it('C22600 - < max amount & wallet = numbers', async () => {
     await banking.depositCreate('0[[[?<><?999', paymentType, currency, 99999);
-    const dbResult = await mysqlConnection.executeQuery(`SELECT * FROM 1win.ma_deposits
- WHERE id_user = ${user.data.id} ORDER BY id DESC;`);
-    // console.log(dbResult);
-    successDbDeposit(dbResult, 99999, '0[[[?<><?999',
+    await successDbDeposit(user.data.id, 99999, '0[[[?<><?999',
       'piastrix_rub', 'RUB');
+  });
+
+  it('C2196280 wallet = undefined', async () => {
+    await banking.depositCreate(undefined, paymentType, currency, 1000);
+    const dbResult = await getLastDeposit(user.data.id);
+    expect(dbResult.length).toEqual(1);
   });
 });
 
@@ -56,7 +49,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
   });
 
   it('C22609 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('', paymentType, currency, 99.6);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

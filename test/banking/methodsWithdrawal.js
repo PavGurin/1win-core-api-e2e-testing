@@ -9,6 +9,7 @@ describe('Deposit requests', () => {
     const { data } = await socket.send('BANKING:methods-withdrawal', { currency: 'RUB' });
     // console.log(data);
     for (let i = 0; i < Object.values(data).length; i++) {
+      // eslint-disable-next-line no-console
       console.log(`${Object.values(data)[i].name}\n${Object.values(data)[i].currency}\n${
         Object.values(data)[i].position}`);
       // console.log(Object.values(data)[i].currency);
