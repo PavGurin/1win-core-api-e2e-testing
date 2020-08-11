@@ -12,21 +12,21 @@ describe('Create deposite for yamoney_ru - RUB', () => {
     user = await register.oneClickReg();
   });
 
-  it('C22646 (+) amount = 100 & wallet = empty', async () => {
-    await banking.depositCreate('', paymentType, currency, 100);
-    await successDbDeposit(user.data.id, 100, '',
+  it('C22646 (+) amount = double & wallet = empty', async () => {
+    await banking.depositCreate('', paymentType, currency, 555.55);
+    await successDbDeposit(user.data.id, 555.55, '',
       'yamoney_rub', 'RUB');
   });
 
   it('C22649 - min amount & wallet = symbols', async () => {
-    await banking.depositCreate('123234345456 etryrt', paymentType, currency, 10);
-    await successDbDeposit(user.data.id, 10, '123234345456 etryrt',
+    await banking.depositCreate('123234345456 etryrt', paymentType, currency, 100);
+    await successDbDeposit(user.data.id, 100, '123234345456 etryrt',
       'yamoney_rub', 'RUB');
   });
 
   it('C22650 - > min amount & wallet = symbols', async () => {
-    await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 11);
-    await successDbDeposit(user.data.id, 11, '12№%:№%:45456etryrt',
+    await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 101);
+    await successDbDeposit(user.data.id, 101, '12№%:№%:45456etryrt',
       'yamoney_rub', 'RUB');
   });
 
@@ -55,13 +55,13 @@ describe('Create deposite for yamoney_ru invalid - RUB', () => {
   });
 
   it('C22661 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('', paymentType, currency, 99.9);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C22662 - amount < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 9);
+    const { data } = await banking.depositCreate('', paymentType, currency, 59);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

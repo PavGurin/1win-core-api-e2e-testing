@@ -18,19 +18,19 @@ describe('Create deposite for megafon_rub - RUB', () => {
       'megafon_rub', 'RUB');
   });
 
-  it('C22529 - min amount & wallet = symbols', async () => {
-    await banking.depositCreate('79215598286', paymentType, currency, 10);
-    await successDbDeposit(user.data.id, 10, '9215598286',
+  it('C22529 - amount = double & wallet = (7)phone', async () => {
+    await banking.depositCreate('79215598286', paymentType, currency, 125.12);
+    await successDbDeposit(user.data.id, 125.12, '9215598286',
       'megafon_rub', 'RUB');
   });
 
-  it('C22530 - > min amount & wallet = symbols', async () => {
-    await banking.depositCreate('79215598286', paymentType, currency, 11);
-    await successDbDeposit(user.data.id, 11, '9215598286',
+  it('C22530 - > min amount & wallet = & wallet = (7)phone', async () => {
+    await banking.depositCreate('79215598286', paymentType, currency, 110);
+    await successDbDeposit(user.data.id, 110, '9215598286',
       'megafon_rub', 'RUB');
   });
 
-  it('C22531 - max amount & wallet = numbers', async () => {
+  it('C22531 - max amount & wallet = & wallet = (+7)phone', async () => {
     await banking.depositCreate('+79001234567', paymentType, currency, 15000);
     await successDbDeposit(user.data.id, 15000, '9001234567',
       'megafon_rub', 'RUB');
@@ -49,13 +49,13 @@ describe('Create deposite for megafon_rub invalid - RUB', () => {
   });
 
   it('C28675 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 99.6);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it('C28676 - amount < min amount', async () => {
-    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 9);
+    const { data } = await banking.depositCreate('+79001234567', paymentType, currency, 50);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

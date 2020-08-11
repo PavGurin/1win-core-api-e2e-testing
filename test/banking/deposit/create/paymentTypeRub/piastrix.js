@@ -12,21 +12,21 @@ describe('Create deposite for piastrix_rub - RUB ', () => {
     user = await register.oneClickReg();
   });
 
-  it('C22594 - (+) amount = 100 & wallet = empty', async () => {
-    await banking.depositCreate('', paymentType, currency, 100);
-    await successDbDeposit(user.data.id, 100, '',
+  it('C22594 - (+) amount = double & wallet = empty', async () => {
+    await banking.depositCreate('', paymentType, currency, 100.51);
+    await successDbDeposit(user.data.id, 100.51, '',
       'piastrix_rub', 'RUB');
   });
 
-  it('C22597 - min amount & wallet = symbols', async () => {
-    await banking.depositCreate('123234345456 etryrt', paymentType, currency, 1);
-    await successDbDeposit(user.data.id, 1, '123234345456 etryrt',
+  it('C22597 - min amount (100) & wallet = symbols', async () => {
+    await banking.depositCreate('123234345456 etryrt', paymentType, currency, 100);
+    await successDbDeposit(user.data.id, 100, '123234345456 etryrt',
       'piastrix_rub', 'RUB');
   });
 
   it('C22598 - > min amount & wallet = symbols', async () => {
-    await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 2);
-    await successDbDeposit(user.data.id, 2, '12№%:№%:45456etryrt',
+    await banking.depositCreate('12№%:№%:45456etryrt', paymentType, currency, 250);
+    await successDbDeposit(user.data.id, 250, '12№%:№%:45456etryrt',
       'piastrix_rub', 'RUB');
   });
 
@@ -49,7 +49,7 @@ describe('Create deposite for piastrix_rub invalid - RUB', () => {
   });
 
   it('C22609 - amount double < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('', paymentType, currency, 99.6);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });

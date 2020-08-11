@@ -12,9 +12,9 @@ describe('Creating deposit for btc_usd - RUB', () => {
     user = await register.oneClickReg();
   });
 
-  it('C28655 - (+) amount = 2251 & wallet = empty', async () => {
-    await banking.depositCreate('', paymentType, currency, 2251);
-    await successDbDeposit(user.data.id, 2251, '',
+  it('C28655 - (+) amount = double & wallet = empty', async () => {
+    await banking.depositCreate('', paymentType, currency, 2251.7);
+    await successDbDeposit(user.data.id, 2251.7, '',
       'btc_usd', 'RUB');
   });
 

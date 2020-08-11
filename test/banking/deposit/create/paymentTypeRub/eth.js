@@ -12,9 +12,9 @@ describe('Create deposit for eth_usd - RUB', () => {
     user = await register.oneClickReg();
   });
 
-  it('C28665 - (+) amount = 1751 & wallet = (+7)phone', async () => {
-    await banking.depositCreate('+79001234567', paymentType, currency, 1751);
-    await successDbDeposit(user.data.id, 1751, '+79001234567',
+  it('C28665 - (+) amount = double & wallet = (+7)phone', async () => {
+    await banking.depositCreate('+79001234567', paymentType, currency, 1751.78);
+    await successDbDeposit(user.data.id, 1751.78, '+79001234567',
       'eth_usd', 'RUB');
   });
 

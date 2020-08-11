@@ -1,7 +1,6 @@
 import { banking } from '../../../../../src/methods/banking';
 import { checkErrMsg } from '../../../../../src/responseChecker';
 import { register } from '../../../../../src/methods/register';
-import { mysqlConnection } from '../../../../../src/methods/mysqlConnection';
 import { getLastDeposit, successDbDeposit } from '../../../../../src/expects/exBanking';
 
 const paymentType = 'card_rub';
@@ -20,8 +19,8 @@ describe('Create deposite for card_rub - RUB', () => {
   });
 
   it('C22539 - > min amount', async () => {
-    await banking.depositCreate('9090787856564545', paymentType, currency, 101);
-    await successDbDeposit(user.data.id, 101, '9090787856564545',
+    await banking.depositCreate('9090787856564545', paymentType, currency, 101.31);
+    await successDbDeposit(user.data.id, 101.31, '9090787856564545',
       'card_rub', 'RUB');
   });
 
