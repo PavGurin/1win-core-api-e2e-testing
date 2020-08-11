@@ -6,6 +6,7 @@ import { register } from '../../../../src/methods/register';
 const paymentType = 'card';
 const currency = 'USD';
 
+// скип, эти тесты будут работать только на проде, т.к. на стейдже будет ответ 500
 describe.skip('Creating deposit for card_rub(USD @master)', () => {
   beforeEach(async () => {
     await register.oneClickRegUSD();
@@ -82,13 +83,13 @@ describe.skip('Creating deposit for card_rub(USD @master)', () => {
 
 describe.skip('Creating deposit for card_rub invalid(USD)', () => {
   it(' amount < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 0.6);
+    const { data } = await banking.depositCreate('', paymentType, currency, 99.9);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
 
   it(' 1 < amount < min amount', async () => {
-    const { data } = await banking.depositCreate('', paymentType, currency, 9);
+    const { data } = await banking.depositCreate('', paymentType, currency, 78);
     // console.log(data);
     checkErrMsg(data, 400, 'Неверная сумма');
   });
