@@ -52,6 +52,9 @@ export async function getPWA(platform) {
     platform,
   });
 }
+export async function pwaVisit(userId) {
+  return socket.send('USER:profile-pwa-visit', { userId });
+}
 
 export async function profileMeta(userId) {
   return socket.send('USER:profile-meta', {});
