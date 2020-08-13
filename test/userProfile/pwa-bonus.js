@@ -27,35 +27,35 @@ describe('Tests for pwa install bonus', () => {
     config = await getCurrencyConfig();
   });
 
-  it('C2202878 (+) deposit in rub', async () => {
+  it('C2202887 (+) deposit in rub', async () => {
     const { data: user } = await register.oneClickReg();
     await banking.createDepositInBD(user.id, 'RUB', amount, new Date(), 'qiwi_rub', '79111232233');
     await setUserBonusAmount(user.id, amount);
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, amount + config.RUB);
   });
-  it('C2202879 (+) deposit in usd', async () => {
+  it('C2202888 (+) deposit in usd', async () => {
     const { data: user } = await register.oneClickRegUSD();
     await banking.createDepositInBD(user.id, 'USD', amount, new Date(), 'qiwi_usd', '79111232233');
     await setUserBonusAmount(user.id, amount);
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, amount + config.USD);
   });
-  it('C2202880 (+) deposit in eur', async () => {
+  it('C2202889 (+) deposit in eur', async () => {
     const { data: user } = await register.oneClickRegEUR();
     await banking.createDepositInBD(user.id, 'EUR', amount, new Date(), 'qiwi_eur', '79111232233');
     await setUserBonusAmount(user.id, amount);
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, amount + config.EUR);
   });
-  it('C2202881 (+) deposit in uah', async () => {
+  it('C2202890 (+) deposit in uah', async () => {
     const { data: user } = await register.oneClickRegUAH();
     await banking.createDepositInBD(user.id, 'UAH', amount, new Date(), 'card', '4276550046589721');
     await setUserBonusAmount(user.id, amount);
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, amount + config.UAH);
   });
-  it('C2202882 (-) bonus is not gained for second pwa visit', async () => {
+  it('C2202891 (-) bonus is not gained for second pwa visit', async () => {
     const { data: user } = await register.oneClickReg();
     await banking.createDepositInBD(user.id, 'RUB', amount, new Date(), 'qiwi_rub', '79111232233');
     await setUserBonusAmount(user.id, amount);
@@ -64,18 +64,18 @@ describe('Tests for pwa install bonus', () => {
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, amount + config.RUB);
   });
-  it('C2202883 (-) bonus is not gained if there were no deposit', async () => {
+  it('C2202892 (-) bonus is not gained if there were no deposit', async () => {
     const { data: user } = await register.oneClickRegUSD();
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, undefined);
   });
-  it('C2202884 (+) bonus is gained if there is a deposit, but no bonus_amount in user meta', async () => {
+  it('C2202893 (+) bonus is gained if there is a deposit, but no bonus_amount in user meta', async () => {
     const { data: user } = await register.oneClickRegEUR();
     await banking.createDepositInBD(user.id, 'EUR', amount, new Date(), 'qiwi_eur', '79111232233');
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, config.EUR);
   });
-  it('C2202885 (+) bonus amount is chosen depending on first deposit currency', async () => {
+  it('C2202894 (+) bonus amount is chosen depending on first deposit currency', async () => {
     const { data: user } = await register.oneClickRegUAH();
     await banking.createDepositInBD(user.id, 'UAH', amount, new Date(), 'card', '4276550046589721');
     await banking.createDepositInBD(user.id, 'EUR', amount, new Date(), 'qiwi_eur', '79111232233');
@@ -85,7 +85,7 @@ describe('Tests for pwa install bonus', () => {
     await pwaVisit(user.id);
     await checkPwaBonus(user.id, amount + config.UAH);
   });
-  it('C2202886 (-) bonus is not gained if pwa was downloaded, but not visited', async () => {
+  it('C2202895 (-) bonus is not gained if pwa was downloaded, but not visited', async () => {
     const { data: user } = await register.oneClickReg();
     await banking.createDepositInBD(user.id, 'RUB', amount, new Date(), 'qiwi_rub', '79111232233');
     await getPWA('android');
