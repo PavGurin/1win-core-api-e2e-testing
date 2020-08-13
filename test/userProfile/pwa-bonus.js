@@ -26,6 +26,7 @@ describe('Tests for pwa install bonus', () => {
   beforeAll(async () => {
     config = await getCurrencyConfig();
   });
+
   it('C2202878 (+) deposit in rub', async () => {
     const { data: user } = await register.oneClickReg();
     await banking.createDepositInBD(user.id, 'RUB', amount, new Date(), 'qiwi_rub', '79111232233');
