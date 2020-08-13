@@ -1,94 +1,71 @@
-import { getTitles, insertTitles } from '../../src/methods/common';
-import { checkEmptyTitles, checkTitles, checkTitlesToMatchExpected } from '../../src/expects/exCommon';
-import { randomStr } from '../../src/randomizer';
-import { mysqlConnection } from '../../src/methods/mysqlConnection';
-import { sleep } from '../../src/methods/utils';
+import { getTitles } from '../../src/methods/common';
+import { checkEmptyTitle, checkTitle } from '../../src/expects/exCommon';
 
 
 describe('Titles route tests', () => {
-  describe('Check params', () => {
-    it('C2190635 (-) no params', async () => {
-      const data = await getTitles();
-      // console.log(data);
-      expect(data.data).toEqual('Bad Request');
-      expect(data.status).toEqual(400);
-      expect(data.statusText).toEqual('Bad Request');
-      // checkTitles(data);
-    });
-    it('C2190636 (+) path only, russian lang by default', async () => {
-      const data = await getTitles({ path: 'cases' });
-      // console.log(data);
-      checkTitles(data, 'ru', 'cases');
-    });
-    it('C2190637 (+) path + lang', async () => {
-      const data = await getTitles({ lang: 'en', path: 'cases' });
-      // console.log(data);
-      checkTitles(data, 'en', 'cases');
-    });
-    it('C2190638 (-) lang only', async () => {
-      const data = await getTitles({ lang: 'en' });
-      // console.log(data);
-      expect(data.data).toEqual('Bad Request');
-      expect(data.status).toEqual(400);
-      expect(data.statusText).toEqual('Bad Request');
-      // checkTitles(data);
-    });
-    it('C2190639 (-) path + unexistent lang', async () => {
-      const data = await getTitles({ lang: 'test', path: 'cases' });
-      // console.log(data);
-      checkEmptyTitles(data);
-    });
-    it('C2190640 (-) unexistent path + lang', async () => {
-      const data = await getTitles({ lang: 'ru', path: 'test' });
-      // console.log(data);
-      checkEmptyTitles(data);
-    });
+  it('C2190635 (-) no params', async () => {
+    const data = await getTitles();
+    // console.log(data);
+    expect(data.data).toEqual('Bad Request');
+    expect(data.status).toEqual(400);
+    expect(data.statusText).toEqual('Bad Request');
   });
-  describe('Insert titles into DB and get them in request', () => {
-    /* eslint object-curly-newline: off */
-    const rnd = randomStr(10);
-    const path = `testpath_${rnd}`;
-    const titles = [{ lang: 'ru', path, text: `текст ${rnd}`, isDynamic: 0 },
-      { lang: 'en', path, text: `text ${rnd}`, isDynamic: 0 },
-      { lang: 'de', path, text: `de text ${rnd}`, isDynamic: 0 },
-      { lang: 'de', path, text: `de text 2 ${rnd}`, isDynamic: 0 },
-      { lang: 'ru', path, text: `текст 2 ${rnd}`, isDynamic: 1 },
-      { lang: 'ru', path, text: `текст 3 ${rnd}`, isDynamic: 1 },
-      { lang: 'en', path, text: `text 2 ${rnd}`, isDynamic: 1 },
-      { lang: 'fr', path, text: `fr text  ${rnd}`, isDynamic: 1 }];
-    beforeAll(async () => {
-      await insertTitles(titles);
-    });
-
-    it('C2190641 (+) lang = ru', async () => {
-      const data = await getTitles({ lang: 'ru', path });
-      // console.log(data);
-      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'ru'));
-    });
-    it('C2190642 (+) lang = en', async () => {
-      const data = await getTitles({ lang: 'en', path });
-      // console.log(data);
-      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'en'));
-    });
-    it('C2190643 (+) lang = fr', async () => {
-      const data = await getTitles({ lang: 'fr', path });
-      // console.log(data);
-      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'fr'));
-    });
-    it('C2190644 (+) lang = de', async () => {
-      const data = await getTitles({ lang: 'de', path });
-      // console.log(data);
-      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'de'));
-    });
-    it('C2190645 (+) lang not specified', async () => {
-      const data = await getTitles({ path });
-      // console.log(data);
-      checkTitlesToMatchExpected(data, titles.filter(title => title.lang === 'ru'));
-    });
-    it('C2190646 (-) lang not present in db for this path', async () => {
-      const data = await getTitles({ lang: 'ua', path });
-      // console.log(data);
-      checkEmptyTitles(data);
-    });
+  it('C2190636 (+) path only, russian lang by default', async () => {
+    const data = await getTitles({ path: 'cases' });
+    // console.log(data);
+    checkTitle(data, 'ru', 'cases');
+  });
+  it('C2190637 (+) path + lang', async () => {
+    const data = await getTitles({ lang: 'en', path: 'cases' });
+    // console.log(data);
+    checkTitle(data, 'en', 'cases');
+  });
+  it('C2190638 (-) lang only', async () => {
+    const data = await getTitles({ lang: 'en' });
+    // console.log(data);
+    expect(data.data).toEqual('Bad Request');
+    expect(data.status).toEqual(400);
+    expect(data.statusText).toEqual('Bad Request');
+  });
+  it('C2190639 (-) path + unexistent lang', async () => {
+    const data = await getTitles({ lang: 'test', path: 'cases' });
+    // console.log(data);
+    checkEmptyTitle(data);
+  });
+  it('C2190640 (-) unexistent path + lang', async () => {
+    const data = await getTitles({ lang: 'ru', path: 'unexistent' });
+    // console.log(data);
+    checkEmptyTitle(data);
+  });
+  it('C2202828 (+) path with space', async () => {
+    const data = await getTitles({ lang: 'ru', path: 'path with space' });
+    // console.log(data);
+    checkTitle(data, 'ru', 'path with space');
+  });
+  it('C2202829 (+) path with underscore', async () => {
+    const data = await getTitles({ lang: 'ru', path: 'path_with_underscore' });
+    // console.log(data);
+    checkTitle(data, 'ru', 'path_with_underscore');
+  });
+  it('C2202830 (+) path with dot', async () => {
+    const data = await getTitles({ lang: 'ru', path: 'path.with.dot' });
+    // console.log(data);
+    checkTitle(data, 'ru', 'path.with.dot');
+  });
+  it('C2202831 (+) path with symbols', async () => {
+    const data = await getTitles({ lang: 'ru', path: 'p-=%@!()' });
+    // console.log(data);
+    checkTitle(data, 'ru', 'p-=%@!()');
+  });
+  it('C2202832 (+) path = one letter', async () => {
+    const data = await getTitles({ lang: 'en', path: 'x' });
+    // console.log(data);
+    checkTitle(data, 'en', 'x');
+  });
+  it('C2202833 (+) path with "', async () => {
+    const data = await getTitles({ lang: 'ru', path: '"casino"' });
+    // console.log(data);
+    // eslint-disable-next-line no-useless-escape
+    checkTitle(data, 'ru', '\"casino\"');
   });
 });
