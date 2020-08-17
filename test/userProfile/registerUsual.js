@@ -1,6 +1,6 @@
 /* eslint camelcase: 'off' */
 import { randomNum, randomStr } from '../../src/randomizer';
-import { checkErrorMsg } from '../../src/responseChecker';
+import { checkErrMsg } from '../../src/responseChecker';
 import { checkRegInfo } from '../../src/expects/exUser';
 import { register } from '../../src/methods/register';
 
@@ -73,7 +73,7 @@ describe('Register - Usual schema', () => {
       partner_key: undefined,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Visit domain is required if partner key does not specified');
+    checkErrMsg(data, 400, 'Visit domain is required if partner key does not specified');
   });
 
   it('C19309 (-) short name', async () => {
@@ -90,7 +90,7 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
+    checkErrMsg(data, 400, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
   });
 
   it('C19310 (-) long name', async () => {
@@ -107,7 +107,7 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
+    checkErrMsg(data, 400, 'Name is invalid, it\'s length must be from 3 to 16 symbols');
   });
 
   it('C19311 (-) short phone number', async () => {
@@ -123,7 +123,7 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    checkErrMsg(data, 400, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
   });
 
   it('C19312 (-) long phone number', async () => {
@@ -139,7 +139,7 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    checkErrMsg(data, 400, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
   });
 
   it('C19313 (-) different passwords', async () => {
@@ -156,7 +156,7 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Password confirmation not matches to password');
+    checkErrMsg(data, 400, 'Password confirmation not matches to password');
   });
 
   it('C19314 (-) short password', async () => {
@@ -173,7 +173,7 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
+    checkErrMsg(data, 400, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
   });
 
   it('C19315 (-) long password', async () => {
@@ -190,6 +190,6 @@ describe('Register - Usual schema', () => {
       partner_key: defaultPartnerKey,
     });
     // console.log(data);
-    checkErrorMsg(data, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
+    checkErrMsg(data, 400, 'Password is invalid, it\'s length must be from 6 to 18 symbols');
   });
 });

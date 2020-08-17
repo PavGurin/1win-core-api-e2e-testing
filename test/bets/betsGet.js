@@ -1,5 +1,5 @@
 import { userList } from '../../src/methods/userList';
-import { checkError404, checkErrorMsg } from '../../src/responseChecker';
+import { checkErrMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
 import {
   generateExpressCoupon, generateOrdinaryCoupon, makeExpressBet, makeOrdinaryBet,
@@ -21,21 +21,21 @@ describe('Bets get', () => {
     await register.oneClickReg();
     const { data } = await getMatchById(25);
     // console.log(data);
-    checkError404(data, 'Ставка не найдена');
+    checkErrMsg(data, 404, 'Ставка не найдена');
   });
 
   it('C22021 (-) without ID field', async () => {
     await register.oneClickReg();
     const { data } = await getMatchById();
     // console.log(data);
-    checkErrorMsg(data, 'Bad request, id is required');
+    checkErrMsg(data, 400, 'Bad request, id is required');
   });
 
   it('C22022 (-) empty ID field', async () => {
     await register.oneClickReg();
     const { data } = await getMatchById('');
     // console.log(data);
-    checkError404(data, 'Ставка не найдена');
+    checkErrMsg(data, 404, 'Ставка не найдена');
   });
 
   it('C22024 (+) get ordinary bet by id', async () => {

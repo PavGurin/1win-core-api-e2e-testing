@@ -1,4 +1,4 @@
-import { checkErrorMsg } from '../../src/responseChecker';
+import { checkErrMsg } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
 import { forgotRecovery } from '../../src/methods/user';
 import { checkSuccessRecovery } from '../../src/expects/exUser';
@@ -25,13 +25,13 @@ describe('Recovery user data by different methods', () => {
     const { data } = await forgotRecovery('nonexistent_user');
 
     // console.log(data);
-    checkErrorMsg(data, 'Пользователь не существует');
+    checkErrMsg(data, 400, 'Пользователь не существует');
   });
 
   it('C19321 (-) empty account field', async () => {
     const { data } = await forgotRecovery('');
 
     // console.log(data);
-    checkErrorMsg(data, 'Bad request, account is invalid');
+    checkErrMsg(data, 400, 'Bad request, account is invalid');
   });
 });

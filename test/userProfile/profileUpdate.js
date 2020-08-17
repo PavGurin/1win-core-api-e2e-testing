@@ -1,7 +1,7 @@
 import { register } from '../../src/methods/register';
 import { updateProfile } from '../../src/methods/user';
 import { randomNum, randomStr } from '../../src/randomizer';
-import { checkErrorMsg } from '../../src/responseChecker';
+import { checkErrMsg } from '../../src/responseChecker';
 
 describe('Profile update after oneClick registration', () => {
   /* Hint from documentation
@@ -42,7 +42,7 @@ describe('Profile update after oneClick registration', () => {
       name: newName,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, name is invalid');
+    checkErrMsg(updatedUser, 400, 'Bad request, name is invalid');
   });
 
   it('C21395 (-) change to long name', async () => {
@@ -56,7 +56,7 @@ describe('Profile update after oneClick registration', () => {
       name: newName,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, name is invalid');
+    checkErrMsg(updatedUser, 400, 'Bad request, name is invalid');
   });
 
   it('C21396 (+) change eMail', async () => {
@@ -136,7 +136,7 @@ describe('Profile update after oneClick registration', () => {
       phone: newPhone,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    checkErrMsg(updatedUser, 400, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
   });
 
   it('C21401 (-) change to long phone', async () => {
@@ -150,7 +150,7 @@ describe('Profile update after oneClick registration', () => {
       phone: newPhone,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    checkErrMsg(updatedUser, 400, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
   });
 
   it('C21402 (-) change phone to existing one', async () => {
@@ -178,7 +178,7 @@ describe('Profile update after oneClick registration', () => {
     });
     // console.log(updatedUser2);
     expect(updatedUser.id).toEqual(data.id);
-    checkErrorMsg(updatedUser2, 'Пользователь с таким номером телефона уже существует');
+    checkErrMsg(updatedUser2, 400, 'Пользователь с таким номером телефона уже существует');
   });
 
   it('C21403 (+) change password', async () => {
@@ -214,7 +214,7 @@ describe('Profile update after oneClick registration', () => {
       repeat_password: randomStr(),
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Password confirmation not matches to a new password');
+    checkErrMsg(updatedUser, 400, 'Password confirmation not matches to a new password');
   });
 
   it('C21417 (-) change w/o \'repeat password\' value', async () => {
@@ -237,7 +237,7 @@ describe('Profile update after oneClick registration', () => {
       password,
     });
     // console.log(loginResult);
-    checkErrorMsg(loginResult, 'Неверный email или пароль');
+    checkErrMsg(loginResult, 400, 'Неверный email или пароль');
   });
 
   it('C21418 (-) change w/o \'new password\' value', async () => {
@@ -260,7 +260,7 @@ describe('Profile update after oneClick registration', () => {
       password: newPassword,
     });
     // console.log(updatedUser);
-    checkErrorMsg(loginResult, 'Неверный email или пароль');
+    checkErrMsg(loginResult, 400, 'Неверный email или пароль');
   });
 
   it('C21405 (-) null name', async () => {
@@ -273,7 +273,7 @@ describe('Profile update after oneClick registration', () => {
       name: null,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, name is required, no default value provided');
+    checkErrMsg(updatedUser, 400, 'Bad request, name is required, no default value provided');
   });
 
   it('C21406 (-) empty name', async () => {
@@ -286,7 +286,7 @@ describe('Profile update after oneClick registration', () => {
       name: '',
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, name is invalid');
+    checkErrMsg(updatedUser, 400, 'Bad request, name is invalid');
   });
 
   it('C21407 (-) null email', async () => {
@@ -299,7 +299,7 @@ describe('Profile update after oneClick registration', () => {
       email: null,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, email is required, no default value provided');
+    checkErrMsg(updatedUser, 400, 'Bad request, email is required, no default value provided');
   });
 
   it('C21408 (-) empty email', async () => {
@@ -312,7 +312,7 @@ describe('Profile update after oneClick registration', () => {
       email: '',
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, email is invalid');
+    checkErrMsg(updatedUser, 400, 'Bad request, email is invalid');
   });
 
   it('C21409 (-) null phone', async () => {
@@ -325,7 +325,7 @@ describe('Profile update after oneClick registration', () => {
       phone: null,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, phone is required, no default value provided');
+    checkErrMsg(updatedUser, 400, 'Bad request, phone is required, no default value provided');
   });
 
   it('C21410 (-) empty phone', async () => {
@@ -338,7 +338,7 @@ describe('Profile update after oneClick registration', () => {
       phone: '',
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
+    checkErrMsg(updatedUser, 400, 'Phone is invalid, it\'s length must be from 5 to 30 symbols');
   });
 
   it('C21411 (-) null password', async () => {
@@ -348,7 +348,7 @@ describe('Profile update after oneClick registration', () => {
       password: null,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, password is required, no default value provided');
+    checkErrMsg(updatedUser, 400, 'Bad request, password is required, no default value provided');
   });
 
   it('C21412 (-) empty password', async () => {
@@ -358,7 +358,7 @@ describe('Profile update after oneClick registration', () => {
       password: '',
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Неверный пароль');
+    checkErrMsg(updatedUser, 400, 'Неверный пароль');
   });
 
   it('C21413 (-) invalid eMail', async () => {
@@ -372,7 +372,7 @@ describe('Profile update after oneClick registration', () => {
       email: newEmail,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, email is invalid');
+    checkErrMsg(updatedUser, 400, 'Bad request, email is invalid');
   });
 
   it('C21414 (+) change every field', async () => {
@@ -436,6 +436,6 @@ describe('Profile update after oneClick registration', () => {
       birthday: null,
     });
     // console.log(updatedUser);
-    checkErrorMsg(updatedUser, 'Bad request, birthday is required');
+    checkErrMsg(updatedUser, 400, 'Bad request, birthday is required');
   });
 });

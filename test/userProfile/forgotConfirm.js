@@ -3,7 +3,7 @@
  */
 
 
-import { checkErrorMsg, checkSuccess } from '../../src/responseChecker';
+import { checkErrMsg, checkSuccess } from '../../src/responseChecker';
 import { register } from '../../src/methods/register';
 import { mail } from '../../src/methods/mail';
 import { sleep } from '../../src/methods/utils';
@@ -34,6 +34,6 @@ describe('Conformation methods for user data recovery', () => {
     const { data: confirmReq } = await forgotConfirm(regData.id, 1234567,
       defaultPassword, defaultPassword);
     // console.log(confirmReq);
-    checkErrorMsg(confirmReq, 'Неверный ключ запроса');
+    checkErrMsg(confirmReq, 400, 'Неверный ключ запроса');
   });
 });
