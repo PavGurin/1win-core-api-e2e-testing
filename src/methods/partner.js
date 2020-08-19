@@ -4,7 +4,7 @@ import { randomNum, randomStr } from '../randomizer';
 import { mysqlConnection } from './mysqlConnection';
 import { formatDateYyyyMmDdHhIiSs, sleep } from './utils';
 
-const PARTNER_STAGING_URL = 'https://partner.staging.1win-prodlike.tech';
+const PARTNER_STAGING_URL = 'https://partner.staging.1win.cloud/';
 // const AUTH_TOKEN = 'Basic YWRtaW46Zk1xM0VaVXB2OGhOMmg=';
 const TIMEOUT = 40000;
 
