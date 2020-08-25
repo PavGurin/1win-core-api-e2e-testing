@@ -620,7 +620,7 @@ export function checkChatGreetingMessage(receivedMessages, partnerId, regTime) {
       + '\n'
       + '    Мы очень рады, что Вы присоединились к нашей партнерской программе.\n\n'
       + '    С нами Вы можете работать по моделям RevShare, CPA и Hybrid.\n'
-      + '    По всем вопросам Вы можете обращаться в данный чат, а также к менеджеру в Telegram – @win_one\n'
+      + '    По всем вопросам Вы можете обращаться в данный чат, а также к менеджеру в Telegram – @partners_1w\n'
       + '    ');
   expect(receivedMessages[0].time).not.toBeBefore(regTime);
   expect(receivedMessages[0].partnerReadTime).toEqual(null);
