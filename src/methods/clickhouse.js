@@ -1,6 +1,6 @@
 const { ClickHouse } = require('clickhouse');
 
-const clickhouse = new ClickHouse({
+const ck = new ClickHouse({
   url: 'https://clickhouse.1win.cloud:443/',
   port: 443,
   basicAuth: {
@@ -12,9 +12,9 @@ const clickhouse = new ClickHouse({
   },
 });
 
-export const ck = {
+export const clickhouse = {
   async ckQuery(query) {
-    const rows = await clickhouse.query(query).toPromise();
+    const rows = await ck.query(query).toPromise();
     return rows;
   },
 };
