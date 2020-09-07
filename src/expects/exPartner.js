@@ -2,6 +2,7 @@ import { getCurrenciesFromDB } from '../methods/banking';
 import { mysqlConnection } from '../methods/mysqlConnection';
 import { partner } from '../methods/partner';
 import { formatDateYyyyMmDd } from '../methods/utils';
+import { ck } from '../methods/ck';
 
 // из-за проблем округления может быть разница в 1 копейку
 // в received и expected
@@ -303,13 +304,27 @@ export async function getHybridCpaProfit(partnerId, sourceId) {
   }
 }
 
+export async function getHybridCpaProfitCk(partnerId, sourceId) {
+  if (!sourceId) {
+    const [result] = await ck.ckQuery(` select sum(event_value)/100 from onewin_partner.stats_v2  
+              where event_source_id in (select toString(broadcaster_id) from onewin_partner.stats_v2 where event = 'CPA_PAYOUT') 
+               and event = 'PAYMENT' and  partner_id = ${partnerId};`);
+    return result['divide(sum(event_value), 100)'];
+  } else { // eslint-disable-line no-else-return
+    const [result] = await ck.ckQuery(` select sum(event_value)/100 from onewin_partner.stats_v2  
+              where event_source_id in (select toString(broadcaster_id) from onewin_partner.stats_v2 where event = 'CPA_PAYOUT') 
+               and event = 'PAYMENT' and  partner_id = ${partnerId} and source_id = ${sourceId};`);
+    return result['divide(sum(event_value), 100)'];
+  }
+}
+
 export async function calculateExpectedCaseHybridPayments(partnerId, caseCostProfitArray,
   expectedCpaPaymentAmountUsd, expectedCpaPaymentCount, partnerCurrency, playerCurrency, sourceId) {
   const {
     profit, loss, difference,
   } = await calculateExpectedCasePayments(caseCostProfitArray, partnerCurrency, playerCurrency);
 
-  let cpaProfit = parseFloat(await getHybridCpaProfit(partnerId, sourceId));
+  let cpaProfit = parseFloat(await getHybridCpaProfitCk(partnerId, sourceId));
   // eslint-disable-next-line no-restricted-globals
   if (isNaN(cpaProfit)) {
     cpaProfit = 0;

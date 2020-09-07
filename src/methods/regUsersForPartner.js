@@ -18,8 +18,8 @@ export async function regUsersAndPlayCases(numUsers, numUserCasesPlayed, caseCos
   for (let i = 0; i < numUsers; i++) {
     const { data: user } = await register.oneClickRegWithPromocode(promocode, usersCurrency);
     if (partnerId && promocodeId && sourceId && depositAmount) {
-      await partner.addFirstDeposit(partnerId, promocodeId, sourceId, user.id, depositAmount);
-      await partner.addDeposit(partnerId, promocodeId, sourceId, user.id, depositAmount);
+      await partner.addFirstDepositCk(partnerId, promocodeId, sourceId, user.id, depositAmount);
+      await partner.addDepositCk(partnerId, promocodeId, sourceId, user.id, depositAmount);
     }
     userIds.push(user.id);
     // console.log(user.id);
@@ -49,8 +49,8 @@ export async function regUsersAndSellBetsOrdinary(numUsers, numUserBetsMake, bet
   for (let i = 0; i < numUsers; i++) {
     const { data: user } = await register.oneClickRegWithPromocode(promocode, usersCurrency);
     if (partnerId && promocodeId && sourceId && depositAmount) {
-      await partner.addFirstDeposit(partnerId, promocodeId, sourceId, user.id, depositAmount);
-      await partner.addDeposit(partnerId, promocodeId, sourceId, user.id, depositAmount);
+      await partner.addFirstDepositCk(partnerId, promocodeId, sourceId, user.id, depositAmount);
+      await partner.addDepositCk(partnerId, promocodeId, sourceId, user.id, depositAmount);
     }
     userIds.push(user.id);
     // console.log(user.id);
@@ -79,8 +79,8 @@ export async function regUsersAndSellBetsExpress(numUsers, numUserBetsMake, betA
   for (let i = 0; i < numUsers; i++) {
     const { data: user } = await register.oneClickRegWithPromocode(promocode, usersCurrency);
     if (partnerId && promocodeId && sourceId && depositAmount) {
-      await partner.addFirstDeposit(partnerId, promocodeId, sourceId, user.id, depositAmount);
-      await partner.addDeposit(partnerId, promocodeId, sourceId, user.id, depositAmount);
+      await partner.addFirstDepositCk(partnerId, promocodeId, sourceId, user.id, depositAmount);
+      await partner.addDepositCk(partnerId, promocodeId, sourceId, user.id, depositAmount);
     }
     userIds.push(user.id);
     // console.log(user.id);

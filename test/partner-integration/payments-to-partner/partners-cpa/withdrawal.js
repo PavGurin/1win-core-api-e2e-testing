@@ -58,7 +58,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId, presetId);
       await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -79,7 +79,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId, presetId);
       await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -101,7 +101,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId, presetId);
       await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -117,7 +117,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId, presetId);
       await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -135,7 +135,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId, presetId);
       await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -160,7 +160,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(3, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 500);
       await regUsersAndPlayCases(2, 1, 500, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, 2500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -180,7 +180,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(3, 1, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 20);
       await regUsersAndPlayCases(2, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 20);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -200,7 +200,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(3, 1, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 20);
       await regUsersAndPlayCases(2, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 20);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -221,7 +221,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(5, 1, 100, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 100);
       await regUsersAndPlayCases(5, 1, 100, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, 100);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -241,7 +241,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(5, 1, 2, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 5);
       await regUsersAndPlayCases(5, 1, 2, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 5);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -261,7 +261,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(5, 1, 2, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 5);
       await regUsersAndPlayCases(5, 1, 2, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 5);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -331,7 +331,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(10, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 500);
       await partner.setBalance(partnerId, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -353,7 +353,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(5, 1, 500, 'RUB', promocode1, partnerId, promocodeId1, sourceId1, 500);
       await regUsersAndPlayCases(5, 1, 500, 'RUB', promocode2, partnerId, promocodeId2, sourceId2, 500);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 500);
 
       const { data } = await register.oneClickReg();
@@ -372,7 +372,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId1, presetId);
       await regUsersAndPlayCases(10, 1, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 20);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 50);
 
       const { data } = await register.oneClickReg();
@@ -394,7 +394,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(5, 1, 20, 'USD', promocode1, partnerId, promocodeId1, sourceId1, 20);
       await regUsersAndPlayCases(5, 1, 20, 'USD', promocode2, partnerId, promocodeId2, sourceId2, 20);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 50);
 
       const { data } = await register.oneClickReg();
@@ -413,7 +413,7 @@ describe('Cpa partner withdrawal tests', () => {
         .createPromocodeWithCPA(cookie, promocode1, sourceId1, presetId);
       await regUsersAndPlayCases(10, 1, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 20);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 50);
 
       const { data } = await register.oneClickReg();
@@ -435,7 +435,7 @@ describe('Cpa partner withdrawal tests', () => {
       await regUsersAndPlayCases(5, 1, 20, 'EUR', promocode1, partnerId, promocodeId1, sourceId1, 20);
       await regUsersAndPlayCases(5, 1, 20, 'EUR', promocode2, partnerId, promocodeId2, sourceId2, 20);
       await sleep(2000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await partner.setBalance(partnerId, 50);
 
       const { data } = await register.oneClickReg();
