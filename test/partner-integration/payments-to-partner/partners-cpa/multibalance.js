@@ -62,7 +62,7 @@ describe.skip('CPA multibalance tests', () => {
       // console.log(partnerEmail);
       // console.log(payment1);
       await sleep(8000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await sleep(2000);
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
@@ -86,7 +86,7 @@ describe.skip('CPA multibalance tests', () => {
       // console.log(partnerEmail);
       // console.log(payment1);
       await sleep(8000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await sleep(2000);
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
@@ -110,7 +110,7 @@ describe.skip('CPA multibalance tests', () => {
       // console.log(partnerEmail);
       // console.log(payment1);
       await sleep(8000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await sleep(2000);
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
@@ -134,7 +134,7 @@ describe.skip('CPA multibalance tests', () => {
       // console.log(partnerEmail);
       // console.log(payment1);
       await sleep(8000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await sleep(2000);
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
@@ -158,7 +158,7 @@ describe.skip('CPA multibalance tests', () => {
       // console.log(partnerEmail);
       // console.log(payment1);
       await sleep(8000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await sleep(2000);
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
@@ -182,7 +182,7 @@ describe.skip('CPA multibalance tests', () => {
       // console.log(partnerEmail);
       // console.log(payment1);
       await sleep(8000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       await sleep(2000);
       await checkSourceProfit(cookie, sourceId1, payment1, payment1);
       await checkSourceProfit(cookie, sourceId2, payment2, payment2);
@@ -223,7 +223,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const { data: user } = await register.oneClickReg();
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
@@ -248,7 +248,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const { data: user } = await register.oneClickReg();
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
@@ -273,7 +273,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const { data: user } = await register.oneClickReg();
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
@@ -299,7 +299,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const { data: user } = await register.oneClickReg();
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
@@ -324,7 +324,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const { data: user } = await register.oneClickReg();
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
@@ -349,7 +349,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const { data: user } = await register.oneClickReg();
         const income = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(income);
@@ -439,7 +439,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeBefore);
         const incomeBefore2 = await partner.getSourceIncome(cookie, sourceId2);
@@ -473,7 +473,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeBefore);
         const incomeBefore2 = await partner.getSourceIncome(cookie, sourceId2);
@@ -507,7 +507,7 @@ describe.skip('CPA multibalance tests', () => {
 
         // console.log(partnerEmail);
         await sleep(10000);
-        await partner.addCpaPayment(partnerId);
+        await partner.addCpaPaymentCk(partnerId);
         const incomeBefore = await partner.getSourceIncome(cookie, sourceId1);
         // console.log(incomeBefore);
         const incomeBefore2 = await partner.getSourceIncome(cookie, sourceId2);

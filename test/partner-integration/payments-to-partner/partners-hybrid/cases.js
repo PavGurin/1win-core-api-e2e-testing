@@ -44,7 +44,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_RUB, 'RUB', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -62,7 +62,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_USD, 'USD', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -80,7 +80,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_EUR, 'EUR', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -99,7 +99,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_UAH, 'UAH', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -117,7 +117,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_RUB, 'RUB', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -135,7 +135,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_USD, 'USD', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -153,7 +153,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_EUR, 'EUR', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -171,7 +171,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_UAH, 'UAH', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -189,7 +189,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_RUB, 'RUB', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -207,7 +207,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_USD, 'USD', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -225,7 +225,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_EUR, 'EUR', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -243,7 +243,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 1, CASE_COST_UAH, 'UAH', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
 
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
@@ -478,7 +478,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_RUB, 'RUB', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -496,7 +496,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_USD, 'USD', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -514,7 +514,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_EUR, 'EUR', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -532,7 +532,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_UAH, 'UAH', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -550,7 +550,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_RUB, 'RUB', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -568,7 +568,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_USD, 'USD', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -586,7 +586,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_EUR, 'EUR', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -604,7 +604,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_UAH, 'UAH', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -622,7 +622,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_RUB, 'RUB', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -640,7 +640,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_USD, 'USD', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -658,7 +658,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_EUR, 'EUR', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
@@ -676,7 +676,7 @@ describe('Cases', () => {
 
       const { caseResults } = await regUsersAndPlayCases(1, 3, CASE_COST_UAH, 'UAH', promocode);
       await sleep(10000);
-      await partner.addCpaPayment(partnerId);
+      await partner.addCpaPaymentCk(partnerId);
       const { data: statsAll } = await partner.getStatsAll(cookie, promocodeId, undefined, 'cpa_profit');
       // console.log(statsAll);
       const { data: statsDay } = await partner.getStatsDay(cookie, new Date(), promocodeId, undefined, 'day_cpa_profit');
