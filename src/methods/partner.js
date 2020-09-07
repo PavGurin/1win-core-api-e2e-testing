@@ -99,18 +99,6 @@ export const partner = {
                                          '${partnerId}', '${hashId}', '${sourceId}', '${userId}', 'FIRST_DEPOSIT', 
                                          '${amount}', '${userId}', '${Date}', '${country}')`);
   },
-  // добавляет для юзера, привязанного к партнеру, первый депозит (event = FIRST_DEPOSIT) в КЛИКХАУС
-  async addFirstDepositCk(partnerId, hashId, sourceId, userId, amount, date = new Date(), country = 'ru',
-    sub1 = ' ', sub2 = ' ', sub3 = ' ', sub4 = ' ', sub5 = ' ') {
-    const Date = formatDateYyyyMmDdHhIiSs(date, true);
-
-    const broadcaster_id = uuidv4();
-    return clickhouse.ckQuery(`insert into onewin_partner.stats_v2(broadcaster_id, partner_id, source_id, hash_id, 
-                                  user_id, event, event_value, event_meta_value, event_source_id, date, country) 
-                                  VALUES('${broadcaster_id}', 
-                                         '${partnerId}', '${sourceId}', '${hashId}', '${userId}', 'FIRST_DEPOSIT', 
-                                         '${amount}', '0',  '${userId}', '${Date}', '${country}', '${sub1}', '${sub2}', '${sub3}', '${sub4}', '${sub5}')`);
-  },
 
   // добавляет для юзера, привязанного к партнеру, депозит (event = DEPOSIT)
   async addDeposit(partnerId, hashId, sourceId, userId, amount, date = new Date(), country = 'ru') {
@@ -123,6 +111,20 @@ export const partner = {
                                          '${partnerId}', '${hashId}', '${sourceId}', '${userId}', 'DEPOSIT', 
                                          '${amount}', '${userId}', '${Date}', '${country}');`);
   },
+
+  // добавляет для юзера, привязанного к партнеру, первый депозит (event = FIRST_DEPOSIT) в КЛИКХАУС
+  async addFirstDepositCk(partnerId, hashId, sourceId, userId, amount, date = new Date(), country = 'ru',
+    sub1 = ' ', sub2 = ' ', sub3 = ' ', sub4 = ' ', sub5 = ' ') {
+    const Date = formatDateYyyyMmDdHhIiSs(date, true);
+
+    const broadcaster_id = uuidv4();
+    return clickhouse.ckQuery(`insert into onewin_partner.stats_v2(broadcaster_id, partner_id, source_id, hash_id, 
+                                  user_id, event, event_value, event_meta_value, event_source_id, date, country, sub1, sub2, sub3, sub4, sub5) 
+                                  VALUES('${broadcaster_id}', 
+                                         '${partnerId}', '${sourceId}', '${hashId}', '${userId}', 'FIRST_DEPOSIT', 
+                                         '${amount * 100}', '0',  '${userId}', '${Date}', '${country}', '${sub1}', '${sub2}', '${sub3}', '${sub4}', '${sub5}')`);
+  },
+
   // добавляет для юзера, привязанного к партнеру, депозит (event = DEPOSIT) в КЛИКХАУС
   async addDepositCk(partnerId, hashId, sourceId, userId, amount, date = new Date(), country = 'ru',
     sub1 = ' ', sub2 = ' ', sub3 = ' ', sub4 = ' ', sub5 = ' ') {
@@ -133,7 +135,7 @@ export const partner = {
                                   user_id, event, event_value, event_meta_value, event_source_id, date, country, sub1, sub2, sub3, sub4, sub5) 
                                   VALUES('${broadcaster_id}', 
                                          '${partnerId}', '${sourceId}', '${hashId}', '${userId}', 'DEPOSIT', 
-                                         '${amount}', '0',  '${userId}', '${Date}', '${country}', '${sub1}', '${sub2}', '${sub3}', '${sub4}', '${sub5}')`);
+                                         '${amount * 100}', '0',  '${userId}', '${Date}', '${country}', '${sub1}', '${sub2}', '${sub3}', '${sub4}', '${sub5}')`);
   },
 
   // добавляет для юзера, привязанного к партнеру, переход (event = LINK_VISITOR) в КЛИКХАУС
