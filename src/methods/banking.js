@@ -6,6 +6,10 @@ import { formatDateYyyyMmDd, formatDateYyyyMmDdHhIiSs } from './utils';
 
 export const banking = {
 
+  async balanceCreate(currency) {
+    return socket.send('BANKING:balance-create', { currency });
+  },
+
   async transferCreateAll(targetEmail, amount, currency) {
     return socket.send('BANKING:transfer-create', {
       targetEmail,
