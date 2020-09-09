@@ -32,3 +32,11 @@ export function checkUserdataSnippet(data, expectedPaymentMethod, expectedAmount
   expect(data.mostPaymentMethod).toEqual(expectedPaymentMethod);
   expect(data.paymentAmountSnippet).toEqual(expectedAmount);
 }
+
+export async function checkBalanceCreate(userId, currency) {
+  const [res] = await mysqlConnection.executeQuery(`select * from 1win.ma_balance where id_user = '${userId}' and currency = '${currency}'`);
+  expect(res).toBeDefined();
+  expect(res.amount).toEqual(0);
+  expect(res.power).toEqual(0);
+  expect(res.percent).toEqual(0);
+}
