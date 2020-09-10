@@ -104,7 +104,7 @@ describe('Balance-create route tests', () => {
   });
   it('C2240448 + all valid currencies', async () => {
     const currencies = [
-      'RUB',
+      // 'RUB',
       'USD',
       'EUR',
       'AMD',
@@ -140,7 +140,8 @@ describe('Balance-create route tests', () => {
       'ZAR',
     ];
     const { data: user } = await register.oneClickReg();
-    await mysqlConnection.executeQuery(`delete from 1win.ma_balance where id_user ='${user.id}' and currency = 'RUB'`);
+    // await mysqlConnection.executeQuery(`delete from 1win.ma_balance
+    // where id_user ='${user.id}' and currency = 'RUB'`);
     // eslint-disable-next-line no-restricted-syntax
     for await (const currency of currencies) {
       const { data } = await banking.balanceCreate(currency);
